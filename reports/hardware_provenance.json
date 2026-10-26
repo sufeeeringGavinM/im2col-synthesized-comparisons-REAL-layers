@@ -1,0 +1,82 @@
+{
+  "NHWC": {
+    "rtl_sha256": {
+      "activation_feeder.v": "6edfd9aabe9478ffc94b89fafeb2f4e8e659b4eec99ca8ddf3475686cace316a",
+      "conv_accelerator.v": "379e51418f1c9e23d8a041de85f2dea760be9c71b46ea01cf0df22c4bd3ef95f",
+      "conv_controller.v": "7ccff718bd1c0d30413d49bdd0381198107575178e6c6413065b67f4d7cda4bc",
+      "conv_core.v": "4bf5ce8e650f3da79b78cf898febc4fcd9f56a1b1b309b2ce6e189ac62a8f017",
+      "conv_datapath.v": "04f6779fcb206b81abf8a4ae9cb57abfda2af360ea54d652fc6b867fe7ced417",
+      "im2col_addr_gen.v": "cf6c0b384e0d602ed479d33f1998195550df98d83f92c674c575b6673c89daff",
+      "kernel_bank.v": "1fade0989bcfdd0c739f02968d849b41e79f21b17c641f37fd1629e50be4e6fd",
+      "linear_address_counter.v": "d054b1c7fee8fde0b8e16d3f60151b6b38620f3c0a57e3cee5d8f35ba8171894",
+      "output_accumulator.v": "5c748dd5c4ee58a20953bf843a6fec92eac8e2bcab7ec2e73198bb318dc7e1ef",
+      "PE.v": "925f281472c7f03a801e1e81199460cf4f0f402ba83320c83a7141f3b39001fb",
+      "setup_divider.v": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d",
+      "sram.v": "1b3c394717a91b787792776ce0bb2ed795e85fe411dcfbe919bf4560cd9d945e",
+      "systolic_array.v": "0ad220bf3abf69c754282868a24b34ab99a22d2262e3a8a8bc13769f1e005da1",
+      "weight_loader.v": "5f9861249d5ad5350433ec86fd540b2380ee6f2a6198be35107a2f7fb383aa14"
+    },
+    "netlist_sha256": "e3409696898c83cf3811d1cb79b23f40f487f183eabdec1da8e293b2f2132042",
+    "dcp_sha256": "8ad742c970f8de0b37a826f582ff10fd540f30e0d26029cd49ebfeaed9d8abfe",
+    "reused_study": "https://github.com/sufeeeringGavinM/synthesized-im2col-comparisons/tree/b8472fa86e73f32d447778a477026a9a330f87c5/tiled/NHWC",
+    "resynthesis": false
+  },
+  "NCHW_centralized": {
+    "rtl_sha256": {
+      "banked_input.v": "9b246aec9bb9cb17285637e9fb4f185831864aed8213b7427651816f261ece48",
+      "conv_accelerator.v": "7afb245a8c2a551c88400315bbbc26ee7c9770efbbcf8f8cb5b370d47f6d541a",
+      "conv_controller.v": "b4fbad115173d927bed51bc592719ffd73b6551e3e37e572404938c5aeec25fe",
+      "conv_core.v": "79475942697a08116421bd5aac6e257fcd1ce02462a55e2f3e091b2c85669ae4",
+      "conv_datapath.v": "e97f4a33de983ce0357331fcf87c241759cf93b99fd682011c078cdaa898cb38",
+      "im2col_addr_gen.v": "7a4910e4fe30dc636109dbbc67614d8a7b4f9a456aa398b39c161d85a0a0f46b",
+      "input_bank.v": "0d7da86d283058478ccefeb830a091046c3454e5c6225ec6e83c821c6672af41",
+      "kernel_bank.v": "1fade0989bcfdd0c739f02968d849b41e79f21b17c641f37fd1629e50be4e6fd",
+      "output_accumulator.v": "476142b824b118269e8c3f9382e5b2347e5c7922d22f89bbfce955c7bed0acb1",
+      "PE.v": "5438682f9c7f8ca43bf01cfad39543e19779f2cf9c75a8786453aff101e1ece6",
+      "setup_divider.v": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d",
+      "sram.v": "1b3c394717a91b787792776ce0bb2ed795e85fe411dcfbe919bf4560cd9d945e",
+      "systolic_array.v": "b56e0a9ecc57a3bc19dd8141a8224d9a5fb6592a7bbd1ae9b540a69acc9746ce",
+      "weight_loader.v": "e3196fa60f3a9fc50ae119e8012ee90d0aa85ee5bfdddb4c2478827b41750bf9"
+    },
+    "netlist_sha256": "760395949371689b51c7024e1e47a9b4e23423c9d280dddf4cb2aeb2d591d8e5",
+    "dcp_sha256": "678a1c2eed6a90936d1b447396daec6b7ea9e3477640f12b1b3a992410d9ed00",
+    "reused_study": "https://github.com/sufeeeringGavinM/synthesized-im2col-comparisons/tree/b8472fa86e73f32d447778a477026a9a330f87c5/tiled/NCHW_centralized",
+    "resynthesis": false
+  },
+  "explicit": {
+    "rtl_sha256": {
+      "conv_accelerator.v": "ac695fee84a16859d72f6e24ee00641cb7b8c5abe6d95b035486485c5f59b826",
+      "explicit_im2col_integrated.v": "e30a10d9b08e14999671fe401be08313b927643db3acab98a1ff070185c8d89d",
+      "linear_address_counter.v": "d054b1c7fee8fde0b8e16d3f60151b6b38620f3c0a57e3cee5d8f35ba8171894",
+      "setup_divider.v": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d"
+    },
+    "netlist_sha256": "72c9a34dd4e0d9bbf2b679336778684978c72e3c6bef446879deb0df9410e4ce",
+    "dcp_sha256": "8286b7ab79b7d8479e591fecf18aa1d9505b308d70473cd0f653c5c755107e1a",
+    "reused_study": "https://github.com/sufeeeringGavinM/synthesized-im2col-comparisons/tree/b8472fa86e73f32d447778a477026a9a330f87c5/tiled/explicit",
+    "resynthesis": false
+  },
+  "im2collette_fifo": {
+    "rtl_sha256": {
+      "channel_bank.v": "6b0a02029c4666acf9f62ca72e8d9a32476070a0223908684a12e72609518015",
+      "conv_accelerator.v": "15ab410ccbcc223e0f39d3c5194c536d4b7d821e258dc20e0bddd48f7a20f383",
+      "conv_controller.v": "031e123381d1841ace2803823429309717373bd846e500eec32b25fc056ba6bc",
+      "conv_core.v": "0d027bd57141e2c8a8b893ca92b7b3e2e534583c9a4084954857f721cd71e10b",
+      "feed_lane.v": "3f8c9310454dac246e18f3d74332530591011584510a996f6f3cb654fc0df501",
+      "im2col_addr_gen.v": "75cb9086ed30d8edd7012aa3ac64c966ac07b595eecb856bbc873c330747344e",
+      "kernel_bank.v": "5693aba9cd0e4cc73ee34545a605533e649844cd9bbf130c830690eca0a32ac3",
+      "linear_address_counter.v": "d054b1c7fee8fde0b8e16d3f60151b6b38620f3c0a57e3cee5d8f35ba8171894",
+      "MMU.v": "08d6cee6da4cc6342b7bf36f3990d8626e82c83480cdc852457dea0ef5cdf06c",
+      "output_accumulator.v": "d6c6c438cf68814a5e462e39c7951d97fc3b1f84617a744af6f5e892c5ddd16f",
+      "pe.v": "23ea762fb3e50e85d4fdfa52022ca2121da7301a4d10fc90017a1eb357bdc154",
+      "row_sram.v": "fcca1912adb795bf2b8377a166ce2f17ee7bd1af5183d51c9956ea9f3cc5f67c",
+      "setup_divider.v": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d",
+      "sync_fifo.v": "2fe80070e63db7c8c4180f0d943b46295af29b88928231bfeb28a172a0729bd3",
+      "systolic_array.v": "654ddbef47d30a09ba2d873fe0727b057fd3c38bf3684f32b10feb896f811393",
+      "weight_loader.v": "3ddc732a3871e5103f6efeb4230c986f65621cdd6252252f2c5ea0cb4837cdc6"
+    },
+    "netlist_sha256": "fdeb83c5ed56fba21cfc43a6b54e9f757c456a026191868f3f5bfc87dcb43c13",
+    "dcp_sha256": "fd4ff1806917890d88d782ddcd1f5cc9587e5b05fcd0b378d79e774d08f4f77c",
+    "reused_study": "https://github.com/sufeeeringGavinM/synthesized-im2col-comparisons/tree/b8472fa86e73f32d447778a477026a9a330f87c5/tiled/im2collette_fifo",
+    "resynthesis": false
+  }
+}

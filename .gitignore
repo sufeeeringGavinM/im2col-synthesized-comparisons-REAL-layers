@@ -1,0 +1,15 @@
+runs/
+__pycache__/
+*.pyc
+*.vvp
+*.vcd
+*.dcp
+*.xpr
+*.jou
+*.log
+*.wdb
+*.pb
+xsim.dir/
+.Xil/
+*.lic
+slides/

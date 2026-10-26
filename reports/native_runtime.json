@@ -1,0 +1,165 @@
+{
+  "scope": "Windows XSim session start-to-exit host wall time, including stimulus/reference/setup/capture/output export; not isolated capture time or accelerator latency. Local simulator timestamps recorded on Asia/Shanghai study host. Compilations/power-report commands are outside this interval.",
+  "cases": [
+    {
+      "variant": "centralized",
+      "layer": "cifar10_conv1",
+      "simulator_start_local": "Mon Oct 26 12:36:45 2026",
+      "simulator_end_local": "Mon Oct 26 12:56:41 2026",
+      "wall_seconds": 1196.0,
+      "cycles": 74722,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.074722000000"
+    },
+    {
+      "variant": "centralized",
+      "layer": "cifar10_conv2",
+      "simulator_start_local": "Mon Oct 26 13:01:24 2026",
+      "simulator_end_local": "Mon Oct 26 13:19:23 2026",
+      "wall_seconds": 1079.0,
+      "cycles": 79174,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.079174000000"
+    },
+    {
+      "variant": "centralized",
+      "layer": "mnist_conv1",
+      "simulator_start_local": "Mon Oct 26 13:27:47 2026",
+      "simulator_end_local": "Mon Oct 26 13:44:36 2026",
+      "wall_seconds": 1009.0,
+      "cycles": 86913,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.086913000000"
+    },
+    {
+      "variant": "centralized",
+      "layer": "mnist_legacy_conv2",
+      "simulator_start_local": "Mon Oct 26 13:55:37 2026",
+      "simulator_end_local": "Mon Oct 26 14:17:10 2026",
+      "wall_seconds": 1293.0,
+      "cycles": 115194,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.115194000000"
+    },
+    {
+      "variant": "channel_first",
+      "layer": "cifar10_conv1",
+      "simulator_start_local": "Mon Oct 26 12:15:57 2026",
+      "simulator_end_local": "Mon Oct 26 12:30:03 2026",
+      "wall_seconds": 846.0,
+      "cycles": 96353,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.096353000000"
+    },
+    {
+      "variant": "channel_first",
+      "layer": "cifar10_conv2",
+      "simulator_start_local": "Mon Oct 26 12:36:46 2026",
+      "simulator_end_local": "Mon Oct 26 12:51:07 2026",
+      "wall_seconds": 861.0,
+      "cycles": 83913,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.083913000000"
+    },
+    {
+      "variant": "channel_first",
+      "layer": "mnist_conv1",
+      "simulator_start_local": "Mon Oct 26 12:54:11 2026",
+      "simulator_end_local": "Mon Oct 26 13:18:50 2026",
+      "wall_seconds": 1479.0,
+      "cycles": 121714,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.121714000000"
+    },
+    {
+      "variant": "channel_first",
+      "layer": "mnist_legacy_conv2",
+      "simulator_start_local": "Mon Oct 26 13:23:21 2026",
+      "simulator_end_local": "Mon Oct 26 13:40:59 2026",
+      "wall_seconds": 1058.0,
+      "cycles": 113697,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.113697000000"
+    },
+    {
+      "variant": "explicit",
+      "layer": "cifar10_conv1",
+      "simulator_start_local": "Mon Oct 26 12:44:51 2026",
+      "simulator_end_local": "Mon Oct 26 13:17:55 2026",
+      "wall_seconds": 1984.0,
+      "cycles": 136337,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.136337000000"
+    },
+    {
+      "variant": "explicit",
+      "layer": "cifar10_conv2",
+      "simulator_start_local": "Mon Oct 26 13:20:54 2026",
+      "simulator_end_local": "Mon Oct 26 13:41:39 2026",
+      "wall_seconds": 1245.0,
+      "cycles": 94473,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.094473000000"
+    },
+    {
+      "variant": "explicit",
+      "layer": "mnist_conv1",
+      "simulator_start_local": "Mon Oct 26 13:45:23 2026",
+      "simulator_end_local": "Mon Oct 26 14:17:11 2026",
+      "wall_seconds": 1908.0,
+      "cycles": 171634,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.171634000000"
+    },
+    {
+      "variant": "explicit",
+      "layer": "mnist_legacy_conv2",
+      "simulator_start_local": "Mon Oct 26 14:19:40 2026",
+      "simulator_end_local": "Mon Oct 26 14:39:01 2026",
+      "wall_seconds": 1161.0,
+      "cycles": 120545,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.120545000000"
+    },
+    {
+      "variant": "im2collette_fifo",
+      "layer": "cifar10_conv1",
+      "simulator_start_local": "Mon Oct 26 13:51:30 2026",
+      "simulator_end_local": "Mon Oct 26 14:13:53 2026",
+      "wall_seconds": 1343.0,
+      "cycles": 96325,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.096325000000"
+    },
+    {
+      "variant": "im2collette_fifo",
+      "layer": "cifar10_conv2",
+      "simulator_start_local": "Mon Oct 26 14:17:00 2026",
+      "simulator_end_local": "Mon Oct 26 14:29:21 2026",
+      "wall_seconds": 741.0,
+      "cycles": 83893,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.083893000000"
+    },
+    {
+      "variant": "im2collette_fifo",
+      "layer": "mnist_conv1",
+      "simulator_start_local": "Mon Oct 26 14:31:56 2026",
+      "simulator_end_local": "Mon Oct 26 14:49:23 2026",
+      "wall_seconds": 1047.0,
+      "cycles": 121610,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.121610000000"
+    },
+    {
+      "variant": "im2collette_fifo",
+      "layer": "mnist_legacy_conv2",
+      "simulator_start_local": "Mon Oct 26 14:51:34 2026",
+      "simulator_end_local": "Mon Oct 26 15:03:04 2026",
+      "wall_seconds": 690.0,
+      "cycles": 113681,
+      "simulated_clock_mhz": 1,
+      "native_duration_seconds": "0.113681000000"
+    }
+  ]
+}

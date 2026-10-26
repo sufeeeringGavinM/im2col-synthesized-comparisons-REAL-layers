@@ -1,0 +1,44 @@
+{
+  "layer": "mnist_legacy_conv2",
+  "config": {
+    "N": 1,
+    "C": 10,
+    "H": 12,
+    "W": 12,
+    "K": 20,
+    "R": 5,
+    "S": 5,
+    "pad_i": 0,
+    "pad_j": 0,
+    "stride_i": 1,
+    "stride_j": 1,
+    "dilation_i": 1,
+    "dilation_j": 1
+  },
+  "seed": 196102605,
+  "model": "Historical PyTorch MNISTConvNet tutorial",
+  "module": "conv2",
+  "output_shape": [
+    1,
+    20,
+    8,
+    8
+  ],
+  "network_input": [
+    1,
+    1,
+    28,
+    28
+  ],
+  "groups": 1,
+  "source_identity_index": 2,
+  "distribution": "Python random.Random(seed), sequential randint(-128,127): inputs then kernels; synthetic activity",
+  "generator": "Retained Python integer golden with32-bit wrap; original Verilog independent loop golden retained",
+  "arithmetic_engine": "retained pure Python integer golden",
+  "python_version": "3.14.4 (main, Aug 20 2026, 10:41:58) [GCC 15.2.0]",
+  "sha256": {
+    "input_tensor.txt": "8d233aa8ff7c108a75a704a2c2e65b1f9b995989323f850b3253273ab09364c4",
+    "kernel_tensor.txt": "cde38b258d48f4064a0aac31bd6f195153d1c8378beebbfc2242c65233f2fe25",
+    "output_tensor.txt": "561ff0bbd561f76f4ec4c84af38209fdef85d32f64f0a7e6d4e1960f9c733c9f"
+  }
+}

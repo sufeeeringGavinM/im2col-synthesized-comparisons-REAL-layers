@@ -1,0 +1,30 @@
+{
+  "sources": [
+    {
+      "repository": "pytorch/tutorials",
+      "commit": "9e8a306f78aaea3dfa867f9d7466f231f3a9c62f",
+      "file": "beginner_source/blitz/cifar10_tutorial.py",
+      "url": "https://raw.githubusercontent.com/pytorch/tutorials/9e8a306f78aaea3dfa867f9d7466f231f3a9c62f/beginner_source/blitz/cifar10_tutorial.py",
+      "local_file": "cifar10_tutorial.py",
+      "sha256": "ccd6fe44e98f97b354fe153f4e22531b73ff565ff93cbce2ff351d704dd61222"
+    },
+    {
+      "repository": "pytorch/examples",
+      "commit": "d0b7e3709407074ac64bb34c5af33fe226abb47c",
+      "file": "mnist/main.py",
+      "url": "https://raw.githubusercontent.com/pytorch/examples/d0b7e3709407074ac64bb34c5af33fe226abb47c/mnist/main.py",
+      "local_file": "mnist_main.py",
+      "sha256": "30a3359d1911d2d859dd090ce20be7ed132a33f508dc389f40366010b3e9ecc8"
+    },
+    {
+      "repository": "pytorch/tutorials",
+      "commit": "9e6c8ba21812ec62b556d859c65b26c4884b48cb",
+      "file": "beginner_source/former_torchies/nn_tutorial.py",
+      "url": "https://raw.githubusercontent.com/pytorch/tutorials/9e6c8ba21812ec62b556d859c65b26c4884b48cb/beginner_source/former_torchies/nn_tutorial.py",
+      "local_file": "legacy_nn_tutorial.py",
+      "sha256": "3e483dd76bb4e6e89b00187c846839cfb011f7fb3b31964f3cd3021b230f8f7d",
+      "documentation": "https://docs.pytorch.org/pytorch_sphinx_theme/beginner/former_torchies/nn_tutorial.html"
+    }
+  ],
+  "scope": "Complete CIFAR10 tutorial conv1/conv2, current MNIST example conv1, historical MNISTConvNet tutorial conv2; model geometries with synthetic signed8 operands, no trained weights/bias/activation/pooling/accuracy claim"
+}

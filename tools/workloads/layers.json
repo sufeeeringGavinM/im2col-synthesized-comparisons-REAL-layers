@@ -1,0 +1,142 @@
+[
+  {
+    "layer": "cifar10_conv1",
+    "config": {
+      "N": 1,
+      "C": 3,
+      "H": 32,
+      "W": 32,
+      "K": 6,
+      "R": 5,
+      "S": 5,
+      "pad_i": 0,
+      "pad_j": 0,
+      "stride_i": 1,
+      "stride_j": 1,
+      "dilation_i": 1,
+      "dilation_j": 1
+    },
+    "seed": 196102601,
+    "model": "PyTorch CIFAR10 tutorial CNN",
+    "module": "conv1",
+    "output_shape": [
+      1,
+      6,
+      28,
+      28
+    ],
+    "network_input": [
+      1,
+      3,
+      32,
+      32
+    ],
+    "groups": 1,
+    "source_identity_index": 0
+  },
+  {
+    "layer": "cifar10_conv2",
+    "config": {
+      "N": 1,
+      "C": 6,
+      "H": 14,
+      "W": 14,
+      "K": 16,
+      "R": 5,
+      "S": 5,
+      "pad_i": 0,
+      "pad_j": 0,
+      "stride_i": 1,
+      "stride_j": 1,
+      "dilation_i": 1,
+      "dilation_j": 1
+    },
+    "seed": 196102602,
+    "model": "PyTorch CIFAR10 tutorial CNN",
+    "module": "conv2",
+    "output_shape": [
+      1,
+      16,
+      10,
+      10
+    ],
+    "network_input": [
+      1,
+      3,
+      32,
+      32
+    ],
+    "groups": 1,
+    "source_identity_index": 0
+  },
+  {
+    "layer": "mnist_conv1",
+    "config": {
+      "N": 1,
+      "C": 1,
+      "H": 28,
+      "W": 28,
+      "K": 32,
+      "R": 3,
+      "S": 3,
+      "pad_i": 0,
+      "pad_j": 0,
+      "stride_i": 1,
+      "stride_j": 1,
+      "dilation_i": 1,
+      "dilation_j": 1
+    },
+    "seed": 196102603,
+    "model": "PyTorch MNIST example CNN",
+    "module": "conv1",
+    "output_shape": [
+      1,
+      32,
+      26,
+      26
+    ],
+    "network_input": [
+      1,
+      1,
+      28,
+      28
+    ],
+    "groups": 1,
+    "source_identity_index": 1
+  },
+  {
+    "layer": "mnist_legacy_conv2",
+    "config": {
+      "N": 1,
+      "C": 10,
+      "H": 12,
+      "W": 12,
+      "K": 20,
+      "R": 5,
+      "S": 5,
+      "pad_i": 0,
+      "pad_j": 0,
+      "stride_i": 1,
+      "stride_j": 1,
+      "dilation_i": 1,
+      "dilation_j": 1
+    },
+    "seed": 196102605,
+    "model": "Historical PyTorch MNISTConvNet tutorial",
+    "module": "conv2",
+    "output_shape": [
+      1,
+      20,
+      8,
+      8
+    ],
+    "network_input": [
+      1,
+      1,
+      28,
+      28
+    ],
+    "groups": 1,
+    "source_identity_index": 2
+  }
+]

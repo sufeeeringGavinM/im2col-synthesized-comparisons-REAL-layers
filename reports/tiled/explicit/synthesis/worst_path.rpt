@@ -1,0 +1,202 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026
+| Date         : Sun Oct 25 14:17:24 2026
+| Host         : root running 64-bit major release  (build 9200)
+| Command      : report_timing -of_objects [get_timing_paths -delay_type max -max_paths 1 -nworst 1] -file worst_path.rpt
+| Design       : conv_accelerator
+| Device       : 7a200t-fbg676
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (VIOLATED) :        -2.397ns  (required time - arrival time)
+  Source:                 u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels0__0/CLK
+                            (rising edge-triggered cell DSP48E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            u_core/u_mmu/g_c[0].u_bank/u_input_sram/mem_reg/ADDRBWRADDR[10]
+                            (rising edge-triggered cell RAMB18E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        21.832ns  (logic 14.571ns (66.741%)  route 7.261ns (33.259%))
+  Logic Levels:           37  (CARRY4=25 DSP48E1=2 LUT1=1 LUT2=3 LUT3=1 LUT4=1 LUT6=4)
+  Clock Path Skew:        -0.039ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.748ns = ( 20.748 - 20.000 ) 
+    Source Clock Delay      (SCD):    0.787ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=11921, unset)        0.787     0.787    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/clk
+                         DSP48E1                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels0__0/CLK
+  -------------------------------------------------------------------    -------------------
+                         DSP48E1 (Prop_dsp48e1_CLK_PCOUT[47])
+                                                      3.380     4.167 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels0__0/PCOUT[47]
+                         net (fo=1, unplaced)         0.055     4.222    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels0__0_n_106
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels0__1/PCIN[47]
+                         DSP48E1 (Prop_dsp48e1_PCIN[47]_P[0])
+                                                      1.271     5.493 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels0__1/P[0]
+                         net (fo=2, unplaced)         0.646     6.139    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels0__1_n_105
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_36/I0
+                         LUT2 (Prop_lut2_I0_O)        0.105     6.244 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_36/O
+                         net (fo=1, unplaced)         0.000     6.244    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_36_n_0
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_4/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.444     6.688 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_4/CO[3]
+                         net (fo=1, unplaced)         0.008     6.696    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_4_n_0
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100     6.796 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_3/CO[3]
+                         net (fo=1, unplaced)         0.000     6.796    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_3_n_0
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100     6.896 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000     6.896    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_2_n_0
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_1/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.277     7.173 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_1/O[3]
+                         net (fo=1, unplaced)         0.646     7.818    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_i_1_n_4
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels/B[14]
+                         DSP48E1 (Prop_dsp48e1_B[14]_P[0])
+                                                      3.228    11.046 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels/P[0]
+                         net (fo=1, unplaced)         0.646    11.692    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_n_105
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_carry_i_3/I1
+                         LUT2 (Prop_lut2_I1_O)        0.105    11.797 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_carry_i_3/O
+                         net (fo=1, unplaced)         0.000    11.797    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_carry_i_3_n_0
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_carry/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.444    12.241 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_carry/CO[3]
+                         net (fo=1, unplaced)         0.008    12.249    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_carry_n_0
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_carry__0/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.277    12.526 f  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels_carry__0/O[3]
+                         net (fo=2, unplaced)         0.530    13.056    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/output_pixels__2[23]
+                                                                      f  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state2_carry__4_i_2/I0
+                         LUT1 (Prop_lut1_I0_O)        0.250    13.306 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state2_carry__4_i_2/O
+                         net (fo=1, unplaced)         0.000    13.306    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state2_carry__4_i_2_n_0
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state2_carry__4/S[2]
+                         CARRY4 (Prop_carry4_S[2]_CO[3])
+                                                      0.316    13.622 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state2_carry__4/CO[3]
+                         net (fo=1, unplaced)         0.000    13.622    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state2_carry__4_n_0
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state2_carry__5/CI
+                         CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.214    13.836 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state2_carry__5/O[2]
+                         net (fo=1, unplaced)         0.584    14.420    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state22_in[27]
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state1_carry__1_i_2/I1
+                         LUT6 (Prop_lut6_I1_O)        0.244    14.664 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state1_carry__1_i_2/O
+                         net (fo=1, unplaced)         0.000    14.664    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state1_carry__1_i_2_n_0
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state1_carry__1/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[2])
+                                                      0.477    15.141 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state1_carry__1/CO[2]
+                         net (fo=37, unplaced)        0.424    15.565    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/state13_out
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/g_position[0].current_n[0][31]_i_8/I1
+                         LUT3 (Prop_lut3_I1_O)        0.252    15.817 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/g_position[0].current_n[0][31]_i_8/O
+                         net (fo=7, unplaced)         0.382    16.199    u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/g_position[0].current_n[0][31]_i_8_n_0
+                                                                      r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/g_position[0].current_h[0][26]_i_2/I0
+                         LUT6 (Prop_lut6_I0_O)        0.105    16.304 r  u_core/u_mmu/g_c[0].u_bank/u_im2col_writer/g_position[0].current_h[0][26]_i_2/O
+                         net (fo=104, unplaced)       0.448    16.752    u_core/u_mmu/u_address/g_position[0].current_h_reg[0][26]_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_544/I4
+                         LUT6 (Prop_lut6_I4_O)        0.105    16.857 r  u_core/u_mmu/u_address/mem_reg_i_544/O
+                         net (fo=2, unplaced)         0.548    17.405    u_core/u_mmu/u_address/mem_reg_i_544_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_485/DI[1]
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.430    17.835 r  u_core/u_mmu/u_address/mem_reg_i_485/CO[3]
+                         net (fo=1, unplaced)         0.008    17.843    u_core/u_mmu/u_address/mem_reg_i_485_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_484/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    17.943 r  u_core/u_mmu/u_address/mem_reg_i_484/CO[3]
+                         net (fo=1, unplaced)         0.000    17.943    u_core/u_mmu/u_address/mem_reg_i_484_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_433/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.043 r  u_core/u_mmu/u_address/mem_reg_i_433/CO[3]
+                         net (fo=1, unplaced)         0.000    18.043    u_core/u_mmu/u_address/mem_reg_i_433_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_432/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.143 r  u_core/u_mmu/u_address/mem_reg_i_432/CO[3]
+                         net (fo=1, unplaced)         0.000    18.143    u_core/u_mmu/u_address/mem_reg_i_432_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_372/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.243 r  u_core/u_mmu/u_address/mem_reg_i_372/CO[3]
+                         net (fo=1, unplaced)         0.000    18.243    u_core/u_mmu/u_address/mem_reg_i_372_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_371/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.343 r  u_core/u_mmu/u_address/mem_reg_i_371/CO[3]
+                         net (fo=1, unplaced)         0.000    18.343    u_core/u_mmu/u_address/mem_reg_i_371_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_310/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.443 r  u_core/u_mmu/u_address/mem_reg_i_310/CO[3]
+                         net (fo=1, unplaced)         0.000    18.443    u_core/u_mmu/u_address/mem_reg_i_310_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_309/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.543 r  u_core/u_mmu/u_address/mem_reg_i_309/CO[3]
+                         net (fo=1, unplaced)         0.000    18.543    u_core/u_mmu/u_address/mem_reg_i_309_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_248/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.643 r  u_core/u_mmu/u_address/mem_reg_i_248/CO[3]
+                         net (fo=1, unplaced)         0.000    18.643    u_core/u_mmu/u_address/mem_reg_i_248_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_247/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.743 r  u_core/u_mmu/u_address/mem_reg_i_247/CO[3]
+                         net (fo=1, unplaced)         0.000    18.743    u_core/u_mmu/u_address/mem_reg_i_247_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_194/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.843 r  u_core/u_mmu/u_address/mem_reg_i_194/CO[3]
+                         net (fo=1, unplaced)         0.000    18.843    u_core/u_mmu/u_address/mem_reg_i_194_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_193/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.943 r  u_core/u_mmu/u_address/mem_reg_i_193/CO[3]
+                         net (fo=1, unplaced)         0.000    18.943    u_core/u_mmu/u_address/mem_reg_i_193_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_152/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    19.043 r  u_core/u_mmu/u_address/mem_reg_i_152/CO[3]
+                         net (fo=1, unplaced)         0.000    19.043    u_core/u_mmu/u_address/mem_reg_i_152_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_117/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    19.143 r  u_core/u_mmu/u_address/mem_reg_i_117/CO[3]
+                         net (fo=1, unplaced)         0.000    19.143    u_core/u_mmu/u_address/mem_reg_i_117_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_83/CI
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.269    19.412 f  u_core/u_mmu/u_address/mem_reg_i_83/O[1]
+                         net (fo=1, unplaced)         0.472    19.884    u_core/u_mmu/u_address/g_position[0].h__0[57]
+                                                                      f  u_core/u_mmu/u_address/mem_reg_i_82/I0
+                         LUT2 (Prop_lut2_I0_O)        0.245    20.129 r  u_core/u_mmu/u_address/mem_reg_i_82/O
+                         net (fo=1, unplaced)         0.000    20.129    u_core/u_mmu/u_address/mem_reg_i_82_n_0
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_50/S[0]
+                         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.423    20.552 r  u_core/u_mmu/u_address/mem_reg_i_50/CO[3]
+                         net (fo=1, unplaced)         0.770    21.322    u_core/u_mmu/u_address/valid_02
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_35__0/I3
+                         LUT6 (Prop_lut6_I3_O)        0.105    21.427 r  u_core/u_mmu/u_address/mem_reg_i_35__0/O
+                         net (fo=83, unplaced)        0.442    21.869    u_core/u_mmu/u_address/shared_valid[0]
+                                                                      r  u_core/u_mmu/u_address/mem_reg_i_11__9/I1
+                         LUT4 (Prop_lut4_I1_O)        0.105    21.974 r  u_core/u_mmu/u_address/mem_reg_i_11__9/O
+                         net (fo=1, unplaced)         0.646    22.619    u_core/u_mmu/g_c[0].u_bank/u_input_sram/ADDRBWRADDR[6]
+                         RAMB18E1                                     r  u_core/u_mmu/g_c[0].u_bank/u_input_sram/mem_reg/ADDRBWRADDR[10]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                                                      0.000    20.000 r  clk
+                         net (fo=11921, unset)        0.748    20.748    u_core/u_mmu/g_c[0].u_bank/u_input_sram/clk
+                         RAMB18E1                                     r  u_core/u_mmu/g_c[0].u_bank/u_input_sram/mem_reg/CLKBWRCLK
+                         clock pessimism              0.000    20.748    <hidden>
+                         clock uncertainty           -0.035    20.712    <hidden>
+                         RAMB18E1 (Setup_ramb18e1_CLKBWRCLK_ADDRBWRADDR[10])
+                                                     -0.490    20.222    u_core/u_mmu/g_c[0].u_bank/u_input_sram/mem_reg
+  -------------------------------------------------------------------
+                         required time                         20.222    <hidden>
+                         arrival time                         -22.619    <hidden>
+  -------------------------------------------------------------------
+                         slack                                 -2.397    <hidden>
+
+
+
+

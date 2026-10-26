@@ -1,0 +1,962 @@
+[
+  {
+    "result": {
+      "variant": "centralized",
+      "layer": "cifar10_conv1",
+      "config": {
+        "N": 1,
+        "C": 3,
+        "H": 32,
+        "W": 32,
+        "K": 6,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102601,
+      "total": 74722,
+      "backing_reads": 26040,
+      "backing_writes": 4704,
+      "planning": 606,
+      "input_transfers": 26880,
+      "kernel_transfers": 25200,
+      "core_execution": 12600,
+      "output_transfers": 9408,
+      "tile_transitions": 28,
+      "tiles": 28,
+      "core_jobs": 28,
+      "tap_jobs": 0,
+      "transfer_signature": "9f676facd7254258",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 308,
+        "advances": 10752,
+        "stalls": 1288,
+        "transitions": 196,
+        "retries": 0
+      },
+      "outputs": 4704,
+      "tensor_hashes": {
+        "input_tensor.txt": "dbb13a765d81115f3b94f367a12ffd5d56b04a9016905d97d11c347a41f819c1",
+        "kernel_tensor.txt": "de7ed0bb76c57c0a3c27aea28be315dfe9581e454619f6a881612863709e4c26",
+        "output_tensor.txt": "1e36f05bc0bec1a23f9c251e764f2d9389daf40689d9a8356fe2b85e9f45e5f8"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 11.0133278659996,
+    "stage_seconds": {
+      "tensor_loading": 0.04,
+      "full_verilog_golden": 0.113,
+      "accelerator": 4.54,
+      "output_check_export": 0.103
+    },
+    "bench_sha256": "40f00751f31a179a4b8f19ce3bd6e70c35116fba4238f8a3cafbcd7a1579c170",
+    "actual_output_sha256": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c"
+  },
+  {
+    "result": {
+      "variant": "centralized",
+      "layer": "cifar10_conv2",
+      "config": {
+        "N": 1,
+        "C": 6,
+        "H": 14,
+        "W": 14,
+        "K": 16,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102602,
+      "total": 79174,
+      "backing_reads": 32400,
+      "backing_writes": 1600,
+      "planning": 434,
+      "input_transfers": 16800,
+      "kernel_transfers": 48000,
+      "core_execution": 10720,
+      "output_transfers": 3200,
+      "tile_transitions": 20,
+      "tiles": 20,
+      "core_jobs": 20,
+      "tap_jobs": 0,
+      "transfer_signature": "a0d09273f708a5f8",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 220,
+        "advances": 9000,
+        "stalls": 1180,
+        "transitions": 280,
+        "retries": 0
+      },
+      "outputs": 1600,
+      "tensor_hashes": {
+        "input_tensor.txt": "58eaa33f37c1b30f76f02e94753385d01fde719c074559b72200de81b73c5046",
+        "kernel_tensor.txt": "ca4a3d32219007aebaffc895459f3b592fb41a97eb746d04953ed3c0593adbbc",
+        "output_tensor.txt": "6cb32efd265052f0afe69a1286915ac1d88c9c2288aafdc5c1773d7edf173989"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 11.340289874999144,
+    "stage_seconds": {
+      "tensor_loading": 0.037,
+      "full_verilog_golden": 0.081,
+      "accelerator": 4.07,
+      "output_check_export": 0.093
+    },
+    "bench_sha256": "40f00751f31a179a4b8f19ce3bd6e70c35116fba4238f8a3cafbcd7a1579c170",
+    "actual_output_sha256": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4"
+  },
+  {
+    "result": {
+      "variant": "centralized",
+      "layer": "mnist_conv1",
+      "config": {
+        "N": 1,
+        "C": 1,
+        "H": 28,
+        "W": 28,
+        "K": 32,
+        "R": 3,
+        "S": 3,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102603,
+      "total": 86913,
+      "backing_reads": 16224,
+      "backing_writes": 21632,
+      "planning": 1841,
+      "input_transfers": 17472,
+      "kernel_transfers": 14976,
+      "core_execution": 9256,
+      "output_transfers": 43264,
+      "tile_transitions": 104,
+      "tiles": 104,
+      "core_jobs": 104,
+      "tap_jobs": 0,
+      "transfer_signature": "12b217e5e0546334",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 1144,
+        "advances": 4784,
+        "stalls": 3120,
+        "transitions": 0,
+        "retries": 0
+      },
+      "outputs": 21632,
+      "tensor_hashes": {
+        "input_tensor.txt": "9ab6cea0ca1dc27cc2a070eaedbf3422e4a5079bd5f9bef0ccc2fcae16c06ff7",
+        "kernel_tensor.txt": "dab51d024c94d96028c96e04d1efb8913caf3a46004ac07bbe8f1b828bea133c",
+        "output_tensor.txt": "f0de506006b025e2744e2c1696a1c5ab801a20d04349a8095f19cdd68955da8e"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 11.247796217998257,
+    "stage_seconds": {
+      "tensor_loading": 0.028,
+      "full_verilog_golden": 0.055,
+      "accelerator": 3.945,
+      "output_check_export": 0.48
+    },
+    "bench_sha256": "40f00751f31a179a4b8f19ce3bd6e70c35116fba4238f8a3cafbcd7a1579c170",
+    "actual_output_sha256": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d"
+  },
+  {
+    "result": {
+      "variant": "centralized",
+      "layer": "mnist_legacy_conv2",
+      "config": {
+        "N": 1,
+        "C": 10,
+        "H": 12,
+        "W": 12,
+        "K": 20,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102605,
+      "total": 115194,
+      "backing_reads": 49600,
+      "backing_writes": 1280,
+      "planning": 362,
+      "input_transfers": 19200,
+      "kernel_transfers": 80000,
+      "core_execution": 13056,
+      "output_transfers": 2560,
+      "tile_transitions": 16,
+      "tiles": 16,
+      "core_jobs": 16,
+      "tap_jobs": 0,
+      "transfer_signature": "4f86375f506a4be2",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 176,
+        "advances": 11200,
+        "stalls": 1264,
+        "transitions": 384,
+        "retries": 0
+      },
+      "outputs": 1280,
+      "tensor_hashes": {
+        "input_tensor.txt": "8d233aa8ff7c108a75a704a2c2e65b1f9b995989323f850b3253273ab09364c4",
+        "kernel_tensor.txt": "cde38b258d48f4064a0aac31bd6f195153d1c8378beebbfc2242c65233f2fe25",
+        "output_tensor.txt": "561ff0bbd561f76f4ec4c84af38209fdef85d32f64f0a7e6d4e1960f9c733c9f"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 15.259941051997885,
+    "stage_seconds": {
+      "tensor_loading": 0.051,
+      "full_verilog_golden": 0.096,
+      "accelerator": 5.265,
+      "output_check_export": 0.041
+    },
+    "bench_sha256": "40f00751f31a179a4b8f19ce3bd6e70c35116fba4238f8a3cafbcd7a1579c170",
+    "actual_output_sha256": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7"
+  },
+  {
+    "result": {
+      "variant": "channel_first",
+      "layer": "cifar10_conv1",
+      "config": {
+        "N": 1,
+        "C": 3,
+        "H": 32,
+        "W": 32,
+        "K": 6,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102601,
+      "total": 96353,
+      "backing_reads": 26040,
+      "backing_writes": 4704,
+      "planning": 89,
+      "input_transfers": 26880,
+      "kernel_transfers": 25200,
+      "core_execution": 34748,
+      "output_transfers": 9408,
+      "tile_transitions": 28,
+      "tiles": 28,
+      "core_jobs": 28,
+      "tap_jobs": 0,
+      "transfer_signature": "9f676facd7254258",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 420,
+        "advances": 33600,
+        "stalls": 0,
+        "transitions": 672,
+        "retries": 0
+      },
+      "outputs": 4704,
+      "tensor_hashes": {
+        "input_tensor.txt": "dbb13a765d81115f3b94f367a12ffd5d56b04a9016905d97d11c347a41f819c1",
+        "kernel_tensor.txt": "de7ed0bb76c57c0a3c27aea28be315dfe9581e454619f6a881612863709e4c26",
+        "output_tensor.txt": "1e36f05bc0bec1a23f9c251e764f2d9389daf40689d9a8356fe2b85e9f45e5f8"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 11.009613456000807,
+    "stage_seconds": {
+      "tensor_loading": 0.046,
+      "full_verilog_golden": 0.103,
+      "accelerator": 3.984,
+      "output_check_export": 0.092
+    },
+    "bench_sha256": "e49b4494ec684b7dc096a61b012571faa0445a099535289e66cc5fa2c51f40ce",
+    "actual_output_sha256": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c"
+  },
+  {
+    "result": {
+      "variant": "channel_first",
+      "layer": "cifar10_conv2",
+      "config": {
+        "N": 1,
+        "C": 6,
+        "H": 14,
+        "W": 14,
+        "K": 16,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102602,
+      "total": 83913,
+      "backing_reads": 32400,
+      "backing_writes": 1600,
+      "planning": 73,
+      "input_transfers": 16800,
+      "kernel_transfers": 48000,
+      "core_execution": 15820,
+      "output_transfers": 3200,
+      "tile_transitions": 20,
+      "tiles": 20,
+      "core_jobs": 20,
+      "tap_jobs": 0,
+      "transfer_signature": "a0d09273f708a5f8",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 300,
+        "advances": 15000,
+        "stalls": 0,
+        "transitions": 480,
+        "retries": 0
+      },
+      "outputs": 1600,
+      "tensor_hashes": {
+        "input_tensor.txt": "58eaa33f37c1b30f76f02e94753385d01fde719c074559b72200de81b73c5046",
+        "kernel_tensor.txt": "ca4a3d32219007aebaffc895459f3b592fb41a97eb746d04953ed3c0593adbbc",
+        "output_tensor.txt": "6cb32efd265052f0afe69a1286915ac1d88c9c2288aafdc5c1773d7edf173989"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 11.428953631002514,
+    "stage_seconds": {
+      "tensor_loading": 0.037,
+      "full_verilog_golden": 0.062,
+      "accelerator": 2.721,
+      "output_check_export": 0.031
+    },
+    "bench_sha256": "e49b4494ec684b7dc096a61b012571faa0445a099535289e66cc5fa2c51f40ce",
+    "actual_output_sha256": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4"
+  },
+  {
+    "result": {
+      "variant": "channel_first",
+      "layer": "mnist_conv1",
+      "config": {
+        "N": 1,
+        "C": 1,
+        "H": 28,
+        "W": 28,
+        "K": 32,
+        "R": 3,
+        "S": 3,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102603,
+      "total": 121714,
+      "backing_reads": 16224,
+      "backing_writes": 21632,
+      "planning": 242,
+      "input_transfers": 17472,
+      "kernel_transfers": 14976,
+      "core_execution": 45656,
+      "output_transfers": 43264,
+      "tile_transitions": 104,
+      "tiles": 104,
+      "core_jobs": 104,
+      "tap_jobs": 0,
+      "transfer_signature": "12b217e5e0546334",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 1560,
+        "advances": 43056,
+        "stalls": 0,
+        "transitions": 832,
+        "retries": 0
+      },
+      "outputs": 21632,
+      "tensor_hashes": {
+        "input_tensor.txt": "9ab6cea0ca1dc27cc2a070eaedbf3422e4a5079bd5f9bef0ccc2fcae16c06ff7",
+        "kernel_tensor.txt": "dab51d024c94d96028c96e04d1efb8913caf3a46004ac07bbe8f1b828bea133c",
+        "output_tensor.txt": "f0de506006b025e2744e2c1696a1c5ab801a20d04349a8095f19cdd68955da8e"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 16.66818422000506,
+    "stage_seconds": {
+      "tensor_loading": 0.028,
+      "full_verilog_golden": 0.073,
+      "accelerator": 4.951,
+      "output_check_export": 0.41
+    },
+    "bench_sha256": "e49b4494ec684b7dc096a61b012571faa0445a099535289e66cc5fa2c51f40ce",
+    "actual_output_sha256": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d"
+  },
+  {
+    "result": {
+      "variant": "channel_first",
+      "layer": "mnist_legacy_conv2",
+      "config": {
+        "N": 1,
+        "C": 10,
+        "H": 12,
+        "W": 12,
+        "K": 20,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102605,
+      "total": 113697,
+      "backing_reads": 49600,
+      "backing_writes": 1280,
+      "planning": 65,
+      "input_transfers": 19200,
+      "kernel_transfers": 80000,
+      "core_execution": 11856,
+      "output_transfers": 2560,
+      "tile_transitions": 16,
+      "tiles": 16,
+      "core_jobs": 16,
+      "tap_jobs": 0,
+      "transfer_signature": "4f86375f506a4be2",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 240,
+        "advances": 11200,
+        "stalls": 0,
+        "transitions": 384,
+        "retries": 0
+      },
+      "outputs": 1280,
+      "tensor_hashes": {
+        "input_tensor.txt": "8d233aa8ff7c108a75a704a2c2e65b1f9b995989323f850b3253273ab09364c4",
+        "kernel_tensor.txt": "cde38b258d48f4064a0aac31bd6f195153d1c8378beebbfc2242c65233f2fe25",
+        "output_tensor.txt": "561ff0bbd561f76f4ec4c84af38209fdef85d32f64f0a7e6d4e1960f9c733c9f"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 10.123547647999658,
+    "stage_seconds": {
+      "tensor_loading": 0.046,
+      "full_verilog_golden": 0.102,
+      "accelerator": 3.514,
+      "output_check_export": 0.052
+    },
+    "bench_sha256": "e49b4494ec684b7dc096a61b012571faa0445a099535289e66cc5fa2c51f40ce",
+    "actual_output_sha256": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7"
+  },
+  {
+    "result": {
+      "variant": "explicit",
+      "layer": "cifar10_conv1",
+      "config": {
+        "N": 1,
+        "C": 3,
+        "H": 32,
+        "W": 32,
+        "K": 6,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102601,
+      "total": 136337,
+      "backing_reads": 26040,
+      "backing_writes": 4704,
+      "planning": 89,
+      "input_transfers": 26880,
+      "kernel_transfers": 25200,
+      "core_execution": 74732,
+      "output_transfers": 9408,
+      "tile_transitions": 28,
+      "tiles": 28,
+      "core_jobs": 28,
+      "tap_jobs": 0,
+      "transfer_signature": "9f676facd7254258",
+      "nested_core": {
+        "im2col": 39396,
+        "weights": 308,
+        "advances": 34300,
+        "stalls": 0,
+        "transitions": 672,
+        "retries": 0
+      },
+      "outputs": 4704,
+      "tensor_hashes": {
+        "input_tensor.txt": "dbb13a765d81115f3b94f367a12ffd5d56b04a9016905d97d11c347a41f819c1",
+        "kernel_tensor.txt": "de7ed0bb76c57c0a3c27aea28be315dfe9581e454619f6a881612863709e4c26",
+        "output_tensor.txt": "1e36f05bc0bec1a23f9c251e764f2d9389daf40689d9a8356fe2b85e9f45e5f8"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 15.995816278002167,
+    "stage_seconds": {
+      "tensor_loading": 0.037,
+      "full_verilog_golden": 0.112,
+      "accelerator": 4.711,
+      "output_check_export": 0.093
+    },
+    "bench_sha256": "765c561b535fa48cca09f0d422bc2d9658f2cd928e2f82dae45e235c38919fc9",
+    "actual_output_sha256": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c"
+  },
+  {
+    "result": {
+      "variant": "explicit",
+      "layer": "cifar10_conv2",
+      "config": {
+        "N": 1,
+        "C": 6,
+        "H": 14,
+        "W": 14,
+        "K": 16,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102602,
+      "total": 94473,
+      "backing_reads": 32400,
+      "backing_writes": 1600,
+      "planning": 73,
+      "input_transfers": 16800,
+      "kernel_transfers": 48000,
+      "core_execution": 26380,
+      "output_transfers": 3200,
+      "tile_transitions": 20,
+      "tiles": 20,
+      "core_jobs": 20,
+      "tap_jobs": 0,
+      "transfer_signature": "a0d09273f708a5f8",
+      "nested_core": {
+        "im2col": 10140,
+        "weights": 220,
+        "advances": 15500,
+        "stalls": 0,
+        "transitions": 480,
+        "retries": 0
+      },
+      "outputs": 1600,
+      "tensor_hashes": {
+        "input_tensor.txt": "58eaa33f37c1b30f76f02e94753385d01fde719c074559b72200de81b73c5046",
+        "kernel_tensor.txt": "ca4a3d32219007aebaffc895459f3b592fb41a97eb746d04953ed3c0593adbbc",
+        "output_tensor.txt": "6cb32efd265052f0afe69a1286915ac1d88c9c2288aafdc5c1773d7edf173989"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 10.311524552002084,
+    "stage_seconds": {
+      "tensor_loading": 0.037,
+      "full_verilog_golden": 0.071,
+      "accelerator": 2.909,
+      "output_check_export": 0.04
+    },
+    "bench_sha256": "765c561b535fa48cca09f0d422bc2d9658f2cd928e2f82dae45e235c38919fc9",
+    "actual_output_sha256": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4"
+  },
+  {
+    "result": {
+      "variant": "explicit",
+      "layer": "mnist_conv1",
+      "config": {
+        "N": 1,
+        "C": 1,
+        "H": 28,
+        "W": 28,
+        "K": 32,
+        "R": 3,
+        "S": 3,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102603,
+      "total": 171634,
+      "backing_reads": 16224,
+      "backing_writes": 21632,
+      "planning": 242,
+      "input_transfers": 17472,
+      "kernel_transfers": 14976,
+      "core_execution": 95576,
+      "output_transfers": 43264,
+      "tile_transitions": 104,
+      "tiles": 104,
+      "core_jobs": 104,
+      "tap_jobs": 0,
+      "transfer_signature": "12b217e5e0546334",
+      "nested_core": {
+        "im2col": 49400,
+        "weights": 1144,
+        "advances": 43992,
+        "stalls": 0,
+        "transitions": 832,
+        "retries": 0
+      },
+      "outputs": 21632,
+      "tensor_hashes": {
+        "input_tensor.txt": "9ab6cea0ca1dc27cc2a070eaedbf3422e4a5079bd5f9bef0ccc2fcae16c06ff7",
+        "kernel_tensor.txt": "dab51d024c94d96028c96e04d1efb8913caf3a46004ac07bbe8f1b828bea133c",
+        "output_tensor.txt": "f0de506006b025e2744e2c1696a1c5ab801a20d04349a8095f19cdd68955da8e"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 15.7003976470005,
+    "stage_seconds": {
+      "tensor_loading": 0.036,
+      "full_verilog_golden": 0.073,
+      "accelerator": 7.001,
+      "output_check_export": 0.408
+    },
+    "bench_sha256": "765c561b535fa48cca09f0d422bc2d9658f2cd928e2f82dae45e235c38919fc9",
+    "actual_output_sha256": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d"
+  },
+  {
+    "result": {
+      "variant": "explicit",
+      "layer": "mnist_legacy_conv2",
+      "config": {
+        "N": 1,
+        "C": 10,
+        "H": 12,
+        "W": 12,
+        "K": 20,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102605,
+      "total": 120545,
+      "backing_reads": 49600,
+      "backing_writes": 1280,
+      "planning": 65,
+      "input_transfers": 19200,
+      "kernel_transfers": 80000,
+      "core_execution": 18704,
+      "output_transfers": 2560,
+      "tile_transitions": 16,
+      "tiles": 16,
+      "core_jobs": 16,
+      "tap_jobs": 0,
+      "transfer_signature": "4f86375f506a4be2",
+      "nested_core": {
+        "im2col": 6512,
+        "weights": 176,
+        "advances": 11600,
+        "stalls": 0,
+        "transitions": 384,
+        "retries": 0
+      },
+      "outputs": 1280,
+      "tensor_hashes": {
+        "input_tensor.txt": "8d233aa8ff7c108a75a704a2c2e65b1f9b995989323f850b3253273ab09364c4",
+        "kernel_tensor.txt": "cde38b258d48f4064a0aac31bd6f195153d1c8378beebbfc2242c65233f2fe25",
+        "output_tensor.txt": "561ff0bbd561f76f4ec4c84af38209fdef85d32f64f0a7e6d4e1960f9c733c9f"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 10.163086897002358,
+    "stage_seconds": {
+      "tensor_loading": 0.046,
+      "full_verilog_golden": 0.1,
+      "accelerator": 3.329,
+      "output_check_export": 0.042
+    },
+    "bench_sha256": "765c561b535fa48cca09f0d422bc2d9658f2cd928e2f82dae45e235c38919fc9",
+    "actual_output_sha256": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7"
+  },
+  {
+    "result": {
+      "variant": "im2collette_fifo",
+      "layer": "cifar10_conv1",
+      "config": {
+        "N": 1,
+        "C": 3,
+        "H": 32,
+        "W": 32,
+        "K": 6,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102601,
+      "total": 96325,
+      "backing_reads": 26040,
+      "backing_writes": 4704,
+      "planning": 89,
+      "input_transfers": 26880,
+      "kernel_transfers": 25200,
+      "core_execution": 34720,
+      "output_transfers": 9408,
+      "tile_transitions": 28,
+      "tiles": 28,
+      "core_jobs": 28,
+      "tap_jobs": 0,
+      "transfer_signature": "9f676facd7254258",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 308,
+        "advances": 33600,
+        "stalls": 84,
+        "transitions": 672,
+        "retries": 0
+      },
+      "outputs": 4704,
+      "tensor_hashes": {
+        "input_tensor.txt": "dbb13a765d81115f3b94f367a12ffd5d56b04a9016905d97d11c347a41f819c1",
+        "kernel_tensor.txt": "de7ed0bb76c57c0a3c27aea28be315dfe9581e454619f6a881612863709e4c26",
+        "output_tensor.txt": "1e36f05bc0bec1a23f9c251e764f2d9389daf40689d9a8356fe2b85e9f45e5f8"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 16.035619121998025,
+    "stage_seconds": {
+      "tensor_loading": 0.045,
+      "full_verilog_golden": 0.065,
+      "accelerator": 5.318,
+      "output_check_export": 0.095
+    },
+    "bench_sha256": "1ea61fbb5e7c7d83956dce5c6a4859001a8bf192ef49ecad2eff4caab6052801",
+    "actual_output_sha256": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c"
+  },
+  {
+    "result": {
+      "variant": "im2collette_fifo",
+      "layer": "cifar10_conv2",
+      "config": {
+        "N": 1,
+        "C": 6,
+        "H": 14,
+        "W": 14,
+        "K": 16,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102602,
+      "total": 83893,
+      "backing_reads": 32400,
+      "backing_writes": 1600,
+      "planning": 73,
+      "input_transfers": 16800,
+      "kernel_transfers": 48000,
+      "core_execution": 15800,
+      "output_transfers": 3200,
+      "tile_transitions": 20,
+      "tiles": 20,
+      "core_jobs": 20,
+      "tap_jobs": 0,
+      "transfer_signature": "a0d09273f708a5f8",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 220,
+        "advances": 15000,
+        "stalls": 60,
+        "transitions": 480,
+        "retries": 0
+      },
+      "outputs": 1600,
+      "tensor_hashes": {
+        "input_tensor.txt": "58eaa33f37c1b30f76f02e94753385d01fde719c074559b72200de81b73c5046",
+        "kernel_tensor.txt": "ca4a3d32219007aebaffc895459f3b592fb41a97eb746d04953ed3c0593adbbc",
+        "output_tensor.txt": "6cb32efd265052f0afe69a1286915ac1d88c9c2288aafdc5c1773d7edf173989"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 10.719436927996867,
+    "stage_seconds": {
+      "tensor_loading": 0.048,
+      "full_verilog_golden": 0.04,
+      "accelerator": 3.772,
+      "output_check_export": 0.051
+    },
+    "bench_sha256": "1ea61fbb5e7c7d83956dce5c6a4859001a8bf192ef49ecad2eff4caab6052801",
+    "actual_output_sha256": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4"
+  },
+  {
+    "result": {
+      "variant": "im2collette_fifo",
+      "layer": "mnist_conv1",
+      "config": {
+        "N": 1,
+        "C": 1,
+        "H": 28,
+        "W": 28,
+        "K": 32,
+        "R": 3,
+        "S": 3,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102603,
+      "total": 121610,
+      "backing_reads": 16224,
+      "backing_writes": 21632,
+      "planning": 242,
+      "input_transfers": 17472,
+      "kernel_transfers": 14976,
+      "core_execution": 45552,
+      "output_transfers": 43264,
+      "tile_transitions": 104,
+      "tiles": 104,
+      "core_jobs": 104,
+      "tap_jobs": 0,
+      "transfer_signature": "12b217e5e0546334",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 1144,
+        "advances": 43056,
+        "stalls": 312,
+        "transitions": 832,
+        "retries": 0
+      },
+      "outputs": 21632,
+      "tensor_hashes": {
+        "input_tensor.txt": "9ab6cea0ca1dc27cc2a070eaedbf3422e4a5079bd5f9bef0ccc2fcae16c06ff7",
+        "kernel_tensor.txt": "dab51d024c94d96028c96e04d1efb8913caf3a46004ac07bbe8f1b828bea133c",
+        "output_tensor.txt": "f0de506006b025e2744e2c1696a1c5ab801a20d04349a8095f19cdd68955da8e"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 15.856186918004823,
+    "stage_seconds": {
+      "tensor_loading": 0.026,
+      "full_verilog_golden": 0.044,
+      "accelerator": 6.839,
+      "output_check_export": 0.338
+    },
+    "bench_sha256": "1ea61fbb5e7c7d83956dce5c6a4859001a8bf192ef49ecad2eff4caab6052801",
+    "actual_output_sha256": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d"
+  },
+  {
+    "result": {
+      "variant": "im2collette_fifo",
+      "layer": "mnist_legacy_conv2",
+      "config": {
+        "N": 1,
+        "C": 10,
+        "H": 12,
+        "W": 12,
+        "K": 20,
+        "R": 5,
+        "S": 5,
+        "pad_i": 0,
+        "pad_j": 0,
+        "stride_i": 1,
+        "stride_j": 1,
+        "dilation_i": 1,
+        "dilation_j": 1
+      },
+      "seed": 196102605,
+      "total": 113681,
+      "backing_reads": 49600,
+      "backing_writes": 1280,
+      "planning": 65,
+      "input_transfers": 19200,
+      "kernel_transfers": 80000,
+      "core_execution": 11840,
+      "output_transfers": 2560,
+      "tile_transitions": 16,
+      "tiles": 16,
+      "core_jobs": 16,
+      "tap_jobs": 0,
+      "transfer_signature": "4f86375f506a4be2",
+      "nested_core": {
+        "im2col": 0,
+        "weights": 176,
+        "advances": 11200,
+        "stalls": 48,
+        "transitions": 384,
+        "retries": 0
+      },
+      "outputs": 1280,
+      "tensor_hashes": {
+        "input_tensor.txt": "8d233aa8ff7c108a75a704a2c2e65b1f9b995989323f850b3253273ab09364c4",
+        "kernel_tensor.txt": "cde38b258d48f4064a0aac31bd6f195153d1c8378beebbfc2242c65233f2fe25",
+        "output_tensor.txt": "561ff0bbd561f76f4ec4c84af38209fdef85d32f64f0a7e6d4e1960f9c733c9f"
+      }
+    },
+    "engine": "Vivado XSim2026.1 compiled four-state RTL; full original Verilog golden retained",
+    "actual_rtl_clock_ns": 10,
+    "wall_seconds": 10.215853129004245,
+    "stage_seconds": {
+      "tensor_loading": 0.058,
+      "full_verilog_golden": 0.042,
+      "accelerator": 4.061,
+      "output_check_export": 0.041
+    },
+    "bench_sha256": "1ea61fbb5e7c7d83956dce5c6a4859001a8bf192ef49ecad2eff4caab6052801",
+    "actual_output_sha256": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7"
+  }
+]

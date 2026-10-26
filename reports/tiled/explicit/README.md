@@ -1,0 +1,3 @@
+# explicit real-layer evidence
+
+[cycles and diagnostics](cycles/SUMMARY.md), [hardware provenance](provenance.json), [reused synthesis](synthesis/), [separate vectorless power](vectorless_power/) and [four native workload captures](workloads/). Hardware matches the linked accepted study exactly; no resynthesis was needed. New workload evidence uses synthetic signed8 operands and actual1MHz native SAIF, complete output/port/cycle/duration checks and recorded annotation/confidence. Resource/timing estimates characterize unchanged post-synthesis hardware; they do not establish routed closure or board power.

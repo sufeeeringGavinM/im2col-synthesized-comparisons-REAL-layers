@@ -1,0 +1,38 @@
+{
+  "engine": "Vivado XSim2026.1 compiled four-state RTL",
+  "full_original_verilog_golden_retained": true,
+  "rtl_clock_ns": 10,
+  "native_saif_clock_mhz": 1,
+  "scope": "Stage markers/declaration ordering and cycle watchdog are testbench adaptations only; accelerator RTL unchanged. Memory-bounded independent architecture workers share one evidence writer; native gate capture uses memory-bounded independent architecture workers with isolated builds and one global evidence writer.",
+  "migration": "Eight accepted Icarus/XSim cases across all four architectures match full golden outputs, exclusive/nested accounting, tile/core/tap counts and transfer signatures. Selected full-layer evidence is separate.",
+  "profiling": {
+    "scope": "Small complete CIFAR10/MNIST model layers; inherited source-identical compiled four-state RTL snapshots; full original Verilog golden retained",
+    "native_optimization": "default",
+    "optimization_speed_ratio": 1.011709718320364,
+    "annotation_equal": true,
+    "timings": [
+      {
+        "optimization": "default",
+        "capture_seconds": 40.694,
+        "wall_seconds": 50.74636628100416,
+        "annotation": "89%   (57308/64661)"
+      },
+      {
+        "optimization": "O3",
+        "capture_seconds": 40.223,
+        "wall_seconds": 52.5152367260016,
+        "annotation": "89%   (57308/64661)"
+      }
+    ],
+    "limitations": "NHWC accepted full_array only; complete golden/output/port/cycle/native-duration checks and power annotation; short single samples, not a full-layer speed guarantee; O3 adoption requires accepted-case validation for every architecture",
+    "concurrency": "Host-memory-bounded architecture workers; serialized heavy compilation and power analysis, isolated case/build directories, one global result writer"
+  },
+  "peak_architecture_workers": 3,
+  "worker_limit": 4,
+  "host_memory_reserve_mib": 768,
+  "per_worker_reservation_mib": 640,
+  "heavy_phases": "Elaboration and Report Power serialized by a shared lock; independent simulations may overlap",
+  "existing_capture_adoption": "An in-progress source-identical native capture and native compilation were preserved during the fourth-case substitution; completed markers/logs/outputs were fully validated and reused",
+  "migration_evidence": "rtl_engine_migration.json",
+  "native_runtime": "native_runtime.json"
+}

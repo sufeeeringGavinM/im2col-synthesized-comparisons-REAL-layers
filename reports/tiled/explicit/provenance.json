@@ -1,0 +1,33 @@
+{
+  "implementation": "explicit",
+  "scope": "tiled",
+  "source_sha256": {
+    "config.json": "8399660061b0cc8a03228f6ef359af992e68ad4645849febda34516070353547",
+    "conv_golden.py": "a992b19678112884f7b5b1fd807bdc82d73d823eb0172a0d149b29686eb804d4",
+    "gen_matrices.py": "eb54eca8398a821734224e67f1361c2abf40b6d6825eb3b65f64fdd7573fe8cf",
+    "README.md": "9a5574f364436b870706b922d78842bb67f9d386947033e7188bca96206d2b16",
+    "run_case.py": "ccc5a96663403e8b9b067492147b97ce26b4ebf6d93e305b70e327f62a646490",
+    "rtl/conv_accelerator.v": "ac695fee84a16859d72f6e24ee00641cb7b8c5abe6d95b035486485c5f59b826",
+    "rtl/explicit_im2col_integrated.v": "e30a10d9b08e14999671fe401be08313b927643db3acab98a1ff070185c8d89d",
+    "rtl/linear_address_counter.v": "d054b1c7fee8fde0b8e16d3f60151b6b38620f3c0a57e3cee5d8f35ba8171894",
+    "rtl/setup_divider.v": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d",
+    "sim/input_tensor.txt": "691870d9a2b50a6f46410bd47ccd40338078e23259688987aacb6978d45b1069",
+    "sim/kernel_tensor.txt": "3d34c2bf01c84800ad9a97371c2f29cd4f5f43bfffe93c24212899fd5d9b50fa",
+    "sim/output_tensor.txt": "f920d3703bf6fc13d063e21e5b086c1d780feee8f093f05aec7ed15972786ea4",
+    "sim/tb_conv_accelerator.v": "8eb9f66a369c23e3c935422023c3aed1e36ad49fe3b84c93383a41a95881dca8",
+    "sim/tensor_reader.vh": "35f04e764816639f59835358f03842677bd2a6fc1b60f999d72ba02c4d01d6c0"
+  },
+  "rtl_sha256": {
+    "conv_accelerator.v": "ac695fee84a16859d72f6e24ee00641cb7b8c5abe6d95b035486485c5f59b826",
+    "explicit_im2col_integrated.v": "e30a10d9b08e14999671fe401be08313b927643db3acab98a1ff070185c8d89d",
+    "linear_address_counter.v": "d054b1c7fee8fde0b8e16d3f60151b6b38620f3c0a57e3cee5d8f35ba8171894",
+    "setup_divider.v": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d"
+  },
+  "netlist_sha256": "72c9a34dd4e0d9bbf2b679336778684978c72e3c6bef446879deb0df9410e4ce",
+  "dcp_sha256": "8286b7ab79b7d8479e591fecf18aa1d9505b308d70473cd0f653c5c755107e1a",
+  "reused_study": "https://github.com/sufeeeringGavinM/synthesized-im2col-comparisons/tree/b8472fa86e73f32d447778a477026a9a330f87c5/tiled/explicit",
+  "hardware_changed": false,
+  "resynthesis": false,
+  "measurement_status": "VALIDATED_4_FULL_LAYERS_RTL_AND_NATIVE_XSIM_POWER",
+  "full_layer_cases": 4
+}

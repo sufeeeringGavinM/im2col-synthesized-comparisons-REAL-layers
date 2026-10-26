@@ -1,0 +1,164 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026
+| Date         : Sun Oct 25 13:11:00 2026
+| Host         : root running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -file utilization_hierarchy.rpt
+| Design       : conv_accelerator
+| Device       : xc7a200tfbg676-2
+| Speed File   : -2
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++-------------------------------------+--------------------------------------+------------+------------+---------+------+------+--------+--------+------------+
+|               Instance              |                Module                | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs | RAMB36 | RAMB18 | DSP Blocks |
++-------------------------------------+--------------------------------------+------------+------------+---------+------+------+--------+--------+------------+
+| conv_accelerator                    |                                (top) |      18765 |      18765 |       0 |    0 | 9900 |      0 |     30 |        111 |
+|   (conv_accelerator)                |                                (top) |       2693 |       2693 |       0 |    0 | 2082 |      0 |      0 |         87 |
+|   u_core                            |                            conv_core |      15252 |      15252 |       0 |    0 | 7553 |      0 |     30 |         24 |
+|     (u_core)                        |                            conv_core |         89 |         89 |       0 |    0 |  421 |      0 |      0 |          0 |
+|     u_controller                    |                      conv_controller |        598 |        598 |       0 |    0 |  105 |      0 |      0 |          6 |
+|     u_datapath                      |                        conv_datapath |      14283 |      14283 |       0 |    0 | 6940 |      0 |     20 |         18 |
+|       (u_datapath)                  |                        conv_datapath |       5267 |       5267 |       0 |    0 |   32 |      0 |      0 |          6 |
+|       g_input[0].u_feeder           |                    activation_feeder |         91 |         91 |       0 |    0 |    1 |      0 |      1 |          0 |
+|         u_sram                      |                             sram_133 |         89 |         89 |       0 |    0 |    0 |      0 |      1 |          0 |
+|       g_input[7].u_feeder           | activation_feeder__parameterized0_14 |         59 |         59 |       0 |    0 |   11 |      0 |      1 |          0 |
+|         u_sram                      |                             sram_126 |         57 |         57 |       0 |    0 |    0 |      0 |      1 |          0 |
+|       g_input[8].u_feeder           | activation_feeder__parameterized0_15 |         60 |         60 |       0 |    0 |   11 |      0 |      1 |          0 |
+|         u_sram                      |                             sram_125 |         57 |         57 |       0 |    0 |    0 |      0 |      1 |          0 |
+|       g_input[9].u_feeder           | activation_feeder__parameterized0_16 |         70 |         70 |       0 |    0 |   11 |      0 |      1 |          0 |
+|         u_sram                      |                                 sram |         68 |         68 |       0 |    0 |    0 |      0 |      1 |          0 |
+|       g_output[0].u_accumulator     |                   output_accumulator |         83 |         83 |       0 |    0 |   41 |      0 |      1 |          0 |
+|       g_output[1].u_accumulator     |   output_accumulator__parameterized0 |        102 |        102 |       0 |    0 |   41 |      0 |      1 |          0 |
+|         u_sram                      |             sram__parameterized0_123 |         53 |         53 |       0 |    0 |    0 |      0 |      1 |          0 |
+|       g_output[2].u_accumulator     |   output_accumulator__parameterized1 |        107 |        107 |       0 |    0 |   41 |      0 |      1 |          0 |
+|         u_sram                      |             sram__parameterized0_122 |         58 |         58 |       0 |    0 |    0 |      0 |      1 |          0 |
+|       g_output[3].u_accumulator     |   output_accumulator__parameterized2 |         93 |         93 |       0 |    0 |   41 |      0 |      1 |          0 |
+|         (g_output[3].u_accumulator) |   output_accumulator__parameterized2 |         52 |         52 |       0 |    0 |   41 |      0 |      0 |          0 |
+|       g_output[4].u_accumulator     |   output_accumulator__parameterized3 |        100 |        100 |       0 |    0 |   41 |      0 |      1 |          0 |
+|         u_sram                      |             sram__parameterized0_120 |         52 |         52 |       0 |    0 |    0 |      0 |      1 |          0 |
+|       g_output[5].u_accumulator     |   output_accumulator__parameterized4 |         87 |         87 |       0 |    0 |   41 |      0 |      1 |          0 |
+|         (g_output[5].u_accumulator) |   output_accumulator__parameterized4 |         50 |         50 |       0 |    0 |   41 |      0 |      0 |          0 |
+|       g_output[6].u_accumulator     |   output_accumulator__parameterized5 |         90 |         90 |       0 |    0 |   41 |      0 |      1 |          0 |
+|         (g_output[6].u_accumulator) |   output_accumulator__parameterized5 |         50 |         50 |       0 |    0 |   41 |      0 |      0 |          0 |
+|       g_output[7].u_accumulator     |   output_accumulator__parameterized6 |         94 |         94 |       0 |    0 |   41 |      0 |      1 |          0 |
+|         (g_output[7].u_accumulator) |   output_accumulator__parameterized6 |         53 |         53 |       0 |    0 |   41 |      0 |      0 |          0 |
+|       g_output[8].u_accumulator     |   output_accumulator__parameterized7 |         76 |         76 |       0 |    0 |   41 |      0 |      1 |          0 |
+|       g_output[9].u_accumulator     |   output_accumulator__parameterized8 |         74 |         74 |       0 |    0 |   41 |      0 |      1 |          0 |
+|       u_agen                        |                      im2col_addr_gen |       1976 |       1976 |       0 |    0 |  959 |      0 |      0 |         12 |
+|         u_address                   |               linear_address_counter |       1975 |       1975 |       0 |    0 |  959 |      0 |      0 |         12 |
+|       u_array                       |                       systolic_array |       6052 |       6052 |       0 |    0 | 5440 |      0 |      0 |          0 |
+|         (u_array)                   |                       systolic_array |          0 |          0 |       0 |    0 |  260 |      0 |      0 |          0 |
+|         g_c[0].g_k[0].u_pe          |                                   PE |         55 |         55 |       0 |    0 |   48 |      0 |      0 |          0 |
+|         g_c[0].g_k[1].u_pe          |                                PE_17 |         60 |         60 |       0 |    0 |   48 |      0 |      0 |          0 |
+|         g_c[0].g_k[2].u_pe          |                                PE_18 |         60 |         60 |       0 |    0 |   48 |      0 |      0 |          0 |
+|         g_c[0].g_k[3].u_pe          |                                PE_19 |         60 |         60 |       0 |    0 |   48 |      0 |      0 |          0 |
+|         g_c[0].g_k[4].u_pe          |                                PE_20 |         60 |         60 |       0 |    0 |   48 |      0 |      0 |          0 |
+|         g_c[0].g_k[5].u_pe          |                                PE_21 |         60 |         60 |       0 |    0 |   48 |      0 |      0 |          0 |
+|         g_c[0].g_k[6].u_pe          |                                PE_22 |         60 |         60 |       0 |    0 |   48 |      0 |      0 |          0 |
+|         g_c[0].g_k[7].u_pe          |                                PE_23 |         60 |         60 |       0 |    0 |   48 |      0 |      0 |          0 |
+|         g_c[0].g_k[8].u_pe          |                                PE_24 |         60 |         60 |       0 |    0 |   48 |      0 |      0 |          0 |
+|         g_c[0].g_k[9].u_pe          |                                PE_25 |         59 |         59 |       0 |    0 |   40 |      0 |      0 |          0 |
+|         g_c[1].g_k[0].u_pe          |                                PE_26 |         71 |         71 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[1].g_k[1].u_pe          |                                PE_27 |         62 |         62 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[1].g_k[2].u_pe          |                                PE_28 |         62 |         62 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[1].g_k[3].u_pe          |                                PE_29 |         62 |         62 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[1].g_k[4].u_pe          |                                PE_30 |         62 |         62 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[1].g_k[5].u_pe          |                                PE_31 |         62 |         62 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[1].g_k[6].u_pe          |                                PE_32 |         62 |         62 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[1].g_k[7].u_pe          |                                PE_33 |         62 |         62 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[1].g_k[8].u_pe          |                                PE_34 |         62 |         62 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[1].g_k[9].u_pe          |                                PE_35 |         61 |         61 |       0 |    0 |   42 |      0 |      0 |          0 |
+|         g_c[2].g_k[0].u_pe          |                                PE_36 |         60 |         60 |       0 |    0 |   51 |      0 |      0 |          0 |
+|         g_c[2].g_k[1].u_pe          |                                PE_37 |         62 |         62 |       0 |    0 |   51 |      0 |      0 |          0 |
+|         g_c[2].g_k[2].u_pe          |                                PE_38 |         62 |         62 |       0 |    0 |   51 |      0 |      0 |          0 |
+|         g_c[2].g_k[3].u_pe          |                                PE_39 |         62 |         62 |       0 |    0 |   51 |      0 |      0 |          0 |
+|         g_c[2].g_k[4].u_pe          |                                PE_40 |         62 |         62 |       0 |    0 |   51 |      0 |      0 |          0 |
+|         g_c[2].g_k[5].u_pe          |                                PE_41 |         62 |         62 |       0 |    0 |   51 |      0 |      0 |          0 |
+|         g_c[2].g_k[6].u_pe          |                                PE_42 |         62 |         62 |       0 |    0 |   51 |      0 |      0 |          0 |
+|         g_c[2].g_k[7].u_pe          |                                PE_43 |         62 |         62 |       0 |    0 |   51 |      0 |      0 |          0 |
+|         g_c[2].g_k[8].u_pe          |                                PE_44 |         62 |         62 |       0 |    0 |   51 |      0 |      0 |          0 |
+|         g_c[2].g_k[9].u_pe          |                                PE_45 |         61 |         61 |       0 |    0 |   43 |      0 |      0 |          0 |
+|         g_c[3].g_k[0].u_pe          |                                PE_46 |         76 |         76 |       0 |    0 |   52 |      0 |      0 |          0 |
+|         g_c[3].g_k[1].u_pe          |                                PE_47 |         62 |         62 |       0 |    0 |   52 |      0 |      0 |          0 |
+|         g_c[3].g_k[2].u_pe          |                                PE_48 |         62 |         62 |       0 |    0 |   52 |      0 |      0 |          0 |
+|         g_c[3].g_k[3].u_pe          |                                PE_49 |         62 |         62 |       0 |    0 |   52 |      0 |      0 |          0 |
+|         g_c[3].g_k[4].u_pe          |                                PE_50 |         62 |         62 |       0 |    0 |   52 |      0 |      0 |          0 |
+|         g_c[3].g_k[5].u_pe          |                                PE_51 |         62 |         62 |       0 |    0 |   52 |      0 |      0 |          0 |
+|         g_c[3].g_k[6].u_pe          |                                PE_52 |         62 |         62 |       0 |    0 |   52 |      0 |      0 |          0 |
+|         g_c[3].g_k[7].u_pe          |                                PE_53 |         62 |         62 |       0 |    0 |   52 |      0 |      0 |          0 |
+|         g_c[3].g_k[8].u_pe          |                                PE_54 |         62 |         62 |       0 |    0 |   52 |      0 |      0 |          0 |
+|         g_c[3].g_k[9].u_pe          |                                PE_55 |         61 |         61 |       0 |    0 |   44 |      0 |      0 |          0 |
+|         g_c[4].g_k[0].u_pe          |                                PE_56 |         60 |         60 |       0 |    0 |   53 |      0 |      0 |          0 |
+|         g_c[4].g_k[1].u_pe          |                                PE_57 |         62 |         62 |       0 |    0 |   53 |      0 |      0 |          0 |
+|         g_c[4].g_k[2].u_pe          |                                PE_58 |         62 |         62 |       0 |    0 |   53 |      0 |      0 |          0 |
+|         g_c[4].g_k[3].u_pe          |                                PE_59 |         62 |         62 |       0 |    0 |   53 |      0 |      0 |          0 |
+|         g_c[4].g_k[4].u_pe          |                                PE_60 |         62 |         62 |       0 |    0 |   53 |      0 |      0 |          0 |
+|         g_c[4].g_k[5].u_pe          |                                PE_61 |         62 |         62 |       0 |    0 |   53 |      0 |      0 |          0 |
+|         g_c[4].g_k[6].u_pe          |                                PE_62 |         62 |         62 |       0 |    0 |   53 |      0 |      0 |          0 |
+|         g_c[4].g_k[7].u_pe          |                                PE_63 |         62 |         62 |       0 |    0 |   53 |      0 |      0 |          0 |
+|         g_c[4].g_k[8].u_pe          |                                PE_64 |         62 |         62 |       0 |    0 |   53 |      0 |      0 |          0 |
+|         g_c[4].g_k[9].u_pe          |                                PE_65 |         61 |         61 |       0 |    0 |   45 |      0 |      0 |          0 |
+|         g_c[5].g_k[0].u_pe          |                                PE_66 |         72 |         72 |       0 |    0 |   54 |      0 |      0 |          0 |
+|         g_c[5].g_k[1].u_pe          |                                PE_67 |         62 |         62 |       0 |    0 |   54 |      0 |      0 |          0 |
+|         g_c[5].g_k[2].u_pe          |                                PE_68 |         62 |         62 |       0 |    0 |   54 |      0 |      0 |          0 |
+|         g_c[5].g_k[3].u_pe          |                                PE_69 |         62 |         62 |       0 |    0 |   54 |      0 |      0 |          0 |
+|         g_c[5].g_k[4].u_pe          |                                PE_70 |         62 |         62 |       0 |    0 |   54 |      0 |      0 |          0 |
+|         g_c[5].g_k[5].u_pe          |                                PE_71 |         62 |         62 |       0 |    0 |   54 |      0 |      0 |          0 |
+|         g_c[5].g_k[6].u_pe          |                                PE_72 |         62 |         62 |       0 |    0 |   54 |      0 |      0 |          0 |
+|         g_c[5].g_k[7].u_pe          |                                PE_73 |         62 |         62 |       0 |    0 |   54 |      0 |      0 |          0 |
+|         g_c[5].g_k[8].u_pe          |                                PE_74 |         62 |         62 |       0 |    0 |   54 |      0 |      0 |          0 |
+|         g_c[5].g_k[9].u_pe          |                                PE_75 |         61 |         61 |       0 |    0 |   46 |      0 |      0 |          0 |
+|         g_c[6].g_k[0].u_pe          |                                PE_76 |         72 |         72 |       0 |    0 |   55 |      0 |      0 |          0 |
+|         g_c[6].g_k[1].u_pe          |                                PE_77 |         62 |         62 |       0 |    0 |   55 |      0 |      0 |          0 |
+|         g_c[6].g_k[2].u_pe          |                                PE_78 |         62 |         62 |       0 |    0 |   55 |      0 |      0 |          0 |
+|         g_c[6].g_k[3].u_pe          |                                PE_79 |         62 |         62 |       0 |    0 |   55 |      0 |      0 |          0 |
+|         g_c[6].g_k[4].u_pe          |                                PE_80 |         62 |         62 |       0 |    0 |   55 |      0 |      0 |          0 |
+|         g_c[6].g_k[5].u_pe          |                                PE_81 |         62 |         62 |       0 |    0 |   55 |      0 |      0 |          0 |
+|         g_c[6].g_k[6].u_pe          |                                PE_82 |         62 |         62 |       0 |    0 |   55 |      0 |      0 |          0 |
+|         g_c[6].g_k[7].u_pe          |                                PE_83 |         62 |         62 |       0 |    0 |   55 |      0 |      0 |          0 |
+|         g_c[6].g_k[8].u_pe          |                                PE_84 |         62 |         62 |       0 |    0 |   55 |      0 |      0 |          0 |
+|         g_c[6].g_k[9].u_pe          |                                PE_85 |         61 |         61 |       0 |    0 |   47 |      0 |      0 |          0 |
+|         g_c[7].g_k[0].u_pe          |                                PE_86 |         59 |         59 |       0 |    0 |   56 |      0 |      0 |          0 |
+|         g_c[7].g_k[1].u_pe          |                                PE_87 |         62 |         62 |       0 |    0 |   56 |      0 |      0 |          0 |
+|         g_c[7].g_k[2].u_pe          |                                PE_88 |         62 |         62 |       0 |    0 |   56 |      0 |      0 |          0 |
+|         g_c[7].g_k[3].u_pe          |                                PE_89 |         62 |         62 |       0 |    0 |   56 |      0 |      0 |          0 |
+|         g_c[7].g_k[4].u_pe          |                                PE_90 |         62 |         62 |       0 |    0 |   56 |      0 |      0 |          0 |
+|         g_c[7].g_k[5].u_pe          |                                PE_91 |         62 |         62 |       0 |    0 |   56 |      0 |      0 |          0 |
+|         g_c[7].g_k[6].u_pe          |                                PE_92 |         62 |         62 |       0 |    0 |   56 |      0 |      0 |          0 |
+|         g_c[7].g_k[7].u_pe          |                                PE_93 |         62 |         62 |       0 |    0 |   56 |      0 |      0 |          0 |
+|         g_c[7].g_k[8].u_pe          |                                PE_94 |         62 |         62 |       0 |    0 |   56 |      0 |      0 |          0 |
+|         g_c[7].g_k[9].u_pe          |                                PE_95 |         61 |         61 |       0 |    0 |   48 |      0 |      0 |          0 |
+|         g_c[8].g_k[0].u_pe          |                                PE_96 |         58 |         58 |       0 |    0 |   57 |      0 |      0 |          0 |
+|         g_c[8].g_k[1].u_pe          |                                PE_97 |         62 |         62 |       0 |    0 |   57 |      0 |      0 |          0 |
+|         g_c[8].g_k[2].u_pe          |                                PE_98 |         62 |         62 |       0 |    0 |   57 |      0 |      0 |          0 |
+|         g_c[8].g_k[3].u_pe          |                                PE_99 |         62 |         62 |       0 |    0 |   57 |      0 |      0 |          0 |
+|         g_c[8].g_k[4].u_pe          |                               PE_100 |         62 |         62 |       0 |    0 |   57 |      0 |      0 |          0 |
+|         g_c[8].g_k[5].u_pe          |                               PE_101 |         62 |         62 |       0 |    0 |   57 |      0 |      0 |          0 |
+|         g_c[8].g_k[6].u_pe          |                               PE_102 |         62 |         62 |       0 |    0 |   57 |      0 |      0 |          0 |
+|         g_c[8].g_k[7].u_pe          |                               PE_103 |         62 |         62 |       0 |    0 |   57 |      0 |      0 |          0 |
+|         g_c[8].g_k[8].u_pe          |                               PE_104 |         62 |         62 |       0 |    0 |   57 |      0 |      0 |          0 |
+|         g_c[8].g_k[9].u_pe          |                               PE_105 |         61 |         61 |       0 |    0 |   49 |      0 |      0 |          0 |
+|         g_c[9].g_k[0].u_pe          |                               PE_106 |         43 |         43 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[9].g_k[1].u_pe          |                               PE_107 |         48 |         48 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[9].g_k[2].u_pe          |                               PE_108 |         48 |         48 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[9].g_k[3].u_pe          |                               PE_109 |         48 |         48 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[9].g_k[4].u_pe          |                               PE_110 |         48 |         48 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[9].g_k[5].u_pe          |                               PE_111 |         48 |         48 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[9].g_k[6].u_pe          |                               PE_112 |         48 |         48 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[9].g_k[7].u_pe          |                               PE_113 |         48 |         48 |       0 |    0 |   50 |      0 |      0 |          0 |
+|         g_c[9].g_k[8].u_pe          |                               PE_114 |         48 |         48 |       0 |    0 |   50 |      0 |      0 |          0 |
+|     u_weight_loader                 |                        weight_loader |         99 |         99 |       0 |    0 |   87 |      0 |      0 |          0 |
+|   u_job_setup                       |                        setup_divider |        820 |        820 |       0 |    0 |  265 |      0 |      0 |          0 |
++-------------------------------------+--------------------------------------+------------+------------+---------+------+------+--------+--------+------------+
+
+

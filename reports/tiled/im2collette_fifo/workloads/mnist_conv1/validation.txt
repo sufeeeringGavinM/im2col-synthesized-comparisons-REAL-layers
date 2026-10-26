@@ -1,0 +1,18 @@
+## puts "NATIVE_SAIF_WINDOW start=$start_time end=$end_time"
+[POWER_WINDOW] start_ps: 3500000
+NATIVE_SAIF_WINDOW start=3500 ns end=121613500 ns
+[METRIC] Layer cycles (start accepted to final store done): 121610
+[METRIC] Backing reads: 16224; writes: 21632
+[TILED_CYCLES] planning=242 input_transfers=17472 kernel_transfers=14976 core_execution=45552 output_transfers=43264 tile_transitions=104 tiles=104 core_jobs=104 tap_jobs=0 signature=12b217e5e0546334
+[CORE_CYCLES] im2col=0 weights=1144 advances=43056 stalls=312 transitions=832 retries=0
+PASS: 21632 outputs matched for one completed layer
+NETLIST_PORT_CHECK_PASS known_bits=2390056
+## puts "NATIVE_SAIF_WINDOW start=$start_time end=$end_time"
+[POWER_WINDOW] start_ps: 3500000
+NATIVE_SAIF_WINDOW start=3500 ns end=121613500 ns
+[METRIC] Layer cycles (start accepted to final store done): 121610
+[METRIC] Backing reads: 16224; writes: 21632
+[TILED_CYCLES] planning=242 input_transfers=17472 kernel_transfers=14976 core_execution=45552 output_transfers=43264 tile_transitions=104 tiles=104 core_jobs=104 tap_jobs=0 signature=12b217e5e0546334
+[CORE_CYCLES] im2col=0 weights=1144 advances=43056 stalls=312 transitions=832 retries=0
+PASS: 21632 outputs matched for one completed layer
+NETLIST_PORT_CHECK_PASS known_bits=2390056

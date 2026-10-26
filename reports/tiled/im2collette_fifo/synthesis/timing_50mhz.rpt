@@ -1,0 +1,710 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026
+| Date         : Sun Oct 25 14:51:06 2026
+| Host         : root running 64-bit major release  (build 9200)
+| Command      : report_timing_summary -report_unconstrained -file timing_50mhz.rpt
+| Design       : conv_accelerator
+| Device       : 7a200t-fbg676
+| Speed File   : -2  PRODUCTION 1.23 2018-06-13
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Summary Report
+
+------------------------------------------------------------------------------------------------
+| Timer Settings
+| --------------
+------------------------------------------------------------------------------------------------
+
+  Enable Multi Corner Analysis               :  Yes
+  Enable Pessimism Removal                   :  Yes
+  Pessimism Removal Resolution               :  Nearest Common Node
+  Enable Input Delay Default Clock           :  No
+  Enable Preset / Clear Arcs                 :  No
+  Disable Flight Delays                      :  No
+  Ignore I/O Paths                           :  No
+  Timing Early Launch at Borrowing Latches   :  No
+  Borrow Time for Max Delay Exceptions       :  Yes
+  Merge Timing Exceptions                    :  Yes
+  Inter-SLR Compensation                     :  Conservative
+
+  Corner  Analyze    Analyze    
+  Name    Max Paths  Min Paths  
+  ------  ---------  ---------  
+  Slow    Yes        Yes        
+  Fast    Yes        Yes        
+
+
+------------------------------------------------------------------------------------------------
+| Report Methodology
+| ------------------
+------------------------------------------------------------------------------------------------
+
+No report available as report_methodology has not been run prior. Run report_methodology on the current design for the summary of methodology violations.
+
+
+
+check_timing report
+
+Table of Contents
+-----------------
+1. checking no_clock (0)
+2. checking constant_clock (0)
+3. checking pulse_width_clock (0)
+4. checking unconstrained_internal_endpoints (0)
+5. checking no_input_delay (0)
+6. checking no_output_delay (0)
+7. checking multiple_clock (0)
+8. checking generated_clocks (0)
+9. checking loops (0)
+10. checking partial_input_delay (0)
+11. checking partial_output_delay (0)
+12. checking latch_loops (0)
+
+1. checking no_clock (0)
+------------------------
+ There are 0 register/latch pins with no clock.
+
+
+2. checking constant_clock (0)
+------------------------------
+ There are 0 register/latch pins with constant_clock.
+
+
+3. checking pulse_width_clock (0)
+---------------------------------
+ There are 0 register/latch pins which need pulse_width check
+
+
+4. checking unconstrained_internal_endpoints (0)
+------------------------------------------------
+ There are 0 pins that are not constrained for maximum delay.
+
+ There are 0 pins that are not constrained for maximum delay due to constant clock.
+
+
+5. checking no_input_delay (0)
+------------------------------
+ There are 0 input ports with no input delay specified.
+
+ There are 0 input ports with no input delay but user has a false path constraint.
+
+
+6. checking no_output_delay (0)
+-------------------------------
+ There are 0 ports with no output delay specified.
+
+ There are 0 ports with no output delay but user has a false path constraint
+
+ There are 0 ports with no output delay but with a timing clock defined on it or propagating through it
+
+
+7. checking multiple_clock (0)
+------------------------------
+ There are 0 register/latch pins with multiple clocks.
+
+
+8. checking generated_clocks (0)
+--------------------------------
+ There are 0 generated clocks that are not connected to a clock source.
+
+
+9. checking loops (0)
+---------------------
+ There are 0 combinational loops in the design.
+
+
+10. checking partial_input_delay (0)
+------------------------------------
+ There are 0 input ports with partial input delay specified.
+
+
+11. checking partial_output_delay (0)
+-------------------------------------
+ There are 0 ports with partial output delay specified.
+
+
+12. checking latch_loops (0)
+----------------------------
+ There are 0 combinational latch loops in the design through latch input
+
+
+
+------------------------------------------------------------------------------------------------
+| Design Timing Summary
+| ---------------------
+------------------------------------------------------------------------------------------------
+
+    WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+    -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+     -9.409   -11250.484                   1845                49296        0.153        0.000                      0                49296        8.870        0.000                       0                 15477  
+
+
+Timing constraints are not met.
+
+
+------------------------------------------------------------------------------------------------
+| Clock Summary
+| -------------
+------------------------------------------------------------------------------------------------
+
+Clock  Waveform(ns)       Period(ns)      Frequency(MHz)
+-----  ------------       ----------      --------------
+clk    {0.000 10.000}     20.000          50.000          
+
+
+------------------------------------------------------------------------------------------------
+| Intra Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+-----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+clk                -9.409   -11250.484                   1845                49296        0.153        0.000                      0                49296        8.870        0.000                       0                 15477  
+
+
+------------------------------------------------------------------------------------------------
+| Inter Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
+----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Other Path Groups Table
+| -----------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
+----------    ----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| User Ignored Path Table
+| -----------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock    
+----------    ----------    --------    
+
+
+------------------------------------------------------------------------------------------------
+| Unconstrained Path Table
+| ------------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock    
+----------    ----------    --------    
+(none)                      clk           
+
+
+------------------------------------------------------------------------------------------------
+| Timing Details
+| --------------
+------------------------------------------------------------------------------------------------
+
+
+---------------------------------------------------------------------------------------------------
+From Clock:  clk
+  To Clock:  clk
+
+Setup :         1845  Failing Endpoints,  Worst Slack       -9.409ns,  Total Violation   -11250.484ns
+Hold  :            0  Failing Endpoints,  Worst Slack        0.153ns,  Total Violation        0.000ns
+PW    :            0  Failing Endpoints,  Worst Slack        8.870ns,  Total Violation        0.000ns
+---------------------------------------------------------------------------------------------------
+
+
+Max Delay Paths
+--------------------------------------------------------------------------------------
+Slack (VIOLATED) :        -9.409ns  (required time - arrival time)
+  Source:                 u_core/u_mmu/output_pixels0__0/CLK
+                            (rising edge-triggered cell DSP48E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/mem_reg/ADDRARDADDR[10]
+                            (rising edge-triggered cell RAMB36E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        28.844ns  (logic 17.060ns (59.145%)  route 11.784ns (40.855%))
+  Logic Levels:           54  (CARRY4=33 DSP48E1=2 LUT2=5 LUT3=1 LUT4=2 LUT5=2 LUT6=9)
+  Clock Path Skew:        -0.039ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.748ns = ( 20.748 - 20.000 ) 
+    Source Clock Delay      (SCD):    0.787ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=15530, unset)        0.787     0.787    u_core/u_mmu/clk
+                         DSP48E1                                      r  u_core/u_mmu/output_pixels0__0/CLK
+  -------------------------------------------------------------------    -------------------
+                         DSP48E1 (Prop_dsp48e1_CLK_PCOUT[47])
+                                                      3.380     4.167 r  u_core/u_mmu/output_pixels0__0/PCOUT[47]
+                         net (fo=1, unplaced)         0.055     4.222    u_core/u_mmu/output_pixels0__0_n_106
+                         DSP48E1 (Prop_dsp48e1_PCIN[47]_P[0])
+                                                      1.271     5.493 r  u_core/u_mmu/output_pixels0__1/P[0]
+                         net (fo=2, unplaced)         0.646     6.139    u_core/u_mmu/output_pixels0__1_n_105
+                         LUT2 (Prop_lut2_I0_O)        0.105     6.244 r  u_core/u_mmu/output_pixels__0_i_27/O
+                         net (fo=1, unplaced)         0.000     6.244    u_core/u_mmu/output_pixels__0_i_27_n_0
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.444     6.688 r  u_core/u_mmu/output_pixels__0_i_18/CO[3]
+                         net (fo=1, unplaced)         0.008     6.696    u_core/u_mmu/output_pixels__0_i_18_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100     6.796 r  u_core/u_mmu/output_pixels_i_3/CO[3]
+                         net (fo=1, unplaced)         0.000     6.796    u_core/u_mmu/output_pixels_i_3_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100     6.896 r  u_core/u_mmu/output_pixels_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000     6.896    u_core/u_mmu/output_pixels_i_2_n_0
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.277     7.173 r  u_core/u_mmu/output_pixels_i_1/O[3]
+                         net (fo=1, unplaced)         0.646     7.818    u_core/u_mmu/output_pixels_i_1_n_4
+                         DSP48E1 (Prop_dsp48e1_A[14]_P[0])
+                                                      3.382    11.200 r  u_core/u_mmu/output_pixels/P[0]
+                         net (fo=1, unplaced)         0.646    11.846    u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__2_i_9_1[0]
+                         LUT2 (Prop_lut2_I1_O)        0.105    11.951 r  u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_17/O
+                         net (fo=1, unplaced)         0.000    11.951    u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_17_n_0
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.444    12.395 r  u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_10/CO[3]
+                         net (fo=1, unplaced)         0.008    12.403    u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_10_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    12.503 r  u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    12.503    u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_9_n_0
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.277    12.780 r  u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__2_i_10/O[3]
+                         net (fo=32, unplaced)        0.590    13.370    u_core/u_mmu/u_agen/u_address/output_pixels__2__0[11]
+                         LUT2 (Prop_lut2_I0_O)        0.250    13.620 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_18/O
+                         net (fo=1, unplaced)         0.000    13.620    u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_18_n_0
+                         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.314    13.934 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_8/CO[3]
+                         net (fo=1, unplaced)         0.000    13.934    u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_8_n_0
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.269    14.203 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_17/O[1]
+                         net (fo=1, unplaced)         0.472    14.675    u_core/u_mmu/u_agen/u_address/packet_count2[29]
+                         LUT4 (Prop_lut4_I0_O)        0.245    14.920 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_7/O
+                         net (fo=1, unplaced)         0.347    15.267    u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_7_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.105    15.372 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_4/O
+                         net (fo=11, unplaced)        0.393    15.765    u_core/u_mmu/u_agen/u_address/output_pixels__0_0
+                         LUT6 (Prop_lut6_I5_O)        0.105    15.870 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_66_67__0_i_3/O
+                         net (fo=3, unplaced)         0.365    16.235    u_core/u_mmu/u_agen/u_address/output_pixels__0
+                         LUT4 (Prop_lut4_I3_O)        0.105    16.340 r  u_core/u_mmu/u_agen/u_address/producer_position[0]_i_137/O
+                         net (fo=1, unplaced)         0.000    16.340    u_core/u_mmu/u_agen/u_address/producer_position[0]_i_137_n_0
+                         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.314    16.654 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_122/CO[3]
+                         net (fo=1, unplaced)         0.008    16.662    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_122_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    16.762 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_121/CO[3]
+                         net (fo=1, unplaced)         0.000    16.762    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_121_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    16.862 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_120/CO[3]
+                         net (fo=1, unplaced)         0.000    16.862    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_120_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    16.962 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_89/CO[3]
+                         net (fo=1, unplaced)         0.000    16.962    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_89_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    17.062 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_88/CO[3]
+                         net (fo=1, unplaced)         0.000    17.062    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_88_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    17.162 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_87/CO[3]
+                         net (fo=1, unplaced)         0.000    17.162    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_87_n_0
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.277    17.439 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_52/O[3]
+                         net (fo=1, unplaced)         0.476    17.915    u_core/u_mmu/u_agen/u_address/producer_position0[27]
+                         LUT6 (Prop_lut6_I4_O)        0.250    18.165 r  u_core/u_mmu/u_agen/u_address/producer_position[0]_i_19/O
+                         net (fo=1, unplaced)         0.000    18.165    u_core/u_mmu/u_agen/u_address/producer_position[0]_i_19_n_0
+                         CARRY4 (Prop_carry4_S[1]_CO[2])
+                                                      0.477    18.642 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_5/CO[2]
+                         net (fo=7, unplaced)         0.384    19.026    u_core/u_mmu/g_c_lanes[5].u_bank/u_feed_lane/u_lowered_fifo/CO[0]
+                         LUT5 (Prop_lut5_I4_O)        0.252    19.278 r  u_core/u_mmu/g_c_lanes[5].u_bank/u_feed_lane/u_lowered_fifo/g_position[3].current_h[3][63]_i_2/O
+                         net (fo=882, unplaced)       0.487    19.765    u_core/u_mmu/u_agen/u_address/g_position[3].current_h_reg[3][63]_0
+                         LUT6 (Prop_lut6_I1_O)        0.105    19.870 r  u_core/u_mmu/u_agen/u_address/packet_values[4][7]_i_339/O
+                         net (fo=2, unplaced)         0.548    20.418    u_core/u_mmu/u_agen/u_address/packet_values[4][7]_i_339_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.430    20.848 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_302/CO[3]
+                         net (fo=1, unplaced)         0.008    20.856    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_302_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    20.956 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_301/CO[3]
+                         net (fo=1, unplaced)         0.000    20.956    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_301_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    21.056 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_266/CO[3]
+                         net (fo=1, unplaced)         0.000    21.056    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_266_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    21.156 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_265/CO[3]
+                         net (fo=1, unplaced)         0.000    21.156    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_265_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    21.256 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_221/CO[3]
+                         net (fo=1, unplaced)         0.000    21.256    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_221_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    21.356 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_220/CO[3]
+                         net (fo=1, unplaced)         0.000    21.356    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_220_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    21.456 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_175/CO[3]
+                         net (fo=1, unplaced)         0.000    21.456    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_175_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    21.556 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_174/CO[3]
+                         net (fo=1, unplaced)         0.000    21.556    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_174_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    21.656 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_129/CO[3]
+                         net (fo=1, unplaced)         0.000    21.656    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_129_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    21.756 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_128/CO[3]
+                         net (fo=1, unplaced)         0.000    21.756    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_128_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    21.856 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_99/CO[3]
+                         net (fo=1, unplaced)         0.000    21.856    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_99_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    21.956 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_98/CO[3]
+                         net (fo=1, unplaced)         0.000    21.956    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_98_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    22.056 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_74/CO[3]
+                         net (fo=1, unplaced)         0.000    22.056    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_74_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    22.156 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_54/CO[3]
+                         net (fo=1, unplaced)         0.000    22.156    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_54_n_0
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.269    22.425 f  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_31/O[1]
+                         net (fo=1, unplaced)         0.472    22.897    u_core/u_mmu/u_agen/u_address/g_position[4].h__0[57]
+                         LUT2 (Prop_lut2_I0_O)        0.245    23.142 r  u_core/u_mmu/u_agen/u_address/packet_values[4][7]_i_25/O
+                         net (fo=1, unplaced)         0.000    23.142    u_core/u_mmu/u_agen/u_address/packet_values[4][7]_i_25_n_0
+                         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.423    23.565 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_9/CO[3]
+                         net (fo=1, unplaced)         0.770    24.335    u_core/u_mmu/u_agen/u_address/valid_42
+                         LUT6 (Prop_lut6_I2_O)        0.105    24.440 r  u_core/u_mmu/u_agen/u_address/packet_values[4][7]_i_4__0/O
+                         net (fo=97, unplaced)        0.446    24.886    u_core/u_mmu/u_agen/u_address/initialized_reg_243
+                         LUT5 (Prop_lut5_I4_O)        0.105    24.991 f  u_core/u_mmu/u_agen/u_address/filled[4]_i_8/O
+                         net (fo=1, unplaced)         0.347    25.338    u_core/u_mmu/u_agen/u_address/filled[4]_i_8_n_0
+                         LUT6 (Prop_lut6_I5_O)        0.105    25.443 f  u_core/u_mmu/u_agen/u_address/filled[4]_i_6/O
+                         net (fo=1, unplaced)         0.347    25.790    u_core/u_mmu/u_agen/u_address/filled[4]_i_6_n_0
+                         LUT6 (Prop_lut6_I5_O)        0.105    25.895 r  u_core/u_mmu/u_agen/u_address/filled[4]_i_3/O
+                         net (fo=5, unplaced)         0.375    26.270    u_core/u_mmu/u_agen/u_address/filled[4]_i_3_n_0
+                         LUT2 (Prop_lut2_I1_O)        0.105    26.375 f  u_core/u_mmu/u_agen/u_address/waiting_i_21/O
+                         net (fo=4, unplaced)         0.962    27.337    u_core/u_mmu/u_agen/u_address/waiting_i_21_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.105    27.442 f  u_core/u_mmu/u_agen/u_address/waiting_i_6/O
+                         net (fo=2, unplaced)         0.358    27.800    u_core/u_mmu/u_agen/u_address/waiting_i_6_n_0
+                         LUT3 (Prop_lut3_I2_O)        0.105    27.905 r  u_core/u_mmu/u_agen/u_address/pending_addr[7]_i_7/O
+                         net (fo=8, unplaced)         0.976    28.881    u_core/u_mmu/u_agen/u_address/pending_addr[7]_i_7_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.105    28.986 r  u_core/u_mmu/u_agen/u_address/pending_addr[4]_i_1/O
+                         net (fo=11, unplaced)        0.646    29.631    u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/ADDRARDADDR[4]
+                         RAMB36E1                                     r  u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/mem_reg/ADDRARDADDR[10]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                                                      0.000    20.000 r  clk
+                         net (fo=15530, unset)        0.748    20.748    u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/clk
+                         RAMB36E1                                     r  u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/mem_reg/CLKARDCLK
+                         clock pessimism              0.000    20.748    <hidden>
+                         clock uncertainty           -0.035    20.712    <hidden>
+                         RAMB36E1 (Setup_ramb36e1_CLKARDCLK_ADDRARDADDR[10])
+                                                     -0.490    20.222    u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/mem_reg
+  -------------------------------------------------------------------
+                         required time                         20.222    <hidden>
+                         arrival time                         -29.631    <hidden>
+  -------------------------------------------------------------------
+                         slack                                 -9.409    <hidden>
+
+
+
+
+
+Min Delay Paths
+--------------------------------------------------------------------------------------
+Slack (MET) :             0.153ns  (arrival time - required time)
+  Source:                 u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/packet_values_reg[0][0]/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/u_lowered_fifo/mem_reg_0_1_0_5/RAMA/I
+                            (rising edge-triggered cell RAMD32 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Hold (Min at Fast Process Corner)
+  Requirement:            0.000ns  (clk rise@0.000ns - clk rise@0.000ns)
+  Data Path Delay:        0.268ns  (logic 0.141ns (52.621%)  route 0.127ns (47.379%))
+  Logic Levels:           0  
+  Clock Path Skew:        0.021ns (DCD - SCD - CPR)
+    Destination Clock Delay (DCD):    0.411ns
+    Source Clock Delay      (SCD):    0.390ns
+    Clock Pessimism Removal (CPR):    -0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=15530, unset)        0.390     0.390    u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/clk
+                         FDRE                                         r  u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/packet_values_reg[0][0]/C
+  -------------------------------------------------------------------    -------------------
+                         FDRE (Prop_fdre_C_Q)         0.141     0.531 r  u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/packet_values_reg[0][0]/Q
+                         net (fo=1, unplaced)         0.127     0.658    u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/u_lowered_fifo/mem_reg_0_1_0_5/DIA0
+                         RAMD32                                       r  u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/u_lowered_fifo/mem_reg_0_1_0_5/RAMA/I
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=15530, unset)        0.411     0.411    u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/u_lowered_fifo/mem_reg_0_1_0_5/WCLK
+                         RAMD32                                       r  u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/u_lowered_fifo/mem_reg_0_1_0_5/RAMA/CLK
+                         clock pessimism              0.000     0.411    <hidden>
+                         RAMD32 (Hold_ramd32_CLK_I)
+                                                      0.094     0.505    u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/u_lowered_fifo/mem_reg_0_1_0_5/RAMA
+  -------------------------------------------------------------------
+                         required time                         -0.505    <hidden>
+                         arrival time                           0.658    <hidden>
+  -------------------------------------------------------------------
+                         slack                                  0.153    <hidden>
+
+
+
+
+
+Pulse Width Checks
+--------------------------------------------------------------------------------------
+Clock Name:         clk
+Waveform(ns):       { 0.000 10.000 }
+Period(ns):         20.000
+Sources:            { clk }
+
+Check Type        Corner  Lib Pin      Reference Pin  Required(ns)  Actual(ns)  Slack(ns)  Location  Pin
+Min Period        n/a     DSP48E1/CLK  n/a            3.272         20.000      16.728               kernel_channel_pitch_reg/CLK
+Low Pulse Width   Slow    RAMD32/CLK   n/a            1.130         10.000      8.870                u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/u_lowered_fifo/mem_reg_0_1_0_5/RAMA/CLK
+High Pulse Width  Slow    RAMD32/CLK   n/a            1.130         10.000      8.870                u_core/u_mmu/g_c_lanes[0].u_bank/u_feed_lane/u_lowered_fifo/mem_reg_0_1_0_5/RAMA/CLK
+
+
+
+--------------------------------------------------------------------------------------
+Path Group:  (none)
+From Clock:  
+  To Clock:  clk
+
+Max Delay         10411 Endpoints
+Min Delay         10411 Endpoints
+--------------------------------------------------------------------------------------
+
+
+Max Delay Paths
+--------------------------------------------------------------------------------------
+Slack:                    inf
+  Source:                 u_core/u_mmu/output_pixels0__0/ACOUT[29]
+                            (internal pin)
+  Destination:            u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/mem_reg/ADDRARDADDR[10]
+                            (rising edge-triggered cell RAMB36E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             (none)
+  Path Type:              Setup (Max at Slow Process Corner)
+  Data Path Delay:        27.243ns  (logic 15.459ns (56.744%)  route 11.784ns (43.256%))
+  Logic Levels:           54  (CARRY4=33 DSP48E1=2 LUT2=5 LUT3=1 LUT4=2 LUT5=2 LUT6=9)
+  Clock Uncertainty:      0.025ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         DSP48E1                      0.000     0.000 r  u_core/u_mmu/output_pixels0__0/ACOUT[29]
+                         net (fo=1, unplaced)         0.055     0.055    u_core/u_mmu/output_pixels0__0_n_24
+                         DSP48E1 (Prop_dsp48e1_ACIN[29]_P[0])
+                                                      3.050     3.105 r  u_core/u_mmu/output_pixels0__1/P[0]
+                         net (fo=2, unplaced)         0.646     3.751    u_core/u_mmu/output_pixels0__1_n_105
+                         LUT2 (Prop_lut2_I0_O)        0.105     3.856 r  u_core/u_mmu/output_pixels__0_i_27/O
+                         net (fo=1, unplaced)         0.000     3.856    u_core/u_mmu/output_pixels__0_i_27_n_0
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.444     4.300 r  u_core/u_mmu/output_pixels__0_i_18/CO[3]
+                         net (fo=1, unplaced)         0.008     4.308    u_core/u_mmu/output_pixels__0_i_18_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100     4.408 r  u_core/u_mmu/output_pixels_i_3/CO[3]
+                         net (fo=1, unplaced)         0.000     4.408    u_core/u_mmu/output_pixels_i_3_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100     4.508 r  u_core/u_mmu/output_pixels_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000     4.508    u_core/u_mmu/output_pixels_i_2_n_0
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.277     4.785 r  u_core/u_mmu/output_pixels_i_1/O[3]
+                         net (fo=1, unplaced)         0.646     5.430    u_core/u_mmu/output_pixels_i_1_n_4
+                         DSP48E1 (Prop_dsp48e1_A[14]_P[0])
+                                                      3.382     8.812 r  u_core/u_mmu/output_pixels/P[0]
+                         net (fo=1, unplaced)         0.646     9.458    u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__2_i_9_1[0]
+                         LUT2 (Prop_lut2_I1_O)        0.105     9.563 r  u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_17/O
+                         net (fo=1, unplaced)         0.000     9.563    u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_17_n_0
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.444    10.007 r  u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_10/CO[3]
+                         net (fo=1, unplaced)         0.008    10.015    u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_10_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    10.115 r  u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    10.115    u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__1_i_9_n_0
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.277    10.392 r  u_core/u_mmu/g_c_lanes[7].u_bank/u_output_sram/wb_valid0_carry__2_i_10/O[3]
+                         net (fo=32, unplaced)        0.590    10.982    u_core/u_mmu/u_agen/u_address/output_pixels__2__0[11]
+                         LUT2 (Prop_lut2_I0_O)        0.250    11.232 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_18/O
+                         net (fo=1, unplaced)         0.000    11.232    u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_18_n_0
+                         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.314    11.546 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_8/CO[3]
+                         net (fo=1, unplaced)         0.000    11.546    u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_8_n_0
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.269    11.815 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_17/O[1]
+                         net (fo=1, unplaced)         0.472    12.287    u_core/u_mmu/u_agen/u_address/packet_count2[29]
+                         LUT4 (Prop_lut4_I0_O)        0.245    12.532 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_7/O
+                         net (fo=1, unplaced)         0.347    12.879    u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_7_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.105    12.984 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_60_65_i_4/O
+                         net (fo=11, unplaced)        0.393    13.377    u_core/u_mmu/u_agen/u_address/output_pixels__0_0
+                         LUT6 (Prop_lut6_I5_O)        0.105    13.482 r  u_core/u_mmu/u_agen/u_address/mem_reg_0_1_66_67__0_i_3/O
+                         net (fo=3, unplaced)         0.365    13.847    u_core/u_mmu/u_agen/u_address/output_pixels__0
+                         LUT4 (Prop_lut4_I3_O)        0.105    13.952 r  u_core/u_mmu/u_agen/u_address/producer_position[0]_i_137/O
+                         net (fo=1, unplaced)         0.000    13.952    u_core/u_mmu/u_agen/u_address/producer_position[0]_i_137_n_0
+                         CARRY4 (Prop_carry4_S[3]_CO[3])
+                                                      0.314    14.266 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_122/CO[3]
+                         net (fo=1, unplaced)         0.008    14.274    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_122_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    14.374 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_121/CO[3]
+                         net (fo=1, unplaced)         0.000    14.374    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_121_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    14.474 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_120/CO[3]
+                         net (fo=1, unplaced)         0.000    14.474    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_120_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    14.574 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_89/CO[3]
+                         net (fo=1, unplaced)         0.000    14.574    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_89_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    14.674 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_88/CO[3]
+                         net (fo=1, unplaced)         0.000    14.674    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_88_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    14.774 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_87/CO[3]
+                         net (fo=1, unplaced)         0.000    14.774    u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_87_n_0
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.277    15.051 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_52/O[3]
+                         net (fo=1, unplaced)         0.476    15.527    u_core/u_mmu/u_agen/u_address/producer_position0[27]
+                         LUT6 (Prop_lut6_I4_O)        0.250    15.777 r  u_core/u_mmu/u_agen/u_address/producer_position[0]_i_19/O
+                         net (fo=1, unplaced)         0.000    15.777    u_core/u_mmu/u_agen/u_address/producer_position[0]_i_19_n_0
+                         CARRY4 (Prop_carry4_S[1]_CO[2])
+                                                      0.477    16.254 r  u_core/u_mmu/u_agen/u_address/producer_position_reg[0]_i_5/CO[2]
+                         net (fo=7, unplaced)         0.384    16.638    u_core/u_mmu/g_c_lanes[5].u_bank/u_feed_lane/u_lowered_fifo/CO[0]
+                         LUT5 (Prop_lut5_I4_O)        0.252    16.890 r  u_core/u_mmu/g_c_lanes[5].u_bank/u_feed_lane/u_lowered_fifo/g_position[3].current_h[3][63]_i_2/O
+                         net (fo=882, unplaced)       0.487    17.377    u_core/u_mmu/u_agen/u_address/g_position[3].current_h_reg[3][63]_0
+                         LUT6 (Prop_lut6_I1_O)        0.105    17.482 r  u_core/u_mmu/u_agen/u_address/packet_values[4][7]_i_339/O
+                         net (fo=2, unplaced)         0.548    18.030    u_core/u_mmu/u_agen/u_address/packet_values[4][7]_i_339_n_0
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.430    18.460 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_302/CO[3]
+                         net (fo=1, unplaced)         0.008    18.468    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_302_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.568 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_301/CO[3]
+                         net (fo=1, unplaced)         0.000    18.568    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_301_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.668 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_266/CO[3]
+                         net (fo=1, unplaced)         0.000    18.668    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_266_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.768 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_265/CO[3]
+                         net (fo=1, unplaced)         0.000    18.768    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_265_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.868 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_221/CO[3]
+                         net (fo=1, unplaced)         0.000    18.868    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_221_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    18.968 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_220/CO[3]
+                         net (fo=1, unplaced)         0.000    18.968    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_220_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    19.068 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_175/CO[3]
+                         net (fo=1, unplaced)         0.000    19.068    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_175_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    19.168 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_174/CO[3]
+                         net (fo=1, unplaced)         0.000    19.168    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_174_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    19.268 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_129/CO[3]
+                         net (fo=1, unplaced)         0.000    19.268    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_129_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    19.368 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_128/CO[3]
+                         net (fo=1, unplaced)         0.000    19.368    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_128_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    19.468 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_99/CO[3]
+                         net (fo=1, unplaced)         0.000    19.468    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_99_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    19.568 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_98/CO[3]
+                         net (fo=1, unplaced)         0.000    19.568    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_98_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    19.668 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_74/CO[3]
+                         net (fo=1, unplaced)         0.000    19.668    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_74_n_0
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.100    19.768 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_54/CO[3]
+                         net (fo=1, unplaced)         0.000    19.768    u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_54_n_0
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.269    20.037 f  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_31/O[1]
+                         net (fo=1, unplaced)         0.472    20.509    u_core/u_mmu/u_agen/u_address/g_position[4].h__0[57]
+                         LUT2 (Prop_lut2_I0_O)        0.245    20.754 r  u_core/u_mmu/u_agen/u_address/packet_values[4][7]_i_25/O
+                         net (fo=1, unplaced)         0.000    20.754    u_core/u_mmu/u_agen/u_address/packet_values[4][7]_i_25_n_0
+                         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.423    21.177 r  u_core/u_mmu/u_agen/u_address/packet_values_reg[4][7]_i_9/CO[3]
+                         net (fo=1, unplaced)         0.770    21.947    u_core/u_mmu/u_agen/u_address/valid_42
+                         LUT6 (Prop_lut6_I2_O)        0.105    22.052 r  u_core/u_mmu/u_agen/u_address/packet_values[4][7]_i_4__0/O
+                         net (fo=97, unplaced)        0.446    22.498    u_core/u_mmu/u_agen/u_address/initialized_reg_243
+                         LUT5 (Prop_lut5_I4_O)        0.105    22.603 f  u_core/u_mmu/u_agen/u_address/filled[4]_i_8/O
+                         net (fo=1, unplaced)         0.347    22.950    u_core/u_mmu/u_agen/u_address/filled[4]_i_8_n_0
+                         LUT6 (Prop_lut6_I5_O)        0.105    23.055 f  u_core/u_mmu/u_agen/u_address/filled[4]_i_6/O
+                         net (fo=1, unplaced)         0.347    23.402    u_core/u_mmu/u_agen/u_address/filled[4]_i_6_n_0
+                         LUT6 (Prop_lut6_I5_O)        0.105    23.507 r  u_core/u_mmu/u_agen/u_address/filled[4]_i_3/O
+                         net (fo=5, unplaced)         0.375    23.882    u_core/u_mmu/u_agen/u_address/filled[4]_i_3_n_0
+                         LUT2 (Prop_lut2_I1_O)        0.105    23.987 f  u_core/u_mmu/u_agen/u_address/waiting_i_21/O
+                         net (fo=4, unplaced)         0.962    24.949    u_core/u_mmu/u_agen/u_address/waiting_i_21_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.105    25.054 f  u_core/u_mmu/u_agen/u_address/waiting_i_6/O
+                         net (fo=2, unplaced)         0.358    25.412    u_core/u_mmu/u_agen/u_address/waiting_i_6_n_0
+                         LUT3 (Prop_lut3_I2_O)        0.105    25.517 r  u_core/u_mmu/u_agen/u_address/pending_addr[7]_i_7/O
+                         net (fo=8, unplaced)         0.976    26.493    u_core/u_mmu/u_agen/u_address/pending_addr[7]_i_7_n_0
+                         LUT6 (Prop_lut6_I1_O)        0.105    26.598 r  u_core/u_mmu/u_agen/u_address/pending_addr[4]_i_1/O
+                         net (fo=11, unplaced)        0.646    27.243    u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/ADDRARDADDR[4]
+                         RAMB36E1                                     r  u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/mem_reg/ADDRARDADDR[10]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=15530, unset)        0.748     0.748    u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/clk
+                         RAMB36E1                                     r  u_core/u_mmu/g_c_lanes[0].u_bank/u_input_sram/mem_reg/CLKARDCLK
+
+
+
+
+
+Min Delay Paths
+--------------------------------------------------------------------------------------
+Slack:                    inf
+  Source:                 u_core/u_controller/run_cycles0__0/ACOUT[29]
+                            (internal pin)
+  Destination:            u_core/u_controller/run_count_reg[0]/D
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             (none)
+  Path Type:              Hold (Min at Fast Process Corner)
+  Data Path Delay:        2.114ns  (logic 1.175ns (55.581%)  route 0.939ns (44.419%))
+  Logic Levels:           6  (CARRY4=3 DSP48E1=1 LUT4=1 LUT6=1)
+  Clock Uncertainty:      0.025ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.050ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         DSP48E1                      0.000     0.000 r  u_core/u_controller/run_cycles0__0/ACOUT[29]
+                         net (fo=1, unplaced)         0.027     0.027    u_core/u_controller/run_cycles0__0_n_24
+                         DSP48E1 (Prop_dsp48e1_ACIN[29]_P[8])
+                                                      0.521     0.548 r  u_core/u_controller/run_cycles0__1/P[8]
+                         net (fo=2, unplaced)         0.320     0.868    u_core/u_controller/run_cycles0__1_n_97
+                         CARRY4 (Prop_carry4_DI[1]_O[2])
+                                                      0.108     0.976 r  u_core/u_controller/run_cycles0_carry__1/O[2]
+                         net (fo=1, unplaced)         0.263     1.240    u_core/u_controller/run_cycles0_carry__1_n_5
+                         CARRY4 (Prop_carry4_S[1]_O[1])
+                                                      0.174     1.414 r  u_core/u_controller/state1_carry__5/O[1]
+                         net (fo=1, unplaced)         0.119     1.533    u_core/u_controller/state1[26]
+                         LUT6 (Prop_lut6_I5_O)        0.108     1.641 r  u_core/u_controller/state0_carry__1_i_3/O
+                         net (fo=1, unplaced)         0.000     1.641    u_core/u_controller/state0_carry__1_i_3_n_0
+                         CARRY4 (Prop_carry4_S[0]_CO[2])
+                                                      0.154     1.795 f  u_core/u_controller/state0_carry__1/CO[2]
+                         net (fo=34, unplaced)        0.209     2.004    u_core/u_controller/state0
+                         LUT4 (Prop_lut4_I1_O)        0.110     2.114 r  u_core/u_controller/run_count[0]_i_1/O
+                         net (fo=1, unplaced)         0.000     2.114    u_core/u_controller/run_count[0]
+                         FDRE                                         r  u_core/u_controller/run_count_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=15530, unset)        0.411     0.411    u_core/u_controller/clk
+                         FDRE                                         r  u_core/u_controller/run_count_reg[0]/C
+
+
+
+
+

@@ -1,0 +1,15 @@
+Recorded report_config_flows output from the completed Vivado synthesis log.
+# report_config_flows
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026
+| Date         : Sun Oct 25 14:01:00 2026
+| Host         : root running 64-bit major release  (build 9200)
+| Command      : report_config_flows
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Config Flows Configurations
+
+Option      Allowable Values                   Value   Default  Type    Description
+mark_debug  enable | disable | synthesis_only  enable  enable   string  Allows nets with MARK_DEBUG to be optimized instead of preserved
+# puts STRATEGY_CONFIGURATION_END

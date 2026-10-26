@@ -1,0 +1,16 @@
+{
+  "activation_feeder.v": "6edfd9aabe9478ffc94b89fafeb2f4e8e659b4eec99ca8ddf3475686cace316a",
+  "conv_accelerator.v": "379e51418f1c9e23d8a041de85f2dea760be9c71b46ea01cf0df22c4bd3ef95f",
+  "conv_controller.v": "7ccff718bd1c0d30413d49bdd0381198107575178e6c6413065b67f4d7cda4bc",
+  "conv_core.v": "4bf5ce8e650f3da79b78cf898febc4fcd9f56a1b1b309b2ce6e189ac62a8f017",
+  "conv_datapath.v": "04f6779fcb206b81abf8a4ae9cb57abfda2af360ea54d652fc6b867fe7ced417",
+  "im2col_addr_gen.v": "cf6c0b384e0d602ed479d33f1998195550df98d83f92c674c575b6673c89daff",
+  "kernel_bank.v": "1fade0989bcfdd0c739f02968d849b41e79f21b17c641f37fd1629e50be4e6fd",
+  "linear_address_counter.v": "d054b1c7fee8fde0b8e16d3f60151b6b38620f3c0a57e3cee5d8f35ba8171894",
+  "output_accumulator.v": "5c748dd5c4ee58a20953bf843a6fec92eac8e2bcab7ec2e73198bb318dc7e1ef",
+  "PE.v": "925f281472c7f03a801e1e81199460cf4f0f402ba83320c83a7141f3b39001fb",
+  "setup_divider.v": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d",
+  "sram.v": "1b3c394717a91b787792776ce0bb2ed795e85fe411dcfbe919bf4560cd9d945e",
+  "systolic_array.v": "0ad220bf3abf69c754282868a24b34ab99a22d2262e3a8a8bc13769f1e005da1",
+  "weight_loader.v": "5f9861249d5ad5350433ec86fd540b2380ee6f2a6198be35107a2f7fb383aa14"
+}

@@ -1,0 +1,155 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026
+| Date         : Sun Oct 25 14:16:32 2026
+| Host         : root running 64-bit major release  (build 9200)
+| Command      : report_utilization -hierarchical -file utilization_hierarchy.rpt
+| Design       : conv_accelerator
+| Device       : xc7a200tfbg676-2
+| Speed File   : -2
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Utilization Design Information
+
+Table of Contents
+-----------------
+1. Utilization by Hierarchy
+
+1. Utilization by Hierarchy
+---------------------------
+
++-----------------------------+------------------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+|           Instance          |               Module               | Total LUTs | Logic LUTs | LUTRAMs | SRLs |  FFs  | RAMB36 | RAMB18 | DSP Blocks |
++-----------------------------+------------------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+| conv_accelerator            |                              (top) |      21540 |      21540 |       0 |    0 | 11412 |    160 |     30 |        171 |
+|   (conv_accelerator)        |                              (top) |       2678 |       2678 |       0 |    0 |  2080 |      0 |      0 |         87 |
+|   u_core                    |                          conv_core |      18041 |      18041 |       0 |    0 |  9067 |    160 |     30 |         84 |
+|     (u_core)                |                          conv_core |         89 |         89 |       0 |    0 |   390 |      0 |      0 |          0 |
+|     u_controller            |                    conv_controller |        690 |        690 |       0 |    0 |   102 |      0 |      0 |          6 |
+|     u_mmu                   |                                MMU |      16961 |      16961 |       0 |    0 |  8488 |    160 |     20 |         78 |
+|       (u_mmu)               |                                MMU |         78 |         78 |       0 |    0 |   177 |      0 |      0 |          6 |
+|       g_c[0].u_bank         |                       channel_bank |        503 |        503 |       0 |    0 |   175 |     16 |      2 |          6 |
+|         u_col_sram          |       row_sram__parameterized0_148 |         76 |         76 |       0 |    0 |     0 |     16 |      0 |          0 |
+|         u_im2col_writer     |         explicit_im2col_writer_149 |        259 |        259 |       0 |    0 |   134 |      0 |      0 |          6 |
+|         u_output            |                 output_accumulator |         68 |         68 |       0 |    0 |    41 |      0 |      0 |          0 |
+|         u_output_sram       |       row_sram__parameterized1_151 |         67 |         67 |       0 |    0 |     0 |      0 |      1 |          0 |
+|       g_c[1].u_bank         |       channel_bank__parameterized0 |        382 |        382 |       0 |    0 |   193 |     16 |      2 |          6 |
+|         u_im2col_writer     |         explicit_im2col_writer_145 |        241 |        241 |       0 |    0 |   134 |      0 |      0 |          6 |
+|         u_output            | output_accumulator__parameterized0 |         68 |         68 |       0 |    0 |    41 |      0 |      0 |          0 |
+|       g_c[2].u_bank         |       channel_bank__parameterized1 |        375 |        375 |       0 |    0 |   193 |     16 |      2 |          6 |
+|         u_im2col_writer     |         explicit_im2col_writer_140 |        233 |        233 |       0 |    0 |   134 |      0 |      0 |          6 |
+|         u_output            | output_accumulator__parameterized1 |         69 |         69 |       0 |    0 |    41 |      0 |      0 |          0 |
+|       g_c[3].u_bank         |       channel_bank__parameterized2 |        407 |        407 |       0 |    0 |   193 |     16 |      2 |          6 |
+|         u_im2col_writer     |         explicit_im2col_writer_135 |        240 |        240 |       0 |    0 |   134 |      0 |      0 |          6 |
+|         u_output            | output_accumulator__parameterized2 |         67 |         67 |       0 |    0 |    41 |      0 |      0 |          0 |
+|         u_output_sram       |       row_sram__parameterized1_137 |         67 |         67 |       0 |    0 |     0 |      0 |      1 |          0 |
+|       g_c[4].u_bank         |       channel_bank__parameterized3 |        395 |        395 |       0 |    0 |   193 |     16 |      2 |          6 |
+|         u_im2col_writer     |         explicit_im2col_writer_130 |        242 |        242 |       0 |    0 |   134 |      0 |      0 |          6 |
+|         u_output            | output_accumulator__parameterized3 |         72 |         72 |       0 |    0 |    41 |      0 |      0 |          0 |
+|       g_c[5].u_bank         |       channel_bank__parameterized4 |        368 |        368 |       0 |    0 |   193 |     16 |      2 |          6 |
+|         u_im2col_writer     |         explicit_im2col_writer_125 |        233 |        233 |       0 |    0 |   134 |      0 |      0 |          6 |
+|         u_output            | output_accumulator__parameterized4 |         70 |         70 |       0 |    0 |    41 |      0 |      0 |          0 |
+|       g_c[6].u_bank         |       channel_bank__parameterized5 |        451 |        451 |       0 |    0 |   193 |     16 |      2 |          6 |
+|         u_im2col_writer     |         explicit_im2col_writer_120 |        233 |        233 |       0 |    0 |   134 |      0 |      0 |          6 |
+|         u_output            | output_accumulator__parameterized5 |         70 |         70 |       0 |    0 |    41 |      0 |      0 |          0 |
+|         u_output_sram       |       row_sram__parameterized1_122 |        115 |        115 |       0 |    0 |     0 |      0 |      1 |          0 |
+|       g_c[7].u_bank         |       channel_bank__parameterized6 |        381 |        381 |       0 |    0 |   193 |     16 |      2 |          6 |
+|         u_im2col_writer     |         explicit_im2col_writer_115 |        232 |        232 |       0 |    0 |   134 |      0 |      0 |          6 |
+|         u_output            | output_accumulator__parameterized6 |         69 |         69 |       0 |    0 |    41 |      0 |      0 |          0 |
+|       g_c[8].u_bank         |       channel_bank__parameterized7 |        367 |        367 |       0 |    0 |   193 |     16 |      2 |          6 |
+|         u_im2col_writer     |         explicit_im2col_writer_110 |        234 |        234 |       0 |    0 |   134 |      0 |      0 |          6 |
+|         u_output            | output_accumulator__parameterized7 |         68 |         68 |       0 |    0 |    41 |      0 |      0 |          0 |
+|       g_c[9].u_bank         |       channel_bank__parameterized8 |        419 |        419 |       0 |    0 |   193 |     16 |      2 |          6 |
+|         u_im2col_writer     |             explicit_im2col_writer |        241 |        241 |       0 |    0 |   134 |      0 |      0 |          6 |
+|         u_input_sram        |                           row_sram |         70 |         70 |       0 |    0 |     0 |      0 |      1 |          0 |
+|         u_output            | output_accumulator__parameterized8 |         72 |         72 |       0 |    0 |    41 |      0 |      0 |          0 |
+|       u_address             |             linear_address_counter |       2428 |       2428 |       0 |    0 |   959 |      0 |      0 |         12 |
+|       u_array               |                     systolic_array |      10407 |      10407 |       0 |    0 |  5440 |      0 |      0 |          0 |
+|         (u_array)           |                     systolic_array |       7517 |       7517 |       0 |    0 |   260 |      0 |      0 |          0 |
+|         g_c[1].g_k[0].u_MAC |                             MAC_18 |         27 |         27 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[1].g_k[1].u_MAC |                             MAC_19 |         35 |         35 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[1].g_k[2].u_MAC |                             MAC_20 |         35 |         35 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[1].g_k[3].u_MAC |                             MAC_21 |         35 |         35 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[1].g_k[4].u_MAC |                             MAC_22 |         35 |         35 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[1].g_k[5].u_MAC |                             MAC_23 |         35 |         35 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[1].g_k[6].u_MAC |                             MAC_24 |         35 |         35 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[1].g_k[7].u_MAC |                             MAC_25 |         35 |         35 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[1].g_k[8].u_MAC |                             MAC_26 |         35 |         35 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[2].g_k[0].u_MAC |                             MAC_28 |         36 |         36 |       0 |    0 |    51 |      0 |      0 |          0 |
+|         g_c[2].g_k[1].u_MAC |                             MAC_29 |         34 |         34 |       0 |    0 |    51 |      0 |      0 |          0 |
+|         g_c[2].g_k[2].u_MAC |                             MAC_30 |         34 |         34 |       0 |    0 |    51 |      0 |      0 |          0 |
+|         g_c[2].g_k[3].u_MAC |                             MAC_31 |         34 |         34 |       0 |    0 |    51 |      0 |      0 |          0 |
+|         g_c[2].g_k[4].u_MAC |                             MAC_32 |         34 |         34 |       0 |    0 |    51 |      0 |      0 |          0 |
+|         g_c[2].g_k[5].u_MAC |                             MAC_33 |         34 |         34 |       0 |    0 |    51 |      0 |      0 |          0 |
+|         g_c[2].g_k[6].u_MAC |                             MAC_34 |         34 |         34 |       0 |    0 |    51 |      0 |      0 |          0 |
+|         g_c[2].g_k[7].u_MAC |                             MAC_35 |         34 |         34 |       0 |    0 |    51 |      0 |      0 |          0 |
+|         g_c[2].g_k[8].u_MAC |                             MAC_36 |         34 |         34 |       0 |    0 |    51 |      0 |      0 |          0 |
+|         g_c[3].g_k[0].u_MAC |                             MAC_38 |         26 |         26 |       0 |    0 |    52 |      0 |      0 |          0 |
+|         g_c[3].g_k[1].u_MAC |                             MAC_39 |         34 |         34 |       0 |    0 |    52 |      0 |      0 |          0 |
+|         g_c[3].g_k[2].u_MAC |                             MAC_40 |         34 |         34 |       0 |    0 |    52 |      0 |      0 |          0 |
+|         g_c[3].g_k[3].u_MAC |                             MAC_41 |         34 |         34 |       0 |    0 |    52 |      0 |      0 |          0 |
+|         g_c[3].g_k[4].u_MAC |                             MAC_42 |         34 |         34 |       0 |    0 |    52 |      0 |      0 |          0 |
+|         g_c[3].g_k[5].u_MAC |                             MAC_43 |         34 |         34 |       0 |    0 |    52 |      0 |      0 |          0 |
+|         g_c[3].g_k[6].u_MAC |                             MAC_44 |         34 |         34 |       0 |    0 |    52 |      0 |      0 |          0 |
+|         g_c[3].g_k[7].u_MAC |                             MAC_45 |         34 |         34 |       0 |    0 |    52 |      0 |      0 |          0 |
+|         g_c[3].g_k[8].u_MAC |                             MAC_46 |         34 |         34 |       0 |    0 |    52 |      0 |      0 |          0 |
+|         g_c[4].g_k[0].u_MAC |                             MAC_48 |         35 |         35 |       0 |    0 |    53 |      0 |      0 |          0 |
+|         g_c[4].g_k[1].u_MAC |                             MAC_49 |         34 |         34 |       0 |    0 |    53 |      0 |      0 |          0 |
+|         g_c[4].g_k[2].u_MAC |                             MAC_50 |         34 |         34 |       0 |    0 |    53 |      0 |      0 |          0 |
+|         g_c[4].g_k[3].u_MAC |                             MAC_51 |         34 |         34 |       0 |    0 |    53 |      0 |      0 |          0 |
+|         g_c[4].g_k[4].u_MAC |                             MAC_52 |         34 |         34 |       0 |    0 |    53 |      0 |      0 |          0 |
+|         g_c[4].g_k[5].u_MAC |                             MAC_53 |         34 |         34 |       0 |    0 |    53 |      0 |      0 |          0 |
+|         g_c[4].g_k[6].u_MAC |                             MAC_54 |         34 |         34 |       0 |    0 |    53 |      0 |      0 |          0 |
+|         g_c[4].g_k[7].u_MAC |                             MAC_55 |         34 |         34 |       0 |    0 |    53 |      0 |      0 |          0 |
+|         g_c[4].g_k[8].u_MAC |                             MAC_56 |         34 |         34 |       0 |    0 |    53 |      0 |      0 |          0 |
+|         g_c[5].g_k[0].u_MAC |                             MAC_58 |         26 |         26 |       0 |    0 |    54 |      0 |      0 |          0 |
+|         g_c[5].g_k[1].u_MAC |                             MAC_59 |         34 |         34 |       0 |    0 |    54 |      0 |      0 |          0 |
+|         g_c[5].g_k[2].u_MAC |                             MAC_60 |         34 |         34 |       0 |    0 |    54 |      0 |      0 |          0 |
+|         g_c[5].g_k[3].u_MAC |                             MAC_61 |         34 |         34 |       0 |    0 |    54 |      0 |      0 |          0 |
+|         g_c[5].g_k[4].u_MAC |                             MAC_62 |         34 |         34 |       0 |    0 |    54 |      0 |      0 |          0 |
+|         g_c[5].g_k[5].u_MAC |                             MAC_63 |         34 |         34 |       0 |    0 |    54 |      0 |      0 |          0 |
+|         g_c[5].g_k[6].u_MAC |                             MAC_64 |         34 |         34 |       0 |    0 |    54 |      0 |      0 |          0 |
+|         g_c[5].g_k[7].u_MAC |                             MAC_65 |         34 |         34 |       0 |    0 |    54 |      0 |      0 |          0 |
+|         g_c[5].g_k[8].u_MAC |                             MAC_66 |         34 |         34 |       0 |    0 |    54 |      0 |      0 |          0 |
+|         g_c[6].g_k[0].u_MAC |                             MAC_68 |         26 |         26 |       0 |    0 |    55 |      0 |      0 |          0 |
+|         g_c[6].g_k[1].u_MAC |                             MAC_69 |         34 |         34 |       0 |    0 |    55 |      0 |      0 |          0 |
+|         g_c[6].g_k[2].u_MAC |                             MAC_70 |         34 |         34 |       0 |    0 |    55 |      0 |      0 |          0 |
+|         g_c[6].g_k[3].u_MAC |                             MAC_71 |         34 |         34 |       0 |    0 |    55 |      0 |      0 |          0 |
+|         g_c[6].g_k[4].u_MAC |                             MAC_72 |         34 |         34 |       0 |    0 |    55 |      0 |      0 |          0 |
+|         g_c[6].g_k[5].u_MAC |                             MAC_73 |         34 |         34 |       0 |    0 |    55 |      0 |      0 |          0 |
+|         g_c[6].g_k[6].u_MAC |                             MAC_74 |         34 |         34 |       0 |    0 |    55 |      0 |      0 |          0 |
+|         g_c[6].g_k[7].u_MAC |                             MAC_75 |         34 |         34 |       0 |    0 |    55 |      0 |      0 |          0 |
+|         g_c[6].g_k[8].u_MAC |                             MAC_76 |         34 |         34 |       0 |    0 |    55 |      0 |      0 |          0 |
+|         g_c[7].g_k[0].u_MAC |                             MAC_78 |         26 |         26 |       0 |    0 |    56 |      0 |      0 |          0 |
+|         g_c[7].g_k[1].u_MAC |                             MAC_79 |         34 |         34 |       0 |    0 |    56 |      0 |      0 |          0 |
+|         g_c[7].g_k[2].u_MAC |                             MAC_80 |         34 |         34 |       0 |    0 |    56 |      0 |      0 |          0 |
+|         g_c[7].g_k[3].u_MAC |                             MAC_81 |         34 |         34 |       0 |    0 |    56 |      0 |      0 |          0 |
+|         g_c[7].g_k[4].u_MAC |                             MAC_82 |         34 |         34 |       0 |    0 |    56 |      0 |      0 |          0 |
+|         g_c[7].g_k[5].u_MAC |                             MAC_83 |         34 |         34 |       0 |    0 |    56 |      0 |      0 |          0 |
+|         g_c[7].g_k[6].u_MAC |                             MAC_84 |         34 |         34 |       0 |    0 |    56 |      0 |      0 |          0 |
+|         g_c[7].g_k[7].u_MAC |                             MAC_85 |         34 |         34 |       0 |    0 |    56 |      0 |      0 |          0 |
+|         g_c[7].g_k[8].u_MAC |                             MAC_86 |         34 |         34 |       0 |    0 |    56 |      0 |      0 |          0 |
+|         g_c[8].g_k[0].u_MAC |                             MAC_88 |         42 |         42 |       0 |    0 |    57 |      0 |      0 |          0 |
+|         g_c[8].g_k[1].u_MAC |                             MAC_89 |         34 |         34 |       0 |    0 |    57 |      0 |      0 |          0 |
+|         g_c[8].g_k[2].u_MAC |                             MAC_90 |         34 |         34 |       0 |    0 |    57 |      0 |      0 |          0 |
+|         g_c[8].g_k[3].u_MAC |                             MAC_91 |         34 |         34 |       0 |    0 |    57 |      0 |      0 |          0 |
+|         g_c[8].g_k[4].u_MAC |                             MAC_92 |         34 |         34 |       0 |    0 |    57 |      0 |      0 |          0 |
+|         g_c[8].g_k[5].u_MAC |                             MAC_93 |         34 |         34 |       0 |    0 |    57 |      0 |      0 |          0 |
+|         g_c[8].g_k[6].u_MAC |                             MAC_94 |         34 |         34 |       0 |    0 |    57 |      0 |      0 |          0 |
+|         g_c[8].g_k[7].u_MAC |                             MAC_95 |         34 |         34 |       0 |    0 |    57 |      0 |      0 |          0 |
+|         g_c[8].g_k[8].u_MAC |                             MAC_96 |         34 |         34 |       0 |    0 |    57 |      0 |      0 |          0 |
+|         g_c[9].g_k[0].u_MAC |                             MAC_98 |         33 |         33 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[9].g_k[1].u_MAC |                             MAC_99 |         34 |         34 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[9].g_k[2].u_MAC |                            MAC_100 |         34 |         34 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[9].g_k[3].u_MAC |                            MAC_101 |         35 |         35 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[9].g_k[4].u_MAC |                            MAC_102 |         34 |         34 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[9].g_k[5].u_MAC |                            MAC_103 |         34 |         34 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[9].g_k[6].u_MAC |                            MAC_104 |         34 |         34 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[9].g_k[7].u_MAC |                            MAC_105 |         34 |         34 |       0 |    0 |    50 |      0 |      0 |          0 |
+|         g_c[9].g_k[8].u_MAC |                            MAC_106 |         34 |         34 |       0 |    0 |    50 |      0 |      0 |          0 |
+|     u_weight_loader         |                      weight_loader |         76 |         76 |       0 |    0 |    87 |      0 |      0 |          0 |
+|   u_job_setup               |                      setup_divider |        821 |        821 |       0 |    0 |   265 |      0 |      0 |          0 |
++-----------------------------+------------------------------------+------------+------------+---------+------+-------+--------+--------+------------+
+
+
