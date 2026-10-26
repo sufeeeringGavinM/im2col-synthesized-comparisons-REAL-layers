@@ -41,6 +41,47 @@ Centralized NCHW has the lowest cycle count for the first three layers; im2colle
 
 Resource and timing results use Vivado 2026.1 post-synthesis analysis for the Artix-7 `xc7a200tfbg676-2`. All four designs fit the device and meet the common 1 MHz power-analysis clock; none meets the 50 MHz synthesis target. Workload activity is captured natively with XSim SAIF. Power estimates are dominated by static power, rounded to 1 mW, and have incomplete activity annotation. They are post-synthesis estimates, not routed or measured board power. Full measurement details and source/hardware identity records are included with the reports.
 
+### FPGA resources and timing
+
+| Implementation | LUTs | Flip-flops | BRAM tiles | DSPs | WNS at 50 MHz (ns) | Estimated Fmax (MHz) |
+|---|---:|---:|---:|---:|---:|---:|
+| NHWC | 18,765 | 9,900 | 15 | 111 | -1.584 | 46.33 |
+| Centralized NCHW | 60,966 | 17,995 | 15 | 206 | -11.345 | 31.90 |
+| Explicit im2col | 21,540 | 11,412 | 175 | 171 | -2.397 | 44.65 |
+| im2collette FIFO | 30,640 | 14,423 | 20 | 111 | -9.409 | 34.00 |
+
+WNS is worst negative slack against the 20 ns synthesis constraint. Estimated Fmax is derived from that slack; placement and routing were not performed. NHWC uses the fewest LUTs and flip-flops and has the highest estimated Fmax. Centralized NCHW uses more LUTs and DSPs, while explicit im2col uses the most BRAM.
+
+### Workload power at 1 MHz
+
+| Implementation | Dynamic power (mW) | Static power (mW) | Total power (mW) |
+|---|---:|---:|---:|
+| NHWC | 1 | 123 | 124 |
+| Centralized NCHW | 1 | 123 | 123–124 |
+| Explicit im2col | 5 | 130 | 135 |
+| im2collette FIFO | 1 | 123 | 124 |
+
+The centralized total is 124 mW for CIFAR10 conv1 and 123 mW for the other three layers. Components and totals are rounded independently to 1 mW, so displayed components may not sum exactly to the total. These workload estimates are separate from the vectorless power reports. Matched-net activity coverage is 89% for NHWC, 85% for centralized NCHW, 84% for explicit im2col, and 72% for FIFO. External backing-memory power is excluded.
+
+### Estimated energy per layer at 1 MHz
+
+| Layer | NHWC (mJ) | Centralized NCHW (mJ) | Explicit im2col (mJ) | im2collette FIFO (mJ) |
+|---|---:|---:|---:|---:|
+| CIFAR10 tutorial conv1 | 11.948 | **9.266** | 18.405 | 11.944 |
+| CIFAR10 tutorial conv2 | 10.405 | **9.738** | 12.754 | 10.403 |
+| MNIST example conv1 | 15.093 | **10.690** | 23.171 | 15.080 |
+| Historical MNISTConvNet tutorial conv2 | 14.098 | 14.169 | 16.274 | **14.096** |
+
+Energy is the reported total power multiplied by layer latency. At 1 MHz, each cycle takes 1 microsecond. The lowest estimated energy for each layer is bold; small differences should be interpreted with the power rounding and annotation limits above.
+
 ## Credits
 
 Source and algorithm credits, course attribution, and AI disclosures are retained in the implementation directories. Sources include [kaggar11/systolic_4x4arr](https://github.com/kaggar11/systolic_4x4arr), [jmbino/im2col](https://github.com/jmbino/im2col), and [ckmalangen/im2collette](https://github.com/ckmalangen/im2collette). See the [NHWC credits](tiled/NHWC/README.md#credits) for the Zhou et al. algorithmic reference. Codex and GPT-6.1 Sol contributed to project development and tooling.
+
+## TLDR
+
+- Four complete convolution layers were tested on four implementations with common array and arithmetic settings and identical synthetic tensors. All 16 RTL and 16 synthesized-netlist activity/power tests passed.
+- Centralized NCHW has the lowest latency and estimated energy for the first three layers. FIFO narrowly leads for historical MNISTConvNet conv2.
+- NHWC uses the fewest LUTs and flip-flops and has the highest estimated Fmax. Explicit im2col has the highest latency and BRAM use in this comparison.
+- All designs fit the FPGA and meet 1 MHz; none meets the 50 MHz synthesis target. Workload power is about 123–135 mW and is dominated by static power.
+- Results cover convolution with synthetic operands. Timing and power are post-synthesis estimates; these tests do not establish board performance or classification accuracy.
