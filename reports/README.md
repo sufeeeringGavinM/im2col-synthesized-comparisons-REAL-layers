@@ -1,8 +1,8 @@
-# Real model geometries on accepted tiled address-counter hardware
+# Real model geometries on tiled address-counter hardware
 
 State: MEASUREMENTS_COMPLETE; RTL 16/16; native SAIF/power 16/16.
 
-N=1, groups=1, dilation=1. Signed8 synthetic operands; 32-bit wrapped sums. This studies individual convolution geometries, with no bias, normalization, activation, pooling, shortcut, trained weights or accuracy claim.
+Batch size is 1. Every output filter uses all input channels (`groups=1`), and kernel taps are adjacent (`dilation=1`). Signed8 synthetic operands; 32-bit wrapped sums. This studies individual convolution geometries, with no bias, normalization, activation, pooling, shortcut, trained weights or accuracy claim.
 
 ## Reused post-synthesis hardware
 
@@ -10,7 +10,7 @@ Vivado2026.1 / xc7a200tfbg676-2 / OOC rebuilt hierarchy / two threads / array10 
 
 | Design | WNS ns | Estimated Fmax MHz | LUT count (%) | FF count (%) | BRAM tiles (%) | DSP count (%) | Separate vectorless dynamic/static/total W |
 |---|---:|---:|---:|---:|---:|---:|---|
-|channel_first|-1.584|46.330615271|18765 (13.94)|9900 (3.68)|15 (4.11)|111 (15.00)|0.002/0.123/0.125|
+|NHWC|-1.584|46.330615271|18765 (13.94)|9900 (3.68)|15 (4.11)|111 (15.00)|0.002/0.123/0.125|
 |centralized|-11.345|31.903014835|60966 (45.29)|17995 (6.68)|15 (4.11)|206 (27.84)|0.013/0.123/0.136|
 |explicit|-2.397|44.648836898|21540 (16.00)|11412 (4.24)|175 (47.95)|171 (23.11)|0.008/0.130/0.138|
 |im2collette_fifo|-9.409|34.003196300|30640 (22.76)|14423 (5.36)|20 (5.48)|111 (15.00)|0.003/0.123/0.126|
@@ -25,10 +25,10 @@ Window: accepted start through final output store/done; includes planning/setup,
 |centralized|cifar10_conv2|79174|434|16800|48000|10720|3200|20|20|20|
 |centralized|mnist_conv1|86913|1841|17472|14976|9256|43264|104|104|104|
 |centralized|mnist_legacy_conv2|115194|362|19200|80000|13056|2560|16|16|16|
-|channel_first|cifar10_conv1|96353|89|26880|25200|34748|9408|28|28|28|
-|channel_first|cifar10_conv2|83913|73|16800|48000|15820|3200|20|20|20|
-|channel_first|mnist_conv1|121714|242|17472|14976|45656|43264|104|104|104|
-|channel_first|mnist_legacy_conv2|113697|65|19200|80000|11856|2560|16|16|16|
+|NHWC|cifar10_conv1|96353|89|26880|25200|34748|9408|28|28|28|
+|NHWC|cifar10_conv2|83913|73|16800|48000|15820|3200|20|20|20|
+|NHWC|mnist_conv1|121714|242|17472|14976|45656|43264|104|104|104|
+|NHWC|mnist_legacy_conv2|113697|65|19200|80000|11856|2560|16|16|16|
 |explicit|cifar10_conv1|136337|89|26880|25200|74732|9408|28|28|28|
 |explicit|cifar10_conv2|94473|73|16800|48000|26380|3200|20|20|20|
 |explicit|mnist_conv1|171634|242|17472|14976|95576|43264|104|104|104|
@@ -40,7 +40,7 @@ Window: accepted start through final output store/done; includes planning/setup,
 
 ## Native workload power at actual1MHz
 
-XSim open_saif/log_saif/close_saif, scope /tb_conv_core/GATE only. Backing memory and shadow RTL excluded. Exact full-layer duration must equal accepted cycles times1us; gate controls, enables, enabled external addresses/data checked cycle-by-cycle and final outputs checked exactly. Zero-delay synthesized simulation excludes routed glitches. Power is quantized to1mW; static dominates at1MHz; no matched-baseline savings claim.
+XSim open_saif/log_saif/close_saif, scope /tb_conv_core/GATE only. Backing memory and shadow RTL excluded. Exact full-layer duration must equal accepted cycles times1us; gate controls, enables, enabled external addresses/data checked cycle-by-cycle and final outputs checked exactly. Zero-delay synthesized simulation excludes routed glitches. Power is quantized to1mW; static dominates at1MHz; these results do not establish power savings.
 
 | Design | Layer | Cycles | Dynamic W | Static W | Total W | Energy uJ | Matched nets | Confidence |
 |---|---|---:|---:|---:|---:|---:|---|---|
@@ -48,10 +48,10 @@ XSim open_saif/log_saif/close_saif, scope /tb_conv_core/GATE only. Backing memor
 |centralized|cifar10_conv2|79174|0.001|0.123|0.123|9738.402|85%   (159563/187575)|High|
 |centralized|mnist_conv1|86913|0.001|0.123|0.123|10690.298999999999|85%   (159563/187575)|High|
 |centralized|mnist_legacy_conv2|115194|0.001|0.123|0.123|14168.862|85%   (159563/187575)|High|
-|channel_first|cifar10_conv1|96353|0.001|0.123|0.124|11947.771999999999|89%   (57308/64661)|High|
-|channel_first|cifar10_conv2|83913|0.001|0.123|0.124|10405.212|89%   (57308/64661)|High|
-|channel_first|mnist_conv1|121714|0.001|0.123|0.124|15092.536|89%   (57308/64661)|High|
-|channel_first|mnist_legacy_conv2|113697|0.001|0.123|0.124|14098.428|89%   (57308/64661)|High|
+|NHWC|cifar10_conv1|96353|0.001|0.123|0.124|11947.771999999999|89%   (57308/64661)|High|
+|NHWC|cifar10_conv2|83913|0.001|0.123|0.124|10405.212|89%   (57308/64661)|High|
+|NHWC|mnist_conv1|121714|0.001|0.123|0.124|15092.536|89%   (57308/64661)|High|
+|NHWC|mnist_legacy_conv2|113697|0.001|0.123|0.124|14098.428|89%   (57308/64661)|High|
 |explicit|cifar10_conv1|136337|0.005|0.13|0.135|18405.495000000003|84%   (67594/80261)|High|
 |explicit|cifar10_conv2|94473|0.005|0.13|0.135|12753.855000000001|84%   (67594/80261)|High|
 |explicit|mnist_conv1|171634|0.005|0.13|0.135|23170.59|84%   (67594/80261)|High|
@@ -63,7 +63,7 @@ XSim open_saif/log_saif/close_saif, scope /tb_conv_core/GATE only. Backing memor
 
 Latency seconds=cycles/1e6, throughput layers/s=1e6/cycles (N1), energy uJ=watts*cycles. Useful MAC/cycle uses valid non-padding input/kernel products; the CSV also provides nominal dense MACs including padded positions. These are workload measures; physical resource/timing figures describe unchanged hardware.
 
-Batch sweep omitted: accepted existing batch correctness evidence is reused; the tiler invokes coreN1 serially without cross-image weight retention. Per-row, non-tiled designs and deferred SRAM-read evidence are excluded.
+The reported measurements cover exactly the four selected layers at batch size 1. The tiler invokes a single-image core serially without retaining weights across images.
 
 ## Coverage, precision and runtime provenance
 
