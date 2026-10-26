@@ -1,0 +1,394 @@
+{
+  "scope": "All 48 RTL files in the four tiled implementation trees",
+  "change": "Explanatory comments only; no Verilog token changes",
+  "method": "Compare ordered lexical tokens, preserving strings, escaped identifiers, compound operators, compiler directives and numeric spellings; ignore only whitespace and comments. No synthesis-affecting comment directives introduced.",
+  "result": "PASS",
+  "files": [
+    {
+      "path": "tiled/NCHW_centralized/rtl/PE.v",
+      "measured_source_sha256": "5438682f9c7f8ca43bf01cfad39543e19779f2cf9c75a8786453aff101e1ece6",
+      "documented_source_sha256": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+      "verilog_tokens_sha256": "4398938b27850ea38f55f29151abab511b4453af3ae7116cd9653eb23d9ace3a",
+      "token_count": 244,
+      "added_lines": 8
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/banked_input.v",
+      "measured_source_sha256": "9b246aec9bb9cb17285637e9fb4f185831864aed8213b7427651816f261ece48",
+      "documented_source_sha256": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+      "verilog_tokens_sha256": "dcd5f115bbde751f73b2fc0c47d5b9a86869364d2fcc3a5a3ad6e220ba5ddc54",
+      "token_count": 910,
+      "added_lines": 21
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/conv_accelerator.v",
+      "measured_source_sha256": "7afb245a8c2a551c88400315bbbc26ee7c9770efbbcf8f8cb5b370d47f6d541a",
+      "documented_source_sha256": "1d2fe43d4159738f7d016d1d4723d06a9fb45a64d7d3b2ab95519a2bf199a8b7",
+      "verilog_tokens_sha256": "5286f4ba4f2a4f4078556b6a3649fe155682ea270234a503636f6f50d64d9b9b",
+      "token_count": 4821,
+      "added_lines": 79
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/conv_controller.v",
+      "measured_source_sha256": "b4fbad115173d927bed51bc592719ffd73b6551e3e37e572404938c5aeec25fe",
+      "documented_source_sha256": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+      "verilog_tokens_sha256": "90ee0884ebbaf70a355b987fc1f6ed3b6fe632dfcd8c3b16209e9dec29dbddf1",
+      "token_count": 348,
+      "added_lines": 9
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/conv_core.v",
+      "measured_source_sha256": "79475942697a08116421bd5aac6e257fcd1ce02462a55e2f3e091b2c85669ae4",
+      "documented_source_sha256": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+      "verilog_tokens_sha256": "36a78acb16ecedff7c8d1c5aad0c7e0c974f2a14e85af4bc981cdb5f740e2581",
+      "token_count": 1350,
+      "added_lines": 11
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/conv_datapath.v",
+      "measured_source_sha256": "e97f4a33de983ce0357331fcf87c241759cf93b99fd682011c078cdaa898cb38",
+      "documented_source_sha256": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+      "verilog_tokens_sha256": "46bc3d8f5929371000613f9a5957c11c64ed8bf73154ac2546eb2bab20d91e71",
+      "token_count": 1200,
+      "added_lines": 11
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/im2col_addr_gen.v",
+      "measured_source_sha256": "7a4910e4fe30dc636109dbbc67614d8a7b4f9a456aa398b39c161d85a0a0f46b",
+      "documented_source_sha256": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+      "verilog_tokens_sha256": "0b9f72c5b073038d54c6f4975be26fabdffb908dcc00be18640d65cc40426345",
+      "token_count": 3522,
+      "added_lines": 65
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/input_bank.v",
+      "measured_source_sha256": "0d7da86d283058478ccefeb830a091046c3454e5c6225ec6e83c821c6672af41",
+      "documented_source_sha256": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+      "verilog_tokens_sha256": "ab7b75fcd129aa769ab04a31b005b379013662e6e4ed8810df5f49351af42c32",
+      "token_count": 112,
+      "added_lines": 4
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/kernel_bank.v",
+      "measured_source_sha256": "1fade0989bcfdd0c739f02968d849b41e79f21b17c641f37fd1629e50be4e6fd",
+      "documented_source_sha256": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+      "verilog_tokens_sha256": "36aab24b31bd9490d175a173fbed16cad03f3356f922bc74bf65cf0b68f6f7d2",
+      "token_count": 125,
+      "added_lines": 4
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/output_accumulator.v",
+      "measured_source_sha256": "476142b824b118269e8c3f9382e5b2347e5c7922d22f89bbfce955c7bed0acb1",
+      "documented_source_sha256": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+      "verilog_tokens_sha256": "f39b47ee8bb2f3ac08e2e8c5b213261a5dc8e601549ea159c6955af246236614",
+      "token_count": 326,
+      "added_lines": 10
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/setup_divider.v",
+      "measured_source_sha256": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d",
+      "documented_source_sha256": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+      "verilog_tokens_sha256": "2a602acb4a08083dfbc87c8bf47d20dc76bd2373fa68ef4eab456fecd2359f6a",
+      "token_count": 402,
+      "added_lines": 13
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/sram.v",
+      "measured_source_sha256": "1b3c394717a91b787792776ce0bb2ed795e85fe411dcfbe919bf4560cd9d945e",
+      "documented_source_sha256": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+      "verilog_tokens_sha256": "e54357aa85ed346ffd99fba3b697624d546335251ca2e2aff598113f59faf036",
+      "token_count": 119,
+      "added_lines": 4
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/systolic_array.v",
+      "measured_source_sha256": "b56e0a9ecc57a3bc19dd8141a8224d9a5fb6592a7bbd1ae9b540a69acc9746ce",
+      "documented_source_sha256": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+      "verilog_tokens_sha256": "04361a1c5418e0cf4e020e3bc4a066851924be1764a7d4da88e8ca7af2d55fb3",
+      "token_count": 597,
+      "added_lines": 6
+    },
+    {
+      "path": "tiled/NCHW_centralized/rtl/weight_loader.v",
+      "measured_source_sha256": "e3196fa60f3a9fc50ae119e8012ee90d0aa85ee5bfdddb4c2478827b41750bf9",
+      "documented_source_sha256": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a",
+      "verilog_tokens_sha256": "7e160bd8cd71aa236fc79154a344788c9c125b3c9d2afbede51cf78c39064fb3",
+      "token_count": 388,
+      "added_lines": 8
+    },
+    {
+      "path": "tiled/NHWC/rtl/PE.v",
+      "measured_source_sha256": "925f281472c7f03a801e1e81199460cf4f0f402ba83320c83a7141f3b39001fb",
+      "documented_source_sha256": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+      "verilog_tokens_sha256": "08f622c60c4ac6ba3c50a0e9d22f5b14280a53e1293853a541e7e6db3b5b348e",
+      "token_count": 237,
+      "added_lines": 8
+    },
+    {
+      "path": "tiled/NHWC/rtl/activation_feeder.v",
+      "measured_source_sha256": "6edfd9aabe9478ffc94b89fafeb2f4e8e659b4eec99ca8ddf3475686cace316a",
+      "documented_source_sha256": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+      "verilog_tokens_sha256": "e32e56753851b7dd8d3620cb2163123eb4eb961fc7b45cd86122c7d1b3adb391",
+      "token_count": 268,
+      "added_lines": 6
+    },
+    {
+      "path": "tiled/NHWC/rtl/conv_accelerator.v",
+      "measured_source_sha256": "379e51418f1c9e23d8a041de85f2dea760be9c71b46ea01cf0df22c4bd3ef95f",
+      "documented_source_sha256": "989966e3ff76a85e130577c19ad2aab8cf9312ba3d02516257780ba365adf3b4",
+      "verilog_tokens_sha256": "bf67a5f77d71de1498057837270df59476991de8fdeb3ba9ca6073cb9a415652",
+      "token_count": 3285,
+      "added_lines": 64
+    },
+    {
+      "path": "tiled/NHWC/rtl/conv_controller.v",
+      "measured_source_sha256": "7ccff718bd1c0d30413d49bdd0381198107575178e6c6413065b67f4d7cda4bc",
+      "documented_source_sha256": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+      "verilog_tokens_sha256": "6a5c2d3799c4fa46304b452e2feeea1bacf2490cf0ad32d5352e52a18e6efdd1",
+      "token_count": 509,
+      "added_lines": 13
+    },
+    {
+      "path": "tiled/NHWC/rtl/conv_core.v",
+      "measured_source_sha256": "4bf5ce8e650f3da79b78cf898febc4fcd9f56a1b1b309b2ce6e189ac62a8f017",
+      "documented_source_sha256": "9e9c5b2a02e847ca654d8a529685f7ee954c497937f0bde096f0c1ac10ee8610",
+      "verilog_tokens_sha256": "3866f0b1db2e254bb0dd57a721f0d63a0baf666911727a31eb7fb5fe86cef680",
+      "token_count": 1385,
+      "added_lines": 9
+    },
+    {
+      "path": "tiled/NHWC/rtl/conv_datapath.v",
+      "measured_source_sha256": "04f6779fcb206b81abf8a4ae9cb57abfda2af360ea54d652fc6b867fe7ced417",
+      "documented_source_sha256": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+      "verilog_tokens_sha256": "3d2f7c07f10266fb1720c794cd4dd20e40d608cb2bf553f9eef58c89f1b59870",
+      "token_count": 1047,
+      "added_lines": 10
+    },
+    {
+      "path": "tiled/NHWC/rtl/im2col_addr_gen.v",
+      "measured_source_sha256": "cf6c0b384e0d602ed479d33f1998195550df98d83f92c674c575b6673c89daff",
+      "documented_source_sha256": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+      "verilog_tokens_sha256": "88d4978e477c942cbff935a1beace239d6497903f82f8241782932266830aacb",
+      "token_count": 286,
+      "added_lines": 5
+    },
+    {
+      "path": "tiled/NHWC/rtl/kernel_bank.v",
+      "measured_source_sha256": "1fade0989bcfdd0c739f02968d849b41e79f21b17c641f37fd1629e50be4e6fd",
+      "documented_source_sha256": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+      "verilog_tokens_sha256": "36aab24b31bd9490d175a173fbed16cad03f3356f922bc74bf65cf0b68f6f7d2",
+      "token_count": 125,
+      "added_lines": 4
+    },
+    {
+      "path": "tiled/NHWC/rtl/linear_address_counter.v",
+      "measured_source_sha256": "d054b1c7fee8fde0b8e16d3f60151b6b38620f3c0a57e3cee5d8f35ba8171894",
+      "documented_source_sha256": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+      "verilog_tokens_sha256": "e2867d9e42d76ff0e44f2d6594e45971eddd82716bad67443e1bcedb01a344d8",
+      "token_count": 1835,
+      "added_lines": 61
+    },
+    {
+      "path": "tiled/NHWC/rtl/output_accumulator.v",
+      "measured_source_sha256": "5c748dd5c4ee58a20953bf843a6fec92eac8e2bcab7ec2e73198bb318dc7e1ef",
+      "documented_source_sha256": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+      "verilog_tokens_sha256": "0440cb61452aac05873ca87fd4b1c58793c7db82e87e55140c1f193a78c47fdd",
+      "token_count": 318,
+      "added_lines": 10
+    },
+    {
+      "path": "tiled/NHWC/rtl/setup_divider.v",
+      "measured_source_sha256": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d",
+      "documented_source_sha256": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+      "verilog_tokens_sha256": "2a602acb4a08083dfbc87c8bf47d20dc76bd2373fa68ef4eab456fecd2359f6a",
+      "token_count": 402,
+      "added_lines": 13
+    },
+    {
+      "path": "tiled/NHWC/rtl/sram.v",
+      "measured_source_sha256": "1b3c394717a91b787792776ce0bb2ed795e85fe411dcfbe919bf4560cd9d945e",
+      "documented_source_sha256": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+      "verilog_tokens_sha256": "e54357aa85ed346ffd99fba3b697624d546335251ca2e2aff598113f59faf036",
+      "token_count": 119,
+      "added_lines": 4
+    },
+    {
+      "path": "tiled/NHWC/rtl/systolic_array.v",
+      "measured_source_sha256": "0ad220bf3abf69c754282868a24b34ab99a22d2262e3a8a8bc13769f1e005da1",
+      "documented_source_sha256": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+      "verilog_tokens_sha256": "58fa9ffe4d7c6cedb0d53f04c24ae9af9bde443c2fb90ebbb7250fce74123d59",
+      "token_count": 585,
+      "added_lines": 6
+    },
+    {
+      "path": "tiled/NHWC/rtl/weight_loader.v",
+      "measured_source_sha256": "5f9861249d5ad5350433ec86fd540b2380ee6f2a6198be35107a2f7fb383aa14",
+      "documented_source_sha256": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037",
+      "verilog_tokens_sha256": "e13a2d29ed7b16032196caab9622ba21f114cf57f18a9494f8f4aa8ed603c3d2",
+      "token_count": 662,
+      "added_lines": 13
+    },
+    {
+      "path": "tiled/explicit/rtl/conv_accelerator.v",
+      "measured_source_sha256": "ac695fee84a16859d72f6e24ee00641cb7b8c5abe6d95b035486485c5f59b826",
+      "documented_source_sha256": "4bbb3a4ed9e3d5646396efcfc9e2125c0d4c85eacf6c1b22a784b8c054f8986b",
+      "verilog_tokens_sha256": "bdf5f0f9de7196423d19baa0e2cb0cbc0762a6b6b7fd1160f99800444133453f",
+      "token_count": 3279,
+      "added_lines": 64
+    },
+    {
+      "path": "tiled/explicit/rtl/explicit_im2col_integrated.v",
+      "measured_source_sha256": "e30a10d9b08e14999671fe401be08313b927643db3acab98a1ff070185c8d89d",
+      "documented_source_sha256": "10e58093db91bdb27ab59b1df3d32e1f8b78d54daa48a914e4111085fd6f36c3",
+      "verilog_tokens_sha256": "af1a3fd64b1896c61e79b88c4598d355e264904c5992be96c5fa523739785d59",
+      "token_count": 6919,
+      "added_lines": 99
+    },
+    {
+      "path": "tiled/explicit/rtl/linear_address_counter.v",
+      "measured_source_sha256": "d054b1c7fee8fde0b8e16d3f60151b6b38620f3c0a57e3cee5d8f35ba8171894",
+      "documented_source_sha256": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+      "verilog_tokens_sha256": "e2867d9e42d76ff0e44f2d6594e45971eddd82716bad67443e1bcedb01a344d8",
+      "token_count": 1835,
+      "added_lines": 61
+    },
+    {
+      "path": "tiled/explicit/rtl/setup_divider.v",
+      "measured_source_sha256": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d",
+      "documented_source_sha256": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+      "verilog_tokens_sha256": "2a602acb4a08083dfbc87c8bf47d20dc76bd2373fa68ef4eab456fecd2359f6a",
+      "token_count": 402,
+      "added_lines": 13
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/MMU.v",
+      "measured_source_sha256": "08d6cee6da4cc6342b7bf36f3990d8626e82c83480cdc852457dea0ef5cdf06c",
+      "documented_source_sha256": "f6597c335bacd49691b745a58e07349566ae9c1344ea7ffaa55f0a95791650fa",
+      "verilog_tokens_sha256": "03d198acf6820a98cfd24dd5350fc6e5c52355cf922ad82a50a24ef2bcb412c4",
+      "token_count": 1756,
+      "added_lines": 21
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/channel_bank.v",
+      "measured_source_sha256": "6b0a02029c4666acf9f62ca72e8d9a32476070a0223908684a12e72609518015",
+      "documented_source_sha256": "e154d2b9c540dc1e0451eb87cc26a3453fb0b219dffc63ebdbd1723576723640",
+      "verilog_tokens_sha256": "a23790448b858420b810ec74fc480f0e71c97e03ba394165e64d982476800db4",
+      "token_count": 660,
+      "added_lines": 4
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/conv_accelerator.v",
+      "measured_source_sha256": "15ab410ccbcc223e0f39d3c5194c536d4b7d821e258dc20e0bddd48f7a20f383",
+      "documented_source_sha256": "0c7e2301b9fecae71b73fa46b9bd4af8035557cf6b599756cb1694b9c462c96c",
+      "verilog_tokens_sha256": "f21446a1a355b60d52ffeccc54ecc847b4908094c0085fd7606a77da285744c0",
+      "token_count": 3386,
+      "added_lines": 68
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/conv_controller.v",
+      "measured_source_sha256": "031e123381d1841ace2803823429309717373bd846e500eec32b25fc056ba6bc",
+      "documented_source_sha256": "d75d7b9fc4a50d1a33aa25eaedf7c91bdb1eeff499f8d5b77093996858c2c0d4",
+      "verilog_tokens_sha256": "1508a398770cbf8162134656dfd90483fa9500b6d061d073d1f2085be8a2b680",
+      "token_count": 671,
+      "added_lines": 11
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/conv_core.v",
+      "measured_source_sha256": "0d027bd57141e2c8a8b893ca92b7b3e2e534583c9a4084954857f721cd71e10b",
+      "documented_source_sha256": "805849f78ceaa62aa83d82924029a1aa4cb756146ea637254724ca40ad4adcfc",
+      "verilog_tokens_sha256": "548bfaed46c90b2fae8ec146ac954ea11955f41963e829ea585a6c39499bd36c",
+      "token_count": 1339,
+      "added_lines": 9
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/feed_lane.v",
+      "measured_source_sha256": "3f8c9310454dac246e18f3d74332530591011584510a996f6f3cb654fc0df501",
+      "documented_source_sha256": "7773bde01d33d6d7936721f73a01e122c4166be58bcfd9c82ebf30cdcf5dbb8f",
+      "verilog_tokens_sha256": "222406ae4630be0624537c84887358c50d391e22929269b5ee7d2f1d8fd78272",
+      "token_count": 426,
+      "added_lines": 9
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/im2col_addr_gen.v",
+      "measured_source_sha256": "75cb9086ed30d8edd7012aa3ac64c966ac07b595eecb856bbc873c330747344e",
+      "documented_source_sha256": "a8401336a7da41913b0077aa3da5bfdb4086cb21e123708139d619b056eeee18",
+      "verilog_tokens_sha256": "fffe40be5045ff989ec3aa7f1870a9e4a549511d94faffe33c4c56b825354290",
+      "token_count": 371,
+      "added_lines": 6
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/kernel_bank.v",
+      "measured_source_sha256": "5693aba9cd0e4cc73ee34545a605533e649844cd9bbf130c830690eca0a32ac3",
+      "documented_source_sha256": "7c55c909def68cee28a5bad906051606abc520b90ce00cac58b3cf93613399a5",
+      "verilog_tokens_sha256": "260c9926eafb8d8b35c5dc73e8049da4ab4cb1168dcab6017b84918d8c20ba93",
+      "token_count": 154,
+      "added_lines": 4
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/linear_address_counter.v",
+      "measured_source_sha256": "d054b1c7fee8fde0b8e16d3f60151b6b38620f3c0a57e3cee5d8f35ba8171894",
+      "documented_source_sha256": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+      "verilog_tokens_sha256": "e2867d9e42d76ff0e44f2d6594e45971eddd82716bad67443e1bcedb01a344d8",
+      "token_count": 1835,
+      "added_lines": 61
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/output_accumulator.v",
+      "measured_source_sha256": "d6c6c438cf68814a5e462e39c7951d97fc3b1f84617a744af6f5e892c5ddd16f",
+      "documented_source_sha256": "0f0a2bc1d1e55f4bf4a461bf05a158ae942ae64883f6e775d58bd444c080e6fa",
+      "verilog_tokens_sha256": "845e6634317236c21f3d660d185b90a48fdda3504a34c2987a3df480bfb31c25",
+      "token_count": 294,
+      "added_lines": 10
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/pe.v",
+      "measured_source_sha256": "23ea762fb3e50e85d4fdfa52022ca2121da7301a4d10fc90017a1eb357bdc154",
+      "documented_source_sha256": "7c9da53d80a4b47ff6d778c4938e5a945f17ccbfdeba6a9b36e2b8091d9d42a4",
+      "verilog_tokens_sha256": "5c7e4d1cf831e77c7d4f2509a2b109058b9669814318319fc653fa321da84206",
+      "token_count": 303,
+      "added_lines": 7
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/row_sram.v",
+      "measured_source_sha256": "fcca1912adb795bf2b8377a166ce2f17ee7bd1af5183d51c9956ea9f3cc5f67c",
+      "documented_source_sha256": "1d388ea97985c9aa27e3f9f63261d59108475559aa722b141e4352a88d2cc618",
+      "verilog_tokens_sha256": "43ba3c5e56e892523ff80f1bfdd8bbe89ef75e639aef764085532e65b00ed0d8",
+      "token_count": 137,
+      "added_lines": 4
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/setup_divider.v",
+      "measured_source_sha256": "9795abbd7ac4509d3c9059319baa49c2ee529a1b66477b505b6f97814e9cc79d",
+      "documented_source_sha256": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+      "verilog_tokens_sha256": "2a602acb4a08083dfbc87c8bf47d20dc76bd2373fa68ef4eab456fecd2359f6a",
+      "token_count": 402,
+      "added_lines": 13
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/sync_fifo.v",
+      "measured_source_sha256": "2fe80070e63db7c8c4180f0d943b46295af29b88928231bfeb28a172a0729bd3",
+      "documented_source_sha256": "00e051685b8ca8b2fdd8a78e3f7663f31b89c3b942dad9e92eb17351015da476",
+      "verilog_tokens_sha256": "f35bc460f1d15c80548f6130ec92b0898bcb8fc5069c8914ed3116e2f4843797",
+      "token_count": 313,
+      "added_lines": 11
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/systolic_array.v",
+      "measured_source_sha256": "654ddbef47d30a09ba2d873fe0727b057fd3c38bf3684f32b10feb896f811393",
+      "documented_source_sha256": "5e041fb5e8af1110b1a23368d41c978e31190405db879b1c575e8b139fedc39b",
+      "verilog_tokens_sha256": "8799535149b417ba64b4d1c23376b8caedb9c6c36b4bf9447231ae84aa2cf8ca",
+      "token_count": 713,
+      "added_lines": 6
+    },
+    {
+      "path": "tiled/im2collette_fifo/rtl/weight_loader.v",
+      "measured_source_sha256": "3ddc732a3871e5103f6efeb4230c986f65621cdd6252252f2c5ea0cb4837cdc6",
+      "documented_source_sha256": "ee1fb34bf737585a2dbbf607fec334753037b039214da178dd39f0806dc65b4b",
+      "verilog_tokens_sha256": "358670f15f07a97481369d5d7796dae52572b253a141e4c98aadb4a89eb9c12f",
+      "token_count": 721,
+      "added_lines": 11
+    }
+  ],
+  "reused_evidence": "Existing functional, cycle, synthesis and native-SAIF/power evidence remains applicable to identical RTL tokens. Raw reports, activity files and original measurement hashes are unchanged.",
+  "limits": "No new simulation or synthesis result is claimed by this documentation check."
+}

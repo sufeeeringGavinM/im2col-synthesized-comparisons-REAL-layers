@@ -1,4 +1,9 @@
 `timescale 1ns/1ps
+// DATA ROUTING: connect address generation, activation delivery, array and output SRAM.
+// Input and output indices use N,C,H,W and N,K,P,Q. Stream position is
+// (p*Q+q)*N+n, so n changes first, then q, then p. Dimensions are local to the job.
+// The address request and SRAM return occur on different clock edges. Row skew
+// adds delays so matching activations and partial sums meet in the systolic array.
 module conv_datapath #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ACC_WIDTH=32,
     INPUT_ADDR_WIDTH=8, OUTPUT_ADDR_WIDTH=8, CFG_WIDTH=32) (
     input output_read_enable,
@@ -19,6 +24,8 @@ module conv_datapath #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ACC_WIDTH=32,
   localparam BANK_WIDTH=(ARRAY_SIZE>1?$clog2(ARRAY_SIZE):1);
   wire clear = !nrst || clear_pass;
   wire [CFG_WIDTH-1:0] output_pixels = cfg_N*cfg_P*cfg_Q;
+  // Rows represent contiguous flattened CRS terms, not fixed input channels.
+  // The final group can have fewer active rows; mask the unused ones.
   wire [CFG_WIDTH-1:0] remaining_terms = cfg_C*cfg_R*cfg_S-group_base;
   wire [CFG_WIDTH-1:0] active_rows = remaining_terms < ARRAY_SIZE ? remaining_terms : ARRAY_SIZE;
   wire [CFG_WIDTH-1:0] issue_position;
@@ -36,6 +43,8 @@ module conv_datapath #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ACC_WIDTH=32,
   wire [ARRAY_SIZE-1:0][BIT_WIDTH-1:0] vector_data;
   reg [CFG_WIDTH:0] step_count;
   wire [CFG_WIDTH:0] pass_steps = (CFG_WIDTH+1)'(output_pixels)+2*ARRAY_SIZE;
+  // Consume a complete vector or advance a drain bubble. A memory stall holds
+  // array data, row skew, pass counter and output writeback together.
   assign advance = !clear && step_count < pass_steps && (step_count>=output_pixels || vector_ready);
   wire consume = advance && step_count<output_pixels;
   assign pass_done = advance && step_count==pass_steps-1;
@@ -51,6 +60,8 @@ module conv_datapath #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ACC_WIDTH=32,
     else if(advance) step_count<=step_count+1'b1;
   end
   wire [ARRAY_SIZE-1:0][BIT_WIDTH-1:0] activation_rows;
+  // NCHW routes returned row-specific words into a data-skew pipeline.
+  // Every row delay is gated by advance, so waiting never misaligns the sums.
   genvar row, col;
   generate for(row=0; row<ARRAY_SIZE; row=row+1) begin : g_skew
     if(row==0) assign activation_rows[row] = consume ? vector_data[row] : 0;

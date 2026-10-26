@@ -1,6 +1,12 @@
 `timescale 1ns / 1ps
 
 // Address and data generation for per-tap output writeback and read-modify-write accumulation
+// OUTPUT WRITEBACK: store each completed spatial result, then reuse it next pass.
+// writeback_cnt tracks pipeline progress; wb_ptr tracks actual output SRAM words.
+// The two counters differ because fill/drain cycles do not all produce results.
+// accumulate selects old stored sum + new pass result; otherwise overwrite it.
+// The read address leads a write by one cycle to align synchronous old_out data.
+// CHANNEL_INDEX/COL_INDEX selects an output filter column, not an input channel.
 module output_accumulator #(
     parameter integer CHANNEL_INDEX = 0,
     parameter integer ACC_WIDTH     = 32,
@@ -24,8 +30,10 @@ module output_accumulator #(
     output wire [ACC_WIDTH-1:0]     wb_data
 );
 
+    // First valid result reaches this column after row skew + array/output latency.
     localparam integer WB_START_CYCLE = CHANNEL_INDEX + OUT_LATENCY;
 
+    // Counts pass progress; variants with advance increment only when the array moves.
     reg [WB_CNT_WIDTH-1:0] writeback_cnt;
     always @(posedge clk) begin
         if (clear) writeback_cnt <= {WB_CNT_WIDTH{1'b0}};
@@ -41,7 +49,9 @@ module output_accumulator #(
         else if (wb_valid) wb_ptr <= wb_ptr + 1'b1;
     end
 
+    // Prefetch the next old output sum one synchronous-read cycle before writeback.
     assign wb_ptr_next = clear ? {ADDR_WIDTH{1'b0}} : (wb_valid ? wb_ptr + 1'b1 : wb_ptr);
+    // First reduction pass overwrites; later passes add to the previously stored sum.
     assign wb_data = accumulate ? (old_out + result_in) : result_in;
 
 endmodule

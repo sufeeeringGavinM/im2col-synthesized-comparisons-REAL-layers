@@ -1,5 +1,16 @@
 `timescale 1ns/1ps
 // One job initializer, a CRS seed counter, and incremental per-lane bank addresses.
+// NCHW REDUCTION-ROW ADDRESS GENERATOR.
+// Physical row lane handles term t=group_base+lane: c=t/(R*S), r=(t/S)%R, s=t%S.
+// Each row needs a different input coordinate h=p*stride_h+r*dil_h-pad_h,
+// w=q*stride_w+s*dil_w-pad_w. _i means height; _j means width in RTL names.
+// For a valid stored input coordinate, the exact swizzle is:
+//   slot=c*R*S+(h%R)*S+w%S; bank=slot%ARRAY_SIZE;
+//   addr=((slot/ARRAY_SIZE)*ceil(H/R)*ceil(W/S)
+//         +(h/R)*ceil(W/S)+w/S)*N+n.
+// Setup precomputes quotient/remainder increments. Steady-state rows update
+// bank/address registers with additions and carry checks, rather than redo this
+// formula. Signed floor division is needed for negative padded starting origins.
 module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
  BANK_WIDTH=(ARRAY_SIZE>1?$clog2(ARRAY_SIZE):1)) (
  input clk,job_clear,clear,issue_advance,
@@ -12,9 +23,21 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
 );
  localparam CW=2*CFG_WIDTH+2;
  localparam IW=(ARRAY_SIZE>1?$clog2(ARRAY_SIZE):1);
+ // One divider services setup steps 0..7; pending prevents duplicate starts.
+ // configured means shared arithmetic is ready; initialized means a row group
+ // has received its saved starting addresses. They are different milestones.
  reg [3:0] setup_step;
  reg pending,configured;
+ // tile_rows=ceil(H/R), tile_cols=ceil(W/S): coarse input-block dimensions.
+ // Encoded names: sr=stride height, sc=stride width; dr=dilation height,
+ // dc=dilation width. Final q/r means quotient/remainder, not output Q/kernel R.
+ // Example scq=floor(stride_w/S), scr=stride_w%S.
+ // initial_hr/wr are Euclidean remainders of -pad_h/-pad_w in R/S.
  reg [CFG_WIDTH-1:0] tile_rows,tile_cols,srq,scq,drq,dcq,srr,scr,drr,dcr,initial_hr,initial_wr;
+ // initial_hq/wq are coarse block coordinates at the padded origin.
+ // row_pitch=tile_cols*N: words between coarse block rows.
+ // plane_pitch=tile_rows*tile_cols*N: words occupied by one swizzle slot group.
+ // initial_address/bank start c=0,r=0,s=0 at p=q=n=0.
  reg signed [CW-1:0] initial_hq,initial_wq,row_pitch,plane_pitch,initial_address;
  reg [BANK_WIDTH-1:0] initial_bank;
  reg [CW-1:0] numerator,denominator;
@@ -36,6 +59,10 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
  setup_divider #(.WIDTH(CW)) u_setup (
   .clk(clk),.clear(job_clear),.start(!job_clear && setup_step<8 && !pending),
   .numerator(numerator),.denominator(denominator),.done(division_done),.quotient(quotient),.remainder(remainder));
+ // Nine precomputed moves: 0/1 horizontal stride without/with residue wrap;
+ // 2/3 vertical stride without/with wrap; 4/5 horizontal dilation;
+ // 6/7 vertical dilation; 8 next channel (slot += R*S).
+ // A residue wrap can make slot_delta negative even while h or w increases.
  wire signed [CW-1:0] slot_delta[0:8];
  assign slot_delta[0]=$signed({1'b0,scr});
  assign slot_delta[1]=$signed({1'b0,scr})-$signed({1'b0,S});
@@ -46,8 +73,13 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
  assign slot_delta[6]=$signed({1'b0,drr})*$signed({1'b0,S});
  assign slot_delta[7]=($signed({1'b0,drr})-$signed({1'b0,R}))*$signed({1'b0,S});
  assign slot_delta[8]=$signed({1'b0,R})*$signed({1'b0,S});
+ // Split each signed slot_delta into floor(delta/ARRAY_SIZE) planes and a
+ // nonnegative bank_delta. address_delta combines plane and coarse-spatial
+ // movement. If adding bank_delta wraps the bank index, add one more plane.
  reg signed [CW-1:0] plane_delta[0:8],address_delta[0:8];
  reg [BANK_WIDTH-1:0] bank_delta[0:8];
+ // Verilog signed division truncates toward zero. Correct it to mathematical
+ // floor so negative moves have a nonnegative remainder and correct bank carry.
  function automatic signed [CW-1:0] floor_banks(input signed [CW-1:0] value);
   reg signed [CW-1:0] divisor;
   begin
@@ -56,15 +88,22 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
    if(value<0 && value%divisor!=0) floor_banks=floor_banks-1;
   end
  endfunction
+ // b and d are each below ARRAY_SIZE: at most one subtraction is needed.
  function automatic [BANK_WIDTH-1:0] hop_bank(input [BANK_WIDTH-1:0] b,d);
   reg [BANK_WIDTH:0] sum;
   begin sum={1'b0,b}+{1'b0,d};hop_bank=BANK_WIDTH'(sum>=ARRAY_SIZE ? sum-ARRAY_SIZE : sum);end
  endfunction
+ // A bank-index carry crosses into the next bank plane in local SRAM.
  function automatic signed [CW-1:0] hop_addr(input signed [CW-1:0] a,input [BANK_WIDTH-1:0] b,d,input signed [CW-1:0] increment);
   reg [BANK_WIDTH:0] sum;
   begin sum={1'b0,b}+{1'b0,d};hop_addr=a+increment+(sum>=ARRAY_SIZE ? plane_pitch : 0);end
  endfunction
  wire [CFG_WIDTH-1:0] initial_slot=initial_hr*S+initial_wr;
+ // TWO METADATA SEED SETS, not the two activation-data slots in banked_input.
+ // A seed set stores starting h,w,remainders,bank,address for each array row.
+ // write_slot is being prepared; active_slot is consumed by the current group.
+ // seed_base/seed_group identify flattened CRS groups; write_index selects a row.
+ // Next-group seed generation overlaps current-group execution.
  reg write_slot,active_slot,initialized;
  reg [1:0] seed_ready;
  reg [IW-1:0] write_index;
@@ -73,6 +112,9 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
  reg signed [CW-1:0] seed_h[0:1][0:ARRAY_SIZE-1],seed_w[0:1][0:ARRAY_SIZE-1],seed_addr[0:1][0:ARRAY_SIZE-1];
  reg [CFG_WIDTH-1:0] seed_hr[0:1][0:ARRAY_SIZE-1],seed_wr[0:1][0:ARRAY_SIZE-1];
  reg [BANK_WIDTH-1:0] seed_bank[0:1][0:ARRAY_SIZE-1];
+ // Seed producer walks for(c) for(r) for(s). kernel_hr/wr track h%R,w%S;
+ // kernel_h/w track the signed coordinates used for padding checks.
+ // kernel_row_* and channel_* save outer-loop origins when s or r resets.
  reg [CFG_WIDTH-1:0] kernel_r,kernel_s,kernel_hr,kernel_wr;
  reg signed [CW-1:0] kernel_h,kernel_w,kernel_addr,kernel_row_addr,channel_addr;
  reg [BANK_WIDTH-1:0] kernel_bank,kernel_row_bank,channel_bank;
@@ -88,6 +130,8 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
  wire signed [CW-1:0] next_kernel_row_addr=hop_addr(kernel_row_addr,kernel_row_bank,bank_delta[dr_move],address_delta[dr_move]);
  wire [BANK_WIDTH-1:0] next_channel_bank=hop_bank(channel_bank,bank_delta[8]);
  wire signed [CW-1:0] next_channel_addr=hop_addr(channel_addr,channel_bank,bank_delta[8],address_delta[8]);
+ // Switch groups only when the requested group's metadata is ready.
+ // ready also excludes clear, so no input request escapes a pass reset.
  wire target_slot=initialized && current_group!=group_base ? !active_slot : active_slot;
  wire load_group=configured && (!initialized || current_group!=group_base) && seed_ready[target_slot] && seed_group[target_slot]==group_base;
  wire [CFG_WIDTH-1:0] total_terms=C*R*S;
@@ -104,6 +148,8 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
    kernel_addr<=0;kernel_row_addr<=0;channel_addr<=0;kernel_bank<=0;kernel_row_bank<=0;channel_bank<=0;
    for(j=0;j<9;j=j+1) begin plane_delta[j]<=0;bank_delta[j]<=0;address_delta[j]<=0;end
   end else if(!configured) begin
+   // Eight sequential divisions obtain block sizes and stride/dilation/padding
+   // quotients/remainders. Multipliers below use their registered results.
    if(setup_step<8) begin
     if(!pending) pending<=1;
     if(division_done) begin
@@ -120,6 +166,7 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
      endcase
     end
    end else case(setup_step)
+    // Convert signed slot moves into reusable bank and plane increments.
     8:begin
      row_pitch<=$signed({1'b0,tile_cols})*$signed({1'b0,N});
      for(j=0;j<9;j=j+1) begin
@@ -128,7 +175,11 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
      end
      setup_step<=9;
     end
+    // Coarse input plane size in local SRAM words, including interleaved images.
     9:begin plane_pitch<=$signed({1'b0,tile_rows})*row_pitch;setup_step<=10;end
+    // Merge coarse-coordinate movement with plane movement for each case.
+    // Padding quotient/remainder calculations allow a negative starting origin;
+    // invalid padded coordinates will be masked before a bank request is issued.
     10:begin
      address_delta[0]<=plane_delta[0]*plane_pitch+$signed({1'b0,scq})*$signed({1'b0,N});
      address_delta[1]<=plane_delta[1]*plane_pitch+($signed({1'b0,scq})+1)*$signed({1'b0,N});
@@ -179,11 +230,15 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
      end
     end
    end
+   // Atomically install one complete row-seed set, then release that set.
    if(load_group) begin
     seed_ready[target_slot]<=0;active_slot<=target_slot;current_group<=group_base;initialized<=1;
    end
   end
  end
+ // Shared stream order: n advances first, then q, then the input row origin.
+ // issue_advance means every valid request for this vector has been scheduled;
+ // it does not mean all responses have returned or the array consumed it yet.
  always @(posedge clk) begin
   if(job_clear || load_group) begin batch_index<=0;output_column<=0;end
   else if(ready && issue_advance) begin
@@ -193,9 +248,15 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
  end
  genvar lane;
  generate for(lane=0;lane<ARRAY_SIZE;lane=lane+1) begin : g_row
+  // Per physical row: h/w are actual signed input coordinates.
+  // hr/wr are their residues modulo R/S; first_w/first_wr restore q=0.
+  // current_bank/address follow q; row_bank/address save the current p origin.
+  // n is shared, so each row adds batch_index only at the final output.
   reg signed [CW-1:0] h,w,row_address,current_address,first_w;
   reg [CFG_WIDTH-1:0] hr,wr,first_wr;
   reg [BANK_WIDTH-1:0] row_bank,current_bank;
+  // stride remainder + current residue selects wrapped/unwrapped increments.
+  // The quotients were included in address_delta during setup.
   wire [CFG_WIDTH:0] col_sum={1'b0,wr}+{1'b0,scr};
   wire [CFG_WIDTH:0] row_sum={1'b0,hr}+{1'b0,srr};
   wire col_wrap=col_sum>={1'b0,S};
@@ -212,6 +273,8 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
     hr<=seed_hr[target_slot][lane];wr<=seed_wr[target_slot][lane];first_wr<=seed_wr[target_slot][lane];
     row_address<=seed_addr[target_slot][lane];current_address<=seed_addr[target_slot][lane];
     row_bank<=seed_bank[target_slot][lane];current_bank<=seed_bank[target_slot][lane];
+   // All images at the current p,q are issued before changing spatial coordinates.
+   // At q wrap, restore horizontal origin and advance the saved vertical origin.
    end else if(ready && issue_advance && batch_index==N-1) begin
     if(output_column==Q-1) begin
      h<=h+$signed({1'b0,stride_i});w<=first_w;wr<=first_wr;
@@ -225,6 +288,8 @@ module im2col_addr_gen #(parameter ARRAY_SIZE=4,CFG_WIDTH=32,ADDR_WIDTH=8,
     end
    end
   end
+  // Last CRS group may not fill all rows. Both unused terms and padding are
+  // invalid requests, so neither may read arbitrary truncated SRAM addresses.
   wire in_bounds=ready && group_base+lane<total_terms && h>=0 && h<$signed({1'b0,H}) && w>=0 && w<$signed({1'b0,W});
   assign valid[lane]=in_bounds;
   assign bank[lane]=in_bounds ? current_bank : 0;

@@ -1,6 +1,10 @@
 `timescale 1ns / 1ps
 
 // Synchronous-read pseudo-dual-port (1W1R) SRAM model matching SKY130 OpenRAM macro behavior
+// LOCAL SRAM MODEL: one word write and one synchronous word read.
+// A read consumes an edge before its value is available; callers align enables
+// and addresses accordingly. This storage has no reset that clears its contents.
+// DATA_WIDTH describes a word: a FIFO input word can contain BUS_WORDS operands.
 module row_sram #(
     parameter integer DATA_WIDTH = 32,
     parameter integer ADDR_WIDTH = 8,

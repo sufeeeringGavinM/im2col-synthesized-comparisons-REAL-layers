@@ -1,5 +1,10 @@
 // Input SRAM ownership, row skew, read alignment, and activation delivery.
 `timescale 1ns / 1ps
+// ONE NHWC-STYLE ROW FEEDER: receive a shared spatial-address request.
+// The request bundle carries {feed enable, padding validity, SRAM address}.
+// Each later row adds one delay stage, aligning activations with systolic sums.
+// Padding/unused channels inject zero. A separate registered valid bit follows
+// the synchronous SRAM read, so address validity is aligned with returned data.
 module activation_feeder #(
     parameter ROW_INDEX = 0, BIT_WIDTH = 8, ADDR_WIDTH = 8
 ) (
@@ -28,6 +33,7 @@ module activation_feeder #(
       .clk(clk), .we(sram_we_ext), .waddr(sram_waddr_ext), .wdata(sram_wdata_ext),
       .raddr(sram_raddr), .rdata(sram_rdata)
   );
+  // Delay the padding-valid flag by the same edge as the SRAM read return.
   reg rd_valid_q;
   always @(posedge clk) rd_valid_q <= feed_out[ADDR_WIDTH];
   assign activation_out = (feed_active && stream_enable && feed_out[ADDR_WIDTH+1] && rd_valid_q)

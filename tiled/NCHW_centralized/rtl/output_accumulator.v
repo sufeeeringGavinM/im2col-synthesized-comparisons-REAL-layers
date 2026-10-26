@@ -1,5 +1,11 @@
 // Output SRAM ownership, writeback timing, and accumulation across reduction groups.
 `timescale 1ns / 1ps
+// OUTPUT WRITEBACK: store each completed spatial result, then reuse it next pass.
+// writeback_cnt tracks pipeline progress; wb_ptr tracks actual output SRAM words.
+// The two counters differ because fill/drain cycles do not all produce results.
+// accumulate selects old stored sum + new pass result; otherwise overwrite it.
+// The read address leads a write by one cycle to align synchronous old_out data.
+// CHANNEL_INDEX/COL_INDEX selects an output filter column, not an input channel.
 module output_accumulator #(
     parameter COL_INDEX = 0, ACC_WIDTH = 32, ADDR_WIDTH = 8,
               WB_CNT_WIDTH = 8, OUT_LATENCY = 5, CFG_WIDTH = 32
@@ -12,12 +18,14 @@ module output_accumulator #(
     output [ACC_WIDTH-1:0] observed_word,
     input [ACC_WIDTH-1:0] result_in
 );
+  // First valid result reaches this column after row skew + array/output latency.
   localparam WB_START_CYCLE = COL_INDEX + OUT_LATENCY;
   wire wb_valid;
   reg [ADDR_WIDTH-1:0] wb_ptr;
   wire [ADDR_WIDTH-1:0] wb_ptr_next;
   wire [ACC_WIDTH-1:0] old_out, wb_data;
   assign observed_word=old_out;
+  // Counts pass progress; variants with advance increment only when the array moves.
   reg [WB_CNT_WIDTH-1:0] writeback_cnt;
   always @(posedge clk) begin
     if (clear) writeback_cnt <= 0;
@@ -39,8 +47,10 @@ module output_accumulator #(
   // the old value then shows up on old_out in the same cycle result_in is written.
   // Each output address is written once per pass and read the cycle before, so there is
   // no read-after-write hazard within a pass.
+  // Prefetch the next old output sum one synchronous-read cycle before writeback.
   assign wb_ptr_next = clear ? {ADDR_WIDTH{1'b0}} : (wb_valid ? wb_ptr + 1'b1 : wb_ptr);
 
+  // First reduction pass overwrites; later passes add to the previously stored sum.
   assign wb_data = accumulate ? old_out + result_in : result_in;
   sram #(.DATA_WIDTH(ACC_WIDTH), .ADDR_WIDTH(ADDR_WIDTH)) u_sram (
       .clk(clk), .we(wb_valid), .waddr(wb_ptr), .wdata(wb_data),

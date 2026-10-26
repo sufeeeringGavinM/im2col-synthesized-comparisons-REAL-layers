@@ -1,5 +1,8 @@
 `timescale 1ns/1ps
 // Shared producer metadata; per-channel retained words and packet queues.
+// ACTIVATION MEMORY/STREAM ROUTING (MMU is the module's historical name).
+// It connects per-channel storage, stream preparation, row skew, array and output
+// writeback. It is not a virtual-memory address translator or operating-system MMU.
 module MMU #(parameter ARRAY_SIZE=10,BIT_WIDTH=8,BUS_WORDS=8,ACC_WIDTH=32,
     ADDR_WIDTH=8,CFG_WIDTH=32,PACKET_WORDS=8,
     COUNT_WIDTH=$clog2(PACKET_WORDS+1),OFFSET_WIDTH=(BUS_WORDS>1?$clog2(BUS_WORDS):1)) (
@@ -17,20 +20,28 @@ module MMU #(parameter ARRAY_SIZE=10,BIT_WIDTH=8,BUS_WORDS=8,ACC_WIDTH=32,
     output [ARRAY_SIZE-1:0][ACC_WIDTH-1:0] observed_words,acc_col_out,
     output advance
 );
+  // clear resets the current array pass. producer_clear lasts for the whole
+  // inactive job: queued packets survive a tap switch so prefetch is useful.
   wire clear=!nrst || clear_pass;
   wire producer_clear=!nrst || !producer_enable;
   wire [CFG_WIDTH-1:0] output_pixels=cfg_N*cfg_P*cfg_Q;
+  // Producer follows for(r) for(s) for(p) for(q) for(n), one packet at a time.
+  // producer_r/s may be one tap ahead of the array's current r/s.
   reg [CFG_WIDTH-1:0] producer_position;
   // Queued packets stay ordered across taps; the producer may run one tap ahead.
   reg [CFG_WIDTH-1:0] producer_r,producer_s;
   wire producer_on_current_tap=producer_r==r && producer_s==s;
   wire producer_has_next=producer_r!=cfg_R-1 || producer_s!=cfg_S-1;
+  // filled[j] says packet position j has been assembled. cache_addr identifies
+  // the retained packed SRAM word; pending_addr identifies an in-flight read.
+  // waiting delays fetch_word by one edge to align its returned data.
   reg [PACKET_WORDS-1:0] filled;
   reg cache_valid,waiting;
   reg [ADDR_WIDTH-1:0] cache_addr,pending_addr;
   // A synchronous read return can supply this cycle's selectors directly.
   wire available_word_valid=waiting || cache_valid;
   wire [ADDR_WIDTH-1:0] available_word_addr=waiting ? pending_addr : cache_addr;
+  // The final packet may contain fewer than PACKET_WORDS valid stream positions.
   wire [COUNT_WIDTH-1:0] packet_count=COUNT_WIDTH'(
     output_pixels-producer_position<PACKET_WORDS ? output_pixels-producer_position : PACKET_WORDS);
   wire [PACKET_WORDS-1:0] padding_valid;
@@ -55,6 +66,9 @@ module MMU #(parameter ARRAY_SIZE=10,BIT_WIDTH=8,BUS_WORDS=8,ACC_WIDTH=32,
   reg [PACKET_WORDS-1:0] collect_mask;
   reg [ADDR_WIDTH-1:0] request_addr;
   integer j,lane;
+  // Request one missing packed address and collect every packet position it
+  // supplies. All active channels use the same address metadata, but each owns
+  // its own data SRAM and packet values. Padding positions collect zero.
   always @* begin
     all_ready=1;all_space=1;
     for(lane=0;lane<ARRAY_SIZE;lane=lane+1)
@@ -71,7 +85,9 @@ module MMU #(parameter ARRAY_SIZE=10,BIT_WIDTH=8,BUS_WORDS=8,ACC_WIDTH=32,
   // Collect the available word and issue the next missing address together.
   wire fetch_word=!producer_clear && address_ready && producer_position<output_pixels && !complete && have_request;
   wire capture_word=!producer_clear && waiting;
+  // Push only a complete packet, and only if every active channel has room.
   assign push_packet=!producer_clear && address_ready && producer_position<output_pixels && complete && all_space;
+  // Advance at most one tap ahead; preserve order in the two-packet queues.
   assign advance_producer_tap=!producer_clear && producer_on_current_tap && producer_has_next
     && (producer_position>=output_pixels || (push_packet && producer_position+packet_count==output_pixels));
   always @(posedge clk) begin
@@ -97,8 +113,11 @@ module MMU #(parameter ARRAY_SIZE=10,BIT_WIDTH=8,BUS_WORDS=8,ACC_WIDTH=32,
   reg [CFG_WIDTH:0] step_count;
   reg [COUNT_WIDTH-1:0] consume_index;
   wire [CFG_WIDTH:0] pass_steps=(CFG_WIDTH+1)'(output_pixels)+2*ARRAY_SIZE;
+  // Array, row skew and output writeback advance together. Missing packets
+  // stall useful input consumption; trailing fill/drain steps need no packet.
   assign advance=running && step_count<pass_steps && (step_count>=output_pixels || all_ready);
   wire consume=advance && step_count<output_pixels;
+  // Serialize the head packet. Pop only when its last valid scalar is consumed.
   wire pop_packet=consume && consume_index==head_count[0]-1'b1;
   always @(posedge clk) begin
     if(clear) begin step_count<=0;consume_index<=0;end
@@ -110,6 +129,8 @@ module MMU #(parameter ARRAY_SIZE=10,BIT_WIDTH=8,BUS_WORDS=8,ACC_WIDTH=32,
       end
     end
   end
+  // Physical row c consumes input channel c. Delay its scalar by c enabled
+  // array steps, so stalls freeze the skew pipeline as well as the PEs.
   genvar c;
   generate for(c=0;c<ARRAY_SIZE;c=c+1) begin : g_c_lanes
     channel_bank #(.CHANNEL_INDEX(c),.BIT_WIDTH(BIT_WIDTH),.BUS_WORDS(BUS_WORDS),

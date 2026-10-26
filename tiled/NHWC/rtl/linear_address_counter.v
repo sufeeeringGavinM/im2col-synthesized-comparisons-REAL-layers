@@ -1,31 +1,77 @@
 `timescale 1ns/1ps
 // Shared job pitches; streaming addresses use only additions and carry tests.
+// INCREMENTAL ADDRESS GENERATION, within ONE channel's local input SRAM.
+// Logical coordinates: h=p*stride_i+r*dilation_i-pad_i;
+//                      w=q*stride_j+s*dilation_j-pad_j.
+// Local word address: ((h*W)+w)*N+n; this is not the external NCHW file offset.
+// _i means height (pad_h/stride_h/dil_h); _j means width (pad_w/stride_w/dil_w).
+// Instead of recomputing products for every access, setup saves increments.
+// Each address lane then adds those increments and applies wrap corrections.
+// LANES counts addresses generated together, not physical systolic-array rows.
+// NHWC/explicit use one lane; the packet feeder uses eight lanes.
 module linear_address_counter #(parameter CFG_WIDTH=32, LANES=1,
+    // Bits to select a seed lane; force at least one bit for scalar operation.
     INDEX_WIDTH=(LANES>1?$clog2(LANES):1)) (
+    // job_clear repeats all setup; position_clear only restores initial_*.
+    // advance accepts one LANES-position movement; otherwise counters hold.
+    // lookahead selects next_* for the output before current_* registers update.
     input clk, job_clear, position_clear, advance, lookahead,
     input [CFG_WIDTH-1:0] N,H,W,Q,R,S,
     input [CFG_WIDTH-1:0] pad_i,pad_j,stride_i,stride_j,dilation_i,dilation_j,r,s,
+    // ready: arithmetic and seeds are prepared. valid: final h/w is in bounds.
+    // linear_addr is a local SRAM word index, with padding reported separately.
     output ready,
     output [LANES-1:0] valid,
     output [LANES-1:0][63:0] linear_addr
 );
+  // setup=0/1/2 prepares dependent arithmetic; setup=3 writes one lane seed per edge.
+  // initialized/ready become true after all LANES starting positions are saved.
   reg [2:0] setup;
   reg initialized;
+  // "Seed" means a starting counter value, not a random number.
+  // seed_index selects which address lane is currently being initialized.
   reg [INDEX_WIDTH-1:0] seed_index;
+  // A pitch is an address distance, measured in SRAM words, not bytes.
+  // row_pitch=W*N: next input row; col_step=stride_w*N: next output column.
+  // row_step=stride_h*W*N: next output-row origin.
+  // tap_col_step=dil_w*N and tap_row_step=dil_h*W*N: move kernel taps.
+  // These products are computed during setup, then reused as adder inputs.
   reg signed [63:0] row_pitch,col_step,row_step,tap_col_step,tap_row_step;
+  // pad_col=pad_w*N; pad_row=pad_h*W*N. Their negatives form the first tap origin.
+  // column_span=Q*stride_w is a coordinate distance: reset w after Q columns.
+  // batch_correction=col_step-N adjusts an address when image index n wraps.
+  // row_correction=row_step-Q*col_step adjusts it when output column q wraps.
+  // Example N=1,W=32,Q=28,stride=1: ordinary +1; row wrap adds +1+4=+5.
   reg signed [63:0] pad_col,pad_row,column_span,batch_correction,row_correction;
+  // Suffixes n/q identify image/output-column indices. Suffixes h/w/addr are
+  // spatial-scan contributions, before adding the tap-and-padding contribution.
+  // seed_* walks positions 0..LANES during setup. jump_* is the resulting
+  // displacement over LANES positions, including its batch/row carry metadata.
   reg [CFG_WIDTH-1:0] seed_n,seed_q,jump_n,jump_q;
   reg signed [63:0] seed_h,seed_w,seed_addr,jump_h,jump_w,jump_addr;
+  // initial_*: saved lane starting positions, restored at each spatial-scan restart.
+  // current_*: live lane positions. For a logical position (n,p,q):
+  // current_h=p*stride_h; current_w=q*stride_w;
+  // current_addr=(p*stride_h*W+q*stride_w)*N+n. Tap offsets are separate.
   reg [CFG_WIDTH-1:0] initial_n[0:LANES-1],initial_q[0:LANES-1];
   reg signed [63:0] initial_h[0:LANES-1],initial_w[0:LANES-1],initial_addr[0:LANES-1];
   reg [CFG_WIDTH-1:0] current_n[0:LANES-1],current_q[0:LANES-1];
   reg signed [63:0] current_h[0:LANES-1],current_w[0:LANES-1],current_addr[0:LANES-1];
+  // saved_r/s detect a new sequential kernel tap from the controller.
+  // tap_h=r*dil_h-pad_h; tap_w=s*dil_w-pad_w;
+  // tap_addr=(tap_h*W+tap_w)*N. tap_row_addr saves the s=0 origin so
+  // advancing r restores the correct horizontal origin rather than extending it.
   reg [CFG_WIDTH-1:0] saved_r,saved_s;
   reg signed [63:0] tap_h,tap_w,tap_addr,tap_row_addr;
+  // active_* includes a newly changed tap immediately, before the tap registers
+  // update on the edge. s==0 denotes a new kernel row in the controller's order.
   wire change_tap=r!=saved_r || s!=saved_s;
   wire signed [63:0] active_h=change_tap && s==0 ? tap_h+$signed({1'b0,dilation_i}) : tap_h;
   wire signed [63:0] active_w=change_tap ? (s==0 ? -$signed({1'b0,pad_j}) : tap_w+$signed({1'b0,dilation_j})) : tap_w;
   wire signed [63:0] active_addr=change_tap ? (s==0 ? tap_row_addr+tap_row_step : tap_addr+tap_col_step) : tap_addr;
+  // Seed enumeration follows for(p) for(q) for(n): n changes fastest.
+  // Wrapping n advances q; wrapping both n and q advances the input row.
+  // seed_next_* are combinational candidates, not extra stored counters.
   wire seed_batch_wrap=seed_n==N-1;
   wire seed_row_wrap=seed_batch_wrap && seed_q==Q-1;
   wire [CFG_WIDTH-1:0] seed_next_n=seed_batch_wrap ? 0 : seed_n+1'b1;
@@ -48,6 +94,7 @@ module linear_address_counter #(parameter CFG_WIDTH=32, LANES=1,
       end
     end else if(!initialized) begin
       case(setup)
+        // Stage 0: independent horizontal products and the input-row pitch.
         0: begin
           row_pitch<=$signed({1'b0,W})*$signed({1'b0,N});
           col_step<=$signed({1'b0,stride_j})*$signed({1'b0,N});
@@ -56,6 +103,7 @@ module linear_address_counter #(parameter CFG_WIDTH=32, LANES=1,
           column_span<=$signed({1'b0,Q})*$signed({1'b0,stride_j});
           setup<=1;
         end
+        // Stage 1: vertical products depend on the previous edge's row_pitch.
         1: begin
           row_step<=$signed({1'b0,stride_i})*row_pitch;
           tap_row_step<=$signed({1'b0,dilation_i})*row_pitch;
@@ -63,12 +111,15 @@ module linear_address_counter #(parameter CFG_WIDTH=32, LANES=1,
           batch_correction<=col_step-$signed({1'b0,N});
           setup<=2;
         end
+        // Stage 2: final wrap correction and signed, possibly negative tap origin.
         2: begin
           row_correction<=row_step-$signed({1'b0,Q})*col_step;
           tap_h<=-$signed({1'b0,pad_i});tap_w<=-$signed({1'b0,pad_j});
           tap_addr<=-pad_row-pad_col;tap_row_addr<=-pad_row-pad_col;
           setup<=3;
         end
+        // Stage 3: one starting position per lane per edge. Scalar mode saves
+        // position 0 and a one-position jump; packet mode saves 0..7 and a jump of 8.
         3: begin
           initial_n[seed_index]<=seed_n;initial_q[seed_index]<=seed_q;
           initial_h[seed_index]<=seed_h;initial_w[seed_index]<=seed_w;initial_addr[seed_index]<=seed_addr;
@@ -87,6 +138,9 @@ module linear_address_counter #(parameter CFG_WIDTH=32, LANES=1,
   end
   genvar lane;
   generate for(lane=0;lane<LANES;lane=lane+1) begin : g_position
+    // Add the shared LANES-position jump, then correct carries through n and q.
+    // These additions replace repeated position/N, position%N and position/Q.
+    // For LANES>1 a next position skips the elements produced by the other lanes.
     wire [CFG_WIDTH:0] n_sum={1'b0,current_n[lane]}+{1'b0,jump_n};
     wire n_wrap=n_sum>={1'b0,N};
     wire [CFG_WIDTH:0] q_sum={1'b0,current_q[lane]}+{1'b0,jump_q}+n_wrap;
@@ -104,18 +158,25 @@ module linear_address_counter #(parameter CFG_WIDTH=32, LANES=1,
         current_n[lane]<=seed_n;current_q[lane]<=seed_q;
         current_h[lane]<=seed_h;current_w[lane]<=seed_w;current_addr[lane]<=seed_addr;
       end else if(initialized) begin
+        // Restart a spatial scan without repeating the setup multiplications.
         if(position_clear) begin
           current_n[lane]<=initial_n[lane];current_q[lane]<=initial_q[lane];
           current_h[lane]<=initial_h[lane];current_w[lane]<=initial_w[lane];current_addr[lane]<=initial_addr[lane];
+        // Hold all position registers when the producer has not accepted a step.
         end else if(advance) begin
           current_n[lane]<=next_n;current_q[lane]<=next_q;
           current_h[lane]<=next_h;current_w[lane]<=next_w;current_addr[lane]<=next_addr;
         end
       end
     end
+    // Choose saved/current/next position. lookahead presents the next request
+    // early so synchronous SRAM can return it on the required feeding edge.
+    // Add tap offsets only here; the spatial seeds are reusable across all taps.
     wire signed [63:0] h=(position_clear ? initial_h[lane] : lookahead ? next_h : current_h[lane])+active_h;
     wire signed [63:0] w=(position_clear ? initial_w[lane] : lookahead ? next_w : current_w[lane])+active_w;
     wire signed [63:0] a=(position_clear ? initial_addr[lane] : lookahead ? next_addr : current_addr[lane])+active_addr;
+    // Negative padded coordinates must be checked before narrowing the address.
+    // The consumer uses valid to inject zero; address zero alone is not padding.
     assign valid[lane]=ready && h>=0 && h<$signed({1'b0,H}) && w>=0 && w<$signed({1'b0,W});
     assign linear_addr[lane]=valid[lane] ? a : 0;
   end endgenerate

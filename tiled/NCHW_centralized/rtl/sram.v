@@ -2,6 +2,10 @@
 
 `timescale 1ns / 1ps
 
+// LOCAL SRAM MODEL: one write port and one synchronous read port.
+// we writes one word on the rising edge; rdata captures the addressed old word
+// on that edge. Nonblocking assignments give read-before-write behavior if the
+// same address is read and written together. There is no bulk-reset of memory.
 module sram #(
     parameter DATA_WIDTH = 32,
     parameter ADDR_WIDTH = 8

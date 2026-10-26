@@ -1,6 +1,12 @@
 `timescale 1ns / 1ps
 
 // Prefetch and descending row shifts for the initial or next kernel tap
+// INITIAL WEIGHTS AND PREFETCH: synchronous SRAM reads followed by row shifts.
+// All filter columns receive weights in parallel. Rows load in descending order
+// so an ARRAY_SIZE-row array needs ARRAY_SIZE shifts, including inactive rows.
+// PRIME/PREFETCH requests the first row one edge before its data is consumed.
+// While computing with one stationary weight buffer, the other can be loaded.
+// Weight loading is independent of activation stalls where advance is present.
 module weight_loader #(
     parameter integer ARRAY_SIZE = 10,
     parameter integer BIT_WIDTH  = 8,
@@ -48,10 +54,15 @@ module weight_loader #(
   // Row-address counter follows the existing descending channel read sequence.
   reg [CFG_WIDTH-1:0] tap_index,saved_r,saved_s;
   reg [ADDR_WIDTH-1:0] row_address;
+  // kernel_stride is the SRAM-word distance between input channels at one tap.
+  // tap_index follows r*S+s without repeatedly multiplying r by S.
+  // selected_tap chooses the next tap while preloading, or the current tap initially.
   wire [CFG_WIDTH-1:0] kernel_stride=R*S;
   wire tap_changed=r!=saved_r || s!=saved_s;
   wire [CFG_WIDTH-1:0] current_tap=tap_index+(tap_changed ? 1'b1 : 1'b0);
   wire [CFG_WIDTH-1:0] selected_tap=running ? current_tap+1'b1 : current_tap;
+  // Start at the last physical row, then subtract R*S per row as weights shift
+  // downward. c_read masks channels beyond C even though the fixed row shift runs.
   wire [ADDR_WIDTH-1:0] highest_address=ADDR_WIDTH'((ARRAY_SIZE-1)*kernel_stride+selected_tap);
   wire first_read=prime || (preload_next && weight_phase==PREFETCH);
   assign kernel_raddr=first_read ? highest_address : load_weights && c_load!=0 ? row_address-ADDR_WIDTH'(kernel_stride) : row_address;

@@ -2,6 +2,11 @@
 
 `timescale 1ns / 1ps
 
+// DATA ROUTING: connect address generation, activation delivery, array and output SRAM.
+// Input and output indices use N,C,H,W and N,K,P,Q. Stream position is
+// (p*Q+q)*N+n, so n changes first, then q, then p. Dimensions are local to the job.
+// The address request and SRAM return occur on different clock edges. Row skew
+// adds delays so matching activations and partial sums meet in the systolic array.
 module conv_datapath #(
     parameter ARRAY_SIZE = 4,
     parameter BIT_WIDTH  = 8,
@@ -55,6 +60,9 @@ module conv_datapath #(
   localparam OUT_LATENCY = ARRAY_SIZE + 1;
   localparam WB_CNT_WIDTH = CFG_WIDTH + 1;
 
+  // NHWC rows are channels c. All rows share the same r,s and spatial address;
+  // row c reads channel bank c after the appropriate skew delay.
+  // output_pixels counts stream positions per filter, including every image n.
   wire [CFG_WIDTH-1:0] output_pixels = cfg_N * cfg_P * cfg_Q;
 
   wire clear = !nrst || clear_pass;  // Clear pixel, skew, and writeback state between tap passes.
@@ -94,6 +102,8 @@ module conv_datapath #(
 
   // Feeders form a shared skew chain for {feed_en, valid, addr}.
   localparam FW = INPUT_ADDR_WIDTH + 2;
+  // One spatial-address request is shared, then delayed progressively across
+  // channel-bank feeders. This is not a separate multiply/divide unit per row.
   wire [FW-1:0] feed_in = {!clear && position_cnt < output_pixels, agen_valid, agen_addr};
   wire [ARRAY_SIZE:0][FW-1:0] feed_bus;
   assign feed_bus[0] = feed_in;

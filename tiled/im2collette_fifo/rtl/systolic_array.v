@@ -1,6 +1,12 @@
 `timescale 1ns / 1ps
 
 // Parameterized 10x10 systolic array grid with stationary weight buffers and registered outputs
+// PHYSICAL ARRAY: reduction terms occupy rows; output filters k occupy columns.
+// Activations travel right, partial sums travel down, and weights shift down
+// only while loading their selected stationary buffer. Each PE multiplies its
+// activation by the selected stored weight and adds the sum arriving from above.
+// The bottom-row sum is registered again as acc_col_out before SRAM writeback.
+// Unused logical rows/columns are masked; physical ARRAY_SIZE is unchanged.
 module systolic_array #(
     parameter integer ARRAY_SIZE = 10,
     parameter integer BIT_WIDTH  = 8,

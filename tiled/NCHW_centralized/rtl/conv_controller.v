@@ -1,5 +1,10 @@
 `timescale 1ns/1ps
 // Sequence contiguous CRS reduction groups; switch only after output drain.
+// CORE SEQUENCER: choose the current reduction pass and stationary weight buffer.
+// PRIME starts a synchronous kernel read; LOAD shifts weights into physical rows.
+// RUN streams spatial positions, including array fill/drain. SWITCH clears pass
+// state before the next pass; already stored partial sums remain in SRAM.
+// This controller sequences clock edges, not simulator wall-clock time.
 module conv_controller #(parameter ARRAY_SIZE=4, CFG_WIDTH=32) (
     input clk, nrst, start, initial_done, pass_done, next_ready,
     input [CFG_WIDTH-1:0] C, R, S,
@@ -10,6 +15,7 @@ module conv_controller #(parameter ARRAY_SIZE=4, CFG_WIDTH=32) (
 );
   localparam IDLE=0, PRIME=1, LOAD=2, RUN=3, SWITCH=4;
   reg [2:0] state;
+  // NCHW reduces flattened t=(c*R+r)*S+s in groups of ARRAY_SIZE physical rows.
   wire has_next = group_base+ARRAY_SIZE < C*R*S;
   assign next_group_base = group_base+ARRAY_SIZE;
   assign busy = state!=IDLE;
@@ -17,8 +23,10 @@ module conv_controller #(parameter ARRAY_SIZE=4, CFG_WIDTH=32) (
   assign prime = state==PRIME;
   assign initial_load = state==LOAD;
   assign running = state==RUN;
+  // Prepare next-pass weights while the current array pass is still running.
   assign preload_next = running && has_next;
   assign restart_weights = (state==IDLE && start) || (running && pass_done && has_next && next_ready);
+  // Later taps/groups must add their contributions to output SRAM, rather than erase them.
   assign accumulate = group_base!=0;
   always @(posedge clk) begin
     if (!nrst) begin
@@ -29,6 +37,7 @@ module conv_controller #(parameter ARRAY_SIZE=4, CFG_WIDTH=32) (
         IDLE: if(start) begin state<=PRIME; group_base<=0; active_weight_buffer<=0; end
         PRIME: state<=LOAD;
         LOAD: if(initial_done) state<=RUN;
+        // Array data path is cleared for one edge; next-group weights are ready.
         SWITCH: state<=RUN;
         RUN: if(pass_done) begin
           if(!has_next) begin state<=IDLE; done<=1; end

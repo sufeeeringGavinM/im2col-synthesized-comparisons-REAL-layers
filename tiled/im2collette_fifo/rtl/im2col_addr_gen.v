@@ -1,4 +1,10 @@
 `timescale 1ns/1ps
+// PACKET ADDRESS WRAPPER: generate PACKET_WORDS spatial positions together.
+// For BUS_WORDS=8, word_addr=floor(linear_addr/8) and word_offset=linear_addr%8
+// are a right shift and low three bits. These are word/operand indices, not
+// external-memory byte addresses. advance occurs only when a packet is pushed.
+// The shared counter uses its saved position state; the position port is retained
+// in the interface but does not decode the address here.
 module im2col_addr_gen #(parameter CFG_WIDTH=32,ADDR_WIDTH=8,BUS_WORDS=8,PACKET_WORDS=8,
  OFFSET_WIDTH=(BUS_WORDS>1?$clog2(BUS_WORDS):1)) (
  input clk,clear,job_clear,advance,

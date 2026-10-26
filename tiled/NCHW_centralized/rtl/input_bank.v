@@ -1,5 +1,9 @@
 `timescale 1ns/1ps
 // One enabled synchronous read and one preload write per bank per clock.
+// ONE NCHW INPUT SRAM BANK: a word read has one synchronous edge of latency.
+// When read_enable is low, rdata holds its previous value. The arbiter controls
+// which row requests each bank serves, and routes the returned word to its slot.
+// Writes preload local storage; no reset clears the SRAM array.
 module input_bank #(parameter BIT_WIDTH=8, ADDR_WIDTH=8) (
     input clk, read_enable, we,
     input [ADDR_WIDTH-1:0] raddr, waddr,

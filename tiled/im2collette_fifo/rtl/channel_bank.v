@@ -1,4 +1,8 @@
 `timescale 1ns/1ps
+// PER-INDEX STORAGE AND FEEDER WRAPPER.
+// Input-side activity is enabled for input channel c<C; output-side storage is
+// independently enabled for filter k<K. A shared physical index does not mean
+// these logical input and output dimensions must have the same size.
 module channel_bank #(parameter CHANNEL_INDEX=0,BIT_WIDTH=8,BUS_WORDS=8,
     ACC_WIDTH=32,ADDR_WIDTH=8,CFG_WIDTH=32,OUT_LATENCY=11,PACKET_WORDS=8,
     COUNT_WIDTH=$clog2(PACKET_WORDS+1),OFFSET_WIDTH=(BUS_WORDS>1?$clog2(BUS_WORDS):1)) (

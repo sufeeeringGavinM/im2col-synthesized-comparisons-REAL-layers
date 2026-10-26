@@ -1,5 +1,11 @@
 `timescale 1ns/1ps
 // One channel: retain a synchronous SRAM word, collect a packet, then serialize.
+// ONE INPUT CHANNEL'S PACKET ASSEMBLER AND QUEUE.
+// retained_word caches one packed SRAM read; word_offset selects an operand from
+// it. packet_values collects the requested positions, inserting padding zeros.
+// Each queued entry carries both its values and its valid element count.
+// consume_index selects the current scalar from the head packet. The last scalar
+// pops the packet; FIFO_DEPTH=2 means two packets, not two scalar operands.
 module feed_lane #(parameter BIT_WIDTH=8,BUS_WORDS=8,PACKET_WORDS=8,FIFO_DEPTH=2,
     OFFSET_WIDTH=(BUS_WORDS>1?$clog2(BUS_WORDS):1),
     COUNT_WIDTH=$clog2(PACKET_WORDS+1)) (
@@ -14,6 +20,7 @@ module feed_lane #(parameter BIT_WIDTH=8,BUS_WORDS=8,PACKET_WORDS=8,FIFO_DEPTH=2
 );
   localparam DATA_BITS=PACKET_WORDS*BIT_WIDTH;
   reg [BUS_WORDS*BIT_WIDTH-1:0] retained_word;
+  // On the return edge use fresh SRAM data directly; otherwise use its saved copy.
   wire [BUS_WORDS*BIT_WIDTH-1:0] collect_word=capture_word ? sram_rdata_bus : retained_word;
   reg [PACKET_WORDS-1:0][BIT_WIDTH-1:0] packet_values;
   wire [DATA_BITS+COUNT_WIDTH-1:0] fifo_dout;
@@ -28,6 +35,8 @@ module feed_lane #(parameter BIT_WIDTH=8,BUS_WORDS=8,PACKET_WORDS=8,FIFO_DEPTH=2
           ? collect_word[word_offset[j]*BIT_WIDTH+:BIT_WIDTH] : 0;
     end
   end
+  // Store {number of valid positions, packet values}; partial final packets
+  // must not expose their unused trailing values to the consumer.
   sync_fifo #(.DATA_WIDTH(DATA_BITS+COUNT_WIDTH),.DEPTH(FIFO_DEPTH),
       .ADDR_WIDTH((FIFO_DEPTH>1?$clog2(FIFO_DEPTH):1))) u_lowered_fifo (
     .clk(clk),.rst(clear),.wr_en(push_packet),.din({packet_count,packet_values}),

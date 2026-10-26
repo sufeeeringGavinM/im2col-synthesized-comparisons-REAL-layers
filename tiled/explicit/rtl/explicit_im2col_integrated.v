@@ -1,5 +1,10 @@
 // One stage of row skew, synchronous-read alignment, and activation gating.
 `timescale 1ns / 1ps
+// ONE NHWC-STYLE ROW FEEDER: receive a shared spatial-address request.
+// The request bundle carries {feed enable, padding validity, SRAM address}.
+// Each later row adds one delay stage, aligning activations with systolic sums.
+// Padding/unused channels inject zero. A separate registered valid bit follows
+// the synchronous SRAM read, so address validity is aligned with returned data.
 module activation_feeder #(
     parameter CHANNEL_INDEX = 0, BIT_WIDTH = 8, ADDR_WIDTH = 8
 ) (
@@ -24,6 +29,7 @@ module activation_feeder #(
   assign sram_raddr = feed_out[ADDR_WIDTH-1:0];
   // rd_valid_q is aligned with the data returned by the synchronous SRAM.
   // Clear it between passes so a stale read cannot enter the array.
+  // Delay the padding-valid flag by the same edge as the SRAM read return.
   reg rd_valid_q;
   always @(posedge clk) begin
     if (clear) rd_valid_q <= 1'b0;
@@ -42,6 +48,10 @@ endmodule
 
 // Per-input-channel storage, explicit im2col writer, activation feed, and output accumulation.
 `timescale 1ns / 1ps
+// PER-INDEX STORAGE AND FEEDER WRAPPER.
+// Input-side activity is enabled for input channel c<C; output-side storage is
+// independently enabled for filter k<K. A shared physical index does not mean
+// these logical input and output dimensions must have the same size.
 module channel_bank #(
     parameter CHANNEL_INDEX = 0,
     parameter BIT_WIDTH = 8,
@@ -144,6 +154,11 @@ endmodule
 `timescale 1ns / 1ps
 // Controls explicit im2col preprocessing followed by tap sequencing and systolic execution.
 `timescale 1ns / 1ps
+// CORE SEQUENCER: choose the current reduction pass and stationary weight buffer.
+// PRIME starts a synchronous kernel read; LOAD shifts weights into physical rows.
+// RUN streams spatial positions, including array fill/drain. SWITCH clears pass
+// state before the next pass; already stored partial sums remain in SRAM.
+// This controller sequences clock edges, not simulator wall-clock time.
 module conv_controller #(parameter ARRAY_SIZE = 4, CFG_WIDTH = 32) (
     input clk, nrst, start, initial_done, im2col_done,
     input [CFG_WIDTH-1:0] N, P, Q, R, S,
@@ -155,21 +170,28 @@ module conv_controller #(parameter ARRAY_SIZE = 4, CFG_WIDTH = 32) (
     output reg [CFG_WIDTH-1:0] r, s,
     output [CFG_WIDTH-1:0] next_r, next_s
 );
+  // Unlike implicit mappings, finish the entire lowered matrix before RUN.
+  // Only this preprocessing stage reads the original spatial input SRAM.
   localparam IDLE=3'd0, IM2COL_START=3'd1, WAIT_IM2COL=3'd2,
              PRIME=3'd3, LOAD_WEIGHTS=3'd4, RUN=3'd5, SWITCH_TAP=3'd6;
   reg [2:0] state;
   reg [CFG_WIDTH:0] run_count;
+  // Pass length includes N*P*Q useful positions plus array fill/drain; explicit adds
+  // one extra registered-output alignment cycle.
   wire [CFG_WIDTH:0] run_cycles = (CFG_WIDTH+1)'(N) * P * Q + 2*ARRAY_SIZE + 1;
   assign busy = state != IDLE;
   assign im2col_start = state == IM2COL_START;
   assign clear_pass = !nrst || state != RUN;
+  // NHWC/explicit/FIFO finish one r,s tap pass before moving to the next tap.
   wire has_next_tap = r != R-1 || s != S-1;
   assign next_r = s == S-1 ? r + 1'b1 : r;
   assign next_s = s == S-1 ? {CFG_WIDTH{1'b0}} : s + 1'b1;
+  // Prepare next-pass weights while the current array pass is still running.
   assign preload_next = state == RUN && has_next_tap;
   assign prime = state == PRIME;
   assign initial_load = state == LOAD_WEIGHTS;
   assign running = state == RUN;
+  // Later taps/groups must add their contributions to output SRAM, rather than erase them.
   assign accumulate = r != 0 || s != 0;
   assign restart_weights = (state == IDLE && start) ||
                            (state == RUN && run_count == run_cycles-1 && has_next_tap);
@@ -185,10 +207,12 @@ module conv_controller #(parameter ARRAY_SIZE = 4, CFG_WIDTH = 32) (
           active_weight_buffer <= 0; r <= 0; s <= 0; run_count <= 0;
           state <= IM2COL_START;
         end
+        // One start pulse launches all active channel writers; wait for every one.
         IM2COL_START: state <= WAIT_IM2COL;
         WAIT_IM2COL: if (im2col_done) state <= PRIME;
         PRIME: state <= LOAD_WEIGHTS;
         LOAD_WEIGHTS: if (initial_done) begin run_count <= 0; state <= RUN; end
+        // One pass-clear edge resets spatial/skew state. Do not erase stored sums.
         SWITCH_TAP: begin run_count <= 0; state <= RUN; end
         RUN: begin
           if (run_count == run_cycles-1) begin
@@ -213,6 +237,12 @@ endmodule
 // Configuration is captured on start and remains fixed throughout the run.
 // Captures configuration, materializes im2col, then runs the existing systolic datapath.
 `timescale 1ns / 1ps
+// ONE LOCAL JOB: capture a descriptor, then connect control, memories and array.
+// N,C,H,W / K,C,R,S / N,K,P,Q are input / weight / output dimensions.
+// _i is height and _j is width: stride_i=stride_h, dilation_j=dil_w, etc.
+// The full-layer wrapper calls this core repeatedly with tile-local dimensions.
+// continue_sum retains earlier reduction-job results in output SRAM. It does not
+// request reuse of activations or weights across jobs. Output SRAM readback is idle-only.
 module conv_core #(
     parameter ARRAY_SIZE = 4, BIT_WIDTH = 8, ACC_WIDTH = 32,
     parameter ADDR_WIDTH = 8, KERNEL_ADDR_WIDTH = 8,
@@ -236,6 +266,8 @@ module conv_core #(
     output [ARRAY_SIZE-1:0][ACC_WIDTH-1:0] observed_words,
     output [ARRAY_SIZE-1:0][ACC_WIDTH-1:0] acc_col_out
 );
+  // Captured once per job. The full-layer scheduler sets it for later channel/tap
+  // reduction jobs contributing to the same resident output tile.
   reg continue_sum;
   assign output_read_data=observed_words;
   always @(posedge clk) begin
@@ -243,6 +275,7 @@ module conv_core #(
     else if(start && !busy) continue_sum<=cfg_continue_sum;
   end
 
+  // Captured descriptor registers: stable throughout a job, even if cfg_* ports change.
   reg [CFG_WIDTH-1:0] N,C,H,W,K,R,S,P,Q,pad_i,pad_j,stride_i,stride_j,dilation_i,dilation_j;
   wire [CFG_WIDTH-1:0] r,s,next_r,next_s;
   wire clear_pass,prime,initial_load,running,preload_next,restart_weights,accumulate;
@@ -305,7 +338,7 @@ endmodule
 
 `timescale 1ns / 1ps
 
-// Combinational input SRAM address generation for a convolution tap.
+// Spatial-address generation is in the shared linear_address_counter module.
 // Shapes: input (N,C,H,W), kernel (K,C,R,S), output (N,K,P,Q).
 // position = (p*Q+q)*N+n: images vary fastest within each output position.
 // addr = (h*W+w)*N+n within the SRAM array for input channel c.
@@ -315,6 +348,10 @@ endmodule
 
 // One output channel's kernel memory with synchronous reads.
 `timescale 1ns / 1ps
+// ONE FILTER'S KERNEL SRAM: one operand per word, one synchronous read port.
+// read_active masks unused logical filter/reduction terms with zero; it does not
+// clear memory. A read issued before an edge is available after that edge.
+// No reset clears the SRAM; preload writes establish its meaningful contents.
 module kernel_bank #(parameter BIT_WIDTH = 8, ADDR_WIDTH = 8) (
     input clk, we, read_enable, read_active,
     input [ADDR_WIDTH-1:0] waddr, raddr,
@@ -332,6 +369,10 @@ endmodule
 `timescale 1ns / 1ps
 
 // Signed PE with two stationary weights: compute from one while loading the other.
+// ONE PROCESSING ELEMENT: signed multiply-add with double-buffered weights.
+// A weight can be shifted into one buffer while the other supplies the product.
+// Activations move right and sums move down. ACC_WIDTH truncation implements
+// wrapped accumulation; there is no saturation, bias or activation function.
 module MAC #(
     parameter BIT_WIDTH = 8,
     parameter ACC_WIDTH = 32
@@ -349,7 +390,9 @@ module MAC #(
     output reg signed [BIT_WIDTH-1:0] data_out,
     output reg signed [BIT_WIDTH-1:0] weight_out
 );
+  // Two stationary weights per PE: one can compute while the other is loaded.
   reg signed [BIT_WIDTH-1:0] stored_weight [0:1];
+  // Combinational signed product. The result register adds acc_in on a compute edge.
   wire signed [ACC_WIDTH-1:0] product =
       $signed(data_in) * $signed(stored_weight[weight_read_buffer]);
 
@@ -362,6 +405,7 @@ module MAC #(
       stored_weight[1] <= 0;
     end else begin
       // Weight shifting is independent of activation and partial-sum advancement.
+      // This weight update is independent of the compute/activation enable.
       if (load_weights) begin
         stored_weight[weight_write_buffer] <= weight_in;
         weight_out <= weight_in;
@@ -386,6 +430,9 @@ endmodule
 
 // MMU reads the precomputed im2col matrix; no spatial address generation occurs during compute.
 `timescale 1ns / 1ps
+// ACTIVATION MEMORY/STREAM ROUTING (MMU is the module's historical name).
+// It connects per-channel storage, stream preparation, row skew, array and output
+// writeback. It is not a virtual-memory address translator or operating-system MMU.
 module MMU #(
     parameter ARRAY_SIZE=4, BIT_WIDTH=8, ACC_WIDTH=32,
     parameter ADDR_WIDTH=8, COL_ADDR_WIDTH=16, CFG_WIDTH=32
@@ -422,6 +469,9 @@ module MMU #(
   // Clamp the address during bubbles and flush cycles to keep SRAM accesses in range.
   wire feed_valid = !clear && (position_cnt < output_pixels);
   wire [CFG_WIDTH-1:0] read_position = position_cnt;
+  // Lowered layout: address=(r*S+s)*(N*P*Q)+position.
+  // Sequential taps add output_pixels to the saved base; position then adds
+  // directly, avoiding a fresh tap-index multiplication on each compute read.
   reg [COL_ADDR_WIDTH-1:0] col_read_base;
   reg [CFG_WIDTH-1:0] saved_r,saved_s;
   wire next_read_tap=r!=saved_r || s!=saved_s;
@@ -443,6 +493,8 @@ module MMU #(
   wire [63:0] activation_addr=shared_addr[0];
   wire activation_valid=shared_valid[0];
   wire address_ready;
+  // Hold the request until shared address-counter setup finishes. The writer
+  // advances that counter only when its WRITE stage consumes one position.
   reg writer_pending;
   wire writer_start=writer_pending && address_ready;
   reg [CFG_WIDTH-1:0] writer_r,writer_s;
@@ -496,6 +548,12 @@ endmodule
 
 // Address and data generation for per-tap output writeback.
 `timescale 1ns / 1ps
+// OUTPUT WRITEBACK: store each completed spatial result, then reuse it next pass.
+// writeback_cnt tracks pipeline progress; wb_ptr tracks actual output SRAM words.
+// The two counters differ because fill/drain cycles do not all produce results.
+// accumulate selects old stored sum + new pass result; otherwise overwrite it.
+// The read address leads a write by one cycle to align synchronous old_out data.
+// CHANNEL_INDEX/COL_INDEX selects an output filter column, not an input channel.
 module output_accumulator #(
     parameter CHANNEL_INDEX = 0, ACC_WIDTH = 32, ADDR_WIDTH = 8,
               WB_CNT_WIDTH = 8, OUT_LATENCY = 5, CFG_WIDTH = 32
@@ -510,7 +568,11 @@ module output_accumulator #(
 );
   // The registered column result arrives one cycle after the nominal array
   // latency. Delay writeback with it so result zero is stored at address zero.
+  // First valid result reaches this column after row skew + array/output latency.
+  // Explicit's registered column-output path needs the extra +1 edge. Its
+  // controller drains one extra cycle too; removing either changes alignment.
   localparam WB_START_CYCLE = CHANNEL_INDEX + OUT_LATENCY + 1;
+  // Counts pass progress; variants with advance increment only when the array moves.
   reg [WB_CNT_WIDTH-1:0] writeback_cnt;
   always @(posedge clk) begin
     if (clear) writeback_cnt <= 0;
@@ -532,8 +594,10 @@ module output_accumulator #(
   // the old value then shows up on old_out in the same cycle result_in is written.
   // Each output address is written once per pass and read the cycle before, so there is
   // no read-after-write hazard within a pass.
+  // Prefetch the next old output sum one synchronous-read cycle before writeback.
   assign wb_ptr_next = clear ? {ADDR_WIDTH{1'b0}} : (wb_valid ? wb_ptr + 1'b1 : wb_ptr);
 
+  // First reduction pass overwrites; later passes add to the previously stored sum.
   assign wb_data = accumulate ? old_out + result_in : result_in;
 endmodule
 
@@ -544,6 +608,10 @@ endmodule
 
 `timescale 1ns / 1ps
 
+// LOCAL SRAM MODEL: one word write and one synchronous word read.
+// A read consumes an edge before its value is available; callers align enables
+// and addresses accordingly. This storage has no reset that clears its contents.
+// DATA_WIDTH describes a word: a FIFO input word can contain BUS_WORDS operands.
 module row_sram #(
     parameter DATA_WIDTH = 32,
     parameter ADDR_WIDTH = 8
@@ -571,6 +639,12 @@ endmodule
 
 // PE grid, stationary weight buffers, and registered column outputs.
 `timescale 1ns / 1ps
+// PHYSICAL ARRAY: reduction terms occupy rows; output filters k occupy columns.
+// Activations travel right, partial sums travel down, and weights shift down
+// only while loading their selected stationary buffer. Each PE multiplies its
+// activation by the selected stored weight and adds the sum arriving from above.
+// The bottom-row sum is registered again as acc_col_out before SRAM writeback.
+// Unused logical rows/columns are masked; physical ARRAY_SIZE is unchanged.
 module systolic_array #(
     parameter ARRAY_SIZE = 4, BIT_WIDTH = 8, ACC_WIDTH = 32, CFG_WIDTH = 32
 ) (
@@ -643,6 +717,12 @@ endmodule
 
 // Prefetch and descending row shifts for the initial or next tap.
 `timescale 1ns / 1ps
+// INITIAL WEIGHTS AND PREFETCH: synchronous SRAM reads followed by row shifts.
+// All filter columns receive weights in parallel. Rows load in descending order
+// so an ARRAY_SIZE-row array needs ARRAY_SIZE shifts, including inactive rows.
+// PRIME/PREFETCH requests the first row one edge before its data is consumed.
+// While computing with one stationary weight buffer, the other can be loaded.
+// Weight loading is independent of activation stalls where advance is present.
 module weight_loader #(
     parameter ARRAY_SIZE = 4, BIT_WIDTH = 8, ADDR_WIDTH = 8, CFG_WIDTH = 32
 ) (
@@ -661,6 +741,8 @@ module weight_loader #(
   reg [C_WIDTH-1:0] c_load;
   assign load_weights = initial_load || (preload_next && weight_phase == SHIFT_WEIGHTS);
   assign weight_write_buffer = running ? !active_weight_buffer : active_weight_buffer;
+  // The c_load==0 cycle still loads the final physical row; the controller
+  // changes to RUN on that edge, after this last shift has taken place.
   assign initial_done = c_load == 0;
   wire [C_WIDTH-1:0] read_row = load_weights && c_load != 0 ? c_load - 1'b1 : c_load;
   assign c_read = CFG_WIDTH'(read_row);
@@ -670,10 +752,15 @@ module weight_loader #(
   // Row-address counter follows the existing descending channel read sequence.
   reg [CFG_WIDTH-1:0] tap_index,saved_r,saved_s;
   reg [ADDR_WIDTH-1:0] row_address;
+  // kernel_stride is the SRAM-word distance between input channels at one tap.
+  // tap_index follows r*S+s without repeatedly multiplying r by S.
+  // selected_tap chooses the next tap while preloading, or the current tap initially.
   wire [CFG_WIDTH-1:0] kernel_stride=R*S;
   wire tap_changed=r!=saved_r || s!=saved_s;
   wire [CFG_WIDTH-1:0] current_tap=tap_index+(tap_changed ? 1'b1 : 1'b0);
   wire [CFG_WIDTH-1:0] selected_tap=running ? current_tap+1'b1 : current_tap;
+  // Start at the last physical row, then subtract R*S per row as weights shift
+  // downward. c_read masks channels beyond C even though the fixed row shift runs.
   wire [ADDR_WIDTH-1:0] highest_address=ADDR_WIDTH'((ARRAY_SIZE-1)*kernel_stride+selected_tap);
   wire first_read=prime || (preload_next && weight_phase==PREFETCH);
   assign kernel_raddr=first_read ? highest_address : load_weights && c_load!=0 ? row_address-ADDR_WIDTH'(kernel_stride) : row_address;
@@ -791,6 +878,12 @@ endmodule
 
 // Explicit im2col writer for one input channel, with independent source and destination address widths.
 `timescale 1ns / 1ps
+// MATERIALIZE ONE CHANNEL'S CONVOLUTION WINDOWS BEFORE ARRAY COMPUTATION.
+// For each r,s, enumerate position=(p*Q+q)*N+n. The source address comes from the
+// shared incremental generator. Destination=(r*S+s)*(N*P*Q)+position is visited
+// sequentially, so col_address simply increments by one.
+// ISSUE reads synchronous source SRAM; WRITE stores its returned word or a padding
+// zero. FINISH pulses done after all R*S*N*P*Q matrix entries are written.
 module explicit_im2col_writer #(
     parameter CFG_WIDTH=32, INPUT_ADDR_WIDTH=8, COL_ADDR_WIDTH=16, DATA_WIDTH=8
 ) (
@@ -816,6 +909,8 @@ module explicit_im2col_writer #(
   wire [CFG_WIDTH-1:0] output_pixels=N*P*Q;
   assign position_clear=!nrst || (state==IDLE && start) || (state==WRITE && position==output_pixels-1'b1);
   assign position_advance=state==WRITE;
+  // All lowered entries are written in order: increment once per WRITE.
+  // col_address is a destination matrix address, not a spatial-input address.
   reg [COL_ADDR_WIDTH-1:0] col_address;
   wire access_valid=(N!=0)&&(Q!=0)&&activation_valid;
   wire [63:0] input_addr_calc=activation_addr;
@@ -835,12 +930,16 @@ module explicit_im2col_writer #(
         IDLE: if(start && N!=0 && P!=0 && Q!=0 && R!=0 && S!=0) begin
           col_address<=0;position<=0; tap_r<=0; tap_s<=0; state<=ISSUE;
         end
+        // Save destination and source validity while the input SRAM reads.
+        // The returned data cannot be written to the lowered matrix on this same edge.
         ISSUE: begin
           // Synchronous input SRAM samples input_raddr on this edge.
           saved_col_addr<=COL_ADDR_WIDTH'(col_addr_calc);
           saved_valid<=access_valid;
           state<=WRITE;
         end
+        // Store the previously read value (or zero) and advance n/q/p position.
+        // At its end, restart positions and advance s, then r.
         WRITE: begin
           col_address<=col_address+1'b1;
           if(position==output_pixels-1'b1) begin

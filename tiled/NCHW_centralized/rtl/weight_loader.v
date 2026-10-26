@@ -1,5 +1,11 @@
 `timescale 1ns/1ps
 // Synchronous kernel reads and descending row shifts; weight loading never stalls with activations.
+// INITIAL WEIGHTS AND PREFETCH: synchronous SRAM reads followed by row shifts.
+// All filter columns receive weights in parallel. Rows load in descending order
+// so an ARRAY_SIZE-row array needs ARRAY_SIZE shifts, including inactive rows.
+// PRIME/PREFETCH requests the first row one edge before its data is consumed.
+// While computing with one stationary weight buffer, the other can be loaded.
+// Weight loading is independent of activation stalls where advance is present.
 module weight_loader #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ADDR_WIDTH=8, CFG_WIDTH=32) (
     input clk, nrst, restart, prime, initial_load, preload_next, running, active_weight_buffer,
     input [CFG_WIDTH-1:0] group_base, next_group_base,
@@ -17,6 +23,8 @@ module weight_loader #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ADDR_WIDTH=8, CFG_WI
   assign weight_write_buffer = running ? !active_weight_buffer : active_weight_buffer;
   assign initial_done = load_row==0;
   assign next_ready = phase==READY;
+  // NCHW row weights use consecutive CRS terms: group_base+row, not c*R*S.
+  // During shifting, request the next row early for synchronous SRAM latency.
   wire [ROW_WIDTH-1:0] read_row = (load_weights && load_row!=0) ? load_row-1'b1 : load_row;
   assign kernel_term = (running ? next_group_base : group_base)+read_row;
   assign kernel_raddr = ADDR_WIDTH'(kernel_term);

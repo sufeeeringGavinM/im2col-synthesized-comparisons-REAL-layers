@@ -1,6 +1,10 @@
 `timescale 1ns / 1ps
 
 // One output channel's kernel memory with synchronous reads (256 bytes per bank)
+// ONE FILTER'S KERNEL SRAM: one operand per word, one synchronous read port.
+// read_active masks unused logical filter/reduction terms with zero; it does not
+// clear memory. A read issued before an edge is available after that edge.
+// No reset clears the SRAM; preload writes establish its meaningful contents.
 module kernel_bank #(
     parameter integer BIT_WIDTH  = 8,
     parameter integer ADDR_WIDTH = 8

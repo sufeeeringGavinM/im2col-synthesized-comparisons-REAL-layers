@@ -1,5 +1,11 @@
 `timescale 1ns/1ps
 // Two vector slots overlap bank service, read return and array consumption.
+// BUILD COMPLETE ACTIVATION VECTORS FROM SINGLE-READ-PORT BANKS.
+// Each array row requests lane_bank/lane_addr. Serve one distinct word per bank
+// per cycle; identical bank+address requests can share that read. Lowest row wins
+// when distinct words compete. Unserved requests remain pending for retry.
+// Two data slots decouple bank service/read returns from array consumption.
+// These slots hold values, unlike im2col_addr_gen's separate address-seed sets.
 module banked_input #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ADDR_WIDTH=8, CFG_WIDTH=32,
     BANK_WIDTH=(ARRAY_SIZE>1?$clog2(ARRAY_SIZE):1)) (
     input clk, clear, running,
@@ -18,10 +24,16 @@ module banked_input #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ADDR_WIDTH=8, CFG_WID
     output [ARRAY_SIZE-1:0] bank_read_enable,
     output issue_advance
 );
+  // issue_slot is the vector being assembled; read_slot is next to consume.
+  // occupied reserves a slot; ready says every required read has returned.
+  // active says the current vector still has requests pending from a conflict.
   reg issue_slot, read_slot, active;
   reg [1:0] occupied, ready;
   reg [ARRAY_SIZE-1:0] pending;
   reg [ARRAY_SIZE-1:0][BIT_WIDTH-1:0] values [0:1];
+  // grant marks requests scheduled this cycle. response_* delays their row,
+  // bank and destination slot identity to match the synchronous SRAM return.
+  // response_final marks the final set of reads, not immediate readiness.
   reg [ARRAY_SIZE-1:0] grant, response_valid;
   reg [ARRAY_SIZE-1:0][BANK_WIDTH-1:0] response_bank;
   reg response_slot, response_final;
@@ -30,6 +42,7 @@ module banked_input #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ADDR_WIDTH=8, CFG_WID
   wire [ARRAY_SIZE-1:0][BIT_WIDTH-1:0] read_data;
   assign vector_ready = ready[read_slot];
   assign vector_data = values[read_slot];
+  // A slot can be reused on the same edge that its old vector is consumed.
   wire slot_available = !occupied[issue_slot] || (consume && read_slot==issue_slot);
   wire issue_enable = running && issue_position < output_pixels && (active || slot_available);
   wire [ARRAY_SIZE-1:0] requests = active ? pending : lane_valid;
@@ -50,6 +63,7 @@ module banked_input #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ADDR_WIDTH=8, CFG_WID
     end
   end
   assign bank_read_enable = read_enable;
+  // Count an actual remaining request, rather than an assumed conflict penalty.
   assign conflict_retry = issue_enable && |(requests & ~grant);
   genvar bank;
   generate for (bank=0; bank<ARRAY_SIZE; bank=bank+1) begin : g_bank
@@ -58,6 +72,8 @@ module banked_input #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ADDR_WIDTH=8, CFG_WID
       .we(we_ext[bank]),.waddr(waddr_ext[bank]),.wdata(wdata_ext[bank]),.rdata(read_data[bank]));
   end endgenerate
   integer row;
+  // The address producer advances only after all requests have been ISSUED.
+  // Their returns and subsequent array consumption can occur on later edges.
   assign issue_advance = issue_enable && ((requests & ~grant)==0);
   always @(posedge clk) begin
     if (clear) begin
@@ -68,6 +84,8 @@ module banked_input #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ADDR_WIDTH=8, CFG_WID
       response_slot <= 0; response_bank <= 0;
       values[0] <= 0; values[1] <= 0;
     end else begin
+      // Release the old head. Later assignments can reserve the same slot on
+      // this edge when a new vector is simultaneously admitted.
       if (consume) begin
         ready[read_slot] <= 0;
         occupied[read_slot] <= 0;
@@ -76,6 +94,7 @@ module banked_input #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ADDR_WIDTH=8, CFG_WID
       // Previous edge's bank reads return after one synchronous read latency.
       for (row=0; row<ARRAY_SIZE; row=row+1)
         if (response_valid[row]) values[response_slot][row] <= read_data[response_bank[row]];
+      // Only the last read RETURN makes the assembled vector consumable.
       if (response_final) ready[response_slot] <= 1;
       response_valid <= grant;
       response_slot <= issue_slot;
@@ -87,11 +106,13 @@ module banked_input #(parameter ARRAY_SIZE=4, BIT_WIDTH=8, ADDR_WIDTH=8, CFG_WID
           ready[issue_slot] <= 0;
           values[issue_slot] <= 0;
         end
+        // Preserve only conflicting requests; already served rows are not reread.
         pending <= requests & ~grant;
         if ((requests & ~grant)==0) begin
           active <= 0;
           issue_slot <= !issue_slot;
           issue_position <= issue_position+1'b1;
+          // An all-padding/unused vector needs no SRAM return, so zero is ready now.
           if (grant==0) ready[issue_slot] <= 1;
           else response_final <= 1;
         end else active <= 1;
