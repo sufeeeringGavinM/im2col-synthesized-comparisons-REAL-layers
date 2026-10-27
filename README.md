@@ -47,6 +47,19 @@ Source and algorithm credits, course attribution, and AI disclosures are retaine
 
 ## TLDR
 
+### Cycle counts and latency at 1 MHz
+
+Each cell shows **cycles / latency in milliseconds**. The lowest latency in each row is bold.
+
+| Layer | NHWC | NCHW | Explicit im2col | im2collette FIFO |
+|---|---:|---:|---:|---:|
+| CIFAR10 tutorial conv1 | 96,353 / 96.353 | **74,722 / 74.722** | 136,337 / 136.337 | 96,325 / 96.325 |
+| CIFAR10 tutorial conv2 | 83,913 / 83.913 | **79,174 / 79.174** | 94,473 / 94.473 | 83,893 / 83.893 |
+| MNIST example conv1 | 121,714 / 121.714 | **86,913 / 86.913** | 171,634 / 171.634 | 121,610 / 121.610 |
+| Historical MNISTConvNet tutorial conv2 | 113,697 / 113.697 | 115,194 / 115.194 | 120,545 / 120.545 | **113,681 / 113.681** |
+
+Latency is measured in simulation from accepted start through the final output store. It includes planning, input and weight transfers, core execution, and output transfers; reset, test-tensor preload, and golden-reference calculation are excluded. At 1 MHz, latency in milliseconds equals cycles divided by 1,000. See the [full cycle and phase data](reports/cycle_results.csv).
+
 ### FPGA resources and timing
 
 | Implementation | LUTs | Flip-flops | BRAM tiles | DSPs | WNS at 50 MHz (ns) | Estimated Fmax (MHz) |
