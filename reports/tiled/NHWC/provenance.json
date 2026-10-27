@@ -5,7 +5,7 @@
     "config.json": "589fbe2ed4d72df92abb3560b6a16a235102a65fae760f32b6a187fb1324f232",
     "conv_golden.py": "3f6d8e9ab7ddedff5657d4222962a8b5362aca0ea3ac86b8faf5dd829d40902c",
     "gen_matrices.py": "ace94c178b82f11fa090c75372f0b36ee3e1da13d9386bf1ab427a25f5f317a6",
-    "README.md": "a0b29b818741eca58ea94e7bd738ef2509b8b8af4238c954d9e9d73aa5e99b4b",
+    "README.md": "e9a5eeb3fbbbe7d2033640221b2b2cc439baf58648461d611b0599f89318ae1e",
     "run_case.py": "ccc5a96663403e8b9b067492147b97ce26b4ebf6d93e305b70e327f62a646490",
     "rtl/activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
     "rtl/conv_accelerator.v": "989966e3ff76a85e130577c19ad2aab8cf9312ba3d02516257780ba365adf3b4",
