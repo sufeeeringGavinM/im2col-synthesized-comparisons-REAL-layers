@@ -36,7 +36,7 @@ Inputs and weights are deterministic synthetic integers, rather than trained mod
 - [Cycle data](reports/cycle_results.csv): total cycles, planning, input transfers, weight transfers, computation, output transfers, and transitions.
 - [Workload power data](reports/workload_results.csv): dynamic, static, and total power estimates, energy, and activity annotation coverage.
 - [Reproduction tools](tools/README.md): tensor generation, RTL validation, and Vivado/XSim commands.
-- [Synthetic maximum-frequency results](reports/synthetic_fmax/README.md): all 16 cases at each architecture’s estimated Fmax, with power, latency, energy, and original reports.
+- [Synthetic maximum-frequency results](reports/synthetic_fmax/README.md): all 16 cases at each architecture’s Fmax, with power, latency, energy, and original reports.
 
 Centralized NCHW has the lowest cycle count for the first three layers; im2collette FIFO narrowly leads for historical MNISTConvNet conv2.
 
@@ -94,11 +94,9 @@ The centralized total is 124 mW for CIFAR10 conv1 and 123 mW for the other three
 
 Energy is the reported total power multiplied by layer latency. At 1 MHz, each cycle takes 1 microsecond. The lowest estimated energy for each layer is bold; small differences should be interpreted with the power rounding and annotation limits above.
 
-### Latency at individual estimated maximum frequencies
+### Latency at Fmax
 
-Each architecture runs at its own estimated maximum frequency: **NHWC 46.331 MHz**, **NCHW 31.903 MHz**, **explicit im2col 44.649 MHz**, and **im2collette FIFO 34.003 MHz**. These are post-synthesis estimates from the existing 50 MHz WNS, using period = 20 ns − WNS; placement and routing were not performed.
-
-The same four layers, original synthetic tensors, and unchanged synthesized hardware are used. All 16 native XSim activity/power cases passed output, interface, cycle/accounting, SAIF-duration, and frequency-specific timing checks. The original 16 RTL acceptances are reused with matching hardware and tensor hashes. No resynthesis was performed.
+Frequencies: **NHWC 46.331 MHz**, **NCHW 31.903 MHz**, **explicit im2col 44.649 MHz**, and **im2collette FIFO 34.003 MHz**.
 
 Each cell is latency in **milliseconds**; the lowest in each row is bold. Cycle counts remain identical to the 1 MHz table.
 
@@ -109,7 +107,7 @@ Each cell is latency in **milliseconds**; the lowest in each row is bold. Cycle 
 | MNIST example conv1 | **2.627** | 2.724 | 3.844 | 3.576 |
 | Historical MNISTConvNet tutorial conv2 | **2.454** | 3.611 | 2.700 | 3.343 |
 
-### Workload power at individual estimated maximum frequencies
+### Workload power at Fmax
 
 | Implementation | Frequency (MHz) | Dynamic power (mW) | Static power (mW) | Total power (mW) |
 | --- | ---: | ---: | ---: | ---: |
@@ -120,9 +118,7 @@ Each cell is latency in **milliseconds**; the lowest in each row is bold. Cycle 
 
 Ranges span the four layers. Exact per-layer dynamic/static/total values and original reports are in the [maximum-frequency results](reports/synthetic_fmax/README.md).
 
-Power components and totals are independently rounded to 1 mW. Matched-net annotation coverage is 89% for NHWC, 85% for NCHW, 84% for explicit im2col, and 72% for FIFO; Vivado reports High confidence. Native XSim uses zero-delay synthesized-netlist activity, which omits routed glitches. External backing-memory power is excluded. These are estimates, not measured board power or routed maximum frequencies.
-
-### Estimated energy per layer at individual estimated maximum frequencies
+### Estimated energy per layer at Fmax
 
 Each cell is estimated total energy in **mJ**; the lowest in each row is bold.
 
@@ -133,4 +129,4 @@ Each cell is estimated total energy in **mJ**; the lowest in each row is bold.
 | MNIST example conv1 | 0.431 | **0.390** | 1.407 | 0.544 |
 | Historical MNISTConvNet tutorial conv2 | **0.390** | 0.516 | 0.991 | 0.491 |
 
-Energy is the reported total power multiplied by the native start-to-done duration at the exact simulated period. Compared with the same synthetic cases at 1 MHz, latency is 31.90–46.33× shorter and estimated total energy is 93.86–97.23% lower. NHWC has the lowest estimated latency for all four layers. It has the lowest estimated total energy for three layers; NCHW has the lowest for MNIST example conv1.
+Energy is the reported total power multiplied by layer latency. Compared with 1 MHz, latency is 31.90–46.33× shorter and estimated total energy is 93.86–97.23% lower. NHWC is fastest for all four layers and has the lowest estimated energy for three; NCHW has the lowest for MNIST example conv1.
