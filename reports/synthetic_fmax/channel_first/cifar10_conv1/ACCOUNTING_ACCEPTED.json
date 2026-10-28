@@ -1,0 +1,47 @@
+{
+  "variant": "channel_first",
+  "layer": "cifar10_conv1",
+  "config": {
+    "N": 1,
+    "C": 3,
+    "H": 32,
+    "W": 32,
+    "K": 6,
+    "R": 5,
+    "S": 5,
+    "pad_i": 0,
+    "pad_j": 0,
+    "stride_i": 1,
+    "stride_j": 1,
+    "dilation_i": 1,
+    "dilation_j": 1
+  },
+  "seed": 196102601,
+  "total": 96353,
+  "backing_reads": 26040,
+  "backing_writes": 4704,
+  "planning": 89,
+  "input_transfers": 26880,
+  "kernel_transfers": 25200,
+  "core_execution": 34748,
+  "output_transfers": 9408,
+  "tile_transitions": 28,
+  "tiles": 28,
+  "core_jobs": 28,
+  "tap_jobs": 0,
+  "transfer_signature": "9f676facd7254258",
+  "nested_core": {
+    "im2col": 0,
+    "weights": 420,
+    "advances": 33600,
+    "stalls": 0,
+    "transitions": 672,
+    "retries": 0
+  },
+  "outputs": 4704,
+  "tensor_hashes": {
+    "input_tensor.txt": "dbb13a765d81115f3b94f367a12ffd5d56b04a9016905d97d11c347a41f819c1",
+    "kernel_tensor.txt": "de7ed0bb76c57c0a3c27aea28be315dfe9581e454619f6a881612863709e4c26",
+    "output_tensor.txt": "1e36f05bc0bec1a23f9c251e764f2d9389daf40689d9a8356fe2b85e9f45e5f8"
+  }
+}

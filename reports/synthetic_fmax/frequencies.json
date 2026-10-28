@@ -1,0 +1,26 @@
+{
+  "channel_first": {
+    "period_ns": "21.584",
+    "frequency_mhz": 46.330615270570796,
+    "origin_wns_ns": -1.584,
+    "scope": "Existing post-synthesis setup estimate1000/(20-WNS); not routed maximum"
+  },
+  "centralized": {
+    "period_ns": "31.345",
+    "frequency_mhz": 31.9030148349019,
+    "origin_wns_ns": -11.345,
+    "scope": "Existing post-synthesis setup estimate1000/(20-WNS); not routed maximum"
+  },
+  "explicit": {
+    "period_ns": "22.397",
+    "frequency_mhz": 44.648836897798816,
+    "origin_wns_ns": -2.397,
+    "scope": "Existing post-synthesis setup estimate1000/(20-WNS); not routed maximum"
+  },
+  "im2collette_fifo": {
+    "period_ns": "29.409",
+    "frequency_mhz": 34.003196300452245,
+    "origin_wns_ns": -9.409,
+    "scope": "Existing post-synthesis setup estimate1000/(20-WNS); not routed maximum"
+  }
+}

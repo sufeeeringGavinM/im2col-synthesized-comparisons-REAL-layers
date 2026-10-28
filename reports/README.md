@@ -72,3 +72,7 @@ Matched design-net coverage is 72–89%, not complete annotation. All 16 tool re
 [Validation and concurrency provenance](validation_engine.json), [RTL runtime records](rtl_runtime.json), [native session wall times](native_runtime.json), and [inherited cross-simulator validation](rtl_engine_migration.json) retain the exact execution scope. The current fourth case is the historical MNISTConvNet tutorial conv2, a different source model from the current-example MNIST conv1; these are separate layer geometries, not a connected network run. All operands are synthetic.
 
 Raw original Vivado report command headers retain output-path metadata; portable reproduction has no dependency on those original paths. Native SAIF bytes are unchanged.
+
+## Synthetic layers at individual estimated maximum frequencies
+
+All 16 additional native activity/power cases passed at each architecture’s own post-synthesis estimated Fmax, using the original synthetic tensors and unchanged hardware. See the [maximum-frequency results](synthetic_fmax/README.md) for latency, per-layer power and energy, exact clock periods, and original acceptance, annotation, timing, and power reports. The common 1 MHz results above remain unchanged.

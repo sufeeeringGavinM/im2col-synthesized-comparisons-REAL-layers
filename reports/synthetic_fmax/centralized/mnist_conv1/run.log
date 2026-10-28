@@ -1,0 +1,115 @@
+#-----------------------------------------------------------
+# xsim v2026.1 (64-bit)
+# SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+# IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+# SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+# Start of session at: Wed Oct 28 03:43:08 2026
+# Process ID         : 24708
+# Current directory  : C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized
+# Command line       : xsim.exe -log C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/xsim.log -mode tcl -source {xsim.dir/counter_activity/xsim_script.tcl}
+# Log file           : C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/xsim.log
+# Journal file       : C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized\xsim.jou
+# Running On         : root
+# Platform           : Windows 11
+# Operating System   : 22631
+# Processor Detail   : Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+# CPU Frequency      : 3408 MHz
+# CPU Physical cores : 4
+# CPU Logical cores  : 8
+# Host memory        : 17143 MB
+# Swap memory        : 8321 MB
+# Total Virtual      : 25465 MB
+# Available Virtual  : 12393 MB
+#-----------------------------------------------------------
+source xsim.dir/counter_activity/xsim_script.tcl
+# xsim {counter_activity} -testplusarg N=1 -testplusarg C=1 -testplusarg H=28 -testplusarg W=28 -testplusarg K=32 -testplusarg R=3 -testplusarg S=3 -testplusarg pad_i=0 -testplusarg pad_j=0 -testplusarg stride_i=1 -testplusarg stride_j=1 -testplusarg dilation_i=1 -testplusarg dilation_j=1 -testplusarg INPUT_FILE=C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/input_tensor.txt -testplusarg KERNEL_FILE=C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/kernel_tensor.txt -testplusarg OUTPUT_FILE=C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/actual.txt -testplusarg SRAM_LAYOUT_FILE=C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/layout.txt -testplusarg NATIVE_WATCHDOG_CYCLES=86977 -autoloadwcfg -tclbatch {C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/capture.tcl} -onfinish stop -onerror quit
+Time resolution is 1 ps
+source C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/capture.tcl
+## if {[catch {
+## run all
+## if {[get_value -radix unsigned /tb_conv_core/power_stage] != 1} {error "Missing accepted-start marker"}
+## set start_time [current_time]
+## open_saif {C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/activity.saif}
+## current_scope /tb_conv_core/GATE
+## set activity_objects [get_objects -r *]
+## if {[llength $activity_objects] == 0} {error "Empty synthesized-DUT activity scope"}
+## log_saif $activity_objects
+## run all
+## set end_time [current_time]
+## if {[get_value -radix unsigned /tb_conv_core/power_stage] != 2} {error "Missing done marker"}
+## close_saif
+## puts "NATIVE_SAIF_WINDOW start=$start_time end=$end_time"
+## run all
+## if {[get_value -radix unsigned /tb_conv_core/power_stage] != 3} {error "Output/netlist checks did not finish"}
+## set result [open {C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/NATIVE_SIM_SUCCESS} w]
+## puts $result "Native XSim SAIF capture and final output/netlist checks completed"
+## close $result
+## } native_error]} {
+## puts stderr "NATIVE_CAPTURE_FAILED $native_error"
+## }
+[POWER_WINDOW] start_ps: 110000
+$stop called at time : 109707 ps : File "C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/tb_conv_core.v" Line 170
+$stop called at time : 2724397692 ps : File "C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/tb_conv_core.v" Line 304
+run: Time (s): cpu = 00:00:00 ; elapsed = 00:11:01 . Memory (MB): peak = 316.531 ; gain = 0.000
+NATIVE_SAIF_WINDOW start=109707 ps end=2724397692 ps
+[METRIC] Layer cycles (start accepted to final store done): 86913
+[METRIC] Backing reads: 16224; writes: 21632
+[TILED_CYCLES] planning=1841 input_transfers=17472 kernel_transfers=14976 core_execution=9256 output_transfers=43264 tile_transitions=104 tiles=104 core_jobs=104 tap_jobs=0 signature=12b217e5e0546334
+[CORE_CYCLES] im2col=0 weights=1144 advances=4784 stalls=3120 transitions=0 retries=0
+PASS: 21632 outputs matched for one completed layer
+NETLIST_PORT_CHECK_PASS known_bits=2251268
+$finish called at time : 2724398692 ps : File "C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/tb_conv_core.v" Line 310
+## quit
+INFO: xsimkernel Simulation Memory Usage: 712152 KB (Peak: 712152 KB), Simulation CPU Usage: 156389 ms
+INFO: [Common 17-206] Exiting xsim at Wed Oct 28 03:54:17 2026...
+
+
+****** xsim v2026.1 (64-bit)
+  **** SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+  **** IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+  **** SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+  **** Start of session at: Wed Oct 28 03:43:08 2026
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source xsim.dir/counter_activity/xsim_script.tcl
+# xsim {counter_activity} -testplusarg N=1 -testplusarg C=1 -testplusarg H=28 -testplusarg W=28 -testplusarg K=32 -testplusarg R=3 -testplusarg S=3 -testplusarg pad_i=0 -testplusarg pad_j=0 -testplusarg stride_i=1 -testplusarg stride_j=1 -testplusarg dilation_i=1 -testplusarg dilation_j=1 -testplusarg INPUT_FILE=C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/input_tensor.txt -testplusarg KERNEL_FILE=C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/kernel_tensor.txt -testplusarg OUTPUT_FILE=C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/actual.txt -testplusarg SRAM_LAYOUT_FILE=C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/layout.txt -testplusarg NATIVE_WATCHDOG_CYCLES=86977 -autoloadwcfg -tclbatch {C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/capture.tcl} -onfinish stop -onerror quit
+Time resolution is 1 ps
+source C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/capture.tcl
+## if {[catch {
+## run all
+## if {[get_value -radix unsigned /tb_conv_core/power_stage] != 1} {error "Missing accepted-start marker"}
+## set start_time [current_time]
+## open_saif {C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/activity.saif}
+## current_scope /tb_conv_core/GATE
+## set activity_objects [get_objects -r *]
+## if {[llength $activity_objects] == 0} {error "Empty synthesized-DUT activity scope"}
+## log_saif $activity_objects
+## run all
+## set end_time [current_time]
+## if {[get_value -radix unsigned /tb_conv_core/power_stage] != 2} {error "Missing done marker"}
+## close_saif
+## puts "NATIVE_SAIF_WINDOW start=$start_time end=$end_time"
+## run all
+## if {[get_value -radix unsigned /tb_conv_core/power_stage] != 3} {error "Output/netlist checks did not finish"}
+## set result [open {C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/mnist_conv1/NATIVE_SIM_SUCCESS} w]
+## puts $result "Native XSim SAIF capture and final output/netlist checks completed"
+## close $result
+## } native_error]} {
+## puts stderr "NATIVE_CAPTURE_FAILED $native_error"
+## }
+[POWER_WINDOW] start_ps: 110000
+$stop called at time : 109707 ps : File "C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/tb_conv_core.v" Line 170
+$stop called at time : 2724397692 ps : File "C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/tb_conv_core.v" Line 304
+run: Time (s): cpu = 00:00:00 ; elapsed = 00:11:01 . Memory (MB): peak = 316.531 ; gain = 0.000
+NATIVE_SAIF_WINDOW start=109707 ps end=2724397692 ps
+[METRIC] Layer cycles (start accepted to final store done): 86913
+[METRIC] Backing reads: 16224; writes: 21632
+[TILED_CYCLES] planning=1841 input_transfers=17472 kernel_transfers=14976 core_execution=9256 output_transfers=43264 tile_transitions=104 tiles=104 core_jobs=104 tap_jobs=0 signature=12b217e5e0546334
+[CORE_CYCLES] im2col=0 weights=1144 advances=4784 stalls=3120 transitions=0 retries=0
+PASS: 21632 outputs matched for one completed layer
+NETLIST_PORT_CHECK_PASS known_bits=2251268
+$finish called at time : 2724398692 ps : File "C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/synthetic_fmax_layers_20261028/workloads/centralized/tb_conv_core.v" Line 310
+## quit
+INFO: xsimkernel Simulation Memory Usage: 712152 KB (Peak: 712152 KB), Simulation CPU Usage: 156389 ms
+INFO: [Common 17-206] Exiting xsim at Wed Oct 28 03:54:17 2026...
