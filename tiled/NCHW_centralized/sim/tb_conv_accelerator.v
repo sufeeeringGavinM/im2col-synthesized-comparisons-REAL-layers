@@ -5,29 +5,29 @@ module tb_conv_accelerator;
   reg [63:0] nested_im2col=0,nested_weights=0,nested_advances=0,nested_stalls=0,nested_transitions=0,nested_retries=0;
 
   always @(posedge clk) if(nrst && busy) begin
-    case(DUT.state)
-      DUT.SETUP,DUT.PLAN_TILE,DUT.PREPARE: phase_planning<=phase_planning+1;
-      DUT.INPUT_READ,DUT.INPUT_WRITE: phase_input_transfers<=phase_input_transfers+1;
-      DUT.KERNEL_READ,DUT.KERNEL_WRITE: phase_kernel_transfers<=phase_kernel_transfers+1;
-      DUT.START_CORE,DUT.WAIT_CORE: phase_core_execution<=phase_core_execution+1;
-      DUT.OUTPUT_READ,DUT.OUTPUT_WRITE: phase_output_transfers<=phase_output_transfers+1;
-      DUT.NEXT_TILE: phase_tile_transitions<=phase_tile_transitions+1;
+    case(DUT.u_accelerator.state)
+      DUT.u_accelerator.SETUP,DUT.u_accelerator.PLAN_TILE,DUT.u_accelerator.PREPARE: phase_planning<=phase_planning+1;
+      DUT.u_accelerator.INPUT_READ,DUT.u_accelerator.INPUT_WRITE: phase_input_transfers<=phase_input_transfers+1;
+      DUT.u_accelerator.KERNEL_READ,DUT.u_accelerator.KERNEL_WRITE: phase_kernel_transfers<=phase_kernel_transfers+1;
+      DUT.u_accelerator.START_CORE,DUT.u_accelerator.WAIT_CORE: phase_core_execution<=phase_core_execution+1;
+      DUT.u_accelerator.OUTPUT_READ,DUT.u_accelerator.OUTPUT_WRITE: phase_output_transfers<=phase_output_transfers+1;
+      DUT.u_accelerator.NEXT_TILE: phase_tile_transitions<=phase_tile_transitions+1;
       default: phase_planning<=phase_planning+1;
     endcase
-    if(DUT.state==DUT.PLAN_TILE) tile_count<=tile_count+1;
-    if(DUT.state==DUT.START_CORE) begin core_jobs<=core_jobs+1; if(DUT.tap_mode) tap_jobs<=tap_jobs+1; end
+    if(DUT.u_accelerator.state==DUT.u_accelerator.PLAN_TILE) tile_count<=tile_count+1;
+    if(DUT.u_accelerator.state==DUT.u_accelerator.START_CORE) begin core_jobs<=core_jobs+1; if(DUT.u_accelerator.tap_mode) tap_jobs<=tap_jobs+1; end
     if(mem_re) transfer_signature<=((transfer_signature<<7)|(transfer_signature>>57)) ^ {32'b0,mem_raddr} ^ 64'h123456789abcdef0;
     if(mem_we) transfer_signature<=((transfer_signature<<7)|(transfer_signature>>57)) ^ {32'b0,mem_waddr} ^ mem_wdata ^ 64'h0fedcba987654321;
   end
-  always @(posedge clk) if(nrst && DUT.u_core.busy) begin
+  always @(posedge clk) if(nrst && DUT.u_accelerator.u_core.busy) begin
     if(1'b0) nested_im2col<=nested_im2col+1;
-    else if(DUT.u_core.prime || DUT.u_core.initial_load) nested_weights<=nested_weights+1;
-    else if(DUT.u_core.running) begin
-      if(DUT.u_core.advance) nested_advances<=nested_advances+1;
+    else if(DUT.u_accelerator.u_core.prime || DUT.u_accelerator.u_core.initial_load) nested_weights<=nested_weights+1;
+    else if(DUT.u_accelerator.u_core.running) begin
+      if(DUT.u_accelerator.u_core.advance) nested_advances<=nested_advances+1;
       else nested_stalls<=nested_stalls+1;
     end else nested_transitions<=nested_transitions+1;
   end
-  always @(posedge clk) if(nrst && DUT.u_core.conflict_retry) nested_retries<=nested_retries+1;
+  always @(posedge clk) if(nrst && DUT.u_accelerator.u_core.conflict_retry) nested_retries<=nested_retries+1;
 
   // Configuration, tensor geometry and external-memory interface.
   parameter ARRAY_SIZE = 10;
@@ -44,7 +44,8 @@ module tb_conv_accelerator;
   integer input_base, kernel_base, output_base, input_words, kernel_words, output_words;
   reg clk = 0, nrst = 0, start = 0;
   always #5 clk = ~clk;
-  wire busy, done, mem_re, mem_we;
+  wire busy, done, mem_re, mem_we,descriptor_ready,chain_busy,chain_done;
+  integer quantize=0,round_nearest=1,output_shift=0;
   wire [MEM_ADDR_WIDTH - 1:0] mem_raddr, mem_waddr;
   wire [MEM_DATA_WIDTH - 1:0] mem_wdata;
   reg [MEM_DATA_WIDTH - 1:0] mem_rdata;
@@ -62,7 +63,7 @@ module tb_conv_accelerator;
   integer reads = 0, writes = 0;
 
   // The layer configuration stays constant for this demonstration.
-  conv_accelerator #(
+  conv_chain #(
     .ARRAY_SIZE(ARRAY_SIZE),
     .BIT_WIDTH(BIT_WIDTH),
     .ACC_WIDTH(ACC_WIDTH),
@@ -73,7 +74,9 @@ module tb_conv_accelerator;
   ) DUT (
     .clk(clk),
     .nrst(nrst),
-    .start(start),
+    .descriptor_valid(start),
+    .descriptor_last(1'b1),
+    .descriptor_ready(descriptor_ready),.chain_busy(chain_busy),.chain_done(chain_done),
     .busy(busy),
     .done(done),
     .cfg_N(N),
@@ -94,6 +97,7 @@ module tb_conv_accelerator;
     .cfg_input_base(MEM_ADDR_WIDTH'(input_base)),
     .cfg_kernel_base(MEM_ADDR_WIDTH'(kernel_base)),
     .cfg_output_base(MEM_ADDR_WIDTH'(output_base)),
+    .cfg_quantize(quantize[0]),.cfg_round_nearest(round_nearest[0]),.cfg_output_shift(output_shift[4:0]),
     .mem_re(mem_re),
     .mem_we(mem_we),
     .mem_raddr(mem_raddr),
@@ -126,6 +130,23 @@ module tb_conv_accelerator;
     end
   end
 
+  // Reference uses magnitude division/remainder, independent of RTL guard/sticky.
+  function automatic signed [ACC_WIDTH-1:0] quant_reference(input signed [ACC_WIDTH-1:0] v);
+    reg signed [63:0] x,mag,denom,y;
+    begin
+      x=v;y=x;
+      if(quantize) begin
+        denom=64'sd1 << output_shift;
+        if(round_nearest) begin
+          mag=x<0?-x:x;y=(mag+denom/2)/denom;if(x<0)y=-y;
+        end else begin
+          y=x/denom;if(x<0 && x%denom!=0)y=y-1;
+        end
+        if(y>127)y=127;if(y< -128)y=-128;
+      end
+      quant_reference=y;
+    end
+  endfunction
   // Full-layer reference: tensor coordinates and signed arithmetic, independent
   // of the hardware tile schedule.
   task build_reference;
@@ -143,7 +164,7 @@ module tb_conv_accelerator;
                     if (h >= 0 && h < H && w >= 0 && w < W)
                       total = total + input_tensor[((n * C + c) * H + h) * W + w] * kernel_tensor[((k * C + c) * R + r) * S + s];
                   end
-              expected[((n * K + k) * P + p) * Q + q] = total;
+              expected[((n * K + k) * P + p) * Q + q] = quant_reference(total);
             end
     end
   endtask
@@ -180,6 +201,9 @@ module tb_conv_accelerator;
 
   // Load one layer and initialise the backing input/kernel tensors.
   initial begin
+    if($value$plusargs("QUANTIZE=%d",quantize)) begin end
+    if($value$plusargs("ROUND_NEAREST=%d",round_nearest)) begin end
+    if($value$plusargs("OUTPUT_SHIFT=%d",output_shift)) begin end
     input_file = "sim/input_tensor.txt";
     kernel_file = "sim/kernel_tensor.txt";
     output_file = "sim/output_tensor_accelerator.txt";
@@ -238,12 +262,14 @@ module tb_conv_accelerator;
 
     // Launch once. The accelerator performs every tile load, compute and store.
     @(negedge clk);
+    if(!descriptor_ready) $fatal(1,"Initial descriptor not ready");
     start = 1;
     @(negedge clk);
     start = 0;
 
     wait (done);
     #1;  // Observe final memory writes after nonblocking assignments commit.
+    if(!chain_done || !chain_busy) $fatal(1,"Last-layer completion handshake");
     check_outputs;
     $finish;
   end

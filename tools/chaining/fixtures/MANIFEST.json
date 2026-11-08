@@ -1,0 +1,16 @@
+{
+  "chain/chain.json": "aea6993d01442236dada3774b0813cedb306559a4a8ac0663f1a2f2535fbdfe5",
+  "chain/chain_descriptors.hex": "8b727708ce9593125075a1c3c81c0f6571abe9da257871dc6f002f84c236ece5",
+  "chain/chain_expected.hex": "bd01e0119d6b6efab2ef923130446e21c66bb89e2a98f63853c9206aec14f34a",
+  "chain/chain_memory.hex": "77f07d5ce828bef705283e2f7ffaafed779305da13a45e90c4836aaec8a52117",
+  "chain/keras_model_v1.1.py": "219f337e9e2989283b588203eaa950e6182b3185e09311433a5e27240e88d7fb",
+  "chain/layer0_raw_expected.hex": "39738e59b40587ab639e0b87929e4b2df93f39e43fc403b624c87c84dba7f493",
+  "chain/layer1_raw_expected.hex": "55ac04d79c4515cfa5f0b5939dab031872f825d89b1084c9e96208f5501437f0",
+  "chain/layer2_raw_expected.hex": "7485f1bc533ace7784e63d05e89848f62706d2a32a44d23c6f4c34cc67dacdf4",
+  "chain/RESULTS.json": "ce695c32be54558b331fe362c1c27903392751fc72d2e580cc3d987420f8d11a",
+  "validation/RESULTS.json": "10064e6f97d95720049e765dea4f129952550e0ed3cca331524f700d126f120b",
+  "quantizer/NCHW_centralized/quant_vectors.txt": "0fb7d5ebb92f3731ebef1c5e94a2e67ecd48578f973ecbe1160428eafd921c9c",
+  "quantizer/NHWC/quant_vectors.txt": "0fb7d5ebb92f3731ebef1c5e94a2e67ecd48578f973ecbe1160428eafd921c9c",
+  "chain/NCHW_centralized/tb_resnet8_chain.v": "1838834d5846dab1ecee47a35acc6c942d207ce920a0394bd14fdd0fa6dae165",
+  "chain/NHWC/tb_resnet8_chain.v": "1838834d5846dab1ecee47a35acc6c942d207ce920a0394bd14fdd0fa6dae165"
+}

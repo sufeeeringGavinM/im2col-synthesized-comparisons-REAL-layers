@@ -20,6 +20,8 @@ module conv_accelerator #(
     input [CFG_WIDTH-1:0] cfg_N,cfg_C,cfg_H,cfg_W,cfg_K,cfg_R,cfg_S,cfg_P,cfg_Q,
     input [CFG_WIDTH-1:0] cfg_pad_i,cfg_pad_j,cfg_stride_i,cfg_stride_j,cfg_dilation_i,cfg_dilation_j,
     input [MEM_ADDR_WIDTH-1:0] cfg_input_base,cfg_kernel_base,cfg_output_base,
+    input cfg_quantize,cfg_round_nearest,
+    input [4:0] cfg_output_shift,
     output reg mem_re, mem_we,
     output reg [MEM_ADDR_WIDTH-1:0] mem_raddr,mem_waddr,
     input [MEM_DATA_WIDTH-1:0] mem_rdata,
@@ -31,6 +33,9 @@ module conv_accelerator #(
              INPUT_READ=4, INPUT_WRITE=5, KERNEL_READ=6, KERNEL_WRITE=7,
              START_CORE=8, WAIT_CORE=9, OUTPUT_READ=10, OUTPUT_WRITE=11, NEXT_TILE=12;
   reg [3:0] state;
+  reg quantize,round_nearest;
+  reg [4:0] output_shift;
+
   // Captured descriptor registers: stable throughout a job, even if cfg_* ports change.
   reg [CFG_WIDTH-1:0] N,C,H,W,K,R,S,P,Q,pad_i,pad_j,stride_i,stride_j,dilation_i,dilation_j;
   reg [MEM_ADDR_WIDTH-1:0] input_base,kernel_base,output_base;
@@ -50,6 +55,11 @@ module conv_accelerator #(
   wire [CFG_WIDTH-1:0] kernel_words=tile_c*local_R*local_S;
   wire core_busy,core_done;
   wire [ARRAY_SIZE-1:0][ACC_WIDTH-1:0] stored_output;
+  wire signed [ACC_WIDTH-1:0] output_value;
+  output_quantizer #(.ACC_WIDTH(ACC_WIDTH),.BIT_WIDTH(BIT_WIDTH)) u_quantizer (
+    .value(stored_output[bank_index]),.enable(quantize),
+    .round_nearest(round_nearest),.shift(output_shift),.result(output_value));
+
   reg [ARRAY_SIZE-1:0] input_we,kernel_we;
   reg [ARRAY_SIZE-1:0][INPUT_ADDR_WIDTH-1:0] input_addr;
   reg [ARRAY_SIZE-1:0][KERNEL_ADDR_WIDTH-1:0] kernel_addr;
@@ -211,7 +221,7 @@ module conv_accelerator #(
       OUTPUT_WRITE: begin
         mem_we=1;
         mem_waddr=MEM_ADDR_WIDTH'(output_dma_addr);
-        mem_wdata=MEM_DATA_WIDTH'(stored_output[bank_index]);
+        mem_wdata=MEM_DATA_WIDTH'(output_value);
       end
     endcase
     end
@@ -244,7 +254,7 @@ module conv_accelerator #(
       for(delta_index=0;delta_index<5;delta_index=delta_index+1) begin delta_bank[delta_index]<=0;delta_address[delta_index]<=0;end
       job_step<=0;job_pending<=0;extent_i<=0;extent_j<=0;taps<=0;needs_taps<=0;plan_c<=0;plan_q<=0;plan_temp<=0;
       spatial_rows<=0;min_cols<=0;spatial_footprint<=0;input_channels<=0;kernel_channels<=0;bounded_c<=0;groups<=0;
-      state<=IDLE;done<=0;
+      state<=IDLE;done<=0;quantize<=0;round_nearest<=1;output_shift<=0;
       N<=1;C<=1;H<=1;W<=1;K<=1;R<=1;S<=1;P<=1;Q<=1;
       pad_i<=0;pad_j<=0;stride_i<=1;stride_j<=1;dilation_i<=1;dilation_j<=1;
       input_base<=0;kernel_base<=0;output_base<=0;
@@ -258,6 +268,7 @@ module conv_accelerator #(
         // Accept one full-layer descriptor only while idle. Initialize outer
         // tile counters and padded origins; subsequent cfg_* changes are ignored.
         IDLE: if(start) begin
+          quantize<=cfg_quantize;round_nearest<=cfg_round_nearest;output_shift<=cfg_output_shift;
           N<=cfg_N;C<=cfg_C;H<=cfg_H;W<=cfg_W;K<=cfg_K;R<=cfg_R;S<=cfg_S;P<=cfg_P;Q<=cfg_Q;
           pad_i<=cfg_pad_i;pad_j<=cfg_pad_j;stride_i<=cfg_stride_i;stride_j<=cfg_stride_j;
           dilation_i<=cfg_dilation_i;dilation_j<=cfg_dilation_j;

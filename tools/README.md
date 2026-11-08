@@ -1,8 +1,8 @@
 # Reproduction tools
 
-- [Cycle replay](cycles/README.md): full RTL golden checks, six exclusive phases and nested diagnostics for the four selected layers.
-- [Vivado/XSim](vivado/README.md): portable sequential native capture/power, with exact matching hardware reuse or optional independent synthesis.
-- [Workloads](workloads/README.md): shared deterministic signed 8-bit tensors, seed/hash/config/model identities and an exact integer generator.
-- [Browser tools](browser/README.md): historical educational mappings with explicit limitations.
+- [Current chaining reproduction](chaining/README.md): exact source/fixture checks, RTL replay, Nexys Video synthesis and native-XSim activity at1MHz and own estimatedFmax.
+- [Workloads](workloads/README.md): deterministic independent-layer tensors, model geometries and provenance.
+- [Previous cycle replay](cycles/README.md) and [previous Vivado/XSim flow](vivado/README.md): reproduce the earlier four-way study from its source commit.
+- [Browser tools](browser/README.md): educational mappings with stated limitations.
 
-The standalone implementation runners use Python 3 and Icarus. Tensor generation uses the retained Python integer golden and requires Python 3; the independent full Verilog golden remains enabled in simulation. Native capture requires Vivado 2026.1 with Artix-7 primitives/glbl and a simulation license adequate for both synthesized and shadow-reference instances. Tools accept installation/output paths and inherit normal user license configuration. No licenses, private configuration, compiled simulator outputs or synthesized netlists/checkpoints are distributed.
+The current main implementations are tiled/NHWC and tiled/NCHW_centralized, with conv_chain as the top. The previous version is commit `962a23ef5d03b0475fd2113338d6ec59b1ae0e3e`; use a separate checkout of that commit for historical source-gated commands. Current standalone run_case.py scripts replay individual raw-output layers.

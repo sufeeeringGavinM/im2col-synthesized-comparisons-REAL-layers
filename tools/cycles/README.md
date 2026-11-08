@@ -1,3 +1,5 @@
+> Previous-version reproduction. For the current chaining version, use [the chaining tools](../chaining/README.md). The historical commands below require the previous source commit `962a23ef5d03b0475fd2113338d6ec59b1ae0e3e`.
+
 # Full-layer cycle validation
 
 For the selected complete small-model layers, use the compiled four-state XSim runner. It retains the complete Verilog golden calculation and every final output/cycle/phase/transfer check:

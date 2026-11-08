@@ -1,0 +1,63 @@
+#-----------------------------------------------------------
+# xsim v2026.1 (64-bit)
+# SW Build 6511674 on Tue Jun 16 11:02:23 MDT 2026
+# IP Build 6504888 on Tue Jun 09 09:05:25 MDT 2026
+# SharedData Build 6501428 on Mon Jun 08 17:34:18 MDT 2026
+# Start of session at: Sun Nov  8 09:36:33 2026
+# Process ID         : 5412
+# Current directory  : C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC
+# Command line       : xsim.exe -log C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/chain_1mhz/xsim.log -mode tcl -source {xsim.dir/counter_activity/xsim_script.tcl}
+# Log file           : C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/chain_1mhz/xsim.log
+# Journal file       : C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC\xsim.jou
+# Running On         : root
+# Platform           : Windows 11
+# Operating System   : 22631
+# Processor Detail   : Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz
+# CPU Frequency      : 3408 MHz
+# CPU Physical cores : 4
+# CPU Logical cores  : 8
+# Host memory        : 17143 MB
+# Swap memory        : 8321 MB
+# Total Virtual      : 25465 MB
+# Available Virtual  : 12528 MB
+#-----------------------------------------------------------
+source xsim.dir/counter_activity/xsim_script.tcl
+# xsim {counter_activity} -testplusarg CLOCK_HALF_NS=500 -testplusarg INIT=C:/Users/RageAgainstW10/eda/designs/196/experiments/conv_chaining_unoptimized_20261108/validation_chain/chain_memory.hex -testplusarg DESC=C:/Users/RageAgainstW10/eda/designs/196/experiments/conv_chaining_unoptimized_20261108/validation_chain/chain_descriptors.hex -testplusarg EXPECTED=C:/Users/RageAgainstW10/eda/designs/196/experiments/conv_chaining_unoptimized_20261108/validation_chain/chain_expected.hex -testplusarg INPUT_FILE=C:/Users/RageAgainstW10/eda/designs/196/experiments/conv_chaining_unoptimized_20261108/validation_chain/input_tensor.txt -testplusarg KERNEL_FILE=C:/Users/RageAgainstW10/eda/designs/196/experiments/conv_chaining_unoptimized_20261108/validation_chain/kernel_tensor.txt -testplusarg OUTPUT_FILE=C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/chain_1mhz/actual.txt -testplusarg SRAM_LAYOUT_FILE=C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/chain_1mhz/layout.txt -testplusarg NATIVE_WATCHDOG_CYCLES=1000618 -autoloadwcfg -tclbatch {C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/chain_1mhz/capture.tcl} -onfinish stop -onerror quit
+Time resolution is 1 ps
+source C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/chain_1mhz/capture.tcl
+## if {[catch {
+## run all
+## if {[get_value -radix unsigned /tb_conv_core/power_stage] != 1} {error "Missing accepted-start marker"}
+## set start_time [current_time]
+## open_saif {C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/chain_1mhz/activity.saif}
+## current_scope /tb_conv_core/GATE
+## set activity_objects [get_objects -r *]
+## if {[llength $activity_objects] == 0} {error "Empty synthesized-DUT activity scope"}
+## log_saif $activity_objects
+## run all
+## set end_time [current_time]
+## if {[get_value -radix unsigned /tb_conv_core/power_stage] != 2} {error "Missing done marker"}
+## close_saif
+## puts "NATIVE_SAIF_WINDOW start=$start_time end=$end_time"
+## run all
+## if {[get_value -radix unsigned /tb_conv_core/power_stage] != 3} {error "Output/netlist checks did not finish"}
+## set result [open {C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/chain_1mhz/NATIVE_SIM_SUCCESS} w]
+## puts $result "Native XSim SAIF capture and final output/netlist checks completed"
+## close $result
+## } native_error]} {
+## puts stderr "NATIVE_CAPTURE_FAILED $native_error"
+## }
+$stop called at time : 21005 ns : File "C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/tb_conv_core.v" Line 90
+CHAIN_LAYER_PASS layer=0 outputs=16384 cycles=128290
+CHAIN_LAYER_PASS layer=1 outputs=16384 cycles=436130
+$stop called at time : 1000575005 ns : File "C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/tb_conv_core.v" Line 96
+run: Time (s): cpu = 00:00:00 ; elapsed = 01:13:31 . Memory (MB): peak = 271.621 ; gain = 0.000
+NATIVE_SAIF_WINDOW start=21005 ns end=1000575005 ns
+CHAIN_LAYER_PASS layer=2 outputs=16384 cycles=436130
+CHAIN_METRICS cycles=1000554 planning=614 input_transfers=421120 kernel_transfers=322560 core_execution=157760 output_transfers=98304 tile_transitions=192 descriptor_gaps=4
+PASS: actual 3-layer ping-pong chain, no intermediate replacement
+NETLIST_PORT_CHECK_PASS known_bits=22048493
+$finish called at time : 1000577505 ns : File "C:/Users/RageAgainstW10/eda/designs/196/synthesis/VivadoSynth/conv_chaining_unoptimized_20261108/native_chain/NHWC/tb_conv_core.v" Line 106
+## quit
+INFO: xsimkernel Simulation Memory Usage: 275808 KB (Peak: 275808 KB), Simulation CPU Usage: 4031812 ms
+INFO: [Common 17-206] Exiting xsim at Sun Nov  8 10:50:07 2026...

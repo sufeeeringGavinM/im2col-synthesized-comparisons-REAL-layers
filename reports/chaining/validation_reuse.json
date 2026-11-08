@@ -1,0 +1,9 @@
+{
+  "status": "PASS",
+  "source_identity": "source_identity.json",
+  "independent_layer_results": "../../tools/chaining/fixtures/validation/RESULTS.json",
+  "whole_chain_results": "../../tools/chaining/fixtures/chain/RESULTS.json",
+  "quantizer_vectors_per_architecture": 13472,
+  "quantizer_source": "../../tools/chaining/fixtures/quantizer",
+  "method": "Exact seed RTL and testbench/tensor identity; accepted functional evidence reused, no new RTL simulations during packaging"
+}

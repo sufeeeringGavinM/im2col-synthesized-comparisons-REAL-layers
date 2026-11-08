@@ -1,3 +1,5 @@
+> Previous-version reproduction. For the current chaining version, use [the chaining tools](../chaining/README.md). The historical commands below require the previous source commit `962a23ef5d03b0475fd2113338d6ec59b1ae0e3e`.
+
 # Portable native Vivado/XSim reproduction
 
 Use Python 3, Vivado 2026.1 with Artix-7 support, AMD primitives/glbl, and a simulation license sufficient for the synthesized DUT plus shadow RTL. Use normal user licenses. Installation/output paths are explicit; Linux, Windows and WSL with Windows tools are supported. Use a new output directory for each run.

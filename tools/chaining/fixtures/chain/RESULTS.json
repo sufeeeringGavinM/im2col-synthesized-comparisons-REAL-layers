@@ -1,0 +1,174 @@
+{
+  "specification": {
+    "source_url": "https://raw.githubusercontent.com/mlcommons/tiny/v1.1/benchmark/training/image_classification/keras_model.py",
+    "source_sha256": "219f337e9e2989283b588203eaa950e6182b3185e09311433a5e27240e88d7fb",
+    "layers": [
+      {
+        "layer": 0,
+        "name": "stem",
+        "config": {
+          "N": 1,
+          "C": 3,
+          "H": 32,
+          "W": 32,
+          "K": 16,
+          "R": 3,
+          "S": 3,
+          "P": 32,
+          "Q": 32,
+          "pad_i": 1,
+          "pad_j": 1,
+          "stride_i": 1,
+          "stride_j": 1,
+          "dilation_i": 1,
+          "dilation_j": 1,
+          "input_base": 8,
+          "kernel_base": 32792,
+          "output_base": 16400,
+          "quantize": 1,
+          "shift": 3,
+          "nearest": 1,
+          "last": 0,
+          "outputs": 16384
+        }
+      },
+      {
+        "layer": 1,
+        "name": "first_block_conv1",
+        "config": {
+          "N": 1,
+          "C": 16,
+          "H": 32,
+          "W": 32,
+          "K": 16,
+          "R": 3,
+          "S": 3,
+          "P": 32,
+          "Q": 32,
+          "pad_i": 1,
+          "pad_j": 1,
+          "stride_i": 1,
+          "stride_j": 1,
+          "dilation_i": 1,
+          "dilation_j": 1,
+          "input_base": 16400,
+          "kernel_base": 33232,
+          "output_base": 8,
+          "quantize": 1,
+          "shift": 5,
+          "nearest": 1,
+          "last": 0,
+          "outputs": 16384
+        }
+      },
+      {
+        "layer": 2,
+        "name": "first_block_conv2",
+        "config": {
+          "N": 1,
+          "C": 16,
+          "H": 32,
+          "W": 32,
+          "K": 16,
+          "R": 3,
+          "S": 3,
+          "P": 32,
+          "Q": 32,
+          "pad_i": 1,
+          "pad_j": 1,
+          "stride_i": 1,
+          "stride_j": 1,
+          "dilation_i": 1,
+          "dilation_j": 1,
+          "input_base": 8,
+          "kernel_base": 35544,
+          "output_base": 16400,
+          "quantize": 0,
+          "shift": 0,
+          "nearest": 1,
+          "last": 1,
+          "outputs": 16384
+        }
+      }
+    ],
+    "seed": 1961107,
+    "operands": "deterministic synthetic signed8, not trained weights",
+    "scope": "Three convolution operators only; no BN, bias, ReLU or residual addition. Ends before first residual addition.",
+    "nominal_macs": 5160960,
+    "first_intermediate_words": 16384,
+    "local_input_words": 2560
+  },
+  "results": [
+    {
+      "architecture": "NHWC",
+      "cycles": 1000554,
+      "phases": {
+        "planning": 614,
+        "input_transfers": 421120,
+        "kernel_transfers": 322560,
+        "core_execution": 157760,
+        "output_transfers": 98304,
+        "tile_transitions": 192,
+        "descriptor_gaps": 4
+      },
+      "layers": [
+        {
+          "layer": 0,
+          "outputs": 16384,
+          "cycles": 128290
+        },
+        {
+          "layer": 1,
+          "outputs": 16384,
+          "cycles": 436130
+        },
+        {
+          "layer": 2,
+          "outputs": 16384,
+          "cycles": 436130
+        }
+      ],
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "cycles": 1014911,
+      "phases": {
+        "planning": 5851,
+        "input_transfers": 421120,
+        "kernel_transfers": 322560,
+        "core_execution": 166880,
+        "output_transfers": 98304,
+        "tile_transitions": 192,
+        "descriptor_gaps": 4
+      },
+      "layers": [
+        {
+          "layer": 0,
+          "outputs": 16384,
+          "cycles": 113465
+        },
+        {
+          "layer": 1,
+          "outputs": 16384,
+          "cycles": 450721
+        },
+        {
+          "layer": 2,
+          "outputs": 16384,
+          "cycles": 450721
+        }
+      ],
+      "status": "PASS"
+    }
+  ],
+  "fixture_sha256": {
+    "chain_descriptors.hex": "8b727708ce9593125075a1c3c81c0f6571abe9da257871dc6f002f84c236ece5",
+    "chain_expected.hex": "bd01e0119d6b6efab2ef923130446e21c66bb89e2a98f63853c9206aec14f34a",
+    "chain_memory.hex": "77f07d5ce828bef705283e2f7ffaafed779305da13a45e90c4836aaec8a52117",
+    "layer0_raw_expected.hex": "39738e59b40587ab639e0b87929e4b2df93f39e43fc403b624c87c84dba7f493",
+    "layer1_raw_expected.hex": "55ac04d79c4515cfa5f0b5939dab031872f825d89b1084c9e96208f5501437f0",
+    "layer2_raw_expected.hex": "7485f1bc533ace7784e63d05e89848f62706d2a32a44d23c6f4c34cc67dacdf4"
+  },
+  "synthesizable_rtl_changed": false
+}

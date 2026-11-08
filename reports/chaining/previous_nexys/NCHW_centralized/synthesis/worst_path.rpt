@@ -1,0 +1,323 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026
+| Date         : Sat Nov  7 20:33:34 2026
+| Host         : root running 64-bit major release  (build 9200)
+| Command      : report_timing -of_objects [get_timing_paths -delay_type max -max_paths 1 -nworst 1] -file worst_path.rpt
+| Design       : conv_accelerator
+| Device       : 7a200t-sbg484
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (VIOLATED) :        -17.611ns  (required time - arrival time)
+  Source:                 tap_mode_reg_rep__4/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            p_0_out__0/A[16]
+                            (rising edge-triggered cell DSP48E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        33.805ns  (logic 21.440ns (63.422%)  route 12.365ns (36.578%))
+  Logic Levels:           68  (CARRY4=54 DSP48E1=2 LUT2=3 LUT3=3 LUT4=1 LUT5=3 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 20.924 - 20.000 ) 
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=18290, unset)        0.973     0.973    clk
+                         FDRE                                         r  tap_mode_reg_rep__4/C
+  -------------------------------------------------------------------    -------------------
+                         FDRE (Prop_fdre_C_Q)         0.456     1.429 r  tap_mode_reg_rep__4/Q
+                         net (fo=114, unplaced)       0.573     2.002    tap_mode_reg_rep__4_n_0
+                                                                      r  slot_delta[3]__1_i_17__0/I0
+                         LUT2 (Prop_lut2_I0_O)        0.321     2.323 r  slot_delta[3]__1_i_17__0/O
+                         net (fo=1, unplaced)         0.000     2.323    slot_delta[3]__1_i_17__0_n_0
+                                                                      r  slot_delta[3]__1_i_4__0/DI[1]
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.547     2.870 r  slot_delta[3]__1_i_4__0/CO[3]
+                         net (fo=1, unplaced)         0.009     2.879    slot_delta[3]__1_i_4__0_n_0
+                                                                      r  slot_delta[3]__1_i_3__0/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     2.996 r  slot_delta[3]__1_i_3__0/CO[3]
+                         net (fo=1, unplaced)         0.000     2.996    slot_delta[3]__1_i_3__0_n_0
+                                                                      r  slot_delta[3]__1_i_2__0/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     3.113 r  slot_delta[3]__1_i_2__0/CO[3]
+                         net (fo=1, unplaced)         0.000     3.113    slot_delta[3]__1_i_2__0_n_0
+                                                                      r  slot_delta[3]__1_i_1__0/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     3.230 r  slot_delta[3]__1_i_1__0/CO[3]
+                         net (fo=1, unplaced)         0.000     3.230    slot_delta[3]__1_i_1__0_n_0
+                                                                      r  slot_delta[3]_i_5__0/CI
+                         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.232     3.462 r  slot_delta[3]_i_5__0/O[0]
+                         net (fo=1, unplaced)         0.800     4.262    slot_delta[3]_i_5__0_n_7
+                                                                      r  slot_delta[3]__1/A[16]
+                         DSP48E1 (Prop_dsp48e1_A[16]_PCOUT[47])
+                                                      4.211     8.473 r  slot_delta[3]__1/PCOUT[47]
+                         net (fo=1, unplaced)         0.055     8.528    slot_delta[3]__1_n_106
+                                                                      r  slot_delta[3]__2/PCIN[47]
+                         DSP48E1 (Prop_dsp48e1_PCIN[47]_P[0])
+                                                      1.518    10.046 r  slot_delta[3]__2/P[0]
+                         net (fo=2, unplaced)         0.800    10.845    p_1_in__0__0[17]
+                                                                      r  p_0_out__0_i_1617/I0
+                         LUT2 (Prop_lut2_I0_O)        0.124    10.969 r  p_0_out__0_i_1617/O
+                         net (fo=1, unplaced)         0.000    10.969    p_0_out__0_i_1617_n_0
+                                                                      r  p_0_out__0_i_1277/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    11.502 r  p_0_out__0_i_1277/CO[3]
+                         net (fo=1, unplaced)         0.009    11.511    p_0_out__0_i_1277_n_0
+                                                                      r  p_0_out__0_i_1291/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    11.628 r  p_0_out__0_i_1291/CO[3]
+                         net (fo=1, unplaced)         0.000    11.628    p_0_out__0_i_1291_n_0
+                                                                      r  p_0_out__0_i_1296/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    11.745 r  p_0_out__0_i_1296/CO[3]
+                         net (fo=1, unplaced)         0.000    11.745    p_0_out__0_i_1296_n_0
+                                                                      r  p_0_out__0_i_1299/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    11.862 r  p_0_out__0_i_1299/CO[3]
+                         net (fo=1, unplaced)         0.000    11.862    p_0_out__0_i_1299_n_0
+                                                                      r  p_0_out__0_i_1309/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    11.979 r  p_0_out__0_i_1309/CO[3]
+                         net (fo=1, unplaced)         0.000    11.979    p_0_out__0_i_1309_n_0
+                                                                      r  p_0_out__0_i_927/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.096 r  p_0_out__0_i_927/CO[3]
+                         net (fo=1, unplaced)         0.000    12.096    p_0_out__0_i_927_n_0
+                                                                      r  p_0_out__0_i_547/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.213 r  p_0_out__0_i_547/CO[3]
+                         net (fo=1, unplaced)         0.000    12.213    p_0_out__0_i_547_n_0
+                                                                      r  p_0_out__0_i_323/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.330 r  p_0_out__0_i_323/CO[3]
+                         net (fo=1, unplaced)         0.000    12.330    p_0_out__0_i_323_n_0
+                                                                      r  p_0_out__0_i_209/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.447 r  p_0_out__0_i_209/CO[3]
+                         net (fo=1, unplaced)         0.000    12.447    p_0_out__0_i_209_n_0
+                                                                      r  p_0_out__0_i_120/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.564 r  p_0_out__0_i_120/CO[3]
+                         net (fo=1, unplaced)         0.000    12.564    p_0_out__0_i_120_n_0
+                                                                      r  p_0_out__0_i_54/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.681 r  p_0_out__0_i_54/CO[3]
+                         net (fo=1, unplaced)         0.000    12.681    p_0_out__0_i_54_n_0
+                                                                      r  p_0_out__0_i_20/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331    13.012 r  p_0_out__0_i_20/O[3]
+                         net (fo=739, unplaced)       0.758    13.770    p_11_in
+                                                                      r  p_0_out__0_i_729/I1
+                         LUT3 (Prop_lut3_I1_O)        0.307    14.077 r  p_0_out__0_i_729/O
+                         net (fo=86, unplaced)        0.545    14.622    p_0_out__0_i_729_n_0
+                                                                      r  p_0_out__0_i_849/I3
+                         LUT6 (Prop_lut6_I3_O)        0.124    14.746 r  p_0_out__0_i_849/O
+                         net (fo=10, unplaced)        0.682    15.428    p_0_out__0_i_849_n_0
+                                                                      r  p_0_out__0_i_3347/DI[1]
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.520    15.948 r  p_0_out__0_i_3347/CO[3]
+                         net (fo=1, unplaced)         0.000    15.948    p_0_out__0_i_3347_n_0
+                                                                      r  p_0_out__0_i_3263/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.065 r  p_0_out__0_i_3263/CO[3]
+                         net (fo=1, unplaced)         0.000    16.065    p_0_out__0_i_3263_n_0
+                                                                      r  p_0_out__0_i_3157/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.182 r  p_0_out__0_i_3157/CO[3]
+                         net (fo=1, unplaced)         0.000    16.182    p_0_out__0_i_3157_n_0
+                                                                      r  p_0_out__0_i_3010/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.299 r  p_0_out__0_i_3010/CO[3]
+                         net (fo=1, unplaced)         0.000    16.299    p_0_out__0_i_3010_n_0
+                                                                      r  p_0_out__0_i_2828/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.416 r  p_0_out__0_i_2828/CO[3]
+                         net (fo=1, unplaced)         0.000    16.416    p_0_out__0_i_2828_n_0
+                                                                      r  p_0_out__0_i_2626/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.533 r  p_0_out__0_i_2626/CO[3]
+                         net (fo=1, unplaced)         0.000    16.533    p_0_out__0_i_2626_n_0
+                                                                      r  p_0_out__0_i_2400/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.650 r  p_0_out__0_i_2400/CO[3]
+                         net (fo=1, unplaced)         0.000    16.650    p_0_out__0_i_2400_n_0
+                                                                      r  p_0_out__0_i_2169/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.767 r  p_0_out__0_i_2169/CO[3]
+                         net (fo=1, unplaced)         0.000    16.767    p_0_out__0_i_2169_n_0
+                                                                      r  p_0_out__0_i_1857/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.884 r  p_0_out__0_i_1857/CO[3]
+                         net (fo=1, unplaced)         0.000    16.884    p_0_out__0_i_1857_n_0
+                                                                      r  p_0_out__0_i_1534/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.001 r  p_0_out__0_i_1534/CO[3]
+                         net (fo=1, unplaced)         0.000    17.001    p_0_out__0_i_1534_n_0
+                                                                      r  p_0_out__0_i_1205/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.118 r  p_0_out__0_i_1205/CO[3]
+                         net (fo=1, unplaced)         0.000    17.118    p_0_out__0_i_1205_n_0
+                                                                      r  p_0_out__0_i_1237/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.235 r  p_0_out__0_i_1237/CO[3]
+                         net (fo=1, unplaced)         0.000    17.235    p_0_out__0_i_1237_n_0
+                                                                      r  p_0_out__0_i_838/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.352 r  p_0_out__0_i_838/CO[3]
+                         net (fo=1, unplaced)         0.000    17.352    p_0_out__0_i_838_n_0
+                                                                      r  p_0_out__0_i_721/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.469 r  p_0_out__0_i_721/CO[3]
+                         net (fo=1, unplaced)         0.000    17.469    p_0_out__0_i_721_n_0
+                                                                      r  p_0_out__0_i_1262/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.586 r  p_0_out__0_i_1262/CO[3]
+                         net (fo=1, unplaced)         0.000    17.586    p_0_out__0_i_1262_n_0
+                                                                      r  p_0_out__0_i_1401/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.703 f  p_0_out__0_i_1401/CO[3]
+                         net (fo=108, unplaced)       1.019    18.722    p_0_out__0_i_1401_n_0
+                                                                      f  p_0_out__0_i_1036/I0
+                         LUT5 (Prop_lut5_I0_O)        0.124    18.846 r  p_0_out__0_i_1036/O
+                         net (fo=1, unplaced)         0.639    19.485    p_0_out__0_i_1036_n_0
+                                                                      r  p_0_out__0_i_570/DI[1]
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.520    20.005 r  p_0_out__0_i_570/CO[3]
+                         net (fo=1, unplaced)         0.000    20.005    p_0_out__0_i_570_n_0
+                                                                      r  p_0_out__0_i_555/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.122 r  p_0_out__0_i_555/CO[3]
+                         net (fo=1, unplaced)         0.000    20.122    p_0_out__0_i_555_n_0
+                                                                      r  p_0_out__0_i_552/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.239 r  p_0_out__0_i_552/CO[3]
+                         net (fo=1, unplaced)         0.000    20.239    p_0_out__0_i_552_n_0
+                                                                      r  p_0_out__0_i_3128/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.356 r  p_0_out__0_i_3128/CO[3]
+                         net (fo=1, unplaced)         0.000    20.356    p_0_out__0_i_3128_n_0
+                                                                      r  p_0_out__0_i_2967/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.473 r  p_0_out__0_i_2967/CO[3]
+                         net (fo=1, unplaced)         0.000    20.473    p_0_out__0_i_2967_n_0
+                                                                      r  p_0_out__0_i_2781/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.590 r  p_0_out__0_i_2781/CO[3]
+                         net (fo=1, unplaced)         0.000    20.590    p_0_out__0_i_2781_n_0
+                                                                      r  p_0_out__0_i_2574/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.707 r  p_0_out__0_i_2574/CO[3]
+                         net (fo=1, unplaced)         0.000    20.707    p_0_out__0_i_2574_n_0
+                                                                      r  p_0_out__0_i_2347/CI
+                         CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.256    20.963 r  p_0_out__0_i_2347/O[2]
+                         net (fo=3, unplaced)         0.470    21.433    p_0_out__0_i_2347_n_5
+                                                                      r  p_0_out__0_i_2101/I0
+                         LUT3 (Prop_lut3_I0_O)        0.301    21.734 r  p_0_out__0_i_2101/O
+                         net (fo=1, unplaced)         0.639    22.373    p_0_out__0_i_2101_n_0
+                                                                      r  p_0_out__0_i_1775/DI[1]
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.520    22.893 r  p_0_out__0_i_1775/CO[3]
+                         net (fo=1, unplaced)         0.000    22.893    p_0_out__0_i_1775_n_0
+                                                                      r  p_0_out__0_i_1434/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331    23.224 r  p_0_out__0_i_1434/O[3]
+                         net (fo=3, unplaced)         0.636    23.860    p_0_out__0_i_1434_n_4
+                                                                      r  p_0_out__0_i_1105/I0
+                         LUT3 (Prop_lut3_I0_O)        0.307    24.167 r  p_0_out__0_i_1105/O
+                         net (fo=1, unplaced)         0.333    24.500    p_0_out__0_i_1105_n_0
+                                                                      r  p_0_out__0_i_600/DI[0]
+                         CARRY4 (Prop_carry4_DI[0]_CO[3])
+                                                      0.550    25.050 r  p_0_out__0_i_600/CO[3]
+                         net (fo=1, unplaced)         0.000    25.050    p_0_out__0_i_600_n_0
+                                                                      r  p_0_out__0_i_399/CI
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.337    25.387 r  p_0_out__0_i_399/O[1]
+                         net (fo=3, unplaced)         0.330    25.717    p_0_out__0_i_399_n_6
+                                                                      r  p_0_out__0_i_598/I0
+                         LUT2 (Prop_lut2_I0_O)        0.306    26.023 r  p_0_out__0_i_598/O
+                         net (fo=1, unplaced)         0.000    26.023    p_0_out__0_i_598_n_0
+                                                                      r  p_0_out__0_i_394/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    26.556 r  p_0_out__0_i_394/CO[3]
+                         net (fo=1, unplaced)         0.000    26.556    p_0_out__0_i_394_n_0
+                                                                      r  p_0_out__0_i_235/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331    26.887 r  p_0_out__0_i_235/O[3]
+                         net (fo=3, unplaced)         0.636    27.523    p_0_out__0_i_235_n_4
+                                                                      r  p_0_out__0_i_224/I0
+                         LUT4 (Prop_lut4_I0_O)        0.307    27.830 r  p_0_out__0_i_224/O
+                         net (fo=1, unplaced)         0.333    28.163    p_0_out__0_i_224_n_0
+                                                                      r  p_0_out__0_i_137/DI[0]
+                         CARRY4 (Prop_carry4_DI[0]_CO[3])
+                                                      0.550    28.713 r  p_0_out__0_i_137/CO[3]
+                         net (fo=1, unplaced)         0.000    28.713    p_0_out__0_i_137_n_0
+                                                                      r  p_0_out__0_i_65/CI
+                         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.179    28.892 r  p_0_out__0_i_65/CO[1]
+                         net (fo=20, unplaced)        0.372    29.264    p_0_out__0_i_65_n_2
+                                                                      r  p_0_out__0_i_172/I4
+                         LUT6 (Prop_lut6_I4_O)        0.332    29.596 r  p_0_out__0_i_172/O
+                         net (fo=1, unplaced)         0.665    30.261    p_0_out__0_i_172_n_0
+                                                                      r  p_0_out__0_i_99/S[0]
+                         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.637    30.898 r  p_0_out__0_i_99/CO[3]
+                         net (fo=1, unplaced)         0.009    30.907    p_0_out__0_i_99_n_0
+                                                                      r  p_0_out__0_i_88/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    31.024 r  p_0_out__0_i_88/CO[3]
+                         net (fo=1, unplaced)         0.000    31.024    p_0_out__0_i_88_n_0
+                                                                      r  p_0_out__0_i_59/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331    31.355 r  p_0_out__0_i_59/O[3]
+                         net (fo=3, unplaced)         0.636    31.991    p_0_out__0_i_59_n_4
+                                                                      r  p_0_out__0_i_70/I0
+                         LUT5 (Prop_lut5_I0_O)        0.302    32.293 r  p_0_out__0_i_70/O
+                         net (fo=1, unplaced)         0.000    32.293    p_0_out__0_i_70_n_0
+                                                                      r  p_0_out__0_i_26/DI[3]
+                         CARRY4 (Prop_carry4_DI[3]_CO[3])
+                                                      0.429    32.722 r  p_0_out__0_i_26/CO[3]
+                         net (fo=1, unplaced)         0.000    32.722    p_0_out__0_i_26_n_0
+                                                                      r  p_0_out__0_i_18/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331    33.053 r  p_0_out__0_i_18/O[3]
+                         net (fo=1, unplaced)         0.618    33.671    p_1_in__1__0[16]
+                                                                      r  p_0_out__0_i_1/I0
+                         LUT5 (Prop_lut5_I0_O)        0.307    33.978 r  p_0_out__0_i_1/O
+                         net (fo=1, unplaced)         0.800    34.778    floor_banks0_return[16]
+                         DSP48E1                                      r  p_0_out__0/A[16]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                                                      0.000    20.000 r  clk
+                         net (fo=18290, unset)        0.924    20.924    clk
+                         DSP48E1                                      r  p_0_out__0/CLK
+                         clock pessimism              0.000    20.924    <hidden>
+                         clock uncertainty           -0.035    20.889    <hidden>
+                         DSP48E1 (Setup_dsp48e1_CLK_A[16])
+                                                     -3.722    17.167    p_0_out__0
+  -------------------------------------------------------------------
+                         required time                         17.167    <hidden>
+                         arrival time                         -34.778    <hidden>
+  -------------------------------------------------------------------
+                         slack                                -17.611    <hidden>
+
+
+
+

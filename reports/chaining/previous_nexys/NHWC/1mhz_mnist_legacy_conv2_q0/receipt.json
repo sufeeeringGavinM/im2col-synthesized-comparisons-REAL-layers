@@ -1,0 +1,25 @@
+{
+  "period_ns": "1000",
+  "metric": {
+    "cycles": 113697,
+    "phases": {
+      "planning": 65,
+      "input_transfers": 19200,
+      "kernel_transfers": 80000,
+      "core_execution": 11856,
+      "output_transfers": 2560,
+      "tile_transitions": 16
+    }
+  },
+  "native_scope": "/tb_conv_core/GATE",
+  "native_duration_seconds": "0.113697000000",
+  "accepted_receipt_original_sha256": "70786231c3b66699ab8ec11aaf49d046af38a34e83a258963fa7d7157795154d",
+  "sha256": {
+    "activity.saif": "3d2871b7e9a2d58105961bb5d5c897b0bb28829e1754612952465f81d2324171",
+    "actual.txt": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+    "capture.tcl": "f7147707ca6e94fd2970c1b39bc9d803062f4521a4a34da43072c70417da7790",
+    "run.log": "5e5e41b752d20774713f06d12034b5db29cf27dbd1d207912e053e9717ed0b5e"
+  },
+  "netlist_sha256": "6a8aca149b96bf4aacbb695a4df13b1b63c5ce2106a252d0855acb5005539c18",
+  "dcp_sha256": "abd1a5ff05e6a70a0497f0cbf2178d3ff2b3de060f89c63f18e04871a6d194d2"
+}

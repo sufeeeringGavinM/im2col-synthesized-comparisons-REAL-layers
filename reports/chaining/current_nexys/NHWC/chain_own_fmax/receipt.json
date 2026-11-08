@@ -1,0 +1,43 @@
+{
+  "period_ns": "25.918",
+  "metric": {
+    "cycles": 1000554,
+    "phases": {
+      "planning": 614,
+      "input_transfers": 421120,
+      "kernel_transfers": 322560,
+      "core_execution": 157760,
+      "output_transfers": 98304,
+      "tile_transitions": 192,
+      "descriptor_gaps": 4
+    },
+    "layers": [
+      {
+        "layer": 0,
+        "outputs": 16384,
+        "cycles": 128290
+      },
+      {
+        "layer": 1,
+        "outputs": 16384,
+        "cycles": 436130
+      },
+      {
+        "layer": 2,
+        "outputs": 16384,
+        "cycles": 436130
+      }
+    ]
+  },
+  "native_scope": "/tb_conv_core/GATE",
+  "native_duration_seconds": "0.025932358572",
+  "accepted_receipt_original_sha256": "bb1ee06bdd63bfc252a5d1368c6c06dc0599034ebf79c892d9dd6d844a6ec711",
+  "sha256": {
+    "activity.saif": "508d85a9e7837fec38796cd7dda98883b01cc15082bd4eee00eb2345b4775eab",
+    "actual.txt": "acef4ff792a6335e13a147ee2b2487b2cdebd608b7b7faac3a4932a792254546",
+    "capture.tcl": "b8adb1434fc2a17f2dcd56b044f20d9dfe4187df5d6a342ce41dd52fdfa5f468",
+    "run.log": "036c3649a65188c9f746953ebb48687bc9db1e69a647931220cf905515008174"
+  },
+  "netlist_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+  "dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914"
+}
