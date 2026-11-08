@@ -121,7 +121,7 @@ Previous-version measurements use accepted native results. Current cycle counts 
 
 Each architecture has three configurations: the previous unchained version on the previous FPGA target, the same unchained version on Nexys Video, and the current chained version on Nexys Video.
 
-**Device use (%)** is the resource count divided by the FPGA's available resource count, multiplied by 100. It describes how much of the device is occupied.
+**Device use (%)** is the resource count divided by the FPGA's available resource count, multiplied by 100. Resource cells show the count followed by device use in parentheses, for example `18,765 (13.94%)`.
 
 **Change (%)** is `(new value − previous value) / previous value × 100`. The first change column compares the unchained Nexys Video version with the previous-target version. The second compares the chained Nexys Video version with the unchained Nexys Video version. These are relative changes, not percentage-point differences in device use. Positive resource changes mean more hardware; negative changes mean less. Positive Fmax changes mean a higher estimated frequency.
 
@@ -131,10 +131,10 @@ WNS changes are shown in nanoseconds because a relative percentage of negative s
 
 | Metric | Previous target, unchained | Nexys Video, unchained | Change from previous target | Nexys Video, chained | Change from Nexys Video unchained |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| LUTs | 18,765 (13.94% device use) | 18,792 (13.96% device use) | +0.14% | **19,108 (14.20% device use)** | +1.68% |
-| Flip-flops | 9,900 (3.68% device use) | 9,900 (3.68% device use) | +0.00% | **9,908 (3.68% device use)** | +0.08% |
-| BRAM tiles | 15 (4.11% device use) | 15 (4.11% device use) | +0.00% | **15 (4.11% device use)** | +0.00% |
-| DSPs | 111 (15.00% device use) | 111 (15.00% device use) | +0.00% | **111 (15.00% device use)** | +0.00% |
+| LUTs | 18,765 (13.94%) | 18,792 (13.96%) | +0.14% | **19,108 (14.20%)** | +1.68% |
+| Flip-flops | 9,900 (3.68%) | 9,900 (3.68%) | +0.00% | **9,908 (3.68%)** | +0.08% |
+| BRAM tiles | 15 (4.11%) | 15 (4.11%) | +0.00% | **15 (4.11%)** | +0.00% |
+| DSPs | 111 (15.00%) | 111 (15.00%) | +0.00% | **111 (15.00%)** | +0.00% |
 | WNS at 50 MHz (ns) | -1.584 | -5.918 | -4.334 ns | **-5.918** | +0.000 ns |
 | Estimated Fmax (MHz) | 46.331 | 38.583 | -16.72% | **38.583** | +0.00% |
 
@@ -142,10 +142,10 @@ WNS changes are shown in nanoseconds because a relative percentage of negative s
 
 | Metric | Previous target, unchained | Nexys Video, unchained | Change from previous target | Nexys Video, chained | Change from Nexys Video unchained |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| LUTs | 60,966 (45.29% device use) | 61,055 (45.36% device use) | +0.15% | **60,980 (45.30% device use)** | -0.12% |
-| Flip-flops | 17,995 (6.68% device use) | 17,995 (6.68% device use) | +0.00% | **17,997 (6.69% device use)** | +0.01% |
-| BRAM tiles | 15 (4.11% device use) | 15 (4.11% device use) | +0.00% | **15 (4.11% device use)** | +0.00% |
-| DSPs | 206 (27.84% device use) | 206 (27.84% device use) | +0.00% | **206 (27.84% device use)** | +0.00% |
+| LUTs | 60,966 (45.29%) | 61,055 (45.36%) | +0.15% | **60,980 (45.30%)** | -0.12% |
+| Flip-flops | 17,995 (6.68%) | 17,995 (6.68%) | +0.00% | **17,997 (6.69%)** | +0.01% |
+| BRAM tiles | 15 (4.11%) | 15 (4.11%) | +0.00% | **15 (4.11%)** | +0.00% |
+| DSPs | 206 (27.84%) | 206 (27.84%) | +0.00% | **206 (27.84%)** | +0.00% |
 | WNS at 50 MHz (ns) | -11.345 | -17.611 | -6.266 ns | **-17.608** | +0.003 ns |
 | Estimated Fmax (MHz) | 31.903 | 26.588 | -16.66% | **26.590** | +0.01% |
 
