@@ -22,7 +22,7 @@ python run_case.py --input-file sim/input_tensor.txt --kernel-file sim/kernel_te
 
 Use `python3` where appropriate. Tensor headers supply dimensions; without headers provide `--N`, `--C`, `--H`, `--W`, `--K`, `--R`, `--S`. Geometry flags are `--pad_i`, `--pad_j`, `--stride_i`, `--stride_j`, `--dilation_i`, `--dilation_j`. Omit input/kernel files to generate deterministic tensors with `--seed`. For full layers use `--timeout 259200` or the [chaining validation tools](../../tools/chaining/README.md). Run `python run_case.py --help` for details. Advanced tool paths use `IVERILOG_BIN`, `VVP_BIN`, `IVERILOG_BACKEND`.
 
-The runner checks outputs against Verilog and Python golden models and writes tensors, logs and result metadata under the selected output directory. The [current results](../../reports/chaining/README.md) distinguish accepted measurements from pending entries. The [chaining reproduction tools](../../tools/chaining/README.md) replay the real three-layer memory chain, the four independent raw-output layers and quantizer checks. Previous-version measurements remain in the repository history and historical reports.
+The runner checks outputs against Verilog and Python golden models and writes tensors, logs and result metadata under the selected output directory. The [current results](../../reports/chaining/README.md) include all 36 accepted measurements. The [chaining reproduction tools](../../tools/chaining/README.md) replay the real three-layer memory chain, the four independent raw-output layers and quantizer checks. Previous-version measurements remain in the repository history and historical reports.
 
 ## Credits
 

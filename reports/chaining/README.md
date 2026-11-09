@@ -1,10 +1,11 @@
-# Current chaining measurement snapshot
+# Current chaining measurement results
 
-AI assistance: Codex. This is a partial snapshot: 2 of20 current native workload cases and16 verified previous-version controls. Pending measurements are not zero. The [main README](../../README.md) shows the reviewed comparison tables.
+AI assistance: Codex. **All 36 cases passed the final audit:** 20 new native workload captures and 16 verified previous-version controls. The [main README](../../README.md) shows the reviewed comparison tables.
 
 - [Exact current source identity](source_identity.json).
 - [Resources, timing and matching controls](hardware.json).
-- [Accepted native workload results](results.json).
+- Accepted native workload results: [JSON](results.json) and [CSV](results.csv).
+- [Final audit summary](audit.json).
 - [Previous-target measurements](previous_target.json).
 - [Reused RTL validation](validation_reuse.json).
 - [Portable reproduction](../../tools/chaining/README.md).

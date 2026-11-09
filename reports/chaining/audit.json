@@ -1,0 +1,381 @@
+{
+  "status": "PASS",
+  "logical_cases": 36,
+  "new_native_captures": 20,
+  "reused_controls": 16,
+  "audited_utc": "2026-11-08T10:59:57.799508+00:00",
+  "finalized_utc": "2026-11-08T11:02:53.226508+00:00",
+  "original_final_audit_sha256": "d12d4accc7e5627bc6809aeb34684a389fac6019984c6e700564009f9d5dc79b",
+  "original_results_sha256": "466aee45e9c82b8713a3d8f9bb8defac0ffc5a799bc2ddbcc47454d7d7c845f1",
+  "frozen_inputs_verified": 90,
+  "direct_rtl_synthesis_verified": true,
+  "independent_raw_control_cycles_identical": true,
+  "quantized_chain_handoffs_validated": true,
+  "gui_project_references_verified": true,
+  "gui_open_test": "PASS: accepted synthesis logs and SUCCESS markers confirm saved-project reopen/link and 20 ns clock; imported DCP hashes verified",
+  "historical_source_equivalence_verified": true,
+  "historical_own_fmax_native_bytes": "Unavailable beside published power reports; retained accepted accounting/provenance only",
+  "source_tensor_netlist_dcp_native_output_phase_window_checks": "PASS",
+  "cases": [
+    {
+      "architecture": "NHWC",
+      "role": "control",
+      "layer": "cifar10_conv1",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/previous_nexys/NHWC/1mhz_cifar10_conv1_q0/receipt.json",
+      "native_saif_sha256": "3b230fd3d37b8c07452df71d230b355c82f61d910a8acf8c36b1072258e5452a",
+      "coverage": "89%   (57308/64661)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "control",
+      "layer": "cifar10_conv2",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/previous_nexys/NHWC/1mhz_cifar10_conv2_q0/receipt.json",
+      "native_saif_sha256": "be9a72a2ac2335c265f0578bcb27d4d7051ddccb891bb2dfb4b0246d7dc8a809",
+      "coverage": "89%   (57308/64661)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "control",
+      "layer": "mnist_conv1",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/previous_nexys/NHWC/1mhz_mnist_conv1_q0/receipt.json",
+      "native_saif_sha256": "51af6f410a26798d64443f26fed62ad42bb150c9dfe9a6965fa450e1eb84da0d",
+      "coverage": "89%   (57308/64661)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "control",
+      "layer": "mnist_legacy_conv2",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/previous_nexys/NHWC/1mhz_mnist_legacy_conv2_q0/receipt.json",
+      "native_saif_sha256": "3d2871b7e9a2d58105961bb5d5c897b0bb28829e1754612952465f81d2324171",
+      "coverage": "89%   (57308/64661)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "control",
+      "layer": "cifar10_conv1",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/previous_nexys/NHWC/own_fmax_cifar10_conv1_q0/receipt.json",
+      "native_saif_sha256": "b1ffff30aa15d5e269d9eb3e61b63334392cd2fa7b86cddb3727a66d7227e742",
+      "coverage": "89%   (57308/64661)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "control",
+      "layer": "cifar10_conv2",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/previous_nexys/NHWC/own_fmax_cifar10_conv2_q0/receipt.json",
+      "native_saif_sha256": "e82c569cfe88c7c4047735ae37437cb439d70370a3c25a763e8901f608da33ff",
+      "coverage": "89%   (57308/64661)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "control",
+      "layer": "mnist_conv1",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/previous_nexys/NHWC/own_fmax_mnist_conv1_q0/receipt.json",
+      "native_saif_sha256": "8754cb7c0d95bc77bb3fab70b94c0fdd058a5f3deb3eef8211c66c485bce60a7",
+      "coverage": "89%   (57308/64661)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "control",
+      "layer": "mnist_legacy_conv2",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/previous_nexys/NHWC/own_fmax_mnist_legacy_conv2_q0/receipt.json",
+      "native_saif_sha256": "d7fbe95f3c6aed9534e3e5465bb8b8cee264a252f288f901982cfa6a11a07480",
+      "coverage": "89%   (57308/64661)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "control",
+      "layer": "cifar10_conv1",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/previous_nexys/NCHW_centralized/1mhz_cifar10_conv1_q0/receipt.json",
+      "native_saif_sha256": "b92b281bd5d6107de65e7ddf5a2ee5520bec75c576d07099b57088bccb77fc78",
+      "coverage": "85%   (159563/187575)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "control",
+      "layer": "cifar10_conv2",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/previous_nexys/NCHW_centralized/1mhz_cifar10_conv2_q0/receipt.json",
+      "native_saif_sha256": "cab088aeeae8d30449a81ce04d34268800298fec2a83d5bf6f4461cd25477d7b",
+      "coverage": "85%   (159563/187575)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "control",
+      "layer": "mnist_conv1",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/previous_nexys/NCHW_centralized/1mhz_mnist_conv1_q0/receipt.json",
+      "native_saif_sha256": "b0870579f90ed53ce7a5f9d9619a621f2ecfb8ca3ca1b828fe3e94d2db4979ba",
+      "coverage": "85%   (159563/187575)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "control",
+      "layer": "mnist_legacy_conv2",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/previous_nexys/NCHW_centralized/1mhz_mnist_legacy_conv2_q0/receipt.json",
+      "native_saif_sha256": "b2bed6614ca19dbd066b3ed425d9dbdce100c0a16a3bb535d4ce483ab551f52c",
+      "coverage": "85%   (159563/187575)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "control",
+      "layer": "cifar10_conv1",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/previous_nexys/NCHW_centralized/own_fmax_cifar10_conv1_q0/receipt.json",
+      "native_saif_sha256": "e5b4d89000c2f6ccaaf74f39c6cec70c7ea372e6f727f7cfbed3ca6e35dadf41",
+      "coverage": "85%   (159563/187575)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "control",
+      "layer": "cifar10_conv2",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/previous_nexys/NCHW_centralized/own_fmax_cifar10_conv2_q0/receipt.json",
+      "native_saif_sha256": "d3256210d005586d6aaa7d448108c02de53793e84cb60d101ec0d2fe62d3c050",
+      "coverage": "85%   (159563/187575)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "control",
+      "layer": "mnist_conv1",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/previous_nexys/NCHW_centralized/own_fmax_mnist_conv1_q0/receipt.json",
+      "native_saif_sha256": "d2e6e503f08075132de522c8e8ba6c2cc4481e86bbf2e8bb1818f300f637a4b6",
+      "coverage": "85%   (159563/187575)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "control",
+      "layer": "mnist_legacy_conv2",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/previous_nexys/NCHW_centralized/own_fmax_mnist_legacy_conv2_q0/receipt.json",
+      "native_saif_sha256": "1b027308216ef3501d59fa7f8f2128008f04adca31ec5ef087d83e6ab145ef19",
+      "coverage": "85%   (159563/187575)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "layer": "resnet8_chain",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/current_nexys/NHWC/chain_1mhz/receipt.json",
+      "native_saif_sha256": "ab420273af51cfab4003c4b29a30e6a25c36b6cfe3280da7c620ede3c531b99c",
+      "coverage": "87%   (56441/65161)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "layer": "resnet8_chain",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/current_nexys/NHWC/chain_own_fmax/receipt.json",
+      "native_saif_sha256": "508d85a9e7837fec38796cd7dda98883b01cc15082bd4eee00eb2345b4775eab",
+      "coverage": "87%   (56441/65161)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "layer": "resnet8_chain",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/current_nexys/NCHW_centralized/chain_1mhz/receipt.json",
+      "native_saif_sha256": "3d72badde706af4cc88ea4e5eb839296aa914188c1731dcc12e2d6fa25241c77",
+      "coverage": "85%   (159952/187587)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "layer": "resnet8_chain",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/current_nexys/NCHW_centralized/chain_own_fmax/receipt.json",
+      "native_saif_sha256": "4e846a7b8dcc952f22427192daaa5e67f2a9dd475955d409bdc3ac942d880e16",
+      "coverage": "85%   (159952/187587)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "layer": "cifar10_conv1",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv1_q0/receipt.json",
+      "native_saif_sha256": "d33fc17278afc76516813fce070035485d7a09f2be087ac08d654c0a25685499",
+      "coverage": "87%   (56441/65161)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "layer": "cifar10_conv2",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv2_q0/receipt.json",
+      "native_saif_sha256": "e2273e276dde6519ccea314cd8373a5088ffccae4f43500e49084e5016a9bb2d",
+      "coverage": "87%   (56441/65161)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "layer": "mnist_conv1",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/current_nexys/NHWC/1mhz_mnist_conv1_q0/receipt.json",
+      "native_saif_sha256": "dc098d5199cccb7fa3322255e5c30a5e3eda838555f96974b372afe57558106c",
+      "coverage": "87%   (56441/65161)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "layer": "mnist_legacy_conv2",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/current_nexys/NHWC/1mhz_mnist_legacy_conv2_q0/receipt.json",
+      "native_saif_sha256": "6058beaa16b2f5f366516693eabc940e394529e57573a520baea9e7b19e27781",
+      "coverage": "87%   (56441/65161)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "layer": "cifar10_conv1",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv1_q0/receipt.json",
+      "native_saif_sha256": "39ab59e780d3a0b2007f46049bec6e991f0bca5e5ba9d6695b855be33d4f1bf3",
+      "coverage": "87%   (56441/65161)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "layer": "cifar10_conv2",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv2_q0/receipt.json",
+      "native_saif_sha256": "00ef09fc49c554bbc5ef3c6e107f9e0af4b0f146dc57a5250c8c596d8eff3e9c",
+      "coverage": "87%   (56441/65161)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "layer": "mnist_conv1",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_conv1_q0/receipt.json",
+      "native_saif_sha256": "e06113483b0bc5ce35c3da94057d0cdcd270715fc458e8d872244b9f18917120",
+      "coverage": "87%   (56441/65161)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "layer": "mnist_legacy_conv2",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_legacy_conv2_q0/receipt.json",
+      "native_saif_sha256": "a980653e5daee1d6b378415da59abfe53875079ba097ea8e0fbe753fbd1663ff",
+      "coverage": "87%   (56441/65161)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "layer": "cifar10_conv1",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv1_q0/receipt.json",
+      "native_saif_sha256": "3d9b0a374c554f027f636301170fd631180b18d15d638a741bc90c30841e5ba3",
+      "coverage": "85%   (159952/187587)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "layer": "cifar10_conv2",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv2_q0/receipt.json",
+      "native_saif_sha256": "48fc68e2b23df667089dca5ae8cbf71ac2fd8399384f7ecec7aaa45185db070a",
+      "coverage": "85%   (159952/187587)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "layer": "mnist_conv1",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_conv1_q0/receipt.json",
+      "native_saif_sha256": "2885f3c4fdc0ea29d5b14b06fce8c3ea5f6d03a42b93e4f51ed7a88cf8725bae",
+      "coverage": "85%   (159952/187587)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "layer": "mnist_legacy_conv2",
+      "frequency": "1mhz",
+      "receipt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_legacy_conv2_q0/receipt.json",
+      "native_saif_sha256": "6dfed7099b97a24df376c0063bb4c913677eb158935627109660539dcc6bf231",
+      "coverage": "85%   (159952/187587)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "layer": "cifar10_conv1",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv1_q0/receipt.json",
+      "native_saif_sha256": "0434756360e4f0c1c24f1ca33bf2c5182307ae7790c57fd3092641f8cb6b9680",
+      "coverage": "85%   (159952/187587)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "layer": "cifar10_conv2",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv2_q0/receipt.json",
+      "native_saif_sha256": "cac035801adf241f107560f8fd5f38f4ce3fafcc90016712e755f12a2fc0267f",
+      "coverage": "85%   (159952/187587)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "layer": "mnist_conv1",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_conv1_q0/receipt.json",
+      "native_saif_sha256": "86c9b3a43569f2ddc65fcf93b91da9877c3b6c0c5b08952cca54eebfa361af3c",
+      "coverage": "85%   (159952/187587)",
+      "status": "PASS"
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "layer": "mnist_legacy_conv2",
+      "frequency": "own_fmax",
+      "receipt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_legacy_conv2_q0/receipt.json",
+      "native_saif_sha256": "5d0c5b8d12b0ef4f8a0844f00070fb18bc22102dff4a15939d115b6a4cac439e",
+      "coverage": "85%   (159952/187587)",
+      "status": "PASS"
+    }
+  ]
+}

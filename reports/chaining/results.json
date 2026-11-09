@@ -1,8 +1,8 @@
 {
-  "status": "PARTIAL",
+  "status": "COMPLETED",
   "expected_logical_cases": 36,
-  "accepted_cases": 18,
-  "fresh_native_cases": 2,
+  "accepted_cases": 36,
+  "fresh_native_cases": 20,
   "reused_control_cases": 16,
   "workloads": [
     {
@@ -2028,7 +2028,2063 @@
           "location": "Full original experiment artifacts; coverage is included in power.rpt"
         }
       }
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "resnet8_chain",
+      "quantize": 1,
+      "frequency": "1mhz",
+      "clock_mhz": 1.0,
+      "cycles": 1014911,
+      "phases": {
+        "planning": 5851,
+        "input_transfers": 421120,
+        "kernel_transfers": 322560,
+        "core_execution": 166880,
+        "output_transfers": 98304,
+        "tile_transitions": 192,
+        "descriptor_gaps": 4
+      },
+      "layers": [
+        {
+          "layer": 0,
+          "outputs": 16384,
+          "cycles": 113465
+        },
+        {
+          "layer": 1,
+          "outputs": 16384,
+          "cycles": 450721
+        },
+        {
+          "layer": 2,
+          "outputs": 16384,
+          "cycles": 450721
+        }
+      ],
+      "latency_us": 1014911.0,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "1.014911000000",
+      "simulated_clock_mhz": 1.0,
+      "simulated_clock_period_ns": "1000",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.001,
+      "static_w": 0.123,
+      "total_w": 0.124,
+      "power_confidence": "High",
+      "design_nets_matched": "85%   (159952/187587)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 124834.053,
+      "energy_uj": 125848.96399999999,
+      "dynamic_energy_uj": 1014.9110000000001,
+      "synthesized.v_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+      "synthesized.dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2",
+      "saif_sha256": "3d72badde706af4cc88ea4e5eb839296aa914188c1731dcc12e2d6fa25241c77",
+      "actual_sha256": "acef4ff792a6335e13a147ee2b2487b2cdebd608b7b7faac3a4932a792254546",
+      "evidence_reused": false,
+      "planning_share_percent": 0.5765037525457898,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NCHW_centralized/chain_1mhz/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NCHW_centralized/chain_1mhz/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NCHW_centralized/chain_1mhz/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NCHW_centralized/chain_1mhz/actual.txt",
+        "validation": "reports/chaining/current_nexys/NCHW_centralized/chain_1mhz/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "0a6999954b46a704f393a0a24e90720067905b49ee57d234ea4cd9a28a972bf1",
+        "timing_1mhz.rpt": "d418fdca13cc5e83587fa633eb33e8f46b8e202cecfee169ea3a849ddb5cede3",
+        "capture.tcl": "d019544b02af5479509681849576337b983cc9b7a8694f84a30bd23185e7476b",
+        "actual.txt": "acef4ff792a6335e13a147ee2b2487b2cdebd608b7b7faac3a4932a792254546",
+        "validation": "c4812cb15a95e2e49efe36cedca1f8d95f29e1598cc7bfa0117d19063454aa97"
+      },
+      "capture": {
+        "period_ns": "1000",
+        "metric": {
+          "cycles": 1014911,
+          "phases": {
+            "planning": 5851,
+            "input_transfers": 421120,
+            "kernel_transfers": 322560,
+            "core_execution": 166880,
+            "output_transfers": 98304,
+            "tile_transitions": 192,
+            "descriptor_gaps": 4
+          },
+          "layers": [
+            {
+              "layer": 0,
+              "outputs": 16384,
+              "cycles": 113465
+            },
+            {
+              "layer": 1,
+              "outputs": 16384,
+              "cycles": 450721
+            },
+            {
+              "layer": 2,
+              "outputs": 16384,
+              "cycles": 450721
+            }
+          ]
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "1.014911000000",
+        "accepted_receipt_original_sha256": "8a5559a36251bf705e801e3f0b02b123f7e7692ac4b4ac7029683713487ec97f",
+        "sha256": {
+          "activity.saif": "3d72badde706af4cc88ea4e5eb839296aa914188c1731dcc12e2d6fa25241c77",
+          "actual.txt": "acef4ff792a6335e13a147ee2b2487b2cdebd608b7b7faac3a4932a792254546",
+          "capture.tcl": "d019544b02af5479509681849576337b983cc9b7a8694f84a30bd23185e7476b",
+          "run.log": "4c64e0bc3c519700e945ac4dbb76b5a62342a2498fc7b9ace122cf01010e3fe6"
+        },
+        "netlist_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+        "dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2"
+      },
+      "source_rtl_sha256": {
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "8db1fabb7bd5715fde361210d5c1fa5628690b3450fda6a4a2c510ef0e6c1bd1",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "tensor_sha256": {
+        "chain_descriptors.hex": "8b727708ce9593125075a1c3c81c0f6571abe9da257871dc6f002f84c236ece5",
+        "chain_expected.hex": "bd01e0119d6b6efab2ef923130446e21c66bb89e2a98f63853c9206aec14f34a",
+        "chain_memory.hex": "77f07d5ce828bef705283e2f7ffaafed779305da13a45e90c4836aaec8a52117",
+        "layer0_raw_expected.hex": "39738e59b40587ab639e0b87929e4b2df93f39e43fc403b624c87c84dba7f493",
+        "layer1_raw_expected.hex": "55ac04d79c4515cfa5f0b5939dab031872f825d89b1084c9e96208f5501437f0",
+        "layer2_raw_expected.hex": "7485f1bc533ace7784e63d05e89848f62706d2a32a44d23c6f4c34cc67dacdf4"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "0d87b7bc131c834cb4829c86354ed5e6a36e51f43a2adaa95d57652c4d9aef0e",
+          "bytes": 14780258,
+          "coverage": "85%   (159952/187587)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "resnet8_chain",
+      "quantize": 1,
+      "frequency": "own_fmax",
+      "clock_mhz": 26.588673225206062,
+      "cycles": 1014911,
+      "phases": {
+        "planning": 5851,
+        "input_transfers": 421120,
+        "kernel_transfers": 322560,
+        "core_execution": 166880,
+        "output_transfers": 98304,
+        "tile_transitions": 192,
+        "descriptor_gaps": 4
+      },
+      "layers": [
+        {
+          "layer": 0,
+          "outputs": 16384,
+          "cycles": 113465
+        },
+        {
+          "layer": 1,
+          "outputs": 16384,
+          "cycles": 450721
+        },
+        {
+          "layer": 2,
+          "outputs": 16384,
+          "cycles": 450721
+        }
+      ],
+      "latency_us": 38170.80271,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.038170802710",
+      "simulated_clock_mhz": 26.588673225206062,
+      "simulated_clock_period_ns": "37.610",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.019,
+      "static_w": 0.123,
+      "total_w": 0.142,
+      "power_confidence": "High",
+      "design_nets_matched": "85%   (159952/187587)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 4695.008733330001,
+      "energy_uj": 5420.25398482,
+      "dynamic_energy_uj": 725.2452514900001,
+      "synthesized.v_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+      "synthesized.dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2",
+      "saif_sha256": "4e846a7b8dcc952f22427192daaa5e67f2a9dd475955d409bdc3ac942d880e16",
+      "actual_sha256": "acef4ff792a6335e13a147ee2b2487b2cdebd608b7b7faac3a4932a792254546",
+      "evidence_reused": false,
+      "planning_share_percent": 0.5765037525457898,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NCHW_centralized/chain_own_fmax/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NCHW_centralized/chain_own_fmax/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NCHW_centralized/chain_own_fmax/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NCHW_centralized/chain_own_fmax/actual.txt",
+        "validation": "reports/chaining/current_nexys/NCHW_centralized/chain_own_fmax/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "77a560d4415b932aab97d65b7b737679bb053b7c26ba80b0be552cb466b59e79",
+        "timing_1mhz.rpt": "87a427f43a77d6a6e8cb7c05ef20986a26c19d1cd0742dc4b4a63253725190fa",
+        "capture.tcl": "905c05c2d6493b080ef88dd48a2db7e6914eae82c4f4e14d356de0e77002ec7f",
+        "actual.txt": "acef4ff792a6335e13a147ee2b2487b2cdebd608b7b7faac3a4932a792254546",
+        "validation": "480131752a25edd36cb70e15dfa01684a996a6fd185cae852526ff8e2ac5937f"
+      },
+      "capture": {
+        "period_ns": "37.610",
+        "metric": {
+          "cycles": 1014911,
+          "phases": {
+            "planning": 5851,
+            "input_transfers": 421120,
+            "kernel_transfers": 322560,
+            "core_execution": 166880,
+            "output_transfers": 98304,
+            "tile_transitions": 192,
+            "descriptor_gaps": 4
+          },
+          "layers": [
+            {
+              "layer": 0,
+              "outputs": 16384,
+              "cycles": 113465
+            },
+            {
+              "layer": 1,
+              "outputs": 16384,
+              "cycles": 450721
+            },
+            {
+              "layer": 2,
+              "outputs": 16384,
+              "cycles": 450721
+            }
+          ]
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.038170802710",
+        "accepted_receipt_original_sha256": "6b53018ed6f6536b3a0ca7037b8fbfed6f15f287909957c71b365e7e1718d3a0",
+        "sha256": {
+          "activity.saif": "4e846a7b8dcc952f22427192daaa5e67f2a9dd475955d409bdc3ac942d880e16",
+          "actual.txt": "acef4ff792a6335e13a147ee2b2487b2cdebd608b7b7faac3a4932a792254546",
+          "capture.tcl": "905c05c2d6493b080ef88dd48a2db7e6914eae82c4f4e14d356de0e77002ec7f",
+          "run.log": "ee2ad8f127c28322b241ee31c7d52d9d2db66189a63859aed240ee3752b0be68"
+        },
+        "netlist_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+        "dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2"
+      },
+      "source_rtl_sha256": {
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "8db1fabb7bd5715fde361210d5c1fa5628690b3450fda6a4a2c510ef0e6c1bd1",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "tensor_sha256": {
+        "chain_descriptors.hex": "8b727708ce9593125075a1c3c81c0f6571abe9da257871dc6f002f84c236ece5",
+        "chain_expected.hex": "bd01e0119d6b6efab2ef923130446e21c66bb89e2a98f63853c9206aec14f34a",
+        "chain_memory.hex": "77f07d5ce828bef705283e2f7ffaafed779305da13a45e90c4836aaec8a52117",
+        "layer0_raw_expected.hex": "39738e59b40587ab639e0b87929e4b2df93f39e43fc403b624c87c84dba7f493",
+        "layer1_raw_expected.hex": "55ac04d79c4515cfa5f0b5939dab031872f825d89b1084c9e96208f5501437f0",
+        "layer2_raw_expected.hex": "7485f1bc533ace7784e63d05e89848f62706d2a32a44d23c6f4c34cc67dacdf4"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "1ee87fcb80a917df699c49e797af8b9fcb8540b84f75b2192de74e5c561a2d38",
+          "bytes": 14780258,
+          "coverage": "85%   (159952/187587)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "cifar10_conv1",
+      "quantize": 0,
+      "frequency": "1mhz",
+      "clock_mhz": 1.0,
+      "cycles": 96353,
+      "phases": {
+        "planning": 89,
+        "input_transfers": 26880,
+        "kernel_transfers": 25200,
+        "core_execution": 34748,
+        "output_transfers": 9408,
+        "tile_transitions": 28
+      },
+      "layers": [],
+      "latency_us": 96353.0,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.096353000000",
+      "simulated_clock_mhz": 1.0,
+      "simulated_clock_period_ns": "1000",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.001,
+      "static_w": 0.123,
+      "total_w": 0.124,
+      "power_confidence": "High",
+      "design_nets_matched": "87%   (56441/65161)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 11851.419,
+      "energy_uj": 11947.771999999999,
+      "dynamic_energy_uj": 96.35300000000001,
+      "synthesized.v_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+      "synthesized.dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914",
+      "saif_sha256": "d33fc17278afc76516813fce070035485d7a09f2be087ac08d654c0a25685499",
+      "actual_sha256": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+      "evidence_reused": false,
+      "planning_share_percent": 0.09236868597760318,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv1_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv1_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv1_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv1_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv1_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "81180e5f39e023c70f50cdcc91c2070fbd2fb485652a8bdff2acbf09cb590028",
+        "timing_1mhz.rpt": "4a34eacdf01a2ec67fe42b9e2dde42711427996c1a56667ad7498fdf8322cc6e",
+        "capture.tcl": "472cabbafc90c37893840dda31204b06db10c315b4a209dcd0353f08a7cd1a34",
+        "actual.txt": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+        "validation": "7128ce06842b2f7f63bd1a56925b835cebce9ab9b181af7a9085b01c60c58914"
+      },
+      "capture": {
+        "period_ns": "1000",
+        "metric": {
+          "cycles": 96353,
+          "phases": {
+            "planning": 89,
+            "input_transfers": 26880,
+            "kernel_transfers": 25200,
+            "core_execution": 34748,
+            "output_transfers": 9408,
+            "tile_transitions": 28
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.096353000000",
+        "accepted_receipt_original_sha256": "4374ef08189db3c265a2b55a3974e9564eb345db685f687847cdecee63680ef9",
+        "sha256": {
+          "activity.saif": "d33fc17278afc76516813fce070035485d7a09f2be087ac08d654c0a25685499",
+          "actual.txt": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+          "capture.tcl": "472cabbafc90c37893840dda31204b06db10c315b4a209dcd0353f08a7cd1a34",
+          "run.log": "7c26c0ffeeb31939d060dcc2c0aba56611fafbf74b013706a6897e84d48bfac1"
+        },
+        "netlist_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+        "dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914"
+      },
+      "source_rtl_sha256": {
+        "activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+        "conv_accelerator.v": "861d4fb193412ecf36003ba0cc30f46d41210a51b36c626523d7b41495967d0b",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+        "conv_core.v": "9e9c5b2a02e847ca654d8a529685f7ee954c497937f0bde096f0c1ac10ee8610",
+        "conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+        "im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+        "output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+        "weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "dbb13a765d81115f3b94f367a12ffd5d56b04a9016905d97d11c347a41f819c1",
+        "kernel_tensor.txt": "de7ed0bb76c57c0a3c27aea28be315dfe9581e454619f6a881612863709e4c26",
+        "output_tensor.txt": "1e36f05bc0bec1a23f9c251e764f2d9389daf40689d9a8356fe2b85e9f45e5f8"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "a7460e6f7f087e7d5a6c820d9a73eb83279495a7ae3d67a970a06b5d031b1fe3",
+          "bytes": 9204549,
+          "coverage": "87%   (56441/65161)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "cifar10_conv2",
+      "quantize": 0,
+      "frequency": "1mhz",
+      "clock_mhz": 1.0,
+      "cycles": 83913,
+      "phases": {
+        "planning": 73,
+        "input_transfers": 16800,
+        "kernel_transfers": 48000,
+        "core_execution": 15820,
+        "output_transfers": 3200,
+        "tile_transitions": 20
+      },
+      "layers": [],
+      "latency_us": 83913.0,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.083913000000",
+      "simulated_clock_mhz": 1.0,
+      "simulated_clock_period_ns": "1000",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.001,
+      "static_w": 0.123,
+      "total_w": 0.124,
+      "power_confidence": "High",
+      "design_nets_matched": "87%   (56441/65161)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 10321.298999999999,
+      "energy_uj": 10405.212,
+      "dynamic_energy_uj": 83.913,
+      "synthesized.v_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+      "synthesized.dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914",
+      "saif_sha256": "e2273e276dde6519ccea314cd8373a5088ffccae4f43500e49084e5016a9bb2d",
+      "actual_sha256": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+      "evidence_reused": false,
+      "planning_share_percent": 0.08699486372790867,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv2_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv2_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv2_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv2_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NHWC/1mhz_cifar10_conv2_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "bde2bf576d04a383569019fb8ee2cc5b9912e9bf91d3e37da32c6d57c31244e5",
+        "timing_1mhz.rpt": "c51a5dc4eb7dedbc518b1a51a06b80bfd8e0f6050fcc31e4186bcf58aa2501c1",
+        "capture.tcl": "722ae5b6f6feda07c20f43815c163f057110c8c92608a043a68d364e2dc55419",
+        "actual.txt": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+        "validation": "8c90fb43d52d204615eb2d0d8530eb68c8def2efbeb2f4de841a14391b1fe381"
+      },
+      "capture": {
+        "period_ns": "1000",
+        "metric": {
+          "cycles": 83913,
+          "phases": {
+            "planning": 73,
+            "input_transfers": 16800,
+            "kernel_transfers": 48000,
+            "core_execution": 15820,
+            "output_transfers": 3200,
+            "tile_transitions": 20
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.083913000000",
+        "accepted_receipt_original_sha256": "c1e312b3245eac405cb79847f38ba0e8c8d69043377523b2095ff429661c682a",
+        "sha256": {
+          "activity.saif": "e2273e276dde6519ccea314cd8373a5088ffccae4f43500e49084e5016a9bb2d",
+          "actual.txt": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+          "capture.tcl": "722ae5b6f6feda07c20f43815c163f057110c8c92608a043a68d364e2dc55419",
+          "run.log": "c40e7d9eb3ccfeec087526689b8938edb228fb33c6f44ee23c07c9bf79074428"
+        },
+        "netlist_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+        "dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914"
+      },
+      "source_rtl_sha256": {
+        "activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+        "conv_accelerator.v": "861d4fb193412ecf36003ba0cc30f46d41210a51b36c626523d7b41495967d0b",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+        "conv_core.v": "9e9c5b2a02e847ca654d8a529685f7ee954c497937f0bde096f0c1ac10ee8610",
+        "conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+        "im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+        "output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+        "weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "58eaa33f37c1b30f76f02e94753385d01fde719c074559b72200de81b73c5046",
+        "kernel_tensor.txt": "ca4a3d32219007aebaffc895459f3b592fb41a97eb746d04953ed3c0593adbbc",
+        "output_tensor.txt": "6cb32efd265052f0afe69a1286915ac1d88c9c2288aafdc5c1773d7edf173989"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "e735f5abbded5c8a2feea197fe7d02a7b2984fa7e31d3ae1d6122d311b09495d",
+          "bytes": 9204549,
+          "coverage": "87%   (56441/65161)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "mnist_conv1",
+      "quantize": 0,
+      "frequency": "1mhz",
+      "clock_mhz": 1.0,
+      "cycles": 121714,
+      "phases": {
+        "planning": 242,
+        "input_transfers": 17472,
+        "kernel_transfers": 14976,
+        "core_execution": 45656,
+        "output_transfers": 43264,
+        "tile_transitions": 104
+      },
+      "layers": [],
+      "latency_us": 121714.0,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.121714000000",
+      "simulated_clock_mhz": 1.0,
+      "simulated_clock_period_ns": "1000",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.001,
+      "static_w": 0.123,
+      "total_w": 0.124,
+      "power_confidence": "High",
+      "design_nets_matched": "87%   (56441/65161)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 14970.822,
+      "energy_uj": 15092.536,
+      "dynamic_energy_uj": 121.714,
+      "synthesized.v_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+      "synthesized.dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914",
+      "saif_sha256": "dc098d5199cccb7fa3322255e5c30a5e3eda838555f96974b372afe57558106c",
+      "actual_sha256": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+      "evidence_reused": false,
+      "planning_share_percent": 0.19882675780929063,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NHWC/1mhz_mnist_conv1_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NHWC/1mhz_mnist_conv1_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NHWC/1mhz_mnist_conv1_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NHWC/1mhz_mnist_conv1_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NHWC/1mhz_mnist_conv1_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "d8d7ea4578da7027e14e0cfa31cc72a05b1eb4241c997adba74a3c9ce36ea612",
+        "timing_1mhz.rpt": "f9e43261ea62fea4eeec91e3d60d2c4a6711e6d02602943f446a851a5ab5a0b3",
+        "capture.tcl": "602d032b79f74e4a2a115d645a2c7d09fdd221e41b9d4182f8f47e8c22635d65",
+        "actual.txt": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+        "validation": "ac24e81c368e0cb848e8f0e77ac76f3414068f46d24bbed0d27ada6a57ef1d55"
+      },
+      "capture": {
+        "period_ns": "1000",
+        "metric": {
+          "cycles": 121714,
+          "phases": {
+            "planning": 242,
+            "input_transfers": 17472,
+            "kernel_transfers": 14976,
+            "core_execution": 45656,
+            "output_transfers": 43264,
+            "tile_transitions": 104
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.121714000000",
+        "accepted_receipt_original_sha256": "7c3a93501a1c2fe1b89e52a793ba5d3e6771a2081f172172423e7513692176f8",
+        "sha256": {
+          "activity.saif": "dc098d5199cccb7fa3322255e5c30a5e3eda838555f96974b372afe57558106c",
+          "actual.txt": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+          "capture.tcl": "602d032b79f74e4a2a115d645a2c7d09fdd221e41b9d4182f8f47e8c22635d65",
+          "run.log": "e1e2e8648788863debfd8627becfadb04034ac99462f92b87c7b8887c515b934"
+        },
+        "netlist_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+        "dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914"
+      },
+      "source_rtl_sha256": {
+        "activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+        "conv_accelerator.v": "861d4fb193412ecf36003ba0cc30f46d41210a51b36c626523d7b41495967d0b",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+        "conv_core.v": "9e9c5b2a02e847ca654d8a529685f7ee954c497937f0bde096f0c1ac10ee8610",
+        "conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+        "im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+        "output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+        "weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "9ab6cea0ca1dc27cc2a070eaedbf3422e4a5079bd5f9bef0ccc2fcae16c06ff7",
+        "kernel_tensor.txt": "dab51d024c94d96028c96e04d1efb8913caf3a46004ac07bbe8f1b828bea133c",
+        "output_tensor.txt": "f0de506006b025e2744e2c1696a1c5ab801a20d04349a8095f19cdd68955da8e"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "ae13971907b67cd807a0faba75ad38da9bc712587873b933285d1a87ee89e3d6",
+          "bytes": 9204549,
+          "coverage": "87%   (56441/65161)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "mnist_legacy_conv2",
+      "quantize": 0,
+      "frequency": "1mhz",
+      "clock_mhz": 1.0,
+      "cycles": 113697,
+      "phases": {
+        "planning": 65,
+        "input_transfers": 19200,
+        "kernel_transfers": 80000,
+        "core_execution": 11856,
+        "output_transfers": 2560,
+        "tile_transitions": 16
+      },
+      "layers": [],
+      "latency_us": 113697.0,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.113697000000",
+      "simulated_clock_mhz": 1.0,
+      "simulated_clock_period_ns": "1000",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.001,
+      "static_w": 0.123,
+      "total_w": 0.124,
+      "power_confidence": "High",
+      "design_nets_matched": "87%   (56441/65161)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 13984.731,
+      "energy_uj": 14098.428,
+      "dynamic_energy_uj": 113.697,
+      "synthesized.v_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+      "synthesized.dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914",
+      "saif_sha256": "6058beaa16b2f5f366516693eabc940e394529e57573a520baea9e7b19e27781",
+      "actual_sha256": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+      "evidence_reused": false,
+      "planning_share_percent": 0.05716949435781067,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NHWC/1mhz_mnist_legacy_conv2_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NHWC/1mhz_mnist_legacy_conv2_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NHWC/1mhz_mnist_legacy_conv2_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NHWC/1mhz_mnist_legacy_conv2_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NHWC/1mhz_mnist_legacy_conv2_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "9464da168d6c58effd23db6cc5e673560863f9a149239cefac8bf5e313521d2b",
+        "timing_1mhz.rpt": "a3fec8cd2e075be32192f76df285d3210669176368a74bb48967bc635a25afb8",
+        "capture.tcl": "2ba0ff0a2721457a07b9cebde70a8c145e8b5f8c0fa4676254bed8f51d484be8",
+        "actual.txt": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+        "validation": "55dad38f32d5984aa7ba73c2a9eb42aecae0b3daab2e409270f1de6d709d5342"
+      },
+      "capture": {
+        "period_ns": "1000",
+        "metric": {
+          "cycles": 113697,
+          "phases": {
+            "planning": 65,
+            "input_transfers": 19200,
+            "kernel_transfers": 80000,
+            "core_execution": 11856,
+            "output_transfers": 2560,
+            "tile_transitions": 16
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.113697000000",
+        "accepted_receipt_original_sha256": "e11e4d7a59d664e23b13c010edc937378f437d7982a917f615bddf8648b17f7b",
+        "sha256": {
+          "activity.saif": "6058beaa16b2f5f366516693eabc940e394529e57573a520baea9e7b19e27781",
+          "actual.txt": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+          "capture.tcl": "2ba0ff0a2721457a07b9cebde70a8c145e8b5f8c0fa4676254bed8f51d484be8",
+          "run.log": "88d071b5d5f50d2036b8818a39cb8b9737cc1a394391144162375b21d90eb58c"
+        },
+        "netlist_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+        "dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914"
+      },
+      "source_rtl_sha256": {
+        "activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+        "conv_accelerator.v": "861d4fb193412ecf36003ba0cc30f46d41210a51b36c626523d7b41495967d0b",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+        "conv_core.v": "9e9c5b2a02e847ca654d8a529685f7ee954c497937f0bde096f0c1ac10ee8610",
+        "conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+        "im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+        "output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+        "weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "8d233aa8ff7c108a75a704a2c2e65b1f9b995989323f850b3253273ab09364c4",
+        "kernel_tensor.txt": "cde38b258d48f4064a0aac31bd6f195153d1c8378beebbfc2242c65233f2fe25",
+        "output_tensor.txt": "561ff0bbd561f76f4ec4c84af38209fdef85d32f64f0a7e6d4e1960f9c733c9f"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "bca66e2e078d539ccc106093e50e884deafa09780a5e0cb2cac5c83dadceee6a",
+          "bytes": 9204549,
+          "coverage": "87%   (56441/65161)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "cifar10_conv1",
+      "quantize": 0,
+      "frequency": "own_fmax",
+      "clock_mhz": 38.58322401419863,
+      "cycles": 96353,
+      "phases": {
+        "planning": 89,
+        "input_transfers": 26880,
+        "kernel_transfers": 25200,
+        "core_execution": 34748,
+        "output_transfers": 9408,
+        "tile_transitions": 28
+      },
+      "layers": [],
+      "latency_us": 2497.277054,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.002497277054",
+      "simulated_clock_mhz": 38.58322401419863,
+      "simulated_clock_period_ns": "25.918",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.035,
+      "static_w": 0.123,
+      "total_w": 0.158,
+      "power_confidence": "High",
+      "design_nets_matched": "87%   (56441/65161)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 307.165077642,
+      "energy_uj": 394.56977453200005,
+      "dynamic_energy_uj": 87.40469689000001,
+      "synthesized.v_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+      "synthesized.dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914",
+      "saif_sha256": "39ab59e780d3a0b2007f46049bec6e991f0bca5e5ba9d6695b855be33d4f1bf3",
+      "actual_sha256": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+      "evidence_reused": false,
+      "planning_share_percent": 0.09236868597760318,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv1_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv1_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv1_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv1_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv1_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "fc9272a051215293b865853e97cb810abad8ee960e37d2d2d15dc9a035523c50",
+        "timing_1mhz.rpt": "7bf0fc3b0dae4c29da7162f2a2eea8d346bd311757629ab7dd71e8df98e1065b",
+        "capture.tcl": "ab84a1c5b99aca196558b6c5f07b67b3e0a6529d482282a17d1ac91d556783a9",
+        "actual.txt": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+        "validation": "a8db9d6b30706f4832c4b21f6d201d7ab6a7f1d6f74fb66a4ff056566dc54c7b"
+      },
+      "capture": {
+        "period_ns": "25.918",
+        "metric": {
+          "cycles": 96353,
+          "phases": {
+            "planning": 89,
+            "input_transfers": 26880,
+            "kernel_transfers": 25200,
+            "core_execution": 34748,
+            "output_transfers": 9408,
+            "tile_transitions": 28
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.002497277054",
+        "accepted_receipt_original_sha256": "34e7505581f96a21e4ba214d18291b2f670569901ec05dc12d99ec9fbfa880ad",
+        "sha256": {
+          "activity.saif": "39ab59e780d3a0b2007f46049bec6e991f0bca5e5ba9d6695b855be33d4f1bf3",
+          "actual.txt": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+          "capture.tcl": "ab84a1c5b99aca196558b6c5f07b67b3e0a6529d482282a17d1ac91d556783a9",
+          "run.log": "e1ab125d2e53afb9e4910dee5dc06cd319f953e39575594f293b00a1e5995351"
+        },
+        "netlist_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+        "dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914"
+      },
+      "source_rtl_sha256": {
+        "activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+        "conv_accelerator.v": "861d4fb193412ecf36003ba0cc30f46d41210a51b36c626523d7b41495967d0b",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+        "conv_core.v": "9e9c5b2a02e847ca654d8a529685f7ee954c497937f0bde096f0c1ac10ee8610",
+        "conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+        "im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+        "output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+        "weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "dbb13a765d81115f3b94f367a12ffd5d56b04a9016905d97d11c347a41f819c1",
+        "kernel_tensor.txt": "de7ed0bb76c57c0a3c27aea28be315dfe9581e454619f6a881612863709e4c26",
+        "output_tensor.txt": "1e36f05bc0bec1a23f9c251e764f2d9389daf40689d9a8356fe2b85e9f45e5f8"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "14ad8263c272f4b1c62e3a9bc1198b00d235996a1739b33c249c367bbba1d85e",
+          "bytes": 9204549,
+          "coverage": "87%   (56441/65161)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "cifar10_conv2",
+      "quantize": 0,
+      "frequency": "own_fmax",
+      "clock_mhz": 38.58322401419863,
+      "cycles": 83913,
+      "phases": {
+        "planning": 73,
+        "input_transfers": 16800,
+        "kernel_transfers": 48000,
+        "core_execution": 15820,
+        "output_transfers": 3200,
+        "tile_transitions": 20
+      },
+      "layers": [],
+      "latency_us": 2174.857134,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.002174857134",
+      "simulated_clock_mhz": 38.58322401419863,
+      "simulated_clock_period_ns": "25.918",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.032,
+      "static_w": 0.123,
+      "total_w": 0.155,
+      "power_confidence": "High",
+      "design_nets_matched": "87%   (56441/65161)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 267.50742748199997,
+      "energy_uj": 337.10285576999996,
+      "dynamic_energy_uj": 69.595428288,
+      "synthesized.v_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+      "synthesized.dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914",
+      "saif_sha256": "00ef09fc49c554bbc5ef3c6e107f9e0af4b0f146dc57a5250c8c596d8eff3e9c",
+      "actual_sha256": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+      "evidence_reused": false,
+      "planning_share_percent": 0.08699486372790867,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv2_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv2_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv2_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv2_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NHWC/own_fmax_cifar10_conv2_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "a5889dbe386fed62b2fa07238d9090d09248f59dbfe9a93a3e0de2f6dd53358e",
+        "timing_1mhz.rpt": "246547529d4644de1a4e8348f3f66e5a914a1e78621296fea03d7ec026a93b3c",
+        "capture.tcl": "a8da2dd82fd862dda8f44e2fa79ae89cdb2f2076d32ce75989e2bdad1d7626be",
+        "actual.txt": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+        "validation": "bb13b0d20d96ebac10a91ce901eb3c91488fd3818f07ea4717b9aa836008b610"
+      },
+      "capture": {
+        "period_ns": "25.918",
+        "metric": {
+          "cycles": 83913,
+          "phases": {
+            "planning": 73,
+            "input_transfers": 16800,
+            "kernel_transfers": 48000,
+            "core_execution": 15820,
+            "output_transfers": 3200,
+            "tile_transitions": 20
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.002174857134",
+        "accepted_receipt_original_sha256": "b0ae3544cbdd883957ee09b3067fe2a090c5fdfe8bda03bcdcbe64ad0b76efd8",
+        "sha256": {
+          "activity.saif": "00ef09fc49c554bbc5ef3c6e107f9e0af4b0f146dc57a5250c8c596d8eff3e9c",
+          "actual.txt": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+          "capture.tcl": "a8da2dd82fd862dda8f44e2fa79ae89cdb2f2076d32ce75989e2bdad1d7626be",
+          "run.log": "21d03c2cb6b2a8966f859f414d75d66d9d6a03fe6930215a3c5a595f6b40b63e"
+        },
+        "netlist_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+        "dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914"
+      },
+      "source_rtl_sha256": {
+        "activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+        "conv_accelerator.v": "861d4fb193412ecf36003ba0cc30f46d41210a51b36c626523d7b41495967d0b",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+        "conv_core.v": "9e9c5b2a02e847ca654d8a529685f7ee954c497937f0bde096f0c1ac10ee8610",
+        "conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+        "im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+        "output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+        "weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "58eaa33f37c1b30f76f02e94753385d01fde719c074559b72200de81b73c5046",
+        "kernel_tensor.txt": "ca4a3d32219007aebaffc895459f3b592fb41a97eb746d04953ed3c0593adbbc",
+        "output_tensor.txt": "6cb32efd265052f0afe69a1286915ac1d88c9c2288aafdc5c1773d7edf173989"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "09dba6e6ebc939f112dd4be2d7c861da72538156a1f1a25b59dbc4fe12e457b2",
+          "bytes": 9204549,
+          "coverage": "87%   (56441/65161)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "mnist_conv1",
+      "quantize": 0,
+      "frequency": "own_fmax",
+      "clock_mhz": 38.58322401419863,
+      "cycles": 121714,
+      "phases": {
+        "planning": 242,
+        "input_transfers": 17472,
+        "kernel_transfers": 14976,
+        "core_execution": 45656,
+        "output_transfers": 43264,
+        "tile_transitions": 104
+      },
+      "layers": [],
+      "latency_us": 3154.583452,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.003154583452",
+      "simulated_clock_mhz": 38.58322401419863,
+      "simulated_clock_period_ns": "25.918",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.035,
+      "static_w": 0.123,
+      "total_w": 0.158,
+      "power_confidence": "High",
+      "design_nets_matched": "87%   (56441/65161)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 388.013764596,
+      "energy_uj": 498.424185416,
+      "dynamic_energy_uj": 110.41042082,
+      "synthesized.v_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+      "synthesized.dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914",
+      "saif_sha256": "e06113483b0bc5ce35c3da94057d0cdcd270715fc458e8d872244b9f18917120",
+      "actual_sha256": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+      "evidence_reused": false,
+      "planning_share_percent": 0.19882675780929063,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_conv1_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_conv1_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_conv1_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_conv1_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_conv1_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "5ddc6a9f02c6ef2d9af5733b5a0572dfb51841c3c2d7ba832d27babb42c317b4",
+        "timing_1mhz.rpt": "d70fa1387f95a948343cad548221d3dcb22fb6da5561a73ce21f721aff5dae12",
+        "capture.tcl": "00cce4df5de28ebb43e10639fcef0c1eb9cafa48a0fa99e79d2e9ecd699dd003",
+        "actual.txt": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+        "validation": "a20cdfae10bf283bade7a8c236fb697adc2cd55f589692583d07451ae917870e"
+      },
+      "capture": {
+        "period_ns": "25.918",
+        "metric": {
+          "cycles": 121714,
+          "phases": {
+            "planning": 242,
+            "input_transfers": 17472,
+            "kernel_transfers": 14976,
+            "core_execution": 45656,
+            "output_transfers": 43264,
+            "tile_transitions": 104
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.003154583452",
+        "accepted_receipt_original_sha256": "876de3e7ed981a579300b22b77691a595bea30badae6f0f569d8c278bc234893",
+        "sha256": {
+          "activity.saif": "e06113483b0bc5ce35c3da94057d0cdcd270715fc458e8d872244b9f18917120",
+          "actual.txt": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+          "capture.tcl": "00cce4df5de28ebb43e10639fcef0c1eb9cafa48a0fa99e79d2e9ecd699dd003",
+          "run.log": "14bf42de2ad3c6e19b6c92fc8f3057866530b58a4df26678faa96aa8f81b648e"
+        },
+        "netlist_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+        "dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914"
+      },
+      "source_rtl_sha256": {
+        "activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+        "conv_accelerator.v": "861d4fb193412ecf36003ba0cc30f46d41210a51b36c626523d7b41495967d0b",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+        "conv_core.v": "9e9c5b2a02e847ca654d8a529685f7ee954c497937f0bde096f0c1ac10ee8610",
+        "conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+        "im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+        "output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+        "weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "9ab6cea0ca1dc27cc2a070eaedbf3422e4a5079bd5f9bef0ccc2fcae16c06ff7",
+        "kernel_tensor.txt": "dab51d024c94d96028c96e04d1efb8913caf3a46004ac07bbe8f1b828bea133c",
+        "output_tensor.txt": "f0de506006b025e2744e2c1696a1c5ab801a20d04349a8095f19cdd68955da8e"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "a49c5a9e9b0b764b9aaa5b5e276aa08a6f671e027995e88bce542d72287acc24",
+          "bytes": 9204549,
+          "coverage": "87%   (56441/65161)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NHWC",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "mnist_legacy_conv2",
+      "quantize": 0,
+      "frequency": "own_fmax",
+      "clock_mhz": 38.58322401419863,
+      "cycles": 113697,
+      "phases": {
+        "planning": 65,
+        "input_transfers": 19200,
+        "kernel_transfers": 80000,
+        "core_execution": 11856,
+        "output_transfers": 2560,
+        "tile_transitions": 16
+      },
+      "layers": [],
+      "latency_us": 2946.798846,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.002946798846",
+      "simulated_clock_mhz": 38.58322401419863,
+      "simulated_clock_period_ns": "25.918",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.03,
+      "static_w": 0.123,
+      "total_w": 0.153,
+      "power_confidence": "High",
+      "design_nets_matched": "87%   (56441/65161)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 362.456258058,
+      "energy_uj": 450.860223438,
+      "dynamic_energy_uj": 88.40396538,
+      "synthesized.v_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+      "synthesized.dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914",
+      "saif_sha256": "a980653e5daee1d6b378415da59abfe53875079ba097ea8e0fbe753fbd1663ff",
+      "actual_sha256": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+      "evidence_reused": false,
+      "planning_share_percent": 0.05716949435781067,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_legacy_conv2_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_legacy_conv2_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_legacy_conv2_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_legacy_conv2_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NHWC/own_fmax_mnist_legacy_conv2_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "566ffa0a75c4d389f02fb54215b25c244d33f492ba4759a9ff30eb997afed133",
+        "timing_1mhz.rpt": "56287a840b81a1752be46c04b9bce6155b169bbc5f5493f7c6e7cea4580de497",
+        "capture.tcl": "9f0a605d991375e799e3202df5ad14d436444598bc40b19613121238cfb6f8f1",
+        "actual.txt": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+        "validation": "3858500ba0b3d681150d96063d9dd9bee527aa097a6b079afd6cc38ce72275ea"
+      },
+      "capture": {
+        "period_ns": "25.918",
+        "metric": {
+          "cycles": 113697,
+          "phases": {
+            "planning": 65,
+            "input_transfers": 19200,
+            "kernel_transfers": 80000,
+            "core_execution": 11856,
+            "output_transfers": 2560,
+            "tile_transitions": 16
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.002946798846",
+        "accepted_receipt_original_sha256": "435e746061645f6cfbfe909609c50194e4be81fef2dff447895f398a4f41132e",
+        "sha256": {
+          "activity.saif": "a980653e5daee1d6b378415da59abfe53875079ba097ea8e0fbe753fbd1663ff",
+          "actual.txt": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+          "capture.tcl": "9f0a605d991375e799e3202df5ad14d436444598bc40b19613121238cfb6f8f1",
+          "run.log": "5252e3a575cb99e3b367503b6ae0f42a79458c55e332d6693acc893ff9c9274e"
+        },
+        "netlist_sha256": "1d66c373f3f8d594cede0944d98ba0086b5d60203c343fa6d17a7c51b2757315",
+        "dcp_sha256": "ae243155f7bfcb71ee76e65f85b3a0edaf1829e6d138f50bd45d37ce7b762914"
+      },
+      "source_rtl_sha256": {
+        "activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+        "conv_accelerator.v": "861d4fb193412ecf36003ba0cc30f46d41210a51b36c626523d7b41495967d0b",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+        "conv_core.v": "9e9c5b2a02e847ca654d8a529685f7ee954c497937f0bde096f0c1ac10ee8610",
+        "conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+        "im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+        "output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+        "weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "8d233aa8ff7c108a75a704a2c2e65b1f9b995989323f850b3253273ab09364c4",
+        "kernel_tensor.txt": "cde38b258d48f4064a0aac31bd6f195153d1c8378beebbfc2242c65233f2fe25",
+        "output_tensor.txt": "561ff0bbd561f76f4ec4c84af38209fdef85d32f64f0a7e6d4e1960f9c733c9f"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "9438d7e92f1741113f4700b1c4268063140332ebcb5311e735475ea0f3ccbc98",
+          "bytes": 9204549,
+          "coverage": "87%   (56441/65161)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "cifar10_conv1",
+      "quantize": 0,
+      "frequency": "1mhz",
+      "clock_mhz": 1.0,
+      "cycles": 74722,
+      "phases": {
+        "planning": 606,
+        "input_transfers": 26880,
+        "kernel_transfers": 25200,
+        "core_execution": 12600,
+        "output_transfers": 9408,
+        "tile_transitions": 28
+      },
+      "layers": [],
+      "latency_us": 74722.0,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.074722000000",
+      "simulated_clock_mhz": 1.0,
+      "simulated_clock_period_ns": "1000",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.001,
+      "static_w": 0.123,
+      "total_w": 0.124,
+      "power_confidence": "High",
+      "design_nets_matched": "85%   (159952/187587)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 9190.806,
+      "energy_uj": 9265.528,
+      "dynamic_energy_uj": 74.72200000000001,
+      "synthesized.v_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+      "synthesized.dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2",
+      "saif_sha256": "3d9b0a374c554f027f636301170fd631180b18d15d638a741bc90c30841e5ba3",
+      "actual_sha256": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+      "evidence_reused": false,
+      "planning_share_percent": 0.8110061293862584,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv1_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv1_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv1_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv1_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv1_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "8a7c03f4d08f5b08de7b00781f26bc61838c1ccd06214a3035faa54d453f342f",
+        "timing_1mhz.rpt": "5690bc1ddeddb7ef9c635768fbfbe2f2dfe017e0e782ac16cf19417e12b841c0",
+        "capture.tcl": "f5b2f52bc55a45f8d517f2346ebe1b85c2292765284f5630fec69543f0a2021e",
+        "actual.txt": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+        "validation": "ac0e829d88723e2bef74f221229c321e986aeabb9e9e88ea7b9075a7f40d302f"
+      },
+      "capture": {
+        "period_ns": "1000",
+        "metric": {
+          "cycles": 74722,
+          "phases": {
+            "planning": 606,
+            "input_transfers": 26880,
+            "kernel_transfers": 25200,
+            "core_execution": 12600,
+            "output_transfers": 9408,
+            "tile_transitions": 28
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.074722000000",
+        "accepted_receipt_original_sha256": "f538b164b8fac1dc8e0bafa8331a8cf171933697b5b32ca86a158e9a63ed6964",
+        "sha256": {
+          "activity.saif": "3d9b0a374c554f027f636301170fd631180b18d15d638a741bc90c30841e5ba3",
+          "actual.txt": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+          "capture.tcl": "f5b2f52bc55a45f8d517f2346ebe1b85c2292765284f5630fec69543f0a2021e",
+          "run.log": "579bb2e53977ea7a37466697eff798cc47d6f51b7f6ebffc61322b30cd1ee6ad"
+        },
+        "netlist_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+        "dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2"
+      },
+      "source_rtl_sha256": {
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "8db1fabb7bd5715fde361210d5c1fa5628690b3450fda6a4a2c510ef0e6c1bd1",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "dbb13a765d81115f3b94f367a12ffd5d56b04a9016905d97d11c347a41f819c1",
+        "kernel_tensor.txt": "de7ed0bb76c57c0a3c27aea28be315dfe9581e454619f6a881612863709e4c26",
+        "output_tensor.txt": "1e36f05bc0bec1a23f9c251e764f2d9389daf40689d9a8356fe2b85e9f45e5f8"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "c27e2f6897faaa72e89be256232aa9d65765b0a993c291fb10a0a45e56d58419",
+          "bytes": 14780258,
+          "coverage": "85%   (159952/187587)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "cifar10_conv2",
+      "quantize": 0,
+      "frequency": "1mhz",
+      "clock_mhz": 1.0,
+      "cycles": 79174,
+      "phases": {
+        "planning": 434,
+        "input_transfers": 16800,
+        "kernel_transfers": 48000,
+        "core_execution": 10720,
+        "output_transfers": 3200,
+        "tile_transitions": 20
+      },
+      "layers": [],
+      "latency_us": 79174.0,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.079174000000",
+      "simulated_clock_mhz": 1.0,
+      "simulated_clock_period_ns": "1000",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.001,
+      "static_w": 0.123,
+      "total_w": 0.124,
+      "power_confidence": "High",
+      "design_nets_matched": "85%   (159952/187587)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 9738.402,
+      "energy_uj": 9817.576,
+      "dynamic_energy_uj": 79.174,
+      "synthesized.v_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+      "synthesized.dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2",
+      "saif_sha256": "48fc68e2b23df667089dca5ae8cbf71ac2fd8399384f7ecec7aaa45185db070a",
+      "actual_sha256": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+      "evidence_reused": false,
+      "planning_share_percent": 0.548159749412686,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv2_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv2_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv2_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv2_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NCHW_centralized/1mhz_cifar10_conv2_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "d73994546fb1013871df41235b6f915001e3a6bee642f01112baaaaacf97dbf6",
+        "timing_1mhz.rpt": "c1402450673ba3fba898c9a27ef990acaaeabdf7387e8638c78cde8bd5d4560f",
+        "capture.tcl": "bec2be077112d04473546e8e6032f0eafc3f3a2c3b7edbd6b6b7aec56de9a61a",
+        "actual.txt": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+        "validation": "381aba3a0fe837b00646d2e61ddee4b022283902cff771655fb3f5692eb15e2f"
+      },
+      "capture": {
+        "period_ns": "1000",
+        "metric": {
+          "cycles": 79174,
+          "phases": {
+            "planning": 434,
+            "input_transfers": 16800,
+            "kernel_transfers": 48000,
+            "core_execution": 10720,
+            "output_transfers": 3200,
+            "tile_transitions": 20
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.079174000000",
+        "accepted_receipt_original_sha256": "fd14dfc0a5aa67d7b065ced6eaf5521c00004140497465edc8a0beb0b0353237",
+        "sha256": {
+          "activity.saif": "48fc68e2b23df667089dca5ae8cbf71ac2fd8399384f7ecec7aaa45185db070a",
+          "actual.txt": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+          "capture.tcl": "bec2be077112d04473546e8e6032f0eafc3f3a2c3b7edbd6b6b7aec56de9a61a",
+          "run.log": "af8a5d1a98c76691e255b0152001b3fa1a517472975a54bbf67818b56ef2686b"
+        },
+        "netlist_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+        "dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2"
+      },
+      "source_rtl_sha256": {
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "8db1fabb7bd5715fde361210d5c1fa5628690b3450fda6a4a2c510ef0e6c1bd1",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "58eaa33f37c1b30f76f02e94753385d01fde719c074559b72200de81b73c5046",
+        "kernel_tensor.txt": "ca4a3d32219007aebaffc895459f3b592fb41a97eb746d04953ed3c0593adbbc",
+        "output_tensor.txt": "6cb32efd265052f0afe69a1286915ac1d88c9c2288aafdc5c1773d7edf173989"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "1f895ed63c5b42ccbda48c93e8739d0e56b5aaf1e412aae7afbed9ef206c22c2",
+          "bytes": 14780258,
+          "coverage": "85%   (159952/187587)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "mnist_conv1",
+      "quantize": 0,
+      "frequency": "1mhz",
+      "clock_mhz": 1.0,
+      "cycles": 86913,
+      "phases": {
+        "planning": 1841,
+        "input_transfers": 17472,
+        "kernel_transfers": 14976,
+        "core_execution": 9256,
+        "output_transfers": 43264,
+        "tile_transitions": 104
+      },
+      "layers": [],
+      "latency_us": 86913.0,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.086913000000",
+      "simulated_clock_mhz": 1.0,
+      "simulated_clock_period_ns": "1000",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.001,
+      "static_w": 0.123,
+      "total_w": 0.124,
+      "power_confidence": "High",
+      "design_nets_matched": "85%   (159952/187587)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 10690.298999999999,
+      "energy_uj": 10777.212,
+      "dynamic_energy_uj": 86.913,
+      "synthesized.v_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+      "synthesized.dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2",
+      "saif_sha256": "2885f3c4fdc0ea29d5b14b06fce8c3ea5f6d03a42b93e4f51ed7a88cf8725bae",
+      "actual_sha256": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+      "evidence_reused": false,
+      "planning_share_percent": 2.118210164187176,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_conv1_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_conv1_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_conv1_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_conv1_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_conv1_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "26b48470edea83e23793cf612d5f23fd6b29fa547ee11ce7cb21af06d249928b",
+        "timing_1mhz.rpt": "078d6f9b4065b653bfb83e66e136934127fa0acf4103dad84adec962f5a6b08f",
+        "capture.tcl": "cf6051236ba3206f73f1d93aab772d29de0265c207f375e29d5f5febde77caca",
+        "actual.txt": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+        "validation": "be840cd5b1485149de19c148f46506ae24aaabe3395f1bca0833981f420b771b"
+      },
+      "capture": {
+        "period_ns": "1000",
+        "metric": {
+          "cycles": 86913,
+          "phases": {
+            "planning": 1841,
+            "input_transfers": 17472,
+            "kernel_transfers": 14976,
+            "core_execution": 9256,
+            "output_transfers": 43264,
+            "tile_transitions": 104
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.086913000000",
+        "accepted_receipt_original_sha256": "3048c4403cc13b07ed2cddc57dd3c0fcb6964b799167e4f3f5607e41261402bd",
+        "sha256": {
+          "activity.saif": "2885f3c4fdc0ea29d5b14b06fce8c3ea5f6d03a42b93e4f51ed7a88cf8725bae",
+          "actual.txt": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+          "capture.tcl": "cf6051236ba3206f73f1d93aab772d29de0265c207f375e29d5f5febde77caca",
+          "run.log": "e8b0b13bbac8c3231cc3e4c8e0cc947300c48795af6db0c4fdf36c9470ebd545"
+        },
+        "netlist_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+        "dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2"
+      },
+      "source_rtl_sha256": {
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "8db1fabb7bd5715fde361210d5c1fa5628690b3450fda6a4a2c510ef0e6c1bd1",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "9ab6cea0ca1dc27cc2a070eaedbf3422e4a5079bd5f9bef0ccc2fcae16c06ff7",
+        "kernel_tensor.txt": "dab51d024c94d96028c96e04d1efb8913caf3a46004ac07bbe8f1b828bea133c",
+        "output_tensor.txt": "f0de506006b025e2744e2c1696a1c5ab801a20d04349a8095f19cdd68955da8e"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "c23f3786bedb1d19381eb9e08c3b87a6c043708dcca32c8c60f0231fa9e7927c",
+          "bytes": 14780258,
+          "coverage": "85%   (159952/187587)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "mnist_legacy_conv2",
+      "quantize": 0,
+      "frequency": "1mhz",
+      "clock_mhz": 1.0,
+      "cycles": 115194,
+      "phases": {
+        "planning": 362,
+        "input_transfers": 19200,
+        "kernel_transfers": 80000,
+        "core_execution": 13056,
+        "output_transfers": 2560,
+        "tile_transitions": 16
+      },
+      "layers": [],
+      "latency_us": 115194.0,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.115194000000",
+      "simulated_clock_mhz": 1.0,
+      "simulated_clock_period_ns": "1000",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.001,
+      "static_w": 0.123,
+      "total_w": 0.124,
+      "power_confidence": "High",
+      "design_nets_matched": "85%   (159952/187587)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 14168.862,
+      "energy_uj": 14284.056,
+      "dynamic_energy_uj": 115.194,
+      "synthesized.v_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+      "synthesized.dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2",
+      "saif_sha256": "6dfed7099b97a24df376c0063bb4c913677eb158935627109660539dcc6bf231",
+      "actual_sha256": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+      "evidence_reused": false,
+      "planning_share_percent": 0.3142524784276959,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_legacy_conv2_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_legacy_conv2_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_legacy_conv2_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_legacy_conv2_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NCHW_centralized/1mhz_mnist_legacy_conv2_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "67e10c30542cf7c3cd0b5600345afc86f193356101142bc8ba2ced972df8aced",
+        "timing_1mhz.rpt": "b7b976810b2e03a1ed45c070287a18c4a7dc99218863ea7bc4bebd5f5dbc60f6",
+        "capture.tcl": "3073f71adefcf16d55d722b8628c245575496bf9b654afe52964147fb23751d4",
+        "actual.txt": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+        "validation": "962e085ca5a28663aef5784f26d3ca8bdf51c7add7fff5857293428d029286e8"
+      },
+      "capture": {
+        "period_ns": "1000",
+        "metric": {
+          "cycles": 115194,
+          "phases": {
+            "planning": 362,
+            "input_transfers": 19200,
+            "kernel_transfers": 80000,
+            "core_execution": 13056,
+            "output_transfers": 2560,
+            "tile_transitions": 16
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.115194000000",
+        "accepted_receipt_original_sha256": "684e9047b847b50161fcdbeb27052a0cf629f5f0f7645f9bfb2ab5162bd19313",
+        "sha256": {
+          "activity.saif": "6dfed7099b97a24df376c0063bb4c913677eb158935627109660539dcc6bf231",
+          "actual.txt": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+          "capture.tcl": "3073f71adefcf16d55d722b8628c245575496bf9b654afe52964147fb23751d4",
+          "run.log": "6fe5be5298c30892a7ed1ae995049e8427dc929fe262ccce193cc7746094bd67"
+        },
+        "netlist_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+        "dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2"
+      },
+      "source_rtl_sha256": {
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "8db1fabb7bd5715fde361210d5c1fa5628690b3450fda6a4a2c510ef0e6c1bd1",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "8d233aa8ff7c108a75a704a2c2e65b1f9b995989323f850b3253273ab09364c4",
+        "kernel_tensor.txt": "cde38b258d48f4064a0aac31bd6f195153d1c8378beebbfc2242c65233f2fe25",
+        "output_tensor.txt": "561ff0bbd561f76f4ec4c84af38209fdef85d32f64f0a7e6d4e1960f9c733c9f"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "cec99fc878768acb32bd7f26e29bfe1955b972f3772e3f2e2973f75ba40668db",
+          "bytes": 14780258,
+          "coverage": "85%   (159952/187587)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "cifar10_conv1",
+      "quantize": 0,
+      "frequency": "own_fmax",
+      "clock_mhz": 26.588673225206062,
+      "cycles": 74722,
+      "phases": {
+        "planning": 606,
+        "input_transfers": 26880,
+        "kernel_transfers": 25200,
+        "core_execution": 12600,
+        "output_transfers": 9408,
+        "tile_transitions": 28
+      },
+      "layers": [],
+      "latency_us": 2810.29442,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.002810294420",
+      "simulated_clock_mhz": 26.588673225206062,
+      "simulated_clock_period_ns": "37.610",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.02,
+      "static_w": 0.123,
+      "total_w": 0.143,
+      "power_confidence": "High",
+      "design_nets_matched": "85%   (159952/187587)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 345.66621366000004,
+      "energy_uj": 401.87210206,
+      "dynamic_energy_uj": 56.205888400000006,
+      "synthesized.v_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+      "synthesized.dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2",
+      "saif_sha256": "0434756360e4f0c1c24f1ca33bf2c5182307ae7790c57fd3092641f8cb6b9680",
+      "actual_sha256": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+      "evidence_reused": false,
+      "planning_share_percent": 0.8110061293862584,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv1_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv1_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv1_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv1_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv1_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "1b592b1e2d5a757ebb99bd000d8fbba9f0796c4c6229b33dc8e83ea57333f029",
+        "timing_1mhz.rpt": "fdd51365fc490b1ccdc6cc1738170f108b8560c474332b739ad00f6d5a001ab4",
+        "capture.tcl": "504c468b45c6264061d700544f896381a15f3221f4c7e175980fadc75ab23dc5",
+        "actual.txt": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+        "validation": "552b220c8e3e41ee8a31f8f9158b640ffcc5cc7eb4ba4f428f0d05ce4f9a11ef"
+      },
+      "capture": {
+        "period_ns": "37.610",
+        "metric": {
+          "cycles": 74722,
+          "phases": {
+            "planning": 606,
+            "input_transfers": 26880,
+            "kernel_transfers": 25200,
+            "core_execution": 12600,
+            "output_transfers": 9408,
+            "tile_transitions": 28
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.002810294420",
+        "accepted_receipt_original_sha256": "6caecadce7fbbebe3c7c06f2c8d2fe5f1f09f83df1a221087b2519ed791c55b4",
+        "sha256": {
+          "activity.saif": "0434756360e4f0c1c24f1ca33bf2c5182307ae7790c57fd3092641f8cb6b9680",
+          "actual.txt": "dc7e6a28cfcf0dbe01d3c3603fd7353889d9b24b72589efb21837e89402c619c",
+          "capture.tcl": "504c468b45c6264061d700544f896381a15f3221f4c7e175980fadc75ab23dc5",
+          "run.log": "8f4193e9775c8225ab4764ea1484e595d9e78424dedc5d6a9d98a29c56f3a1ed"
+        },
+        "netlist_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+        "dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2"
+      },
+      "source_rtl_sha256": {
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "8db1fabb7bd5715fde361210d5c1fa5628690b3450fda6a4a2c510ef0e6c1bd1",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "dbb13a765d81115f3b94f367a12ffd5d56b04a9016905d97d11c347a41f819c1",
+        "kernel_tensor.txt": "de7ed0bb76c57c0a3c27aea28be315dfe9581e454619f6a881612863709e4c26",
+        "output_tensor.txt": "1e36f05bc0bec1a23f9c251e764f2d9389daf40689d9a8356fe2b85e9f45e5f8"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "03c6d66390a587dc70b412ca5e5c363257370a6d964d644eff996558089b3490",
+          "bytes": 14780258,
+          "coverage": "85%   (159952/187587)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "cifar10_conv2",
+      "quantize": 0,
+      "frequency": "own_fmax",
+      "clock_mhz": 26.588673225206062,
+      "cycles": 79174,
+      "phases": {
+        "planning": 434,
+        "input_transfers": 16800,
+        "kernel_transfers": 48000,
+        "core_execution": 10720,
+        "output_transfers": 3200,
+        "tile_transitions": 20
+      },
+      "layers": [],
+      "latency_us": 2977.73414,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.002977734140",
+      "simulated_clock_mhz": 26.588673225206062,
+      "simulated_clock_period_ns": "37.610",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.017,
+      "static_w": 0.123,
+      "total_w": 0.14,
+      "power_confidence": "High",
+      "design_nets_matched": "85%   (159952/187587)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 366.26129922,
+      "energy_uj": 416.88277960000005,
+      "dynamic_energy_uj": 50.62148038,
+      "synthesized.v_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+      "synthesized.dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2",
+      "saif_sha256": "cac035801adf241f107560f8fd5f38f4ce3fafcc90016712e755f12a2fc0267f",
+      "actual_sha256": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+      "evidence_reused": false,
+      "planning_share_percent": 0.548159749412686,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv2_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv2_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv2_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv2_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_cifar10_conv2_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "8f7b781b350c7dfca5d2a3d63c1753bfdefdf5d3a67aa6cf43ba6ecf5f1df711",
+        "timing_1mhz.rpt": "be59b02c820f3be141a63ad89fa34eee9c341bb577f8642ae04ff085d936330d",
+        "capture.tcl": "b740b00301e44f7297d96affe1cb6f934df1957783a1739c707c7e24e0e9551f",
+        "actual.txt": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+        "validation": "7e00ec8eab7c69c19235811fef0508751d2df0671c89e5d7a6867c6997d1f5af"
+      },
+      "capture": {
+        "period_ns": "37.610",
+        "metric": {
+          "cycles": 79174,
+          "phases": {
+            "planning": 434,
+            "input_transfers": 16800,
+            "kernel_transfers": 48000,
+            "core_execution": 10720,
+            "output_transfers": 3200,
+            "tile_transitions": 20
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.002977734140",
+        "accepted_receipt_original_sha256": "1eece95ee5dd308d978f4071da96e1bef9ec61fbcefd2cc5574dd6d96d3cb693",
+        "sha256": {
+          "activity.saif": "cac035801adf241f107560f8fd5f38f4ce3fafcc90016712e755f12a2fc0267f",
+          "actual.txt": "437a07c5b9829952e0771a62684e3c0e130f9918052a5a86a067351cb7df89d4",
+          "capture.tcl": "b740b00301e44f7297d96affe1cb6f934df1957783a1739c707c7e24e0e9551f",
+          "run.log": "6aa5cb2b621b8be45d4e396187cecd38c2ac9609b2938b39c1d9632d15cbd5b9"
+        },
+        "netlist_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+        "dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2"
+      },
+      "source_rtl_sha256": {
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "8db1fabb7bd5715fde361210d5c1fa5628690b3450fda6a4a2c510ef0e6c1bd1",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "58eaa33f37c1b30f76f02e94753385d01fde719c074559b72200de81b73c5046",
+        "kernel_tensor.txt": "ca4a3d32219007aebaffc895459f3b592fb41a97eb746d04953ed3c0593adbbc",
+        "output_tensor.txt": "6cb32efd265052f0afe69a1286915ac1d88c9c2288aafdc5c1773d7edf173989"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "5cdb19d68a91f02565c7179a37eeee825a27e9b35baf565f7a3e92f723f44f62",
+          "bytes": 14780258,
+          "coverage": "85%   (159952/187587)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "mnist_conv1",
+      "quantize": 0,
+      "frequency": "own_fmax",
+      "clock_mhz": 26.588673225206062,
+      "cycles": 86913,
+      "phases": {
+        "planning": 1841,
+        "input_transfers": 17472,
+        "kernel_transfers": 14976,
+        "core_execution": 9256,
+        "output_transfers": 43264,
+        "tile_transitions": 104
+      },
+      "layers": [],
+      "latency_us": 3268.79793,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.003268797930",
+      "simulated_clock_mhz": 26.588673225206062,
+      "simulated_clock_period_ns": "37.610",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.017,
+      "static_w": 0.123,
+      "total_w": 0.14,
+      "power_confidence": "High",
+      "design_nets_matched": "85%   (159952/187587)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 402.06214539,
+      "energy_uj": 457.63171020000004,
+      "dynamic_energy_uj": 55.56956481000001,
+      "synthesized.v_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+      "synthesized.dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2",
+      "saif_sha256": "86c9b3a43569f2ddc65fcf93b91da9877c3b6c0c5b08952cca54eebfa361af3c",
+      "actual_sha256": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+      "evidence_reused": false,
+      "planning_share_percent": 2.118210164187176,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_conv1_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_conv1_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_conv1_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_conv1_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_conv1_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "8fe0bceed8d13bd64cd8295d4358a939463dec19760a904ac136641197b76da0",
+        "timing_1mhz.rpt": "e8368e8eff75eb70d6d9877a8b65fa8c78aaca309b412b60f610da5a6be7b1db",
+        "capture.tcl": "bd46d97f042755a91af914e59a2e77e76b64de45aa8055bf8178c2f3dd654000",
+        "actual.txt": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+        "validation": "621100abbc0101daa3424a4bc90d7545fae92e5875b69569d9c51e9492d942d3"
+      },
+      "capture": {
+        "period_ns": "37.610",
+        "metric": {
+          "cycles": 86913,
+          "phases": {
+            "planning": 1841,
+            "input_transfers": 17472,
+            "kernel_transfers": 14976,
+            "core_execution": 9256,
+            "output_transfers": 43264,
+            "tile_transitions": 104
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.003268797930",
+        "accepted_receipt_original_sha256": "8b6412c452e6a35e573828d1799c0f93ae453322b8790f6b9d663b16ae1ffd28",
+        "sha256": {
+          "activity.saif": "86c9b3a43569f2ddc65fcf93b91da9877c3b6c0c5b08952cca54eebfa361af3c",
+          "actual.txt": "5596f0c21f002d7a40935b16d2af39c15edf43d764e612d65f668d9f1b0b497d",
+          "capture.tcl": "bd46d97f042755a91af914e59a2e77e76b64de45aa8055bf8178c2f3dd654000",
+          "run.log": "8acd96cabf98c12b46f81f9af0265ee3a82acd81014028fb02453f942e2e1821"
+        },
+        "netlist_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+        "dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2"
+      },
+      "source_rtl_sha256": {
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "8db1fabb7bd5715fde361210d5c1fa5628690b3450fda6a4a2c510ef0e6c1bd1",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "9ab6cea0ca1dc27cc2a070eaedbf3422e4a5079bd5f9bef0ccc2fcae16c06ff7",
+        "kernel_tensor.txt": "dab51d024c94d96028c96e04d1efb8913caf3a46004ac07bbe8f1b828bea133c",
+        "output_tensor.txt": "f0de506006b025e2744e2c1696a1c5ab801a20d04349a8095f19cdd68955da8e"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "3778a71b339ff0f735100f316a3893b2ad12ff84f7cd3f2b32c07aab728adae0",
+          "bytes": 14780258,
+          "coverage": "85%   (159952/187587)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "role": "derivative",
+      "part": "xc7a200tsbg484-1",
+      "layer": "mnist_legacy_conv2",
+      "quantize": 0,
+      "frequency": "own_fmax",
+      "clock_mhz": 26.588673225206062,
+      "cycles": 115194,
+      "phases": {
+        "planning": 362,
+        "input_transfers": 19200,
+        "kernel_transfers": 80000,
+        "core_execution": 13056,
+        "output_transfers": 2560,
+        "tile_transitions": 16
+      },
+      "layers": [],
+      "latency_us": 4332.44634,
+      "generator": "Vivado XSim native open_saif/log_saif/close_saif",
+      "native_duration_seconds": "0.004332446340",
+      "simulated_clock_mhz": 26.588673225206062,
+      "simulated_clock_period_ns": "37.610",
+      "activity_scope": "/tb_conv_core/GATE",
+      "dynamic_w": 0.017,
+      "static_w": 0.123,
+      "total_w": 0.14,
+      "power_confidence": "High",
+      "design_nets_matched": "85%   (159952/187587)",
+      "timing_at_simulated_frequency_all_constraints_met": true,
+      "static_energy_uj": 532.8908998200001,
+      "energy_uj": 606.5424876000001,
+      "dynamic_energy_uj": 73.65158778000001,
+      "synthesized.v_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+      "synthesized.dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2",
+      "saif_sha256": "5d0c5b8d12b0ef4f8a0844f00070fb18bc22102dff4a15939d115b6a4cac439e",
+      "actual_sha256": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+      "evidence_reused": false,
+      "planning_share_percent": 0.3142524784276959,
+      "reports": {
+        "power.rpt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_legacy_conv2_q0/power.rpt",
+        "timing_1mhz.rpt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_legacy_conv2_q0/timing_1mhz.rpt",
+        "capture.tcl": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_legacy_conv2_q0/capture.tcl",
+        "actual.txt": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_legacy_conv2_q0/actual.txt",
+        "validation": "reports/chaining/current_nexys/NCHW_centralized/own_fmax_mnist_legacy_conv2_q0/validation.txt"
+      },
+      "report_sha256": {
+        "power.rpt": "ff9eeafd07a95d4edfabd58070d79e5a47c52c3faa0fb24e829ace7c26f2f32b",
+        "timing_1mhz.rpt": "73e6a0fbffbb0088dbf85872bebb58629c3beab64c0275006a7468d9e9babdb4",
+        "capture.tcl": "add53e9be66e197fa2de9ccacb5f7f8f6a3ea79ee29b463548b3ca40b2d55791",
+        "actual.txt": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+        "validation": "87304fe01c7cc61992d9cb38c63e517f501613c6b007952d7e51c0ca8d1488c6"
+      },
+      "capture": {
+        "period_ns": "37.610",
+        "metric": {
+          "cycles": 115194,
+          "phases": {
+            "planning": 362,
+            "input_transfers": 19200,
+            "kernel_transfers": 80000,
+            "core_execution": 13056,
+            "output_transfers": 2560,
+            "tile_transitions": 16
+          }
+        },
+        "native_scope": "/tb_conv_core/GATE",
+        "native_duration_seconds": "0.004332446340",
+        "accepted_receipt_original_sha256": "3b688a993e06ae8695770daad8de5393613450dedff757ae7a7fdef567baaa94",
+        "sha256": {
+          "activity.saif": "5d0c5b8d12b0ef4f8a0844f00070fb18bc22102dff4a15939d115b6a4cac439e",
+          "actual.txt": "edfe663f5a76caf9633b1171d83b0fbebf5cabce8d2ef87de73853ba0de94fe7",
+          "capture.tcl": "add53e9be66e197fa2de9ccacb5f7f8f6a3ea79ee29b463548b3ca40b2d55791",
+          "run.log": "f1a3b08c9a5287dba8aaaee50801ddbc9af0aa1e70d180948904869e55c44954"
+        },
+        "netlist_sha256": "164fe25b2634c4ce86602ef40d150337cb68cc0423beee5d037e9fccfba2750b",
+        "dcp_sha256": "2418535b296aecb628623744cc6480677af1e1c3de352748b424218d22507ee2"
+      },
+      "source_rtl_sha256": {
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "8db1fabb7bd5715fde361210d5c1fa5628690b3450fda6a4a2c510ef0e6c1bd1",
+        "conv_chain.v": "8c609800b65e17412a249fd7054924c8ea421807ab2dc108712827d831c52fa4",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "e6e35d5013c54b60effbf68096833201ec8da4ca2d319076d8b3c3a1d548096a",
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "tensor_sha256": {
+        "input_tensor.txt": "8d233aa8ff7c108a75a704a2c2e65b1f9b995989323f850b3253273ab09364c4",
+        "kernel_tensor.txt": "cde38b258d48f4064a0aac31bd6f195153d1c8378beebbfc2242c65233f2fe25",
+        "output_tensor.txt": "561ff0bbd561f76f4ec4c84af38209fdef85d32f64f0a7e6d4e1960f9c733c9f"
+      },
+      "external_artifacts": {
+        "annotation.rpt": {
+          "sha256": "bbe9bd642714ebe09aca9e2696d19aa7f41defceaee97d67c25c71d409a2f182",
+          "bytes": 14780258,
+          "coverage": "85%   (159952/187587)",
+          "location": "Full original experiment artifacts; coverage is included in power.rpt"
+        }
+      }
     }
   ],
-  "measurement_queue_complete": false
+  "measurement_queue_complete": true
 }

@@ -81,11 +81,11 @@ Inputs and weights are deterministic synthetic integers, rather than trained mod
 
 ## Results
 
-**Both chaining implementations have completed fresh synthesis for Nexys Video.** Accepted RTL validation covers all eight independent raw-output cases and both three-layer chains.
+**All 36 measurement cases passed the final audit.** Both chaining implementations were freshly synthesized for Nexys Video. The completed matrix contains 20 new native captures and 16 verified previous-version controls.
 
 The output quantizer also passed **13,472 input-and-control test cases per architecture**. Each case supplies a signed 32-bit accumulator value, quantization enable, shift, and rounding mode, then checks the result against the integer reference. The cases cover shifts 0–31, both rounding modes, disabled quantization, positive and negative values, rounding boundaries, saturation boundaries, and random values. These are checks of the quantizer's arithmetic behavior, not additional convolution layers.
 
-Synthesized-netlist workload measurements are still running. The NHWC whole-chain measurements at 1 MHz and its estimated Fmax have passed output, interface, cycle, native-activity, and power checks.
+All synthesized-netlist workload measurements passed output, interface, cycle, native-activity, and power checks.
 
 The measurement matrix contains:
 
@@ -93,7 +93,7 @@ The measurement matrix contains:
 - **16 raw independent-layer cases:** four layers, two architectures, and two frequencies.
 - **16 previous-version control cases:** matching accepted measurements reused after source, settings, tensor, netlist, capture, output, and power verification.
 
-- [Current measurement snapshot](reports/chaining/README.md): accepted results, raw reports and source/hardware identities.
+- [Current measurement results](reports/chaining/README.md): accepted results, raw reports and source/hardware identities.
 - [Reproduction tools](tools/chaining/README.md): source checks, RTL replay and native workload measurements.
 - [Previous-version report](reports/README.md): the earlier four-implementation comparison.
 
@@ -111,11 +111,9 @@ Codex and GPT-6.1 Sol contributed to project development and tooling.
 
 ## TLDR
 
-**Table key:** `TBD` marks a current measurement that is not yet available. `N/A` marks a comparison without an equivalent measurement, or a relative change with a zero reference value. Neither means zero.
-
 Resource and independent-layer tables compare the previous unchained version on its previous target, the previous unchained version on Nexys Video, and the current chained version on Nexys Video. Whole-chain tables show the current version, since an equivalent previous measurement is unavailable. Target change compares the first two configurations; chaining change compares the two Nexys Video configurations.
 
-Previous-version measurements use accepted native results. Current cycle counts use accepted RTL validation, and current latency values are calculated from those counts and the configured clock periods. Current power and energy cells contain accepted native results where available and `TBD` otherwise.
+Previous-version and current measurements use accepted native results. Latency values are calculated from validated cycle counts and actual capture clock periods. Power and energy tables show the accepted workload estimates.
 
 ### Resources and timing: previous and current versions
 
@@ -155,7 +153,7 @@ The previous target and Nexys Video differ in both package and speed grade. Comp
 
 ### Measurement clocks
 
-Values are **MHz**. At own estimated Fmax, each configuration uses its own clock. Pending current measurements show their configured clock, calculated from the synthesis-derived period and rounded to the simulation clock grid.
+Values are **MHz**. At own estimated Fmax, each configuration uses its own clock. Capture clocks are calculated from the synthesis-derived period and rounded to the simulation clock grid.
 
 | Workload / metric | Previous target, unchained | Nexys Video, unchained | Target change | Nexys Video, chained | Chaining change |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -166,7 +164,7 @@ Values are **MHz**. At own estimated Fmax, each configuration uses its own clock
 
 ### Whole-chain cycles and latency
 
-The previous unchained version has no equivalent accepted whole-chain measurement. Current cycle counts come from accepted RTL validation.
+The previous unchained version has no equivalent accepted whole-chain measurement. Current cycle counts are validated in the accepted synthesized-netlist captures.
 
 | Workload / metric | Nexys Video, chained |
 | --- | ---: |
@@ -185,8 +183,8 @@ Value cells show **dynamic / static / total power in mW**.
 | --- | ---: |
 | NHWC — 1 MHz | 1.000 / 123.000 / 124.000 |
 | NHWC — own estimated Fmax | 33.000 / 123.000 / 156.000 |
-| NCHW — 1 MHz | TBD / TBD / TBD |
-| NCHW — own estimated Fmax | TBD / TBD / TBD |
+| NCHW — 1 MHz | 1.000 / 123.000 / 124.000 |
+| NCHW — own estimated Fmax | 19.000 / 123.000 / 142.000 |
 
 ### Whole-chain estimated energy
 
@@ -196,14 +194,14 @@ Value cells show **dynamic / static / total energy in mJ**.
 | --- | ---: |
 | NHWC — 1 MHz | 1.001 / 123.068 / 124.069 |
 | NHWC — own estimated Fmax | 0.856 / 3.190 / 4.045 |
-| NCHW — 1 MHz | TBD / TBD / TBD |
-| NCHW — own estimated Fmax | TBD / TBD / TBD |
+| NCHW — 1 MHz | 1.015 / 124.834 / 125.849 |
+| NCHW — own estimated Fmax | 0.725 / 4.695 / 5.420 |
 
-Both accepted NHWC captures cover **1,000,554 cycles** and have **87% matched-net activity annotation**. Whole-chain energy covers the complete three-layer sequence. Individual chain-layer cycles and latency are available, but energy is measured for the complete chain.
+Both NHWC captures cover **1,000,554 cycles** with **87% matched-net activity annotation**; both NCHW captures cover **1,014,911 cycles** with **85% annotation**. Whole-chain energy covers the complete three-layer sequence. Individual chain-layer cycles and latency are available, but energy is measured for the complete chain.
 
 ### Independent-layer cycle counts
 
-Current values use accepted RTL validation. Each independent layer uses raw32 output.
+All cycle counts are validated in the accepted synthesized-netlist captures. Each independent layer uses raw32 output.
 
 | Workload / metric | Previous target, unchained | Nexys Video, unchained | Target change | Nexys Video, chained | Chaining change |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -218,7 +216,7 @@ Current values use accepted RTL validation. Each independent layer uses raw32 ou
 
 ### Independent-layer latency at 1 MHz
 
-Values are **milliseconds**. Current values are calculated from accepted RTL cycles.
+Values are **milliseconds**. Values are calculated from validated cycles and actual capture clocks.
 
 | Workload / metric | Previous target, unchained | Nexys Video, unchained | Target change | Nexys Video, chained | Chaining change |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -237,14 +235,14 @@ Value cells show **dynamic / static / total power in mW**. Change cells show the
 
 | Workload / metric | Previous target, unchained | Nexys Video, unchained | Target change | Nexys Video, chained | Chaining change |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| NHWC — CIFAR10 conv1 | 1.000 / 123.000 / 124.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — CIFAR10 conv2 | 1.000 / 123.000 / 124.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — MNIST conv1 | 1.000 / 123.000 / 124.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — Historical MNISTConvNet conv2 | 1.000 / 123.000 / 124.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — CIFAR10 conv1 | 1.000 / 123.000 / 124.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — CIFAR10 conv2 | 1.000 / 123.000 / 123.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / +0.81% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — MNIST conv1 | 1.000 / 123.000 / 123.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / +0.81% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — Historical MNISTConvNet conv2 | 1.000 / 123.000 / 123.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / +0.81% | TBD / TBD / TBD | TBD / TBD / TBD |
+| NHWC — CIFAR10 conv1 | 1.000 / 123.000 / 124.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% |
+| NHWC — CIFAR10 conv2 | 1.000 / 123.000 / 124.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% |
+| NHWC — MNIST conv1 | 1.000 / 123.000 / 124.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% |
+| NHWC — Historical MNISTConvNet conv2 | 1.000 / 123.000 / 124.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% |
+| NCHW — CIFAR10 conv1 | 1.000 / 123.000 / 124.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% |
+| NCHW — CIFAR10 conv2 | 1.000 / 123.000 / 123.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / +0.81% | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% |
+| NCHW — MNIST conv1 | 1.000 / 123.000 / 123.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / +0.81% | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% |
+| NCHW — Historical MNISTConvNet conv2 | 1.000 / 123.000 / 123.000 | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / +0.81% | 1.000 / 123.000 / 124.000 | 0.00% / 0.00% / 0.00% |
 
 ### Independent-layer estimated energy at 1 MHz
 
@@ -252,18 +250,18 @@ Value cells show **dynamic / static / total energy in mJ**. Change cells show th
 
 | Workload / metric | Previous target, unchained | Nexys Video, unchained | Target change | Nexys Video, chained | Chaining change |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| NHWC — CIFAR10 conv1 | 0.096 / 11.851 / 11.948 | 0.096 / 11.851 / 11.948 | 0.00% / 0.00% / 0.00% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — CIFAR10 conv2 | 0.084 / 10.321 / 10.405 | 0.084 / 10.321 / 10.405 | 0.00% / 0.00% / 0.00% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — MNIST conv1 | 0.122 / 14.971 / 15.093 | 0.122 / 14.971 / 15.093 | 0.00% / 0.00% / 0.00% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — Historical MNISTConvNet conv2 | 0.114 / 13.985 / 14.098 | 0.114 / 13.985 / 14.098 | 0.00% / 0.00% / 0.00% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — CIFAR10 conv1 | 0.075 / 9.191 / 9.266 | 0.075 / 9.191 / 9.266 | 0.00% / 0.00% / 0.00% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — CIFAR10 conv2 | 0.079 / 9.738 / 9.738 | 0.079 / 9.738 / 9.818 | 0.00% / 0.00% / +0.81% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — MNIST conv1 | 0.087 / 10.690 / 10.690 | 0.087 / 10.690 / 10.777 | 0.00% / 0.00% / +0.81% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — Historical MNISTConvNet conv2 | 0.115 / 14.169 / 14.169 | 0.115 / 14.169 / 14.284 | 0.00% / 0.00% / +0.81% | TBD / TBD / TBD | TBD / TBD / TBD |
+| NHWC — CIFAR10 conv1 | 0.096 / 11.851 / 11.948 | 0.096 / 11.851 / 11.948 | 0.00% / 0.00% / 0.00% | 0.096 / 11.851 / 11.948 | 0.00% / 0.00% / 0.00% |
+| NHWC — CIFAR10 conv2 | 0.084 / 10.321 / 10.405 | 0.084 / 10.321 / 10.405 | 0.00% / 0.00% / 0.00% | 0.084 / 10.321 / 10.405 | 0.00% / 0.00% / 0.00% |
+| NHWC — MNIST conv1 | 0.122 / 14.971 / 15.093 | 0.122 / 14.971 / 15.093 | 0.00% / 0.00% / 0.00% | 0.122 / 14.971 / 15.093 | 0.00% / 0.00% / 0.00% |
+| NHWC — Historical MNISTConvNet conv2 | 0.114 / 13.985 / 14.098 | 0.114 / 13.985 / 14.098 | 0.00% / 0.00% / 0.00% | 0.114 / 13.985 / 14.098 | 0.00% / 0.00% / 0.00% |
+| NCHW — CIFAR10 conv1 | 0.075 / 9.191 / 9.266 | 0.075 / 9.191 / 9.266 | 0.00% / 0.00% / 0.00% | 0.075 / 9.191 / 9.266 | 0.00% / 0.00% / 0.00% |
+| NCHW — CIFAR10 conv2 | 0.079 / 9.738 / 9.738 | 0.079 / 9.738 / 9.818 | 0.00% / 0.00% / +0.81% | 0.079 / 9.738 / 9.818 | 0.00% / 0.00% / 0.00% |
+| NCHW — MNIST conv1 | 0.087 / 10.690 / 10.690 | 0.087 / 10.690 / 10.777 | 0.00% / 0.00% / +0.81% | 0.087 / 10.690 / 10.777 | 0.00% / 0.00% / 0.00% |
+| NCHW — Historical MNISTConvNet conv2 | 0.115 / 14.169 / 14.169 | 0.115 / 14.169 / 14.284 | 0.00% / 0.00% / +0.81% | 0.115 / 14.169 / 14.284 | 0.00% / 0.00% / 0.00% |
 
 ### Independent-layer latency at own estimated Fmax
 
-Values are **milliseconds**. Current values are calculated from accepted RTL cycles.
+Values are **milliseconds**. Values are calculated from validated cycles and actual capture clocks.
 
 | Workload / metric | Previous target, unchained | Nexys Video, unchained | Target change | Nexys Video, chained | Chaining change |
 | --- | ---: | ---: | ---: | ---: | ---: |
@@ -282,14 +280,14 @@ Value cells show **dynamic / static / total power in mW**. Change cells show the
 
 | Workload / metric | Previous target, unchained | Nexys Video, unchained | Target change | Nexys Video, chained | Chaining change |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| NHWC — CIFAR10 conv1 | 41.000 / 123.000 / 164.000 | 34.000 / 123.000 / 157.000 | -17.07% / 0.00% / -4.27% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — CIFAR10 conv2 | 38.000 / 123.000 / 161.000 | 31.000 / 123.000 / 155.000 | -18.42% / 0.00% / -3.73% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — MNIST conv1 | 41.000 / 123.000 / 164.000 | 34.000 / 123.000 / 157.000 | -17.07% / 0.00% / -4.27% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — Historical MNISTConvNet conv2 | 36.000 / 123.000 / 159.000 | 30.000 / 123.000 / 153.000 | -16.67% / 0.00% / -3.77% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — CIFAR10 conv1 | 24.000 / 123.000 / 147.000 | 20.000 / 123.000 / 143.000 | -16.67% / 0.00% / -2.72% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — CIFAR10 conv2 | 21.000 / 123.000 / 144.000 | 18.000 / 123.000 / 141.000 | -14.29% / 0.00% / -2.08% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — MNIST conv1 | 21.000 / 123.000 / 143.000 | 17.000 / 123.000 / 140.000 | -19.05% / 0.00% / -2.10% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — Historical MNISTConvNet conv2 | 20.000 / 123.000 / 143.000 | 17.000 / 123.000 / 140.000 | -15.00% / 0.00% / -2.10% | TBD / TBD / TBD | TBD / TBD / TBD |
+| NHWC — CIFAR10 conv1 | 41.000 / 123.000 / 164.000 | 34.000 / 123.000 / 157.000 | -17.07% / 0.00% / -4.27% | 35.000 / 123.000 / 158.000 | +2.94% / 0.00% / +0.64% |
+| NHWC — CIFAR10 conv2 | 38.000 / 123.000 / 161.000 | 31.000 / 123.000 / 155.000 | -18.42% / 0.00% / -3.73% | 32.000 / 123.000 / 155.000 | +3.23% / 0.00% / 0.00% |
+| NHWC — MNIST conv1 | 41.000 / 123.000 / 164.000 | 34.000 / 123.000 / 157.000 | -17.07% / 0.00% / -4.27% | 35.000 / 123.000 / 158.000 | +2.94% / 0.00% / +0.64% |
+| NHWC — Historical MNISTConvNet conv2 | 36.000 / 123.000 / 159.000 | 30.000 / 123.000 / 153.000 | -16.67% / 0.00% / -3.77% | 30.000 / 123.000 / 153.000 | 0.00% / 0.00% / 0.00% |
+| NCHW — CIFAR10 conv1 | 24.000 / 123.000 / 147.000 | 20.000 / 123.000 / 143.000 | -16.67% / 0.00% / -2.72% | 20.000 / 123.000 / 143.000 | 0.00% / 0.00% / 0.00% |
+| NCHW — CIFAR10 conv2 | 21.000 / 123.000 / 144.000 | 18.000 / 123.000 / 141.000 | -14.29% / 0.00% / -2.08% | 17.000 / 123.000 / 140.000 | -5.56% / 0.00% / -0.71% |
+| NCHW — MNIST conv1 | 21.000 / 123.000 / 143.000 | 17.000 / 123.000 / 140.000 | -19.05% / 0.00% / -2.10% | 17.000 / 123.000 / 140.000 | 0.00% / 0.00% / 0.00% |
+| NCHW — Historical MNISTConvNet conv2 | 20.000 / 123.000 / 143.000 | 17.000 / 123.000 / 140.000 | -15.00% / 0.00% / -2.10% | 17.000 / 123.000 / 140.000 | 0.00% / 0.00% / 0.00% |
 
 ### Independent-layer estimated energy at own estimated Fmax
 
@@ -297,14 +295,14 @@ Value cells show **dynamic / static / total energy in mJ**. Change cells show th
 
 | Workload / metric | Previous target, unchained | Nexys Video, unchained | Target change | Nexys Video, chained | Chaining change |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| NHWC — CIFAR10 conv1 | 0.085 / 0.256 / 0.341 | 0.085 / 0.307 / 0.392 | -0.42% / +20.08% / +14.95% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — CIFAR10 conv2 | 0.069 / 0.223 / 0.292 | 0.067 / 0.268 / 0.337 | -2.04% / +20.08% / +15.60% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — MNIST conv1 | 0.108 / 0.323 / 0.431 | 0.107 / 0.388 / 0.495 | -0.42% / +20.08% / +14.95% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NHWC — Historical MNISTConvNet conv2 | 0.088 / 0.302 / 0.390 | 0.088 / 0.362 / 0.451 | +0.07% / +20.08% / +15.55% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — CIFAR10 conv1 | 0.056 / 0.288 / 0.344 | 0.056 / 0.346 / 0.402 | -0.01% / +19.99% / +16.73% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — CIFAR10 conv2 | 0.052 / 0.305 / 0.357 | 0.054 / 0.366 / 0.420 | +2.85% / +19.99% / +17.49% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — MNIST conv1 | 0.057 / 0.335 / 0.390 | 0.056 / 0.402 / 0.458 | -2.86% / +19.99% / +17.48% | TBD / TBD / TBD | TBD / TBD / TBD |
-| NCHW — Historical MNISTConvNet conv2 | 0.072 / 0.444 / 0.516 | 0.074 / 0.533 / 0.607 | +1.99% / +19.99% / +17.48% | TBD / TBD / TBD | TBD / TBD / TBD |
+| NHWC — CIFAR10 conv1 | 0.085 / 0.256 / 0.341 | 0.085 / 0.307 / 0.392 | -0.42% / +20.08% / +14.95% | 0.087 / 0.307 / 0.395 | +2.94% / 0.00% / +0.64% |
+| NHWC — CIFAR10 conv2 | 0.069 / 0.223 / 0.292 | 0.067 / 0.268 / 0.337 | -2.04% / +20.08% / +15.60% | 0.070 / 0.268 / 0.337 | +3.23% / 0.00% / 0.00% |
+| NHWC — MNIST conv1 | 0.108 / 0.323 / 0.431 | 0.107 / 0.388 / 0.495 | -0.42% / +20.08% / +14.95% | 0.110 / 0.388 / 0.498 | +2.94% / 0.00% / +0.64% |
+| NHWC — Historical MNISTConvNet conv2 | 0.088 / 0.302 / 0.390 | 0.088 / 0.362 / 0.451 | +0.07% / +20.08% / +15.55% | 0.088 / 0.362 / 0.451 | 0.00% / 0.00% / 0.00% |
+| NCHW — CIFAR10 conv1 | 0.056 / 0.288 / 0.344 | 0.056 / 0.346 / 0.402 | -0.01% / +19.99% / +16.73% | 0.056 / 0.346 / 0.402 | -0.01% / -0.01% / -0.01% |
+| NCHW — CIFAR10 conv2 | 0.052 / 0.305 / 0.357 | 0.054 / 0.366 / 0.420 | +2.85% / +19.99% / +17.49% | 0.051 / 0.366 / 0.417 | -5.56% / -0.01% / -0.71% |
+| NCHW — MNIST conv1 | 0.057 / 0.335 / 0.390 | 0.056 / 0.402 / 0.458 | -2.86% / +19.99% / +17.48% | 0.056 / 0.402 / 0.458 | -0.01% / -0.01% / -0.01% |
+| NCHW — Historical MNISTConvNet conv2 | 0.072 / 0.444 / 0.516 | 0.074 / 0.533 / 0.607 | +1.99% / +19.99% / +17.48% | 0.074 / 0.533 / 0.607 | -0.01% / -0.01% / -0.01% |
 
 Energy equals reported power multiplied by workload latency. Power components and totals are rounded independently, so displayed components may not sum exactly to the total. Percentages use the underlying values before display rounding. Own-Fmax comparisons include different operating clocks.
 
