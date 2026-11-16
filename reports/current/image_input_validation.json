@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "checks": {
+    "non_square_RGB_grayscale_resize_and_quantization": "PASS",
+    "existing_28x28_grayscale_values_preserved": "PASS",
+    "larger_grayscale_resize": "PASS",
+    "public_image_CLI_and_recorded_preprocessing": "PASS",
+    "input_tensor_CLI_preserved": "PASS",
+    "RTL_model_and_remaining_runtime_hashes_unchanged": "PASS"
+  },
+  "pillow_version": "13.0.0",
+  "image_target": [
+    28,
+    28
+  ],
+  "image_mode": "grayscale",
+  "resize_method": "Lanczos only when dimensions differ",
+  "existing_pixels_preserved": true,
+  "training_or_rtl_rerun": false
+}

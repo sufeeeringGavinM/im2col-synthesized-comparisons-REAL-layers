@@ -83,7 +83,7 @@ python3 tools/mnist/run.py --stage rtl --samples 1 --out-dir runs/mnist_rtl
 
 Use `--samples 20 --directed` for all retained images and three directed reduction/bias cases per implementation. See [MNIST replay](tools/mnist/README.md), [single-layer controls](tiled/NHWC/README.md) and [synthesis preparation](tools/vivado_synthesis/README.md). Generated outputs require a new directory and are excluded from Git.
 
-For a different input, use `--image digit.png` (exactly 28×28; requires Pillow) or `--input-tensor input.hex` (784 already-quantized INT8 hex values). The runner generates fresh integer-reference outputs and checks all RTL intermediates. For different convolution tensors/shapes, use either implementation's `run_case.py` with input/kernel files and optional bias/scale controls. See [custom input examples](tools/mnist/README.md#use-a-different-image-or-tensor).
+For a different input, use `--image digit.png` (automatically converted to grayscale and resized to 28×28; requires Pillow) or `--input-tensor input.hex` (784 already-quantized INT8 hex values). The runner generates fresh integer-reference outputs and checks all RTL intermediates. For different convolution tensors/shapes, use either implementation's `run_case.py` with input/kernel files and optional bias/scale controls. See [custom input examples](tools/mnist/README.md#use-a-different-image-or-tensor).
 
 ## MNIST demonstration
 

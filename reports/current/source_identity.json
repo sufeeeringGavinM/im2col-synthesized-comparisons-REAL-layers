@@ -53,7 +53,7 @@
     "tools/mnist/MNIST_Training_Test_3_.ipynb": "d494e028476d78d4a0b35f34358efadc920980704bca11227b19898e4b7d5d12",
     "tools/mnist/reference.py": "1db7687d19e6631796cd0f8937f489e9df0b63970022af6252f704be49709660",
     "tools/mnist/requirements-training.lock": "5e35ac398f65d4a16b918d90a6ae97666b840ea3ffd396792f301f70357410f9",
-    "tools/mnist/run.py": "69a436455fa9ef3d84767392d6bd61e6c233135a242e5bf1b17e0ca6641a5007",
+    "tools/mnist/run.py": "c53e1e3240a136249df61fcbd0029a6f6c59c3097c47ce9ad864722482634692",
     "tools/mnist/tb_mnist.v": "8ee7bfa2b8d3754e4bab38b5700ce51b8c210e3f95643faca92b81d6aa7465f8",
     "tools/mnist/train_notebook.py": "907d4b7258b1b3dd1ecf365d4de28f8e54d446ac0c19822b37d1d57c71ff51dc",
     "tools/mnist/training/EXECUTION.json": "f8a37bce000265b8ab0dfd6a710158f25dab09e2582a96527f7864c5b8d28ae3",

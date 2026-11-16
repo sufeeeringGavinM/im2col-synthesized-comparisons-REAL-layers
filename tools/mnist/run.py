@@ -24,6 +24,27 @@ def verify():
     return identity
 
 
+def load_image(path):
+    """Convert a manual image to the model's 784 grayscale INT8 inputs."""
+    from PIL import Image
+
+    with Image.open(path) as image:
+        original_size = image.size
+        original_mode = image.mode
+        grayscale = image.convert('L')
+        resized = original_size != (28, 28)
+        if resized:
+            grayscale = grayscale.resize((28, 28), Image.Resampling.LANCZOS)
+        inputs = preprocess(np.asarray(grayscale, dtype=np.uint8)).ravel()
+    provenance = dict(kind='image', sha256=hashlib.sha256(path.read_bytes()).hexdigest(),
+                      original_size=list(original_size), original_mode=original_mode,
+                      processed_size=[28, 28], resized=resized,
+                      resampling='lanczos' if resized else 'none',
+                      preprocessing='grayscale; resize to 28x28 with Lanczos if needed; '
+                                    'floor((pixel*127+127)/255); row-major flatten')
+    return inputs, provenance
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--stage', choices=['prepare', 'rtl'], default='prepare')
@@ -31,7 +52,7 @@ def main():
     parser.add_argument('--samples', type=int, default=1, help='First 1..20 retained images')
     parser.add_argument('--directed', action='store_true', help='Also check three reduction/bias edge cases')
     custom = parser.add_mutually_exclusive_group()
-    custom.add_argument('--image', type=Path, help='28x28 image: light digit on dark background; requires Pillow')
+    custom.add_argument('--image', type=Path, help='Image auto-converted to grayscale and resized to 28x28; light digit on dark background; requires Pillow')
     custom.add_argument('--input-tensor', type=Path, help='784 already-quantized input values as two-digit hex words')
     parser.add_argument('--label', type=int, choices=range(10), help='Optional true label for a custom input')
     parser.add_argument('--out-dir', type=Path, required=True, help='A new output directory')
@@ -45,15 +66,9 @@ def main():
     provenance = None
     if args.image:
         try:
-            from PIL import Image
+            custom_input, provenance = load_image(args.image)
         except ImportError:
             parser.error('--image requires Pillow: python3 -m pip install pillow')
-        with Image.open(args.image) as image:
-            if image.size != (28, 28):
-                parser.error('Expected a 28x28 image; resizing/inversion/centering are not automatic')
-            custom_input = preprocess(np.asarray(image.convert('L'), dtype=np.uint8)).ravel()
-        provenance = dict(kind='image', sha256=hashlib.sha256(args.image.read_bytes()).hexdigest(),
-                          preprocessing='grayscale then floor((pixel*127+127)/255); row-major flatten')
     elif args.input_tensor:
         tokens = [word for line in args.input_tensor.read_text().splitlines()
                   for word in line.split('//', 1)[0].split()]

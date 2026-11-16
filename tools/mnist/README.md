@@ -28,7 +28,7 @@ python3 tools/mnist/run.py --stage rtl --image digit.png --label 7 --out-dir run
 python3 tools/mnist/run.py --stage rtl --input-tensor input.hex --out-dir runs/my_tensor
 ```
 
-`--image` requires exactly 28×28 pixels, with a light digit on a dark background. It converts to grayscale, applies `floor((pixel*127+127)/255)` and flattens in row-major order. Resizing, inversion and centering are not automatic; handwriting should resemble the centered MNIST examples. `--label` is optional and affects only classification reporting, not expected arithmetic.
+`--image` accepts images of any dimensions, with a light digit on a dark background. It converts to grayscale, resizes to 28×28 using Lanczos when needed, applies `floor((pixel*127+127)/255)` and flattens in row-major order. Images already at 28×28 retain their grayscale pixels. Non-square images are stretched to the square input size. Use centered digits resembling the MNIST examples; inversion and centering remain manual. The run plan records original dimensions/mode, processed dimensions and the resize method. `--label` is optional and affects only classification reporting, not expected arithmetic.
 
 `--input-tensor` accepts exactly 784 signed INT8 values encoded as unsigned two-digit hex words, with optional `//` comments. It uses them directly, without pixel normalization. Both custom modes run the released two-layer model and generate fresh integer-reference intermediates, then compare every actual RTL output. Source/model checks remain strict; the new input hash and preprocessing are recorded in the output plan. A correct arithmetic match does not guarantee that the model recognizes arbitrary handwriting.
 
