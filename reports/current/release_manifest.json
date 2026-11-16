@@ -41,7 +41,7 @@
       "comparison_period_ns": 50,
       "max_threads": 8
     },
-    "NCHW_centralized": {
+    "NCHW": {
       "rtl_sha256": {
         "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
         "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",

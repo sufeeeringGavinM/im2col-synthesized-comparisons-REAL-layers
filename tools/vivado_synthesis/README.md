@@ -15,6 +15,6 @@ python3 tools/vivado_synthesis/prepare_run.py \
   --out runs/new_nhwc_synthesis --vivado-root 'C:/path/to/Vivado'
 ```
 
-Use `tiled/NCHW_centralized/rtl` for NCHW. Defaults: `xc7a200tsbg484-1`, OOC rebuilt hierarchy, 20 ns synthesis clock, 2 ns I/O delays and eight requested threads. The explicit common period above is 50 ns (20 MHz). Runtime controls remain observable. The converter uses WSL's `wslpath`; the generated launcher targets Windows Vivado.
+Use `tiled/NCHW/rtl` for NCHW. Defaults: `xc7a200tsbg484-1`, OOC rebuilt hierarchy, 20 ns synthesis clock, 2 ns I/O delays and eight requested threads. The explicit common period above is 50 ns (20 MHz). Runtime controls remain observable. The converter uses WSL's `wslpath`; the generated launcher targets Windows Vivado.
 
 For an authorized measurement, invoke generated `launch.cmd`, retain native exit code and `SUCCESS`, and inspect constraints/reports. Reuse accepted measurements for unchanged release RTL. This preset performs no placement/routing, bitstream, simulation or power estimation. New workload-power claims require native XSim activity and a matching DCP.

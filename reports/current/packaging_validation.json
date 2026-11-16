@@ -85,7 +85,7 @@
       "chain_window_ps": 13248900000
     },
     {
-      "architecture": "NCHW_centralized",
+      "architecture": "NCHW",
       "id": "custom",
       "label": null,
       "prediction": 1,

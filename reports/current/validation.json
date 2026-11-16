@@ -34,7 +34,7 @@
         }
       }
     },
-    "NCHW_centralized": {
+    "NCHW": {
       "status": "PASS",
       "rtl_cases": 23,
       "four_state_controls": [

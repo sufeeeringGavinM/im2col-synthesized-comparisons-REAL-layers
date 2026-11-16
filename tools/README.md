@@ -2,7 +2,7 @@
 
 - [Current MNIST replay](mnist/README.md): released source/model checks and actual two-layer RTL memory handoffs at 20 MHz.
 - [Current synthesis preparation](vivado_synthesis/README.md): the shared accepted preset; preparation does not launch Vivado.
-- `tiled/NHWC/run_case.py` and `tiled/NCHW_centralized/run_case.py`: individual layers with optional bias and requantization.
+- `tiled/NHWC/run_case.py` and `tiled/NCHW/run_case.py`: individual layers with optional bias and requantization.
 - [Historical chaining reproduction](chaining/README.md): source-gated earlier release, with original 1 MHz/own-Fmax measurements.
 - [Workloads](workloads/README.md), [earlier cycle replay](cycles/README.md), [earlier Vivado flow](vivado/README.md) and [browser tools](browser/README.md): supporting/historical material with their own source identities.
 

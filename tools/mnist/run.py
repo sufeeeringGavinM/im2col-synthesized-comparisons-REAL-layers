@@ -12,7 +12,7 @@ import workload
 from reference import preprocess
 
 ROOT = Path(__file__).resolve().parents[2]
-ARCHES = ['NHWC', 'NCHW_centralized']
+ARCHES = ['NHWC', 'NCHW']
 
 
 def verify():

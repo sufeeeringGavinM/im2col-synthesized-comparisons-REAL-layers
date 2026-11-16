@@ -1,6 +1,6 @@
 {
   "mode": "tiled",
-  "implementation": "channel_last_centralized",
+  "implementation": "NCHW",
   "layout": "swizzled",
   "array_size": 10,
   "cfg_width": 32,

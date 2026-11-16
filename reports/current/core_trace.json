@@ -10,7 +10,7 @@
       "advancing": 21,
       "wait": 0
     },
-    "NCHW_centralized": {
+    "NCHW": {
       "busy": 60,
       "prime": 1,
       "load": 10,

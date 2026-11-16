@@ -22,7 +22,7 @@ The table combines hardware comparisons with a trained **784→128→10 MNIST ne
 | Total power at own Fmax | 145 mW | 138 mW |
 | Inference energy at own Fmax | 1.067 mJ | 1.552 mJ |
 
-Arrows show **unquantized → quantized**, with percentage change relative to the unquantized value. Workload rows show the quantized accelerator only; no matching unquantized notebook measurement is available. Native Fmax analysis uses 27.766 ns for NHWC and 37.568 ns for NCHW (36.015 and 26.618 MHz); NCHW's 37.567 ns estimated minimum period rounds up by 1 ps to match simulator clock precision. Latency/energy use the actual simulated clock. The unquantized baseline also predates descriptor chaining and uses a different synthesis thread count, so hardware changes include wrapper and mapping effects.
+Arrows show **unquantized → quantized**, with percentage change relative to the unquantized value. Cycle, latency, power and energy rows describe the accelerator with quantization logic; matching full-model measurements are unavailable for the raw-output baseline. Native Fmax analysis uses 27.766 ns for NHWC and 37.568 ns for NCHW (36.015 and 26.618 MHz); NCHW's 37.567 ns estimated minimum period rounds up by 1 ps to match simulator clock precision. Latency/energy use the actual simulated clock. The unquantized baseline also predates descriptor chaining and uses a different synthesis thread count, so hardware changes include wrapper and mapping effects.
 
 Latency counts accelerator work; energy includes two descriptor-gap cycles and a 100 ps netlist propagation offset. Software processing and external-memory energy are excluded. All clocks and power are post-synthesis estimates, without routed timing closure or board validation.
 
@@ -31,7 +31,7 @@ Latency counts accelerator work; energy includes two descriptor-gap cycles and a
 | Implementation | Source | Addressing |
 |---|---|---|
 | NHWC | [tiled/NHWC](tiled/NHWC/README.md) | Counter-based NHWC unrolling and activation feeding |
-| NCHW | [tiled/NCHW_centralized](tiled/NCHW_centralized/README.md) | Central address generation, residue-swizzled input banking and two activation-vector data slots |
+| NCHW | [tiled/NCHW](tiled/NCHW/README.md) | Central address generation, residue-swizzled input banking and two activation-vector data slots |
 
 Tensor files use NCHW inputs, KCRS weights and NKPQ outputs in both implementations. Tensor-file order, unrolling order and physical SRAM banking are separate conventions. Convolution supports batching, independent height/width padding, stride and dilation, and reduction tiling with stored partial sums.
 

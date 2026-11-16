@@ -1,6 +1,6 @@
 # Working on the accelerator
 
-The current release is **NHWC and two-slot NCHW with bias, scale multiplication and output quantization**, selected by the user on November 16, 2026. Main sources are `tiled/NHWC` and `tiled/NCHW_centralized`; `conv_chain` is the top. ReLU and other nonlinear operations run in testbench/software on actual output values.
+The current release is **NHWC and two-slot NCHW with bias, scale multiplication and output quantization**, selected by the user on November 16, 2026. Main sources are `tiled/NHWC` and `tiled/NCHW`; `conv_chain` is the top. ReLU and other nonlinear operations run in testbench/software on actual output values.
 
 - Describe ReLU only as a software/testbench operation in current accelerator documentation and discussion.
 

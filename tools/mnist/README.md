@@ -9,7 +9,7 @@ python3 tools/mnist/run.py --stage prepare --out-dir runs/mnist_prepare
 python3 tools/mnist/run.py --stage rtl --samples 1 --out-dir runs/mnist_rtl
 ```
 
-Use `--samples 20 --directed` for all retained images and three directed reduction/bias cases per implementation. Select one architecture with `--variant NHWC` or `--variant NCHW_centralized`. `--timeout` sets seconds per invocation. Set `IVERILOG_BIN`, `VVP_BIN` and optionally `IVERILOG_BACKEND` for nonstandard tool installations. Each output directory must be new.
+Use `--samples 20 --directed` for all retained images and three directed reduction/bias cases per implementation. Select one architecture with `--variant NHWC` or `--variant NCHW`. `--timeout` sets seconds per invocation. Set `IVERILOG_BIN`, `VVP_BIN` and optionally `IVERILOG_BACKEND` for nonstandard tool installations. Each output directory must be new.
 
 `run.py` verifies released source/model hashes, generates memory fixtures, compiles `tb_mnist.v` against main RTL, and checks actual writes and intermediate handoffs. Per-layer phases/jobs/core cycles, raw/postprocessed outputs and predictions are written under the output folder. It checks accepted MNIST cycle totals as well as exact values; classification correctness is distinct from arithmetic correctness.
 

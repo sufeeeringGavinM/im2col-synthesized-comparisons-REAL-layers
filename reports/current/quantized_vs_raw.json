@@ -96,7 +96,7 @@
       "raw_20mhz_slack_projection_ns": 24.082,
       "quantized_20mhz_slack_measured_ns": 22.234
     },
-    "NCHW_centralized": {
+    "NCHW": {
       "raw": {
         "target_period_ns": 20.0,
         "wns_ns": -17.611,
@@ -120,7 +120,7 @@
           "data_path_delay_ns": "33.805",
           "logic_levels": "68"
         },
-        "report_directory": "external-evidence/control_NCHW_centralized"
+        "report_directory": "external-evidence/control_NCHW"
       },
       "quantized": {
         "lut": 61703.0,

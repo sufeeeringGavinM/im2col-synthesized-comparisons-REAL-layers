@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "changes": "NCHW namespace and paths",
+  "rtl_and_model_bytes_unchanged": true,
+  "measurement_values_unchanged": true,
+  "historical_records_unchanged": true,
+  "source_identity_verified": true,
+  "cli_variant": "NCHW",
+  "prepare_stage": "PASS",
+  "documentation_links": "PASS",
+  "runtime_changes": [
+    "tiled/NCHW/config.json",
+    "tools/mnist/run.py"
+  ],
+  "synthesis_or_simulation_rerun": false
+}

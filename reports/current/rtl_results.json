@@ -1660,7 +1660,7 @@
         "disabled"
       ]
     },
-    "NCHW_centralized": {
+    "NCHW": {
       "status": "PASS",
       "cases": [
         {

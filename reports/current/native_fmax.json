@@ -19,7 +19,7 @@
         "wns_ns": 0.0
       }
     },
-    "NCHW_centralized": {
+    "NCHW": {
       "dynamic_w": 0.015,
       "static_w": 0.123,
       "total_w": 0.138,

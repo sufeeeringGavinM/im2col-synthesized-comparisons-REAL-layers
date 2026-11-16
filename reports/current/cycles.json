@@ -60,7 +60,7 @@
     ],
     "total_accelerator_cycles": 264976
   },
-  "NCHW_centralized": {
+  "NCHW": {
     "layers": [
       {
         "layer": 0,

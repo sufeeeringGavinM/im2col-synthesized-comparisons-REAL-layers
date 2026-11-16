@@ -1,6 +1,6 @@
 # Accelerator status
 
-The accelerator implements NHWC and two-slot NCHW with descriptor-based layer chaining, optional INT32 channel bias, scale multiplication and output quantization. Main source paths are `tiled/NHWC` and `tiled/NCHW_centralized`, with `conv_chain` as top.
+The accelerator implements NHWC and two-slot NCHW with descriptor-based layer chaining, optional INT32 channel bias, scale multiplication and output quantization. Main source paths are `tiled/NHWC` and `tiled/NCHW`, with `conv_chain` as top.
 
 Requantization bypass retains independently enabled bias. The MNIST testbench applies ReLU to actual hidden-layer output values between descriptors; final classification scores retain biased INT32 precision.
 
