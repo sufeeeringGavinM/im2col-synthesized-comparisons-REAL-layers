@@ -1,0 +1,69 @@
+{
+  "architecture": [
+    784,
+    128,
+    10
+  ],
+  "epochs": 12,
+  "batch_size": 128,
+  "optimizer": "Keras Adam(0.001)",
+  "loss": "SparseCategoricalCrossentropy(from_logits=True)",
+  "validation_split": 0.2,
+  "training_images": 48000,
+  "validation_images": 12000,
+  "test_images": 10000,
+  "calibration_images": 48000,
+  "seed": 196,
+  "float_test_accuracy": 0.9753,
+  "integer_test_accuracy": 0.9751,
+  "independent_reference_matches_all_10000_raw_scores": true,
+  "notebook_preprocessing_matches_runtime_preprocessing": true,
+  "parameters": 101770,
+  "integer_statistics": [
+    {
+      "max_abs_prefix_bound": 741043,
+      "accumulation_overflow_possible": 0,
+      "bias_wraps": 0,
+      "biased_min": -402106,
+      "biased_max": 310603,
+      "saturated_low": 47,
+      "saturated_high": 0,
+      "values": 1280000,
+      "relu_clamps": 501771
+    },
+    {
+      "max_abs_prefix_bound": 72622,
+      "accumulation_overflow_possible": 0,
+      "bias_wraps": 0,
+      "biased_min": -41011,
+      "biased_max": 27517,
+      "saturated_low": 0,
+      "saturated_high": 0,
+      "values": 100000,
+      "relu_clamps": 0
+    }
+  ],
+  "training_environment": {
+    "notebook": "MNIST_Training_Test_3_.ipynb",
+    "notebook_sha256": "e1d8c9e8c5cbc31ba714703ed6c39f45f91bbc2603f6542337dafca4cfa5ff4a",
+    "seed": 196,
+    "seed_note": "Notebook has no fixed seed; this rerun fixes seed 196.",
+    "python": "3.13.18",
+    "tensorflow": "2.21.0",
+    "numpy": "2.5.5",
+    "executed_cells": {
+      "2": "9933bc889452de4cefcd25737c6d556a1b398f6c1dabce1c37b44b43920f5fae",
+      "4": "bd559bc685ec800429e861511080742007506df687f8a3d144267eba845cc2cc",
+      "7": "ca449f70a820df069a220de860abbcf0e5f943bcdf6ce10cd04a3958e75a0251",
+      "9": "b8b281d3026490222e8704b21ddc3585181750035820a0e770cdab24e7804d55",
+      "11": "3466574a10203d90de9aa9d812bb5a2cb68bc18a31374cb1bef2961464e177dc",
+      "13": "c0ea72bd5b98e56b1bb5de68c0377a6c2dc4c7f2181943f631511af158b971c4",
+      "19": "6da0bfcb5038e61e87aa255986333a5d57a8620c9d66f757a175f70801da4466",
+      "21": "c73755487aeba98e92c21073786201d7d4eee10803df6a4c9431af864a3d6664",
+      "23": "fe01d2738e456377255b4b817c0a5f1e563ffb0c69fddb214544389ad3e442f9",
+      "25": "1ace743baf8515c399dec88eba2d78243f4c9d1876c8978a2167a79943cb3c87"
+    },
+    "skipped_cells": "Markdown, example test-image plot and training-history plots only"
+  },
+  "wall_seconds": 31.04838119699889
+}

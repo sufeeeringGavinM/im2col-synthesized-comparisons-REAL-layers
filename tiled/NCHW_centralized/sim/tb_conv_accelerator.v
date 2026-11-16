@@ -45,7 +45,9 @@ module tb_conv_accelerator;
   reg clk = 0, nrst = 0, start = 0;
   always #5 clk = ~clk;
   wire busy, done, mem_re, mem_we,descriptor_ready,chain_busy,chain_done;
-  integer quantize=0,round_nearest=1,output_shift=0;
+  integer quantize=0,round_nearest=1,output_shift=0,bias_enable=0,bias_base;
+  reg [31:0] output_multiplier=1;
+  string bias_file;
   wire [MEM_ADDR_WIDTH - 1:0] mem_raddr, mem_waddr;
   wire [MEM_DATA_WIDTH - 1:0] mem_wdata;
   reg [MEM_DATA_WIDTH - 1:0] mem_rdata;
@@ -97,6 +99,7 @@ module tb_conv_accelerator;
     .cfg_input_base(MEM_ADDR_WIDTH'(input_base)),
     .cfg_kernel_base(MEM_ADDR_WIDTH'(kernel_base)),
     .cfg_output_base(MEM_ADDR_WIDTH'(output_base)),
+    .cfg_output_multiplier(output_multiplier),.cfg_bias_enable(bias_enable[0]),.cfg_bias_base(MEM_ADDR_WIDTH'(bias_base)),
     .cfg_quantize(quantize[0]),.cfg_round_nearest(round_nearest[0]),.cfg_output_shift(output_shift[4:0]),
     .mem_re(mem_re),
     .mem_we(mem_we),
@@ -136,6 +139,7 @@ module tb_conv_accelerator;
     begin
       x=v;y=x;
       if(quantize) begin
+        x=$signed(v)*$signed({1'b0,output_multiplier});
         denom=64'sd1 << output_shift;
         if(round_nearest) begin
           mag=x<0?-x:x;y=(mag+denom/2)/denom;if(x<0)y=-y;
@@ -164,6 +168,7 @@ module tb_conv_accelerator;
                     if (h >= 0 && h < H && w >= 0 && w < W)
                       total = total + input_tensor[((n * C + c) * H + h) * W + w] * kernel_tensor[((k * C + c) * R + r) * S + s];
                   end
+              if(bias_enable) total=total+$signed(memory[bias_base+k]);
               expected[((n * K + k) * P + p) * Q + q] = quant_reference(total);
             end
     end
@@ -204,6 +209,8 @@ module tb_conv_accelerator;
     if($value$plusargs("QUANTIZE=%d",quantize)) begin end
     if($value$plusargs("ROUND_NEAREST=%d",round_nearest)) begin end
     if($value$plusargs("OUTPUT_SHIFT=%d",output_shift)) begin end
+    if($value$plusargs("OUTPUT_MULTIPLIER=%d",output_multiplier)) begin end
+    if($value$plusargs("BIAS_FILE=%s",bias_file)) bias_enable=1;
     input_file = "sim/input_tensor.txt";
     kernel_file = "sim/kernel_tensor.txt";
     output_file = "sim/output_tensor_accelerator.txt";
@@ -236,7 +243,7 @@ module tb_conv_accelerator;
       $fatal(1, "Kernel does not fit padded input");
     P = (longint'(H) + 2 * pad_i - longint'(dilation_i) * (R - 1) - 1) / stride_i + 1;
     Q = (longint'(W) + 2 * pad_j - longint'(dilation_j) * (S - 1) - 1) / stride_j + 1;
-    if (P < 1 || Q < 1 || longint'(N) * C * H * W + longint'(K) * C * R * S + longint'(N) * K * P * Q + 32 > MEM_DEPTH)
+    if (P < 1 || Q < 1 || longint'(N) * C * H * W + longint'(K) * C * R * S + longint'(N) * K * P * Q + (bias_enable?K:0) + 40 > MEM_DEPTH)
       $fatal(1, "Layer exceeds testbench backing memory");
 
     // Lay out the three tensors in separate regions of backing memory.
@@ -248,6 +255,8 @@ module tb_conv_accelerator;
     output_base = kernel_base + kernel_words + 8;
     read_tensor(input_file, 0, N, C, H, W);
     read_tensor(kernel_file, 1, K, C, R, S);
+    bias_base=output_base+output_words+8;
+    if(bias_enable) $readmemh(bias_file,memory,bias_base,bias_base+K-1);
     build_reference;
     for (a = 0; a < input_words; a = a + 1)
       memory[input_base + a] = MEM_DATA_WIDTH'($unsigned(input_tensor[a]));

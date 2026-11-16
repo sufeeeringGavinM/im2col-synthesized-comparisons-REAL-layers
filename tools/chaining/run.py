@@ -65,6 +65,8 @@ def main():
  parser.add_argument('--timeout',type=int,default=259200,help='Timeout for each RTL command in seconds')
  args=parser.parse_args();identity=verify()
  arches=m.ARCHES if args.variant=='all' else [args.variant]
+ if args.stage=='all' and not m.POWER_TCL.is_file():
+  raise FileNotFoundError('Missing power reporting script: '+str(m.POWER_TCL))
  if args.stage in ['synthesis','all']:
   assert args.vivado_root,'--vivado-root is required for synthesis/native measurements'
   flow.VIVADO_ROOT=args.vivado_root.expanduser().resolve();flow.WINDOWS_TOOLS=(flow.VIVADO_ROOT/'bin/vivado.bat').is_file()

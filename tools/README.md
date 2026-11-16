@@ -1,8 +1,9 @@
 # Reproduction tools
 
-- [Current chaining reproduction](chaining/README.md): exact source/fixture checks, RTL replay, Nexys Video synthesis and native-XSim activity at1MHz and own estimatedFmax.
-- [Workloads](workloads/README.md): deterministic independent-layer tensors, model geometries and provenance.
-- [Previous cycle replay](cycles/README.md) and [previous Vivado/XSim flow](vivado/README.md): reproduce the earlier four-way study from its source commit.
-- [Browser tools](browser/README.md): educational mappings with stated limitations.
+- [Current MNIST replay](mnist/README.md): released source/model checks and actual two-layer RTL memory handoffs at 20 MHz.
+- [Current synthesis preparation](vivado_synthesis/README.md): the shared accepted preset; preparation does not launch Vivado.
+- `tiled/NHWC/run_case.py` and `tiled/NCHW_centralized/run_case.py`: individual layers with optional bias and requantization.
+- [Historical chaining reproduction](chaining/README.md): source-gated earlier release, with original 1 MHz/own-Fmax measurements.
+- [Workloads](workloads/README.md), [earlier cycle replay](cycles/README.md), [earlier Vivado flow](vivado/README.md) and [browser tools](browser/README.md): supporting/historical material with their own source identities.
 
-The current main implementations are tiled/NHWC and tiled/NCHW_centralized, with conv_chain as the top. The previous version is commit `962a23ef5d03b0475fd2113338d6ec59b1ae0e3e`; use a separate checkout of that commit for historical source-gated commands. Current standalone run_case.py scripts replay individual raw-output layers.
+The current pair is NHWC and two-slot NCHW, with `conv_chain` as top. Commands write generated artifacts to new ignored directories. Historical source gates intentionally reject the current release; reproduce older measurements from the documented source commit.

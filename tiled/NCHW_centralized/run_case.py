@@ -10,7 +10,7 @@ import sys
 
 
 def windows_to_wsl():
-    path_options={'--input-file','--kernel-file','--expected-file','--out-dir','--wave-file'}
+    path_options={'--input-file','--kernel-file','--bias-file','--expected-file','--out-dir','--wave-file'}
     def convert(value):
         return subprocess.check_output(['wsl.exe','--exec','wslpath','-u',str(Path(value).expanduser().resolve())],text=True).strip()
     arguments=[]
@@ -30,6 +30,7 @@ if os.name=='nt' and not (shutil.which('iverilog') and shutil.which('vvp')):
     windows_to_wsl()
 
 from gen_matrices import TENSOR_ARGUMENTS, convolve, create_parser, output_shape, write_hex_tensor
+from output_processing import requantize
 
 
 def read_tensor(path,bits):
@@ -52,17 +53,24 @@ def main():
     parser.add_argument('--input-file',type=Path)
     parser.add_argument('--kernel-file',type=Path)
     parser.add_argument('--expected-file',type=Path,help='Optional independent 32-bit hex expected output')
+    parser.add_argument('--bias-file',type=Path,help='K signed32 bias values as unsigned hexadecimal words')
+    parser.add_argument('--quantize',action='store_true',help='Enable scale/round/shift/INT8 saturation')
+    parser.add_argument('--multiplier',type=int,default=1,help='Unsigned32 scale numerator')
+    parser.add_argument('--shift',type=int,default=0,help='Right shift 0..31')
+    parser.add_argument('--rounding',choices=['nearest','floor'],default='nearest')
     parser.add_argument('--wave-file',type=Path)
     parser.add_argument('--tiled',action='store_true',help='Compatibility flag; folder selects the simulation top')
     parser.add_argument('--timeout',type=int,default=300,help='Seconds per simulator tool; use a generous bound for full layers')
     args=parser.parse_args()
+    if not 0 <= args.multiplier <= 0xffffffff or not 0 <= args.shift <= 31:
+        parser.error('Expected unsigned32 multiplier and shift 0..31')
     if bool(args.input_file)!=bool(args.kernel_file):
         parser.error('Provide both --input-file and --kernel-file')
     if args.tiled and metadata['mode']!='tiled':
         parser.error('This folder contains a non-tiled implementation')
     output=args.out_dir.expanduser().resolve()
-    reserved={output/name for name in ['input_used.txt','kernel_used.txt','expected_python.txt','output_tensor.txt','compile.log','simulation.log','simulation.vvp','result.json','sram_layout.txt']}
-    if any(path is not None and path.expanduser().resolve() in reserved for path in [args.input_file,args.kernel_file,args.expected_file]):
+    reserved={output/name for name in ['bias_used.txt','input_used.txt','kernel_used.txt','expected_python.txt','output_tensor.txt','compile.log','simulation.log','simulation.vvp','result.json','sram_layout.txt']}
+    if any(path is not None and path.expanduser().resolve() in reserved for path in [args.input_file,args.kernel_file,args.bias_file,args.expected_file]):
         parser.error('Choose an --out-dir that will not overwrite a supplied tensor')
     defaults=dict(TENSOR_ARGUMENTS)
     if args.input_file:
@@ -97,7 +105,7 @@ def main():
     if len(inputs)!=args.N*args.C*args.H*args.W or len(kernels)!=args.K*args.C*args.R*args.S:
         parser.error('Input/kernel word counts disagree with the configured tensor shapes')
     if metadata['mode']=='tiled':
-        if len(inputs)+len(kernels)+args.N*args.K*height*width+32>2500000:
+        if len(inputs)+len(kernels)+args.N*args.K*height*width+(args.K if args.bias_file else 0)+40>2500000:
             parser.error('Layer exceeds the existing testbench backing memory')
     else:
         if max(args.C,args.K)>10 or args.C*args.R*args.S>256 or args.N*height*width>256:
@@ -112,6 +120,14 @@ def main():
     signed_inputs=[value-256 if value>=128 else value for value in inputs]
     signed_kernels=[value-256 if value>=128 else value for value in kernels]
     expected=convolve(signed_inputs,signed_kernels,args)
+    biases=[0]*args.K
+    if args.bias_file:
+        biases,_=read_tensor(args.bias_file.expanduser().resolve(),32)
+        if len(biases)!=args.K:
+            parser.error('Expected one bias per output channel')
+    expected=[requantize(value,args.multiplier,args.shift,args.rounding=='nearest',args.quantize,
+                        biases[(i//(height*width))%args.K]) & 0xffffffff
+              for i,value in enumerate(expected)]
     if args.expected_file:
         supplied,shape=read_tensor(args.expected_file.expanduser().resolve(),32)
         if shape is not None and shape!=(args.N,args.K,height,width):
@@ -122,6 +138,8 @@ def main():
     write_hex_tensor(output/'input_used.txt',(args.N,args.C,args.H,args.W),inputs,8)
     write_hex_tensor(output/'kernel_used.txt',(args.K,args.C,args.R,args.S),kernels,8)
     write_hex_tensor(output/'expected_python.txt',(args.N,args.K,height,width),expected,32)
+    if args.bias_file:
+        (output/'bias_used.txt').write_text(''.join(f'{v:08x}\n' for v in biases))
     compiler=os.environ.get('IVERILOG_BIN') or shutil.which('iverilog')
     runtime=os.environ.get('VVP_BIN') or shutil.which('vvp')
     backend=os.environ.get('IVERILOG_BACKEND')
@@ -137,6 +155,9 @@ def main():
     actual=output/'output_tensor.txt'
     arguments=[f'+{name}={getattr(args,name)}' for name,_ in TENSOR_ARGUMENTS]
     arguments.extend([f'+INPUT_FILE={output}/input_used.txt',f'+KERNEL_FILE={output}/kernel_used.txt',f'+OUTPUT_FILE={actual}',f'+SRAM_LAYOUT_FILE={output}/sram_layout.txt'])
+    arguments.extend([f'+QUANTIZE={int(args.quantize)}',f'+OUTPUT_MULTIPLIER={args.multiplier}',f'+OUTPUT_SHIFT={args.shift}',f'+ROUND_NEAREST={int(args.rounding=="nearest")}'])
+    if args.bias_file:
+        arguments.append(f'+BIAS_FILE={output}/bias_used.txt')
     if args.wave_file:
         arguments.append('+WAVE_FILE='+str(args.wave_file.expanduser().resolve()))
     with (output/'simulation.log').open('w') as log:
@@ -147,7 +168,7 @@ def main():
     observed,_=read_tensor(actual,32)
     if observed!=expected:
         raise RuntimeError('RTL output differs from Python golden output')
-    record=dict(status='PASS',implementation=metadata['implementation'],mode=metadata['mode'],config={name:getattr(args,name) for name,_ in TENSOR_ARGUMENTS},output_shape=[args.N,args.K,height,width],outputs=len(expected),checks=['Verilog reference task','Python golden model'],metrics=[line for line in log.splitlines() if '[METRIC]' in line],actual_file=str(actual))
+    record=dict(status='PASS',implementation=metadata['implementation'],mode=metadata['mode'],config={name:getattr(args,name) for name,_ in TENSOR_ARGUMENTS},output_processing=dict(bias_enabled=bool(args.bias_file),quantize=args.quantize,multiplier=args.multiplier,shift=args.shift,rounding=args.rounding),output_shape=[args.N,args.K,height,width],outputs=len(expected),checks=['Verilog reference task','Python golden model'],metrics=[line for line in log.splitlines() if '[METRIC]' in line],actual_file=str(actual))
     (output/'result.json').write_text(json.dumps(record,indent=2)+'\n')
     print(f"PASS: {len(expected)} outputs match Verilog and Python references. Results: {output}")
 

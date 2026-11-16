@@ -1,0 +1,88 @@
+{
+  "parent_commit": "97e6f4a232c8c64792d3a033fcdcb5d5a10f2a9c",
+  "promotion": "Bias/scale accelerator with trained MNIST demonstration",
+  "rtl_changed_from_validated_snapshot": false,
+  "synthesis_rerun": false,
+  "nonlinear_hardware": false,
+  "sources": {
+    "NHWC": {
+      "rtl_sha256": {
+        "PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+        "activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+        "conv_accelerator.v": "66ae429d8c599fff50318e16e19874b7167d36dc8b629a76fbe887d5bf93f3f7",
+        "conv_chain.v": "9f0ccd2254ec9e625a4f5818976f12567f40af45a0faf2283c67055b431d2949",
+        "conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+        "conv_core.v": "9e9c5b2a02e847ca654d8a529685f7ee954c497937f0bde096f0c1ac10ee8610",
+        "conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+        "im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+        "output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+        "output_quantizer.v": "fe89c0b7e51f003e6882c879980db910e4fcd5cffc5ec536682d3f127ec48224",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+        "weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037"
+      },
+      "accepted_synthesis_manifest_sha256": "0cf43ad8f47272de423919ec0925b822926b5294a625ee85a636bb1fdf3c22f0",
+      "preset_sha256": "32383178d60ab7423dbb7c8b04a253954449b58cb7826fcd00a4ad4c6ee7dc9e",
+      "part": "xc7a200tsbg484-1",
+      "generics": [
+        "ARRAY_SIZE=10",
+        "BIT_WIDTH=8",
+        "ACC_WIDTH=32",
+        "CFG_WIDTH=32",
+        "INPUT_ADDR_WIDTH=8",
+        "OUTPUT_ADDR_WIDTH=8",
+        "KERNEL_ADDR_WIDTH=8",
+        "MEM_ADDR_WIDTH=32"
+      ],
+      "synthesis_period_ns": 20,
+      "comparison_period_ns": 50,
+      "max_threads": 8
+    },
+    "NCHW_centralized": {
+      "rtl_sha256": {
+        "PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "conv_accelerator.v": "fcbd96018e0e22a7d3f81b7388fdbb788403a428763f1a874006ef35159917ed",
+        "conv_chain.v": "9f0ccd2254ec9e625a4f5818976f12567f40af45a0faf2283c67055b431d2949",
+        "conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "conv_core.v": "5292ddcfe16bde5f56dc1370070d93e27dc0fe48765c8791841bf645d195c239",
+        "conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "output_quantizer.v": "fe89c0b7e51f003e6882c879980db910e4fcd5cffc5ec536682d3f127ec48224",
+        "setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "accepted_synthesis_manifest_sha256": "47f8c3e862f1e62a78f69c929f6430e2bf8aab8283cf80bcbcb68218fcf17c13",
+      "preset_sha256": "32383178d60ab7423dbb7c8b04a253954449b58cb7826fcd00a4ad4c6ee7dc9e",
+      "part": "xc7a200tsbg484-1",
+      "generics": [
+        "ARRAY_SIZE=10",
+        "BIT_WIDTH=8",
+        "ACC_WIDTH=32",
+        "CFG_WIDTH=32",
+        "INPUT_ADDR_WIDTH=8",
+        "OUTPUT_ADDR_WIDTH=8",
+        "KERNEL_ADDR_WIDTH=8",
+        "MEM_ADDR_WIDTH=32"
+      ],
+      "synthesis_period_ns": 20,
+      "comparison_period_ns": 50,
+      "max_threads": 8
+    }
+  },
+  "model_source": "tools/mnist/MNIST_Training_Test_3_.ipynb",
+  "model_architecture": [
+    784,
+    128,
+    10
+  ],
+  "training_seed": 196
+}

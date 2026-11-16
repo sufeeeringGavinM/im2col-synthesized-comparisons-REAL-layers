@@ -1,0 +1,1098 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026
+| Publication   : host and run timestamp omitted
+| Publication   : host and run timestamp omitted
+| Command      : report_timing -of_objects [get_timing_paths -quiet -through [get_pins -hierarchical -quiet -filter {NAME =~ "*u_quantizer*/*"}] -delay_type max -max_paths 5 -nworst 1] -file block_quantizer.rpt
+| Design       : conv_chain
+| Device       : 7a200t-sbg484
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+| Design State : Synthesized
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (VIOLATED) :        -9.324ns  (required time - arrival time)
+  Source:                 u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/CLKARDCLK
+                            (rising edge-triggered cell RAMB18E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            mem_wdata[0]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        26.315ns  (logic 16.597ns (63.070%)  route 9.718ns (36.930%))
+  Logic Levels:           47  (CARRY4=30 DSP48E1=2 LUT2=3 LUT4=1 LUT5=1 LUT6=9 MUXF7=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -0.973ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 )
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=18380, unset)        0.973     0.973    u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/clk
+                         RAMB18E1                                     r  u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+                         RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[1])
+                                                      2.454     3.427 r  u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/DOADO[1]
+                         net (fo=2, unplaced)         0.800     4.227    u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/stored_output[4]_278[1]
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/product__1_i_82/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.351 r  u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/product__1_i_82/O
+                         net (fo=1, unplaced)         0.000     4.351    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51/I1
+                         MUXF7 (Prop_muxf7_I1_O)      0.247     4.598 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51/O
+                         net (fo=1, unplaced)         0.452     5.050    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35/I0
+                         LUT6 (Prop_lut6_I0_O)        0.298     5.348 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35/O
+                         net (fo=1, unplaced)         0.000     5.348    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     5.881 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4/CO[3]
+                         net (fo=1, unplaced)         0.009     5.890    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.007 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3/CO[3]
+                         net (fo=1, unplaced)         0.000     6.007    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.124 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000     6.124    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.241 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     6.241    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product_i_4/CI
+                         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.232     6.473 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product_i_4/O[0]
+                         net (fo=3, unplaced)         0.800     7.272    u_accelerator/u_quantizer/value[16]
+                                                                      r  u_accelerator/u_quantizer/product__1/A[16]
+                         DSP48E1 (Prop_dsp48e1_A[16]_PCOUT[47])
+                                                      4.211    11.483 r  u_accelerator/u_quantizer/product__1/PCOUT[47]
+                         net (fo=1, unplaced)         0.055    11.538    u_accelerator/u_quantizer/product__1_n_106
+                                                                      r  u_accelerator/u_quantizer/product__2/PCIN[47]
+                         DSP48E1 (Prop_dsp48e1_PCIN[47]_P[0])
+                                                      1.518    13.056 r  u_accelerator/u_quantizer/product__2/P[0]
+                         net (fo=2, unplaced)         0.800    13.856    u_accelerator/u_quantizer/p_1_in[17]
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18/I0
+                         LUT2 (Prop_lut2_I0_O)        0.124    13.980 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18/O
+                         net (fo=1, unplaced)         0.000    13.980    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    14.513 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15/CO[3]
+                         net (fo=1, unplaced)         0.009    14.522    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.639 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34/CO[3]
+                         net (fo=1, unplaced)         0.000    14.639    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.756 r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15/CO[3]
+                         net (fo=1, unplaced)         0.000    14.756    u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.873 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87/CO[3]
+                         net (fo=1, unplaced)         0.000    14.873    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.990 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86/CO[3]
+                         net (fo=1, unplaced)         0.000    14.990    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    15.107 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83/CO[3]
+                         net (fo=1, unplaced)         0.000    15.107    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    15.224 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84/CO[3]
+                         net (fo=1, unplaced)         0.000    15.224    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_81/CI
+                         CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.256    15.480 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_81/O[2]
+                         net (fo=5, unplaced)         0.933    16.413    u_accelerator/u_quantizer/p_45_in
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80/I2
+                         LUT4 (Prop_lut4_I2_O)        0.301    16.714 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80/O
+                         net (fo=1, unplaced)         0.419    17.133    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79/I4
+                         LUT5 (Prop_lut5_I4_O)        0.124    17.257 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79/O
+                         net (fo=1, unplaced)         0.449    17.706    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    17.830 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76/O
+                         net (fo=1, unplaced)         0.449    18.279    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    18.403 f  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70/O
+                         net (fo=1, unplaced)         0.449    18.852    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70_n_0
+                                                                      f  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61/I1
+                         LUT6 (Prop_lut6_I1_O)        0.124    18.976 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61/O
+                         net (fo=1, unplaced)         0.449    19.425    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37/I0
+                         LUT6 (Prop_lut6_I0_O)        0.124    19.549 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37/O
+                         net (fo=1, unplaced)         0.449    19.998    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17/I4
+                         LUT6 (Prop_lut6_I4_O)        0.124    20.122 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17/O
+                         net (fo=1, unplaced)         0.449    20.571    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    20.695 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7/O
+                         net (fo=1, unplaced)         0.000    20.695    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2/S[0]
+                         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.513    21.208 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.009    21.217    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.334 r  u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.334    u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.451 r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.451    u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.568 r  u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.568    u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.685 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.685    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.802 r  u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.802    u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.919 r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.919    u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.036 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    22.036    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.153 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199/CO[3]
+                         net (fo=1, unplaced)         0.000    22.153    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.270 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162/CO[3]
+                         net (fo=1, unplaced)         0.000    22.270    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.387 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161/CO[3]
+                         net (fo=1, unplaced)         0.000    22.387    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.504 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98/CO[3]
+                         net (fo=1, unplaced)         0.000    22.504    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.621 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97/CO[3]
+                         net (fo=1, unplaced)         0.000    22.621    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.738 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63/CO[3]
+                         net (fo=1, unplaced)         0.000    22.738    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62/CI
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.337    23.075 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62/O[1]
+                         net (fo=4, unplaced)         0.635    23.710    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62_n_6
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29/I0
+                         LUT2 (Prop_lut2_I0_O)        0.306    24.016 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29/O
+                         net (fo=1, unplaced)         0.000    24.016    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    24.549 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    24.549    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.179    24.728 f  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_3/CO[1]
+                         net (fo=32, unplaced)        0.682    25.410    u_accelerator/u_quantizer/result1
+                                                                      f  u_accelerator/u_quantizer/mem_wdata[0]_INST_0_i_1/I0
+                         LUT6 (Prop_lut6_I0_O)        0.332    25.742 r  u_accelerator/u_quantizer/mem_wdata[0]_INST_0_i_1/O
+                         net (fo=1, unplaced)         0.449    26.191    u_accelerator/u_quantizer/mem_wdata[0]_INST_0_i_1_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[0]_INST_0/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124    26.315 r  u_accelerator/u_quantizer/mem_wdata[0]_INST_0/O
+                         net (fo=0)                   0.973    27.288    mem_wdata[0]
+                                                                      r  mem_wdata[0]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -27.288    <hidden>
+  -------------------------------------------------------------------
+                         slack                                 -9.324    <hidden>
+
+Slack (VIOLATED) :        -9.324ns  (required time - arrival time)
+  Source:                 u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/CLKARDCLK
+                            (rising edge-triggered cell RAMB18E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            mem_wdata[10]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        26.315ns  (logic 16.597ns (63.070%)  route 9.718ns (36.930%))
+  Logic Levels:           47  (CARRY4=30 DSP48E1=2 LUT2=3 LUT4=1 LUT5=1 LUT6=9 MUXF7=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -0.973ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 )
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=18380, unset)        0.973     0.973    u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/clk
+                         RAMB18E1                                     r  u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+                         RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[1])
+                                                      2.454     3.427 r  u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/DOADO[1]
+                         net (fo=2, unplaced)         0.800     4.227    u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/stored_output[4]_278[1]
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/product__1_i_82/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.351 r  u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/product__1_i_82/O
+                         net (fo=1, unplaced)         0.000     4.351    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51/I1
+                         MUXF7 (Prop_muxf7_I1_O)      0.247     4.598 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51/O
+                         net (fo=1, unplaced)         0.452     5.050    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35/I0
+                         LUT6 (Prop_lut6_I0_O)        0.298     5.348 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35/O
+                         net (fo=1, unplaced)         0.000     5.348    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     5.881 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4/CO[3]
+                         net (fo=1, unplaced)         0.009     5.890    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.007 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3/CO[3]
+                         net (fo=1, unplaced)         0.000     6.007    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.124 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000     6.124    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.241 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     6.241    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product_i_4/CI
+                         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.232     6.473 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product_i_4/O[0]
+                         net (fo=3, unplaced)         0.800     7.272    u_accelerator/u_quantizer/value[16]
+                                                                      r  u_accelerator/u_quantizer/product__1/A[16]
+                         DSP48E1 (Prop_dsp48e1_A[16]_PCOUT[47])
+                                                      4.211    11.483 r  u_accelerator/u_quantizer/product__1/PCOUT[47]
+                         net (fo=1, unplaced)         0.055    11.538    u_accelerator/u_quantizer/product__1_n_106
+                                                                      r  u_accelerator/u_quantizer/product__2/PCIN[47]
+                         DSP48E1 (Prop_dsp48e1_PCIN[47]_P[0])
+                                                      1.518    13.056 r  u_accelerator/u_quantizer/product__2/P[0]
+                         net (fo=2, unplaced)         0.800    13.856    u_accelerator/u_quantizer/p_1_in[17]
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18/I0
+                         LUT2 (Prop_lut2_I0_O)        0.124    13.980 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18/O
+                         net (fo=1, unplaced)         0.000    13.980    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    14.513 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15/CO[3]
+                         net (fo=1, unplaced)         0.009    14.522    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.639 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34/CO[3]
+                         net (fo=1, unplaced)         0.000    14.639    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.756 r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15/CO[3]
+                         net (fo=1, unplaced)         0.000    14.756    u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.873 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87/CO[3]
+                         net (fo=1, unplaced)         0.000    14.873    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.990 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86/CO[3]
+                         net (fo=1, unplaced)         0.000    14.990    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    15.107 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83/CO[3]
+                         net (fo=1, unplaced)         0.000    15.107    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    15.224 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84/CO[3]
+                         net (fo=1, unplaced)         0.000    15.224    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_81/CI
+                         CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.256    15.480 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_81/O[2]
+                         net (fo=5, unplaced)         0.933    16.413    u_accelerator/u_quantizer/p_45_in
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80/I2
+                         LUT4 (Prop_lut4_I2_O)        0.301    16.714 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80/O
+                         net (fo=1, unplaced)         0.419    17.133    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79/I4
+                         LUT5 (Prop_lut5_I4_O)        0.124    17.257 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79/O
+                         net (fo=1, unplaced)         0.449    17.706    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    17.830 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76/O
+                         net (fo=1, unplaced)         0.449    18.279    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    18.403 f  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70/O
+                         net (fo=1, unplaced)         0.449    18.852    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70_n_0
+                                                                      f  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61/I1
+                         LUT6 (Prop_lut6_I1_O)        0.124    18.976 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61/O
+                         net (fo=1, unplaced)         0.449    19.425    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37/I0
+                         LUT6 (Prop_lut6_I0_O)        0.124    19.549 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37/O
+                         net (fo=1, unplaced)         0.449    19.998    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17/I4
+                         LUT6 (Prop_lut6_I4_O)        0.124    20.122 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17/O
+                         net (fo=1, unplaced)         0.449    20.571    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    20.695 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7/O
+                         net (fo=1, unplaced)         0.000    20.695    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2/S[0]
+                         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.513    21.208 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.009    21.217    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.334 r  u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.334    u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.451 r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.451    u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.568 r  u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.568    u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.685 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.685    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.802 r  u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.802    u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.919 r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.919    u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.036 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    22.036    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.153 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199/CO[3]
+                         net (fo=1, unplaced)         0.000    22.153    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.270 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162/CO[3]
+                         net (fo=1, unplaced)         0.000    22.270    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.387 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161/CO[3]
+                         net (fo=1, unplaced)         0.000    22.387    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.504 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98/CO[3]
+                         net (fo=1, unplaced)         0.000    22.504    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.621 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97/CO[3]
+                         net (fo=1, unplaced)         0.000    22.621    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.738 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63/CO[3]
+                         net (fo=1, unplaced)         0.000    22.738    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62/CI
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.337    23.075 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62/O[1]
+                         net (fo=4, unplaced)         0.635    23.710    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62_n_6
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29/I0
+                         LUT2 (Prop_lut2_I0_O)        0.306    24.016 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29/O
+                         net (fo=1, unplaced)         0.000    24.016    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    24.549 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    24.549    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.179    24.728 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_3/CO[1]
+                         net (fo=32, unplaced)        0.682    25.410    u_accelerator/u_quantizer/result1
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[10]_INST_0_i_1/I2
+                         LUT6 (Prop_lut6_I2_O)        0.332    25.742 r  u_accelerator/u_quantizer/mem_wdata[10]_INST_0_i_1/O
+                         net (fo=1, unplaced)         0.449    26.191    u_accelerator/u_quantizer/mem_wdata[10]_INST_0_i_1_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[10]_INST_0/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124    26.315 r  u_accelerator/u_quantizer/mem_wdata[10]_INST_0/O
+                         net (fo=0)                   0.973    27.288    mem_wdata[10]
+                                                                      r  mem_wdata[10]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -27.288    <hidden>
+  -------------------------------------------------------------------
+                         slack                                 -9.324    <hidden>
+
+Slack (VIOLATED) :        -9.324ns  (required time - arrival time)
+  Source:                 u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/CLKARDCLK
+                            (rising edge-triggered cell RAMB18E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            mem_wdata[11]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        26.315ns  (logic 16.597ns (63.070%)  route 9.718ns (36.930%))
+  Logic Levels:           47  (CARRY4=30 DSP48E1=2 LUT2=3 LUT4=1 LUT5=1 LUT6=9 MUXF7=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -0.973ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 )
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=18380, unset)        0.973     0.973    u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/clk
+                         RAMB18E1                                     r  u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+                         RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[1])
+                                                      2.454     3.427 r  u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/DOADO[1]
+                         net (fo=2, unplaced)         0.800     4.227    u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/stored_output[4]_278[1]
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/product__1_i_82/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.351 r  u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/product__1_i_82/O
+                         net (fo=1, unplaced)         0.000     4.351    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51/I1
+                         MUXF7 (Prop_muxf7_I1_O)      0.247     4.598 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51/O
+                         net (fo=1, unplaced)         0.452     5.050    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35/I0
+                         LUT6 (Prop_lut6_I0_O)        0.298     5.348 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35/O
+                         net (fo=1, unplaced)         0.000     5.348    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     5.881 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4/CO[3]
+                         net (fo=1, unplaced)         0.009     5.890    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.007 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3/CO[3]
+                         net (fo=1, unplaced)         0.000     6.007    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.124 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000     6.124    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.241 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     6.241    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product_i_4/CI
+                         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.232     6.473 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product_i_4/O[0]
+                         net (fo=3, unplaced)         0.800     7.272    u_accelerator/u_quantizer/value[16]
+                                                                      r  u_accelerator/u_quantizer/product__1/A[16]
+                         DSP48E1 (Prop_dsp48e1_A[16]_PCOUT[47])
+                                                      4.211    11.483 r  u_accelerator/u_quantizer/product__1/PCOUT[47]
+                         net (fo=1, unplaced)         0.055    11.538    u_accelerator/u_quantizer/product__1_n_106
+                                                                      r  u_accelerator/u_quantizer/product__2/PCIN[47]
+                         DSP48E1 (Prop_dsp48e1_PCIN[47]_P[0])
+                                                      1.518    13.056 r  u_accelerator/u_quantizer/product__2/P[0]
+                         net (fo=2, unplaced)         0.800    13.856    u_accelerator/u_quantizer/p_1_in[17]
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18/I0
+                         LUT2 (Prop_lut2_I0_O)        0.124    13.980 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18/O
+                         net (fo=1, unplaced)         0.000    13.980    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    14.513 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15/CO[3]
+                         net (fo=1, unplaced)         0.009    14.522    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.639 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34/CO[3]
+                         net (fo=1, unplaced)         0.000    14.639    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.756 r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15/CO[3]
+                         net (fo=1, unplaced)         0.000    14.756    u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.873 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87/CO[3]
+                         net (fo=1, unplaced)         0.000    14.873    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.990 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86/CO[3]
+                         net (fo=1, unplaced)         0.000    14.990    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    15.107 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83/CO[3]
+                         net (fo=1, unplaced)         0.000    15.107    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    15.224 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84/CO[3]
+                         net (fo=1, unplaced)         0.000    15.224    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_81/CI
+                         CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.256    15.480 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_81/O[2]
+                         net (fo=5, unplaced)         0.933    16.413    u_accelerator/u_quantizer/p_45_in
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80/I2
+                         LUT4 (Prop_lut4_I2_O)        0.301    16.714 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80/O
+                         net (fo=1, unplaced)         0.419    17.133    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79/I4
+                         LUT5 (Prop_lut5_I4_O)        0.124    17.257 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79/O
+                         net (fo=1, unplaced)         0.449    17.706    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    17.830 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76/O
+                         net (fo=1, unplaced)         0.449    18.279    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    18.403 f  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70/O
+                         net (fo=1, unplaced)         0.449    18.852    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70_n_0
+                                                                      f  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61/I1
+                         LUT6 (Prop_lut6_I1_O)        0.124    18.976 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61/O
+                         net (fo=1, unplaced)         0.449    19.425    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37/I0
+                         LUT6 (Prop_lut6_I0_O)        0.124    19.549 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37/O
+                         net (fo=1, unplaced)         0.449    19.998    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17/I4
+                         LUT6 (Prop_lut6_I4_O)        0.124    20.122 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17/O
+                         net (fo=1, unplaced)         0.449    20.571    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    20.695 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7/O
+                         net (fo=1, unplaced)         0.000    20.695    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2/S[0]
+                         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.513    21.208 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.009    21.217    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.334 r  u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.334    u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.451 r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.451    u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.568 r  u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.568    u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.685 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.685    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.802 r  u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.802    u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.919 r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.919    u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.036 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    22.036    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.153 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199/CO[3]
+                         net (fo=1, unplaced)         0.000    22.153    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.270 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162/CO[3]
+                         net (fo=1, unplaced)         0.000    22.270    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.387 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161/CO[3]
+                         net (fo=1, unplaced)         0.000    22.387    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.504 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98/CO[3]
+                         net (fo=1, unplaced)         0.000    22.504    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.621 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97/CO[3]
+                         net (fo=1, unplaced)         0.000    22.621    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.738 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63/CO[3]
+                         net (fo=1, unplaced)         0.000    22.738    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62/CI
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.337    23.075 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62/O[1]
+                         net (fo=4, unplaced)         0.635    23.710    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62_n_6
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29/I0
+                         LUT2 (Prop_lut2_I0_O)        0.306    24.016 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29/O
+                         net (fo=1, unplaced)         0.000    24.016    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    24.549 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    24.549    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.179    24.728 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_3/CO[1]
+                         net (fo=32, unplaced)        0.682    25.410    u_accelerator/u_quantizer/result1
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_1/I2
+                         LUT6 (Prop_lut6_I2_O)        0.332    25.742 r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_1/O
+                         net (fo=1, unplaced)         0.449    26.191    u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_1_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124    26.315 r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0/O
+                         net (fo=0)                   0.973    27.288    mem_wdata[11]
+                                                                      r  mem_wdata[11]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -27.288    <hidden>
+  -------------------------------------------------------------------
+                         slack                                 -9.324    <hidden>
+
+Slack (VIOLATED) :        -9.324ns  (required time - arrival time)
+  Source:                 u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/CLKARDCLK
+                            (rising edge-triggered cell RAMB18E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            mem_wdata[12]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        26.315ns  (logic 16.597ns (63.070%)  route 9.718ns (36.930%))
+  Logic Levels:           47  (CARRY4=30 DSP48E1=2 LUT2=3 LUT4=1 LUT5=1 LUT6=9 MUXF7=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -0.973ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 )
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=18380, unset)        0.973     0.973    u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/clk
+                         RAMB18E1                                     r  u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+                         RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[1])
+                                                      2.454     3.427 r  u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/DOADO[1]
+                         net (fo=2, unplaced)         0.800     4.227    u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/stored_output[4]_278[1]
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/product__1_i_82/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.351 r  u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/product__1_i_82/O
+                         net (fo=1, unplaced)         0.000     4.351    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51/I1
+                         MUXF7 (Prop_muxf7_I1_O)      0.247     4.598 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51/O
+                         net (fo=1, unplaced)         0.452     5.050    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35/I0
+                         LUT6 (Prop_lut6_I0_O)        0.298     5.348 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35/O
+                         net (fo=1, unplaced)         0.000     5.348    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     5.881 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4/CO[3]
+                         net (fo=1, unplaced)         0.009     5.890    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.007 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3/CO[3]
+                         net (fo=1, unplaced)         0.000     6.007    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.124 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000     6.124    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.241 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     6.241    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product_i_4/CI
+                         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.232     6.473 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product_i_4/O[0]
+                         net (fo=3, unplaced)         0.800     7.272    u_accelerator/u_quantizer/value[16]
+                                                                      r  u_accelerator/u_quantizer/product__1/A[16]
+                         DSP48E1 (Prop_dsp48e1_A[16]_PCOUT[47])
+                                                      4.211    11.483 r  u_accelerator/u_quantizer/product__1/PCOUT[47]
+                         net (fo=1, unplaced)         0.055    11.538    u_accelerator/u_quantizer/product__1_n_106
+                                                                      r  u_accelerator/u_quantizer/product__2/PCIN[47]
+                         DSP48E1 (Prop_dsp48e1_PCIN[47]_P[0])
+                                                      1.518    13.056 r  u_accelerator/u_quantizer/product__2/P[0]
+                         net (fo=2, unplaced)         0.800    13.856    u_accelerator/u_quantizer/p_1_in[17]
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18/I0
+                         LUT2 (Prop_lut2_I0_O)        0.124    13.980 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18/O
+                         net (fo=1, unplaced)         0.000    13.980    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    14.513 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15/CO[3]
+                         net (fo=1, unplaced)         0.009    14.522    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.639 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34/CO[3]
+                         net (fo=1, unplaced)         0.000    14.639    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.756 r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15/CO[3]
+                         net (fo=1, unplaced)         0.000    14.756    u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.873 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87/CO[3]
+                         net (fo=1, unplaced)         0.000    14.873    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.990 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86/CO[3]
+                         net (fo=1, unplaced)         0.000    14.990    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    15.107 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83/CO[3]
+                         net (fo=1, unplaced)         0.000    15.107    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    15.224 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84/CO[3]
+                         net (fo=1, unplaced)         0.000    15.224    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_81/CI
+                         CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.256    15.480 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_81/O[2]
+                         net (fo=5, unplaced)         0.933    16.413    u_accelerator/u_quantizer/p_45_in
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80/I2
+                         LUT4 (Prop_lut4_I2_O)        0.301    16.714 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80/O
+                         net (fo=1, unplaced)         0.419    17.133    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79/I4
+                         LUT5 (Prop_lut5_I4_O)        0.124    17.257 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79/O
+                         net (fo=1, unplaced)         0.449    17.706    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    17.830 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76/O
+                         net (fo=1, unplaced)         0.449    18.279    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    18.403 f  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70/O
+                         net (fo=1, unplaced)         0.449    18.852    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70_n_0
+                                                                      f  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61/I1
+                         LUT6 (Prop_lut6_I1_O)        0.124    18.976 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61/O
+                         net (fo=1, unplaced)         0.449    19.425    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37/I0
+                         LUT6 (Prop_lut6_I0_O)        0.124    19.549 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37/O
+                         net (fo=1, unplaced)         0.449    19.998    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17/I4
+                         LUT6 (Prop_lut6_I4_O)        0.124    20.122 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17/O
+                         net (fo=1, unplaced)         0.449    20.571    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    20.695 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7/O
+                         net (fo=1, unplaced)         0.000    20.695    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2/S[0]
+                         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.513    21.208 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.009    21.217    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.334 r  u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.334    u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.451 r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.451    u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.568 r  u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.568    u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.685 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.685    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.802 r  u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.802    u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.919 r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.919    u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.036 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    22.036    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.153 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199/CO[3]
+                         net (fo=1, unplaced)         0.000    22.153    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.270 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162/CO[3]
+                         net (fo=1, unplaced)         0.000    22.270    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.387 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161/CO[3]
+                         net (fo=1, unplaced)         0.000    22.387    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.504 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98/CO[3]
+                         net (fo=1, unplaced)         0.000    22.504    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.621 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97/CO[3]
+                         net (fo=1, unplaced)         0.000    22.621    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.738 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63/CO[3]
+                         net (fo=1, unplaced)         0.000    22.738    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62/CI
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.337    23.075 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62/O[1]
+                         net (fo=4, unplaced)         0.635    23.710    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62_n_6
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29/I0
+                         LUT2 (Prop_lut2_I0_O)        0.306    24.016 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29/O
+                         net (fo=1, unplaced)         0.000    24.016    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    24.549 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    24.549    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.179    24.728 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_3/CO[1]
+                         net (fo=32, unplaced)        0.682    25.410    u_accelerator/u_quantizer/result1
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[12]_INST_0_i_1/I2
+                         LUT6 (Prop_lut6_I2_O)        0.332    25.742 r  u_accelerator/u_quantizer/mem_wdata[12]_INST_0_i_1/O
+                         net (fo=1, unplaced)         0.449    26.191    u_accelerator/u_quantizer/mem_wdata[12]_INST_0_i_1_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[12]_INST_0/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124    26.315 r  u_accelerator/u_quantizer/mem_wdata[12]_INST_0/O
+                         net (fo=0)                   0.973    27.288    mem_wdata[12]
+                                                                      r  mem_wdata[12]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -27.288    <hidden>
+  -------------------------------------------------------------------
+                         slack                                 -9.324    <hidden>
+
+Slack (VIOLATED) :        -9.324ns  (required time - arrival time)
+  Source:                 u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/CLKARDCLK
+                            (rising edge-triggered cell RAMB18E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            mem_wdata[13]
+                            (output port clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Max at Slow Process Corner
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        26.315ns  (logic 16.597ns (63.070%)  route 9.718ns (36.930%))
+  Logic Levels:           47  (CARRY4=30 DSP48E1=2 LUT2=3 LUT4=1 LUT5=1 LUT6=9 MUXF7=1)
+  Output Delay:           2.000ns
+  Clock Path Skew:        -0.973ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.000ns = ( 20.000 - 20.000 )
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=18380, unset)        0.973     0.973    u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/clk
+                         RAMB18E1                                     r  u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/CLKARDCLK
+  -------------------------------------------------------------------    -------------------
+                         RAMB18E1 (Prop_ramb18e1_CLKARDCLK_DOADO[1])
+                                                      2.454     3.427 r  u_accelerator/u_core/u_datapath/g_output[4].u_accumulator/u_sram/mem_reg/DOADO[1]
+                         net (fo=2, unplaced)         0.800     4.227    u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/stored_output[4]_278[1]
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/product__1_i_82/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124     4.351 r  u_accelerator/u_core/u_datapath/g_output[7].u_accumulator/u_sram/product__1_i_82/O
+                         net (fo=1, unplaced)         0.000     4.351    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51/I1
+                         MUXF7 (Prop_muxf7_I1_O)      0.247     4.598 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51/O
+                         net (fo=1, unplaced)         0.452     5.050    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_51_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35/I0
+                         LUT6 (Prop_lut6_I0_O)        0.298     5.348 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35/O
+                         net (fo=1, unplaced)         0.000     5.348    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_35_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533     5.881 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4/CO[3]
+                         net (fo=1, unplaced)         0.009     5.890    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_4_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.007 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3/CO[3]
+                         net (fo=1, unplaced)         0.000     6.007    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_3_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.124 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000     6.124    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_2_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     6.241 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1/CO[3]
+                         net (fo=1, unplaced)         0.000     6.241    u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product__1_i_1_n_0
+                                                                      r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product_i_4/CI
+                         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.232     6.473 r  u_accelerator/u_core/u_datapath/g_output[3].u_accumulator/u_sram/product_i_4/O[0]
+                         net (fo=3, unplaced)         0.800     7.272    u_accelerator/u_quantizer/value[16]
+                                                                      r  u_accelerator/u_quantizer/product__1/A[16]
+                         DSP48E1 (Prop_dsp48e1_A[16]_PCOUT[47])
+                                                      4.211    11.483 r  u_accelerator/u_quantizer/product__1/PCOUT[47]
+                         net (fo=1, unplaced)         0.055    11.538    u_accelerator/u_quantizer/product__1_n_106
+                                                                      r  u_accelerator/u_quantizer/product__2/PCIN[47]
+                         DSP48E1 (Prop_dsp48e1_PCIN[47]_P[0])
+                                                      1.518    13.056 r  u_accelerator/u_quantizer/product__2/P[0]
+                         net (fo=2, unplaced)         0.800    13.856    u_accelerator/u_quantizer/p_1_in[17]
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18/I0
+                         LUT2 (Prop_lut2_I0_O)        0.124    13.980 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18/O
+                         net (fo=1, unplaced)         0.000    13.980    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_18_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    14.513 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15/CO[3]
+                         net (fo=1, unplaced)         0.009    14.522    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_15_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.639 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34/CO[3]
+                         net (fo=1, unplaced)         0.000    14.639    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_34_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.756 r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15/CO[3]
+                         net (fo=1, unplaced)         0.000    14.756    u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_15_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.873 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87/CO[3]
+                         net (fo=1, unplaced)         0.000    14.873    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_87_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    14.990 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86/CO[3]
+                         net (fo=1, unplaced)         0.000    14.990    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_86_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    15.107 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83/CO[3]
+                         net (fo=1, unplaced)         0.000    15.107    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_83_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    15.224 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84/CO[3]
+                         net (fo=1, unplaced)         0.000    15.224    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_84_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_81/CI
+                         CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.256    15.480 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_81/O[2]
+                         net (fo=5, unplaced)         0.933    16.413    u_accelerator/u_quantizer/p_45_in
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80/I2
+                         LUT4 (Prop_lut4_I2_O)        0.301    16.714 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80/O
+                         net (fo=1, unplaced)         0.419    17.133    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_80_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79/I4
+                         LUT5 (Prop_lut5_I4_O)        0.124    17.257 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79/O
+                         net (fo=1, unplaced)         0.449    17.706    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_79_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    17.830 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76/O
+                         net (fo=1, unplaced)         0.449    18.279    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_76_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    18.403 f  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70/O
+                         net (fo=1, unplaced)         0.449    18.852    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_70_n_0
+                                                                      f  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61/I1
+                         LUT6 (Prop_lut6_I1_O)        0.124    18.976 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61/O
+                         net (fo=1, unplaced)         0.449    19.425    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_61_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37/I0
+                         LUT6 (Prop_lut6_I0_O)        0.124    19.549 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37/O
+                         net (fo=1, unplaced)         0.449    19.998    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_37_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17/I4
+                         LUT6 (Prop_lut6_I4_O)        0.124    20.122 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17/O
+                         net (fo=1, unplaced)         0.449    20.571    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_17_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7/I5
+                         LUT6 (Prop_lut6_I5_O)        0.124    20.695 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7/O
+                         net (fo=1, unplaced)         0.000    20.695    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_7_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2/S[0]
+                         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.513    21.208 r  u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.009    21.217    u_accelerator/u_quantizer/mem_wdata[3]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.334 r  u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.334    u_accelerator/u_quantizer/mem_wdata[7]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.451 r  u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.451    u_accelerator/u_quantizer/mem_wdata[11]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.568 r  u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.568    u_accelerator/u_quantizer/mem_wdata[15]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.685 r  u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.685    u_accelerator/u_quantizer/mem_wdata[19]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.802 r  u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.802    u_accelerator/u_quantizer/mem_wdata[23]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    21.919 r  u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    21.919    u_accelerator/u_quantizer/mem_wdata[27]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.036 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2/CO[3]
+                         net (fo=1, unplaced)         0.000    22.036    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_2_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.153 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199/CO[3]
+                         net (fo=1, unplaced)         0.000    22.153    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_199_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.270 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162/CO[3]
+                         net (fo=1, unplaced)         0.000    22.270    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_162_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.387 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161/CO[3]
+                         net (fo=1, unplaced)         0.000    22.387    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_161_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.504 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98/CO[3]
+                         net (fo=1, unplaced)         0.000    22.504    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_98_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.621 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97/CO[3]
+                         net (fo=1, unplaced)         0.000    22.621    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_97_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    22.738 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63/CO[3]
+                         net (fo=1, unplaced)         0.000    22.738    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_63_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62/CI
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.337    23.075 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62/O[1]
+                         net (fo=4, unplaced)         0.635    23.710    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_62_n_6
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29/I0
+                         LUT2 (Prop_lut2_I0_O)        0.306    24.016 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29/O
+                         net (fo=1, unplaced)         0.000    24.016    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_29_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    24.549 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9/CO[3]
+                         net (fo=1, unplaced)         0.000    24.549    u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_9_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_3/CI
+                         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.179    24.728 r  u_accelerator/u_quantizer/mem_wdata[31]_INST_0_i_3/CO[1]
+                         net (fo=32, unplaced)        0.682    25.410    u_accelerator/u_quantizer/result1
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[13]_INST_0_i_1/I2
+                         LUT6 (Prop_lut6_I2_O)        0.332    25.742 r  u_accelerator/u_quantizer/mem_wdata[13]_INST_0_i_1/O
+                         net (fo=1, unplaced)         0.449    26.191    u_accelerator/u_quantizer/mem_wdata[13]_INST_0_i_1_n_0
+                                                                      r  u_accelerator/u_quantizer/mem_wdata[13]_INST_0/I1
+                         LUT2 (Prop_lut2_I1_O)        0.124    26.315 r  u_accelerator/u_quantizer/mem_wdata[13]_INST_0/O
+                         net (fo=0)                   0.973    27.288    mem_wdata[13]
+                                                                      r  mem_wdata[13]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                         clock pessimism              0.000    20.000    <hidden>
+                         clock uncertainty           -0.035    19.965    <hidden>
+                         output delay                -2.000    17.965    <hidden>
+  -------------------------------------------------------------------
+                         required time                         17.965    <hidden>
+                         arrival time                         -27.288    <hidden>
+  -------------------------------------------------------------------
+                         slack                                 -9.324    <hidden>

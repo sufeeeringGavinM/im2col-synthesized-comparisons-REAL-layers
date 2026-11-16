@@ -1,0 +1,160 @@
+{
+  "status": "PASS",
+  "checks": {
+    "released_runtime_and_model_identity": "PASS",
+    "all_notebook_cell_sources_preserved_and_executed_cells_pinned": "PASS",
+    "all_exported_weights_biases_and_controls_equal_notebook_npz": "PASS",
+    "fresh_training_metrics_and_predictions_identity": "PASS",
+    "unchanged_accepted_synthesis_rtl_and_course_reference_attribution": "PASS",
+    "accepted_rtl_cycles_coverage_and_additional_cycle_partition": "PASS",
+    "four_native_captures_exact_duration_values_matching_power_clocks_and_energy": "PASS",
+    "published_report_identity_and_sanitization_provenance": "PASS",
+    "public_cli_new_custom_image_and_tensor_exact_four_state_checks": "PASS",
+    "current_markdown_links": "PASS",
+    "current_artifacts_no_personal_host_paths": "PASS",
+    "diff_whitespace_and_python_syntax": "PASS"
+  },
+  "public_cli_cases": [
+    {
+      "architecture": "NHWC",
+      "id": "custom",
+      "label": null,
+      "prediction": 2,
+      "correct": null,
+      "layers": [
+        {
+          "layer": 0,
+          "outputs": 128,
+          "cycles": 261586,
+          "phase_total": 261586,
+          "reads": 110672,
+          "writes": 128,
+          "jobs": 1027,
+          "core_busy": 36972,
+          "phases": {
+            "0": 0,
+            "1": 1,
+            "2": 13,
+            "3": 1027,
+            "4": 10192,
+            "5": 10192,
+            "6": 100352,
+            "7": 100352,
+            "8": 1027,
+            "9": 37999,
+            "10": 128,
+            "11": 128,
+            "12": 13,
+            "13": 0,
+            "14": 34,
+            "15": 128
+          }
+        },
+        {
+          "layer": 1,
+          "outputs": 10,
+          "cycles": 3390,
+          "phase_total": 3390,
+          "reads": 1418,
+          "writes": 10,
+          "jobs": 13,
+          "core_busy": 468,
+          "phases": {
+            "0": 0,
+            "1": 1,
+            "2": 1,
+            "3": 13,
+            "4": 128,
+            "5": 128,
+            "6": 1280,
+            "7": 1280,
+            "8": 13,
+            "9": 481,
+            "10": 10,
+            "11": 10,
+            "12": 1,
+            "13": 0,
+            "14": 34,
+            "15": 10
+          }
+        }
+      ],
+      "total_accelerator_cycles": 264976,
+      "outputs_sha256": "40f8764faf2662a86cbaeb344f94b9e6806f9e2a5d053694449bd65893eea491",
+      "post_clamps": 52,
+      "chain_window_ps": 13248900000
+    },
+    {
+      "architecture": "NCHW_centralized",
+      "id": "custom",
+      "label": null,
+      "prediction": 1,
+      "correct": null,
+      "layers": [
+        {
+          "layer": 0,
+          "outputs": 128,
+          "cycles": 295512,
+          "phase_total": 295512,
+          "reads": 110672,
+          "writes": 128,
+          "jobs": 1027,
+          "core_busy": 61620,
+          "phases": {
+            "0": 0,
+            "1": 1,
+            "2": 13,
+            "3": 1027,
+            "4": 10192,
+            "5": 10192,
+            "6": 100352,
+            "7": 100352,
+            "8": 1027,
+            "9": 62647,
+            "10": 128,
+            "11": 128,
+            "12": 13,
+            "13": 9243,
+            "14": 69,
+            "15": 128
+          }
+        },
+        {
+          "layer": 1,
+          "outputs": 10,
+          "cycles": 3854,
+          "phase_total": 3854,
+          "reads": 1418,
+          "writes": 10,
+          "jobs": 13,
+          "core_busy": 780,
+          "phases": {
+            "0": 0,
+            "1": 1,
+            "2": 1,
+            "3": 13,
+            "4": 128,
+            "5": 128,
+            "6": 1280,
+            "7": 1280,
+            "8": 13,
+            "9": 793,
+            "10": 10,
+            "11": 10,
+            "12": 1,
+            "13": 117,
+            "14": 69,
+            "15": 10
+          }
+        }
+      ],
+      "total_accelerator_cycles": 299366,
+      "outputs_sha256": "81b53b93382329eb34866e9a10f6a55c118501cae336f9dcad71660247746018",
+      "post_clamps": 74,
+      "chain_window_ps": 14968400000
+    }
+  ],
+  "public_cli_note": "Two new custom fixtures, independent of the retained20images; source/model prepare also passed",
+  "synthesis_rerun": false,
+  "training_rerun": false
+}

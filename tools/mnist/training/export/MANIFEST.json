@@ -1,0 +1,11 @@
+{
+  "b0.hex": "405a823d3a2681d0699eb62651a4fe30fdd22c08e87c5f9aded94ebb299909b3",
+  "b1.hex": "b99f88dd59df23bec58fcd9e8b0db31de82de1c96a7c182e20c21120cc31a5c2",
+  "dense_1_biases.hex": "b99f88dd59df23bec58fcd9e8b0db31de82de1c96a7c182e20c21120cc31a5c2",
+  "dense_1_weights.hex": "8957db47bd7fae89aa963e12678ed3cd52e580aca951d883e92315d69eea3b72",
+  "dense_biases.hex": "405a823d3a2681d0699eb62651a4fe30fdd22c08e87c5f9aded94ebb299909b3",
+  "dense_weights.hex": "0aa23ec849de866413d2c3f744b4b77ccf52a1620e59f5427d3064664ba91c08",
+  "quantization_params.txt": "fb0972cd9d33201ca8ff6260b5bb7616fbbd6bd6f03843f2853feb25c89bcdd3",
+  "w0.hex": "0aa23ec849de866413d2c3f744b4b77ccf52a1620e59f5427d3064664ba91c08",
+  "w1.hex": "8957db47bd7fae89aa963e12678ed3cd52e580aca951d883e92315d69eea3b72"
+}

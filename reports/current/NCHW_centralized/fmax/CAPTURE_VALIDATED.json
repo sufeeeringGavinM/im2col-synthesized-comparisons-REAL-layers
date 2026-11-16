@@ -1,0 +1,77 @@
+{
+  "status": "PASS",
+  "duration_ps": 11246657124,
+  "requested_period_ns": 37.567,
+  "actual_period_ns": 37.568,
+  "clock_precision_ps": 1,
+  "descriptor_gap_cycles": 2,
+  "primitive_propagation_ps": 100,
+  "saif_sha256": "bdc21b822b8995dd3e6b1c76778e9d56c98007b56fd71bd283e12dd29ef186e3",
+  "netlist_port_checks": true,
+  "raw_post_words": 138,
+  "clock_saif_checked": true,
+  "row": {
+    "layers": [
+      {
+        "layer": 0,
+        "outputs": 128,
+        "cycles": 295512,
+        "phase_total": 295512,
+        "reads": 110672,
+        "writes": 128,
+        "jobs": 1027,
+        "core_busy": 61620,
+        "phases": {
+          "0": 0,
+          "1": 1,
+          "2": 13,
+          "3": 1027,
+          "4": 10192,
+          "5": 10192,
+          "6": 100352,
+          "7": 100352,
+          "8": 1027,
+          "9": 62647,
+          "10": 128,
+          "11": 128,
+          "12": 13,
+          "13": 9243,
+          "14": 69,
+          "15": 128
+        }
+      },
+      {
+        "layer": 1,
+        "outputs": 10,
+        "cycles": 3854,
+        "phase_total": 3854,
+        "reads": 1418,
+        "writes": 10,
+        "jobs": 13,
+        "core_busy": 780,
+        "phases": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 13,
+          "4": 128,
+          "5": 128,
+          "6": 1280,
+          "7": 1280,
+          "8": 13,
+          "9": 793,
+          "10": 10,
+          "11": 10,
+          "12": 1,
+          "13": 117,
+          "14": 69,
+          "15": 10
+        }
+      }
+    ],
+    "total_accelerator_cycles": 299366,
+    "outputs_sha256": "10a8f7c699e27837bb165a8c2bf835bec2f564a7748a4acac3cf19257cd05ddd",
+    "post_clamps": 42,
+    "chain_window_ps": 11246657000
+  }
+}

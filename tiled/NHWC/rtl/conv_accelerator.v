@@ -22,6 +22,9 @@ module conv_accelerator #(
     input [MEM_ADDR_WIDTH-1:0] cfg_input_base,cfg_kernel_base,cfg_output_base,
     input cfg_quantize,cfg_round_nearest,
     input [4:0] cfg_output_shift,
+    input [31:0] cfg_output_multiplier,
+    input cfg_bias_enable,
+    input [MEM_ADDR_WIDTH-1:0] cfg_bias_base,
     output reg mem_re, mem_we,
     output reg [MEM_ADDR_WIDTH-1:0] mem_raddr,mem_waddr,
     input [MEM_DATA_WIDTH-1:0] mem_rdata,
@@ -32,9 +35,14 @@ module conv_accelerator #(
   localparam IDLE=0, SETUP=1, PLAN_TILE=2, PREPARE=3,
              INPUT_READ=4, INPUT_WRITE=5, KERNEL_READ=6, KERNEL_WRITE=7,
              START_CORE=8, WAIT_CORE=9, OUTPUT_READ=10, OUTPUT_WRITE=11, NEXT_TILE=12;
+  localparam BIAS_READ=15;
   reg [3:0] state;
   reg quantize,round_nearest;
   reg [4:0] output_shift;
+  reg [31:0] output_multiplier;
+  reg bias_enable;
+  reg [MEM_ADDR_WIDTH-1:0] bias_base;
+  reg signed [ACC_WIDTH-1:0] output_bias;
 
   // Captured descriptor registers: stable throughout a job, even if cfg_* ports change.
   reg [CFG_WIDTH-1:0] N,C,H,W,K,R,S,P,Q,pad_i,pad_j,stride_i,stride_j,dilation_i,dilation_j;
@@ -56,9 +64,13 @@ module conv_accelerator #(
   wire core_busy,core_done;
   wire [ARRAY_SIZE-1:0][ACC_WIDTH-1:0] stored_output;
   wire signed [ACC_WIDTH-1:0] output_value;
+  // Add bias once to each completed output, with the inherited ACC_WIDTH wrap.
+  wire signed [ACC_WIDTH-1:0] biased_output =
+      $signed(stored_output[bank_index]) + (bias_enable ? output_bias : ACC_WIDTH'(0));
   output_quantizer #(.ACC_WIDTH(ACC_WIDTH),.BIT_WIDTH(BIT_WIDTH)) u_quantizer (
-    .value(stored_output[bank_index]),.enable(quantize),
-    .round_nearest(round_nearest),.shift(output_shift),.result(output_value));
+    .value(biased_output),.enable(quantize),
+    .round_nearest(round_nearest),.shift(output_shift),
+    .multiplier(output_multiplier),.result(output_value));
 
   reg [ARRAY_SIZE-1:0] input_we,kernel_we;
   reg [ARRAY_SIZE-1:0][INPUT_ADDR_WIDTH-1:0] input_addr;
@@ -159,6 +171,10 @@ module conv_accelerator #(
         kernel_addr[bank_index]=KERNEL_ADDR_WIDTH'(word_index);
         kernel_data[bank_index]=mem_rdata[BIT_WIDTH-1:0];
       end
+      BIAS_READ: begin
+        mem_re=1;
+        mem_raddr=bias_base+MEM_ADDR_WIDTH'(k0)+MEM_ADDR_WIDTH'(bank_index);
+      end
       OUTPUT_WRITE: begin
         mem_we=1;
         mem_waddr=MEM_ADDR_WIDTH'(output_dma_addr);
@@ -191,7 +207,7 @@ module conv_accelerator #(
       dma_column<=0;dma_row<=0;output_row_origin<=0;output_col_origin<=0;tap_i_offset<=0;tap_j_offset<=0;
       job_step<=0;job_pending<=0;extent_i<=0;extent_j<=0;taps<=0;needs_taps<=0;plan_c<=0;plan_q<=0;plan_temp<=0;
       spatial_rows<=0;min_cols<=0;spatial_footprint<=0;input_channels<=0;kernel_channels<=0;bounded_c<=0;groups<=0;
-      state<=IDLE;done<=0;quantize<=0;round_nearest<=1;output_shift<=0;
+      state<=IDLE;done<=0;quantize<=0;round_nearest<=1;output_shift<=0;output_multiplier<=1;bias_enable<=0;bias_base<=0;output_bias<=0;
       N<=1;C<=1;H<=1;W<=1;K<=1;R<=1;S<=1;P<=1;Q<=1;
       pad_i<=0;pad_j<=0;stride_i<=1;stride_j<=1;dilation_i<=1;dilation_j<=1;
       input_base<=0;kernel_base<=0;output_base<=0;
@@ -205,7 +221,8 @@ module conv_accelerator #(
         // Accept one full-layer descriptor only while idle. Initialize outer
         // tile counters and padded origins; subsequent cfg_* changes are ignored.
         IDLE: if(start) begin
-          quantize<=cfg_quantize;round_nearest<=cfg_round_nearest;output_shift<=cfg_output_shift;
+          quantize<=cfg_quantize;round_nearest<=cfg_round_nearest;output_shift<=cfg_output_shift;output_multiplier<=cfg_output_multiplier;
+          bias_enable<=cfg_bias_enable;bias_base<=cfg_bias_base;
           N<=cfg_N;C<=cfg_C;H<=cfg_H;W<=cfg_W;K<=cfg_K;R<=cfg_R;S<=cfg_S;P<=cfg_P;Q<=cfg_Q;
           pad_i<=cfg_pad_i;pad_j<=cfg_pad_j;stride_i<=cfg_stride_i;stride_j<=cfg_stride_j;
           dilation_i<=cfg_dilation_i;dilation_j<=cfg_dilation_j;
@@ -321,10 +338,16 @@ module conv_accelerator #(
           else if(tap_mode && tap_r+1<R) begin tap_s<=0;tap_r<=tap_r+1'b1;tap_j_offset<=0;tap_i_offset<=tap_i_offset+$signed(64'(dilation_i));state<=PREPARE;end
           else if(c0+tile_c<C) begin
             c0<=c0+tile_c;tap_r<=0;tap_s<=0;tap_i_offset<=0;tap_j_offset<=0;state<=PREPARE;
-          end else begin bank_index<=0;word_index<=0;state<=OUTPUT_READ;end
+          end else begin bank_index<=0;word_index<=0;state<=bias_enable?BIAS_READ:OUTPUT_READ;end
         end
         // Read local output SRAM one edge before writing the external result.
-        OUTPUT_READ: state<=OUTPUT_WRITE;
+        // Fetch once per filter per output tile. Its registered memory return
+        // is consumed on the following local-output read edge.
+        BIAS_READ: state<=OUTPUT_READ;
+        OUTPUT_READ: begin
+          if(bias_enable && word_index==0) output_bias<=$signed(mem_rdata[ACC_WIDTH-1:0]);
+          state<=OUTPUT_WRITE;
+        end
         // Store each q in the tile, then select the next filter using pitch P*Q.
         // Physical local output bank index is k within the current K tile.
         OUTPUT_WRITE: begin
@@ -334,8 +357,9 @@ module conv_accelerator #(
           if(word_index+1<tile_q) word_index<=word_index+1'b1;
           else begin
             word_index<=0;
-            if(bank_index+1<tile_k) bank_index<=bank_index+1'b1;
-            else state<=NEXT_TILE;
+            if(bank_index+1<tile_k) begin
+              bank_index<=bank_index+1'b1;state<=bias_enable?BIAS_READ:OUTPUT_READ;
+            end else state<=NEXT_TILE;
           end
         end
         // Advance q tiles first; then p rows; then K tiles; finally images n.

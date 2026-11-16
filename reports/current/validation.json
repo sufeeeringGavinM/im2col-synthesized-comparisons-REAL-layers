@@ -1,0 +1,81 @@
+{
+  "status": "PASS",
+  "scope": "Fresh notebook-model RTL and native workload checks; hash-matched resource/timing synthesis reused",
+  "variants": {
+    "NHWC": {
+      "status": "PASS",
+      "rtl_cases": 23,
+      "four_state_controls": [
+        0,
+        "raw",
+        "quantized",
+        "disabled"
+      ],
+      "native_clocks": {
+        "20mhz": {
+          "status": "PASS",
+          "duration_ps": 13248900100,
+          "raw_post_values": 138,
+          "saif_sha256": "13b1cf988ce0457c7b90eeb05e640d77e230588127b9d5ac5e3d2e4f680a86d0",
+          "annotation": "87%   (59504/68144)",
+          "confidence": "High",
+          "actual_period_ns": 50,
+          "wns_ns": 22.234
+        },
+        "fmax": {
+          "status": "PASS",
+          "duration_ps": 7357379248,
+          "raw_post_values": 138,
+          "saif_sha256": "fb9754c13bc9d752bbf85df8a8a5bbc02fcc0620a7b6abea5873c27e7f142ba2",
+          "annotation": "87%   (59504/68144)",
+          "confidence": "High",
+          "actual_period_ns": 27.766,
+          "wns_ns": 0.0
+        }
+      }
+    },
+    "NCHW_centralized": {
+      "status": "PASS",
+      "rtl_cases": 23,
+      "four_state_controls": [
+        0,
+        "raw",
+        "quantized",
+        "disabled"
+      ],
+      "native_clocks": {
+        "20mhz": {
+          "status": "PASS",
+          "duration_ps": 14968400100,
+          "raw_post_values": 138,
+          "saif_sha256": "1f5c3d05018dc3abb854cf0ea17eeaf570d9cc385ef67451ed22dda7ae7941bf",
+          "annotation": "79%   (148754/189255)",
+          "confidence": "High",
+          "actual_period_ns": 50,
+          "wns_ns": 12.433
+        },
+        "fmax": {
+          "status": "PASS",
+          "duration_ps": 11246657124,
+          "raw_post_values": 138,
+          "saif_sha256": "bdc21b822b8995dd3e6b1c76778e9d56c98007b56fd71bd283e12dd29ef186e3",
+          "annotation": "79%   (148754/189255)",
+          "confidence": "High",
+          "actual_period_ns": 37.568,
+          "wns_ns": 0.001
+        }
+      }
+    }
+  },
+  "rtl_pipeline_cases": 46,
+  "four_state_controls": 8,
+  "native_inferences": 4,
+  "native_values_per_inference": 138,
+  "global_setup_paths": 20,
+  "common_clock_mhz": 20,
+  "notebook_full_test_images": 10000,
+  "full_test_reference_score_match": true,
+  "selected_rtl_images_per_architecture": 20,
+  "selected_rtl_classifications_correct": 18,
+  "routed_or_board_validation": false
+}

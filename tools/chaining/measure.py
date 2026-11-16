@@ -8,6 +8,7 @@ import comparison_flow as flow
 import native_xsim,run_workloads
 from metrics import words,quant,signed,metrics,get_metrics as chain_metrics
 E=Path(__file__).resolve().parent
+POWER_TCL=E/'power.tcl'
 ROOT=E.parents[1]
 OFFICIAL=ROOT
 BATCH=None
@@ -49,7 +50,7 @@ def collect_power(arch,variant,case,frequency,period,metric,layer,mode,role,nati
  capture['tensor_sha256']={p.name:sha(p) for p in ((E/'fixtures/chain').glob('*.hex') if layer=='resnet8_chain' else case.glob('*_tensor.txt'))}
  (case/'CAPTURE_ACCEPTED.json').write_text(json.dumps(capture,indent=2)+'\n')
  flow.STATE.update(current=variant+'/'+case.name,status='POWER');flow.save_state()
- flow.execute_tool('vivado',['-mode','batch','-source',flow.windows_path(E/'flow/power.tcl'),'-log',flow.windows_path(case/'vivado.log'),'-journal',flow.windows_path(case/'vivado.jou'),'-tclargs',flow.windows_path(BATCH/variant/'synthesized.dcp'),flow.windows_path(case),str(period)],case,'power',7200)
+ flow.execute_tool('vivado',['-mode','batch','-source',flow.windows_path(POWER_TCL),'-log',flow.windows_path(case/'vivado.log'),'-journal',flow.windows_path(case/'vivado.jou'),'-tclargs',flow.windows_path(BATCH/variant/'synthesized.dcp'),flow.windows_path(case),str(period)],case,'power',7200)
  assert (case/'POWER_SUCCESS').exists(),case
  t=(case/'power.rpt').read_text();row=dict(architecture=arch,role=role,part='xc7a200tsbg484-1',layer=layer,quantize=mode,frequency=frequency,clock_mhz=float(Decimal(1000)/period),cycles=metric['cycles'],phases=metric['phases'],layers=metric.get('layers',[]),latency_us=float(period*Decimal(metric['cycles'])/1000),**native)
  for label,key in [('Dynamic (W)','dynamic_w'),('Device Static (W)','static_w'),('Total On-Chip Power (W)','total_w')]:row[key]=float(re.search(r'\|\s*'+re.escape(label)+r'\s*\|\s*([\d.]+)',t)[1])

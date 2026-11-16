@@ -1,0 +1,112 @@
+{
+  "NHWC/utilization.rpt": {
+    "original_sha256": "b665e315bb8818af7354528c2307014c9a34ad30ba6ad3d2f3f73d3cc0f4d462",
+    "published_sha256": "60492fa49c2f5ae352c5cd81fe374a0832917875ff75f4e53643f2170362d8b9",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NHWC/utilization_hierarchy.rpt": {
+    "original_sha256": "4e25b711b1bfa1b3b2a82562341d6d6259054b3dbd0d1124485d5e895a0c7bb9",
+    "published_sha256": "651952f4304711da38b870e6f097711101b243d9bed60ea86b7d20f61928ae25",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NHWC/timing_synthesis.rpt": {
+    "original_sha256": "34136b65eea14e6c7fde50e13f7190c214a6765bb678af1aea42d7c6d2fadf8e",
+    "published_sha256": "4da45554e5cb2c921fb26bef1c9a44f1dacd467d31a96f01ab747eeea39c8b3b",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NHWC/timing_common_50.0ns.rpt": {
+    "original_sha256": "a595ae79094841166b1c610877ca701fef4fa596e1a546f6165e6e030317ab69",
+    "published_sha256": "b25bc75184eedf99ff86e97a7b88b321017dbfed54c885551731b61cf6069a7f",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NHWC/worst_paths_10.rpt": {
+    "original_sha256": "5eae23937fb0de5a692c2a6295571ec023f1fdda714b573bf1cd50c549761145",
+    "published_sha256": "75bc7f226e1b7d3f0996c2a6e245e2a676d2f4223c1c3a28a305ab79cd691da7",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NHWC/block_quantizer.rpt": {
+    "original_sha256": "65469df2f85c73916aea9b789a86f7b70411025619fcea693724e83816af6979",
+    "published_sha256": "f39102898a5f1ea2a84b97ede398ac492f8d9dadf2035f0912d51341f6216f29",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NHWC/timing_checks.rpt": {
+    "original_sha256": "ac923312d2c2c9464141391f6ddff718458f0d5053470abb749645399d50026a",
+    "published_sha256": "790e44263a4d61708ce6666524a799146e64f3d37060a95b320ea345196214af",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NCHW_centralized/utilization.rpt": {
+    "original_sha256": "1ae221144d4e039c769e99c150b55c5cae61abaf25713b44e063b6cc75df5a4b",
+    "published_sha256": "3d1266a7e5f8b73fb3dba6b0964f0caabea3096ede37383b04c65131f5e7a017",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NCHW_centralized/utilization_hierarchy.rpt": {
+    "original_sha256": "57e41918be1a0686a9ca83baf0b65f18ee26088774d29f005ea1f93e0f58a0c5",
+    "published_sha256": "2b1f2c214aaae9e79255a54193e7a41a00761ab178d2cedbcd22b838537a9af4",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NCHW_centralized/timing_synthesis.rpt": {
+    "original_sha256": "f6b391d1d40ae47f8aeb7dda25ee23035f40162aa898b55490930dde1ac425a7",
+    "published_sha256": "d8e8e5c122d749919aa64e021507051aba9444dd552a53b85fae5bcdd7560f06",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NCHW_centralized/timing_common_50.0ns.rpt": {
+    "original_sha256": "31e77dfcf46e5f39ae3854fe5a8136893ecb5dcabbbf2e5279a7871e358fd950",
+    "published_sha256": "727f155b4ca05a4bf0a7abaed6bff7b600dd0febd9144f910046b22b20c4c460",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NCHW_centralized/worst_paths_10.rpt": {
+    "original_sha256": "d9903b2ff2126c3d987a74aa12fbcee6ef40376d9eac8d4098a52f601691b315",
+    "published_sha256": "a5f0b57556d51681a14993780a23cff4e1d3bc2bfe0e5a799dc7a29eb98c3557",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NCHW_centralized/block_quantizer.rpt": {
+    "original_sha256": "393858f5a3d1931330c00a8b0d2c3a73a2cd32fb9d118fe08970b35f899b37e3",
+    "published_sha256": "52fde2343a7e14925125278b2d8e05aeceef8ac55bc9176f5b52d717be48ae2f",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NCHW_centralized/timing_checks.rpt": {
+    "original_sha256": "ae8a169d4c724ccf6dc9920c061cdd81bc3906bd6b96f68dd680713e7e26b887",
+    "published_sha256": "790e44263a4d61708ce6666524a799146e64f3d37060a95b320ea345196214af",
+    "edits": "host/path/timestamp sanitization and trailing whitespace normalization; numeric content preserved"
+  },
+  "NHWC/20mhz/power.rpt": {
+    "original_sha256": "2ebd0f34554e900c0d0d6a1c166c4bd3fc8631e4c5f17fa418ee359897917189",
+    "published_sha256": "0b4662e3778c41e7c594621705fb12529d1590e21fb04b2554ed0c4afdae08aa",
+    "edits": "Host, run timestamp and absolute paths removed; numeric content preserved"
+  },
+  "NHWC/20mhz/timing_common.rpt": {
+    "original_sha256": "7e236b86c168b0d5c83eedd12b8735a0177e7c8d207d0a1b245902fbad67cb61",
+    "published_sha256": "8549b16b46ea04c6dc559035057a70e041f401d2a5604f23617b40ae760168f2",
+    "edits": "Host, run timestamp and absolute paths removed; numeric content preserved"
+  },
+  "NCHW_centralized/20mhz/power.rpt": {
+    "original_sha256": "70b7d3aa800eecba2705b6f3c4ec40f901ed898d817d564453734139462ef240",
+    "published_sha256": "63d1344fe038d3b5da5477a7a5a007b68a070279b1a46f28ec628be2d2c6a684",
+    "edits": "Host, run timestamp and absolute paths removed; numeric content preserved"
+  },
+  "NCHW_centralized/20mhz/timing_common.rpt": {
+    "original_sha256": "7ab5326e64a4bf1fc1e5d4fd145abc0c0b9fe23af367a0bb1de6f6885dec7269",
+    "published_sha256": "0c7ce2dcb5babfc17af8de1e43f5a730678cb84ec0a4268e9fc453facd3780a6",
+    "edits": "Host, run timestamp and absolute paths removed; numeric content preserved"
+  },
+  "NHWC/fmax/power.rpt": {
+    "original_sha256": "09a867c6342ad7af22cd9797d76d7eeb646799f6547abf2121f9a25e41a32864",
+    "published_sha256": "0b7256a150eaee9850db18ee4275366af0ed905a4089ac6b247489078df4f61a",
+    "edits": "Host, run timestamp and absolute paths removed; numeric content preserved"
+  },
+  "NHWC/fmax/timing_common.rpt": {
+    "original_sha256": "343281a9ac801d723dc87a5daa8008dd6be8a24d63e1ab522009284f136980cc",
+    "published_sha256": "13c9634feba1f646d80d310985682cf04e4bfb54215b7235d1767174345c0817",
+    "edits": "Host, run timestamp and absolute paths removed; numeric content preserved"
+  },
+  "NCHW_centralized/fmax/power.rpt": {
+    "original_sha256": "5d98c367f006c8bdd7c5dd86d4c7f027b3ea487b52f29350aa6c87689139fe7e",
+    "published_sha256": "19658308a5ef354434aeacaae148e8e700cb22ed904cf19300e25d4cc6ecf257",
+    "edits": "Host, run timestamp and absolute paths removed; numeric content preserved"
+  },
+  "NCHW_centralized/fmax/timing_common.rpt": {
+    "original_sha256": "5ad209723f2e4319e7337a1a5babf816b1dc9c44c8ca54c49417196b57acc5d0",
+    "published_sha256": "b7df7a81197cccacd32d0c0bb90120b1775330a2d5a3e0edbe94a87a24507ffa",
+    "edits": "Host, run timestamp and absolute paths removed; numeric content preserved"
+  }
+}

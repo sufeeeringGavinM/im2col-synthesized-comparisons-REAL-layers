@@ -1,0 +1,13 @@
+{
+  "uploaded_notebook_sha256": "e1d8c9e8c5cbc31ba714703ed6c39f45f91bbc2603f6542337dafca4cfa5ff4a",
+  "published_notebook_sha256": "d494e028476d78d4a0b35f34358efadc920980704bca11227b19898e4b7d5d12",
+  "notebook_edits": "Saved outputs cleared and UI metadata removed; all cell source text preserved",
+  "training_cells_executed_verbatim": true,
+  "seed": 196,
+  "seed_note": "Added reproducibility seed; notebook training/export specifications unchanged",
+  "architecture": [
+    784,
+    128,
+    10
+  ]
+}

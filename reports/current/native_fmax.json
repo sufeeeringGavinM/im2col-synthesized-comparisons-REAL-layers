@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "architectures": {
+    "NHWC": {
+      "dynamic_w": 0.022,
+      "static_w": 0.123,
+      "total_w": 0.145,
+      "confidence": "High",
+      "annotation": "87%   (59504/68144)",
+      "duration_ps": 7357379248,
+      "clock_mhz": 36.015270474681266,
+      "clock_period_ns": 27.766,
+      "clock_role": "individual post-synthesis estimated Fmax",
+      "latency_us": 7357.379248,
+      "total_energy_uj": 1066.81999096,
+      "saif_sha256": "fb9754c13bc9d752bbf85df8a8a5bbc02fcc0620a7b6abea5873c27e7f142ba2",
+      "timing": {
+        "period_ns": 27.766,
+        "wns_ns": 0.0
+      }
+    },
+    "NCHW_centralized": {
+      "dynamic_w": 0.015,
+      "static_w": 0.123,
+      "total_w": 0.138,
+      "confidence": "High",
+      "annotation": "79%   (148754/189255)",
+      "duration_ps": 11246657124,
+      "clock_mhz": 26.61839863713799,
+      "clock_period_ns": 37.568,
+      "requested_estimated_fmax_mhz": 26.619107195144675,
+      "requested_period_ns": 37.567,
+      "clock_role": "individual estimated Fmax, rounded down in frequency to simulator precision",
+      "clock_rounding_note": "1ps simulation precision rounds18.7835ns half-period to18.784ns; matching power uses37.568ns period, not37.567ns",
+      "latency_us": 11246.657124,
+      "total_energy_uj": 1552.038683112,
+      "saif_sha256": "bdc21b822b8995dd3e6b1c76778e9d56c98007b56fd71bd283e12dd29ef186e3",
+      "timing": {
+        "period_ns": 37.568,
+        "wns_ns": 0.001
+      }
+    }
+  }
+}

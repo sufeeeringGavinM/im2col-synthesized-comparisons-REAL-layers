@@ -1,0 +1,73 @@
+{
+  "status": "PASS",
+  "duration_ps": 7357379248,
+  "descriptor_gap_cycles": 2,
+  "primitive_propagation_ps": 100,
+  "saif_sha256": "fb9754c13bc9d752bbf85df8a8a5bbc02fcc0620a7b6abea5873c27e7f142ba2",
+  "netlist_port_checks": true,
+  "raw_post_words": 138,
+  "row": {
+    "layers": [
+      {
+        "layer": 0,
+        "outputs": 128,
+        "cycles": 261586,
+        "phase_total": 261586,
+        "reads": 110672,
+        "writes": 128,
+        "jobs": 1027,
+        "core_busy": 36972,
+        "phases": {
+          "0": 0,
+          "1": 1,
+          "2": 13,
+          "3": 1027,
+          "4": 10192,
+          "5": 10192,
+          "6": 100352,
+          "7": 100352,
+          "8": 1027,
+          "9": 37999,
+          "10": 128,
+          "11": 128,
+          "12": 13,
+          "13": 0,
+          "14": 34,
+          "15": 128
+        }
+      },
+      {
+        "layer": 1,
+        "outputs": 10,
+        "cycles": 3390,
+        "phase_total": 3390,
+        "reads": 1418,
+        "writes": 10,
+        "jobs": 13,
+        "core_busy": 468,
+        "phases": {
+          "0": 0,
+          "1": 1,
+          "2": 1,
+          "3": 13,
+          "4": 128,
+          "5": 128,
+          "6": 1280,
+          "7": 1280,
+          "8": 13,
+          "9": 481,
+          "10": 10,
+          "11": 10,
+          "12": 1,
+          "13": 0,
+          "14": 34,
+          "15": 10
+        }
+      }
+    ],
+    "total_accelerator_cycles": 264976,
+    "outputs_sha256": "10a8f7c699e27837bb165a8c2bf835bec2f564a7748a4acac3cf19257cd05ddd",
+    "post_clamps": 42,
+    "chain_window_ps": 7357379000
+  }
+}

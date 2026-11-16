@@ -1,0 +1,39 @@
+{
+  "layers": [
+    {
+      "layer": 0,
+      "input_channels": 784,
+      "output_channels": 128,
+      "input_scale": 0.007874015748031496,
+      "weight_scale": 0.006055439551045576,
+      "output_scale": 0.12554808488980992,
+      "target_ratio": 0.0003797797985372186,
+      "multiplier": 815571,
+      "shift": 31,
+      "quantize": true,
+      "relu": true,
+      "rounding": "nearest_ties_away"
+    },
+    {
+      "layer": 1,
+      "input_channels": 128,
+      "output_channels": 10,
+      "input_scale": 0.12554808488980992,
+      "weight_scale": 0.0076938998980784976,
+      "output_scale": 0.3457752137672244,
+      "target_ratio": 0.0027935906307845963,
+      "multiplier": 5999190,
+      "shift": 31,
+      "quantize": false,
+      "relu": false,
+      "rounding": "nearest_ties_away"
+    }
+  ],
+  "input_scale": 0.007874015748031496,
+  "calibration_images": 48000,
+  "calibration_selection": "x_train[:48000], excludes validation",
+  "weights_bias_rounding": "NumPy round, ties to even, exactly as notebook",
+  "output_rounding": "nearest ties away from zero, exactly as notebook integer validation",
+  "zero_point": 0,
+  "final_output": "biased INT32 without requantization"
+}

@@ -1,0 +1,12 @@
+s_input: 0.007874015748031496
+
+[dense]
+  multiplier (dec): 815571
+  multiplier (hex): 0x000c71d3
+  right_shift:      31
+
+[dense_1]
+  multiplier (dec): 5999190
+  multiplier (hex): 0x005b8a56
+  right_shift:      31
+

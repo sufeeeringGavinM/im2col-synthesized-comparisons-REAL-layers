@@ -1,0 +1,190 @@
+{
+  "scope": "Bias plus scale/multiply, shift, rounding and saturation are all included in quantization. Nonlinear operations such as ReLU are performed in testbench/software.",
+  "limitations": [
+    "Historical raw-output baseline predates descriptor chaining; full-design deltas include that wrapper and synthesis/remapping effects.",
+    "Raw baseline has no matching20MHz trained-MNIST native power capture; no20MHz power comparison or matched full-inference cycle claim is made.",
+    "Hardware counts and estimated Fmax are reused; no new synthesis or simulation."
+  ],
+  "architectures": {
+    "NHWC": {
+      "raw": {
+        "target_period_ns": 20.0,
+        "wns_ns": -5.918,
+        "estimated_minimum_period_ns": 25.918,
+        "estimated_fmax_mhz": 38.58322401419863,
+        "lut": 18792.0,
+        "lut_available": 134600.0,
+        "lut_percent": 13.96,
+        "ff": 9900.0,
+        "ff_available": 269200.0,
+        "ff_percent": 3.68,
+        "bram": 15.0,
+        "bram_available": 365.0,
+        "bram_percent": 4.11,
+        "dsp": 111.0,
+        "dsp_available": 740.0,
+        "dsp_percent": 15.0,
+        "worst_path": {
+          "source": "K_reg[16]/C",
+          "destination": "output_filter_base_reg[31]/D",
+          "data_path_delay_ns": "25.863",
+          "logic_levels": "22"
+        },
+        "report_directory": "external-evidence/control_NHWC"
+      },
+      "quantized": {
+        "lut": 21315.0,
+        "lut_available": 134600.0,
+        "lut_percent": 15.84,
+        "ff": 10293.0,
+        "ff_available": 269200.0,
+        "ff_percent": 3.82,
+        "bram": 10.0,
+        "bram_available": 365.0,
+        "bram_percent": 2.74,
+        "dsp": 115.0,
+        "dsp_available": 740.0,
+        "dsp_percent": 15.54,
+        "preset_version": 2,
+        "target_period_ns": 20.0,
+        "wns_ns": -7.766,
+        "estimated_minimum_period_ns": 27.766,
+        "estimated_fmax_mhz": 36.015270474681266,
+        "common_period_wns_ns": {
+          "50.0": 22.234,
+          "100.0": 72.234,
+          "1000.0": 972.234
+        },
+        "worst_path": {
+          "source": "u_accelerator/u_core/u_datapath/g_output[0].u_accumulator/u_sram/rdata_reg[1]/C",
+          "destination": "mem_wdata[0]",
+          "delay": "24.757ns  (logic 14.212ns (57.405%)  route 10.545ns (42.595%))",
+          "logic_levels": "45  (CARRY4=30 DSP48E1=2 LUT2=2 LUT4=1 LUT5=2 LUT6=8)"
+        },
+        "resource_fit": true,
+        "timing_50mhz_met": false,
+        "gui": {
+          "reopen_link_passed": true,
+          "netlist_cells": 39661,
+          "clock_period_ns": 20.0
+        }
+      },
+      "delta": {
+        "lut": {
+          "absolute": 2523.0,
+          "relative_percent": 13.425925925925926
+        },
+        "ff": {
+          "absolute": 393.0,
+          "relative_percent": 3.9696969696969697
+        },
+        "bram": {
+          "absolute": -5.0,
+          "relative_percent": -33.333333333333336
+        },
+        "dsp": {
+          "absolute": 4.0,
+          "relative_percent": 3.6036036036036037
+        },
+        "estimated_fmax_mhz": {
+          "absolute": -2.5679535395173616,
+          "relative_percent": -6.6556219837210975
+        }
+      },
+      "raw_dcp_sha256": "abd1a5ff05e6a70a0497f0cbf2178d3ff2b3de060f89c63f18e04871a6d194d2",
+      "quantized_dcp_sha256": "b815db5a1eb79a1cf78fff49802df5c60133f048494f511445927fcef60bc8d9",
+      "raw_20mhz_slack_projection_ns": 24.082,
+      "quantized_20mhz_slack_measured_ns": 22.234
+    },
+    "NCHW_centralized": {
+      "raw": {
+        "target_period_ns": 20.0,
+        "wns_ns": -17.611,
+        "estimated_minimum_period_ns": 37.611000000000004,
+        "estimated_fmax_mhz": 26.587966286458744,
+        "lut": 61055.0,
+        "lut_available": 134600.0,
+        "lut_percent": 45.36,
+        "ff": 17995.0,
+        "ff_available": 269200.0,
+        "ff_percent": 6.68,
+        "bram": 15.0,
+        "bram_available": 365.0,
+        "bram_percent": 4.11,
+        "dsp": 206.0,
+        "dsp_available": 740.0,
+        "dsp_percent": 27.84,
+        "worst_path": {
+          "source": "tap_mode_reg_rep__4/C",
+          "destination": "p_0_out__0/A[16]",
+          "data_path_delay_ns": "33.805",
+          "logic_levels": "68"
+        },
+        "report_directory": "external-evidence/control_NCHW_centralized"
+      },
+      "quantized": {
+        "lut": 61703.0,
+        "lut_available": 134600.0,
+        "lut_percent": 45.84,
+        "ff": 18083.0,
+        "ff_available": 269200.0,
+        "ff_percent": 6.72,
+        "bram": 15.0,
+        "bram_available": 365.0,
+        "bram_percent": 4.11,
+        "dsp": 210.0,
+        "dsp_available": 740.0,
+        "dsp_percent": 28.38,
+        "preset_version": 2,
+        "target_period_ns": 20.0,
+        "wns_ns": -17.567,
+        "estimated_minimum_period_ns": 37.567,
+        "estimated_fmax_mhz": 26.619107195144675,
+        "common_period_wns_ns": {
+          "50.0": 12.433,
+          "100.0": 62.433,
+          "1000.0": 962.433
+        },
+        "worst_path": {
+          "source": "u_accelerator/tap_mode_reg_rep__1/C",
+          "destination": "u_accelerator/p_0_out__0/A[16]",
+          "delay": "33.761ns  (logic 21.392ns (63.363%)  route 12.369ns (36.637%))",
+          "logic_levels": "68  (CARRY4=54 DSP48E1=2 LUT2=3 LUT3=3 LUT4=1 LUT5=3 LUT6=2)"
+        },
+        "resource_fit": true,
+        "timing_50mhz_met": false,
+        "gui": {
+          "reopen_link_passed": true,
+          "netlist_cells": 103476,
+          "clock_period_ns": 20.0
+        }
+      },
+      "delta": {
+        "lut": {
+          "absolute": 648.0,
+          "relative_percent": 1.0613381377446565
+        },
+        "ff": {
+          "absolute": 88.0,
+          "relative_percent": 0.48902472909141426
+        },
+        "bram": {
+          "absolute": 0.0,
+          "relative_percent": 0.0
+        },
+        "dsp": {
+          "absolute": 4.0,
+          "relative_percent": 1.941747572815534
+        },
+        "estimated_fmax_mhz": {
+          "absolute": 0.03114090868593067,
+          "relative_percent": 0.11712407165865385
+        }
+      },
+      "raw_dcp_sha256": "8dc6d889b7154563719f5d40dc7bcd12db755655f5b417bf3d523c7c088d884b",
+      "quantized_dcp_sha256": "69b4d8faa64501e58f600c201053945cc173ca517040aad8f623f6b603f03c91",
+      "raw_20mhz_slack_projection_ns": 12.389,
+      "quantized_20mhz_slack_measured_ns": 12.433
+    }
+  }
+}

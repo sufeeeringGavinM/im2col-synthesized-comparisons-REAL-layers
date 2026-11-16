@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "scope": "First job of notebook-model image 0 only; diagnostic stops before full layer completion",
+  "architectures": {
+    "NHWC": {
+      "busy": 36,
+      "prime": 5,
+      "load": 10,
+      "run": 21,
+      "advancing": 21,
+      "wait": 0
+    },
+    "NCHW_centralized": {
+      "busy": 60,
+      "prime": 1,
+      "load": 10,
+      "run": 49,
+      "advancing": 21,
+      "wait": 28
+    }
+  }
+}

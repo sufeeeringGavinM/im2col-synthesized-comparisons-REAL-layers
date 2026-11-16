@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "architectures": {
+    "NHWC": {
+      "dynamic_w": 0.012,
+      "static_w": 0.123,
+      "total_w": 0.135,
+      "confidence": "High",
+      "annotation": "87%   (59504/68144)",
+      "duration_ps": 13248900100,
+      "common_mhz": 20,
+      "latency_us": 13248.9001,
+      "total_energy_uj": 1788.6015135000002,
+      "saif_sha256": "13b1cf988ce0457c7b90eeb05e640d77e230588127b9d5ac5e3d2e4f680a86d0",
+      "timing": {
+        "period_ns": 50,
+        "wns_ns": 22.234
+      }
+    },
+    "NCHW_centralized": {
+      "dynamic_w": 0.011,
+      "static_w": 0.123,
+      "total_w": 0.134,
+      "confidence": "High",
+      "annotation": "79%   (148754/189255)",
+      "duration_ps": 14968400100,
+      "common_mhz": 20,
+      "latency_us": 14968.4001,
+      "total_energy_uj": 2005.7656134000001,
+      "saif_sha256": "1f5c3d05018dc3abb854cf0ea17eeaf570d9cc385ef67451ed22dda7ae7941bf",
+      "timing": {
+        "period_ns": 50,
+        "wns_ns": 12.433
+      }
+    }
+  }
+}

@@ -4,7 +4,7 @@ module tb_output_quantizer;
   wire signed [31:0] result;
   integer f,n=0,rc,en,mode,sh;reg [31:0] v,want;
   string file_name;
-  output_quantizer dut(value,enable,nearest,shift,result);
+  output_quantizer dut(.value(value),.enable(enable),.round_nearest(nearest),.shift(shift),.multiplier(32'd1),.result(result));
   initial begin
     if(!$value$plusargs("FILE=%s",file_name)) $fatal(1,"Missing vectors");
     f=$fopen(file_name,"r");if(!f)$fatal(1,"Cannot open vectors");

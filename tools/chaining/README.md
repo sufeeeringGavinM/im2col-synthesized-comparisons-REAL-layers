@@ -1,6 +1,6 @@
-# Quantized convolution chaining reproduction
+# Historical quantized convolution chaining reproduction
 
-The current NHWC and NCHW sources are `tiled/NHWC` and `tiled/NCHW_centralized`, with `conv_chain` as the top. These tools adapt the accepted sequential RTL/native measurement flow. AI assistance: Codex.
+The historical NHWC and NCHW sources are `tiled/NHWC` and `tiled/NCHW_centralized`, with `conv_chain` as the top. These tools adapt the accepted sequential RTL/native measurement flow. AI assistance: Codex.
 
 From the repository root, verify the exact source/fixture identities and write a plan without launching simulation or synthesis:
 
@@ -33,3 +33,5 @@ Native XSim SAIF covers accepted start through final completion at `/tb_conv_cor
 `fixtures/chain/` contains the exact synthetic descriptors, external-memory initialization, expected outputs and accepted chain benches. It uses the first three MLPerf Tiny v1.1 ResNet8 CONV geometries, shifts3/5 nearest for intermediates and raw32 for the final output. Original bias/BN/ReLU/residual add are omitted. No trained inference is claimed. The independent layers use the shared `tools/workloads/` fixtures with quantization disabled.
 
 The [current measurement results](../../reports/chaining/README.md) pins exact current sources and accepted evidence. Preserve completed stage outputs when inspecting an interrupted local reproduction; do not treat compilation alone as native validation or rerun accepted activity merely because power reporting needs attention. The earlier four-way source-gated reproduction commands apply to the previous source commit linked in the report README.
+
+For these historical commands use a separate checkout of commit `97e6f4a232c8c64792d3a033fcdcb5d5a10f2a9c`. For the current release use [MNIST replay](../mnist/README.md). The old source gate intentionally remains strict.

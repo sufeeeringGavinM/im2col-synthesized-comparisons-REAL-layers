@@ -1,1 +1,6 @@
 * -text
+
+# Native XSim dumps retain their original CRLF bytes for hash verification.
+reports/current/**/*.hex whitespace=cr-at-eol
+# Preserve the notebook export text, including its final empty line.
+tools/mnist/training/export/quantization_params.txt whitespace=-blank-at-eof
