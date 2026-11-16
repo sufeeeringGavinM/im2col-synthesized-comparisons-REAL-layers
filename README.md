@@ -16,10 +16,10 @@ The table combines hardware comparisons with a trained **784→128→10 MNIST ne
 | Estimated Fmax | 38.583 MHz → 36.015 MHz (-6.656%) | 26.588 MHz → 26.619 MHz (+0.117%) |
 | MNIST accelerator cycles | 264,976 | 299,366 |
 | Latency at 20 MHz | 13.2488 ms | 14.9683 ms |
-| Total power at 20 MHz | 135 mW | 134 mW |
+| Power at 20 MHz (dynamic / static / total) | 12 / 123 / 135 mW | 11 / 123 / 134 mW |
 | Inference energy at 20 MHz | 1.789 mJ | 2.006 mJ |
 | Latency at own Fmax | 7.3573 ms | 11.2466 ms |
-| Total power at own Fmax | 145 mW | 138 mW |
+| Power at own Fmax (dynamic / static / total) | 22 / 123 / 145 mW | 15 / 123 / 138 mW |
 | Inference energy at own Fmax | 1.067 mJ | 1.552 mJ |
 
 Arrows show **unquantized → quantized**, with percentage change relative to the unquantized value. Cycle, latency, power and energy rows describe the accelerator with quantization logic; matching full-model measurements are unavailable for the raw-output baseline. Native Fmax analysis uses 27.766 ns for NHWC and 37.568 ns for NCHW (36.015 and 26.618 MHz); NCHW's 37.567 ns estimated minimum period rounds up by 1 ps to match simulator clock precision. Latency/energy use the actual simulated clock. The unquantized baseline also predates descriptor chaining and uses a different synthesis thread count, so hardware changes include wrapper and mapping effects.
