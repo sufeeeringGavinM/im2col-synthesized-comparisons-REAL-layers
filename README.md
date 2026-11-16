@@ -92,6 +92,15 @@ For a different input, use `--image digit.png` (automatically converted to grays
                          → Dense 10  → raw32 scores → software argmax
 ```
 
+Each dense layer runs as a **1×1 convolution at a single spatial position**. The flattened features become input channels, and each dense neuron becomes one output channel. Shapes below use NCHW for activations and KCRS for kernels, for both implementations:
+
+| Dense operation | Convolution input | Convolution kernel | Convolution output |
+|---|---|---|---|
+| 784 → 128 | 1×784×1×1 | 128×784×1×1 | 1×128×1×1 |
+| 128 → 10 | 1×128×1×1 | 10×128×1×1 | 1×10×1×1 |
+
+Both use stride 1, padding 0, dilation 1 and one group. At the only spatial position, each output is `sum(input[c] * weight[k,c,0,0]) + bias[k]`, exactly the dense dot product. Keras stores dense weights as `[input, output]`; the export transposes them to `[output, input]` and supplies them in KCRS order. The 28×28 image is flattened row by row into 784 channels before the first convolution. Thus, the accelerator executes the trained dense network using its convolution datapath, without changing the model's connectivity.
+
 The hidden layer uses bias and requantization. The final layer uses bias with requantization disabled. ReLU transforms actual accelerator writes before they feed the next layer; reference tensors never replace those writes. The testbench assigns no simulated time to software ReLU, so its latency/energy is unmeasured.
 
 The included [Keras training notebook](tools/mnist/MNIST_Training_Test_3_.ipynb) uses Keras Dense128 with ReLU, then Dense10 linear; Adam 0.001, 12 epochs, batch size 128, 20% validation, final-epoch weights and calibration over the 48,000 training images. Training uses seed 196 for reproducibility. All notebook cell source text is preserved; saved outputs/UI metadata are removed from the published copy.
