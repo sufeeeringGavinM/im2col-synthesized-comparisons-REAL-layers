@@ -1,6 +1,6 @@
 # MNIST RTL replay
 
-Requires Python 3 with NumPy and Icarus Verilog. Custom image loading also requires Pillow (`python3 -m pip install pillow`). Install NumPy in your Python environment (`python3 -m pip install numpy`); training frameworks and a dataset download are not needed. AI assistance: Codex.
+Requires Python 3 with NumPy; RTL replay also requires Icarus Verilog, and custom images require Pillow. For Ubuntu/WSL installation, stage selection, output files and troubleshooting, see the [main running instructions](../../README.md#run-the-accelerator). Training frameworks and a dataset download are not needed. AI assistance: Codex.
 
 From the repository root:
 
@@ -9,7 +9,7 @@ python3 tools/mnist/run.py --stage prepare --out-dir runs/mnist_prepare
 python3 tools/mnist/run.py --stage rtl --samples 1 --out-dir runs/mnist_rtl
 ```
 
-Use `--samples 20 --directed` for all retained images and three directed reduction/bias cases per implementation. Select one architecture with `--variant NHWC` or `--variant NCHW`. `--timeout` sets seconds per invocation. Set `IVERILOG_BIN`, `VVP_BIN` and optionally `IVERILOG_BACKEND` for nonstandard tool installations. Each output directory must be new.
+Use `--samples 20 --directed` for all retained images and three directed reduction/bias cases per implementation. Select one architecture with `--variant NHWC` or `--variant NCHW`. `--timeout` sets seconds per invocation. Set `IVERILOG_BIN`, `VVP_BIN` and optionally `IVERILOG_BACKEND` for nonstandard tool installations. `--out-dir` is optional: by default, each run creates a unique `runs/mnist_<stage>_*` folder under the current working directory and prints its absolute path. An explicitly supplied output directory must be new.
 
 `run.py` verifies released source/model hashes, generates memory fixtures, compiles `tb_mnist.v` against main RTL, and checks actual writes and intermediate handoffs. Per-layer phases/jobs/core cycles, raw/postprocessed outputs and predictions are written under the output folder. It checks accepted MNIST cycle totals as well as exact values; classification correctness is distinct from arithmetic correctness.
 
@@ -51,3 +51,16 @@ python3 tools/mnist/train_notebook.py --out-dir runs/retrained_notebook
 Training downloads MNIST and writes new parameters/metrics; it does not replace the released fixtures or refresh their hashes. The lock records the measured Python 3.13.18 / TensorFlow CPU 2.21.0 environment. Different environments can change training results despite a fixed seed. Validate new exports before using them as hardware evidence.
 
 Weights and bias export use NumPy ties-to-even rounding. Runtime hidden-layer requantization uses a wide product and nearest rounding with ties away from zero, followed by software ReLU. The final layer adds bias and bypasses requantization. See [memory formats](MEMORY_FORMAT.md).
+
+## Python-only inference
+
+```bash
+python3 tools/mnist/run.py --stage py_sim --samples 1 --out-dir runs/python_demo
+python3 tools/mnist/run.py --stage py_sim --image digit.png --out-dir runs/python_image
+```
+
+`py_sim` requires NumPy (and Pillow for images), without Icarus Verilog. It uses the same integer reference as RTL replay: signed INT8 inputs, wrapped INT32 accumulation/bias, integer scale multiplication, nearest rounding with ties away from zero, saturation, and software ReLU. Computed outputs feed the next layer. It supports the same retained images, custom tensors/images, and `--directed` cases. `--variant` has no effect because both architectures implement the same arithmetic.
+
+Outputs are in `python/<case>/raw_outputs.hex` (before software ReLU) and `python/<case>/rtl_outputs.hex` (after software ReLU; filename retained for RTL comparison). Each file concatenates layer outputs as eight-digit, lowercase, two's-complement hex words, one per line, exactly like RTL dumps. The normal model writes 128 hidden values followed by ten final scores. Predictions are in `results.json`. These are Python-computed tensors, not RTL execution or cycle measurements.
+
+The runner identity hash tracks this CLI extension; historical RTL/synthesis measurements remain unchanged. Byte equality is checked against accepted RTL output hashes during development; a Python-only run does not itself verify the hardware.

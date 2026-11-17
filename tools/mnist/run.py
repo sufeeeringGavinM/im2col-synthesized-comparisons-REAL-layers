@@ -6,6 +6,7 @@ import json
 import os
 import shutil
 import subprocess
+import tempfile
 
 import numpy as np
 import workload
@@ -47,7 +48,7 @@ def load_image(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--stage', choices=['prepare', 'rtl'], default='prepare')
+    parser.add_argument('--stage', choices=['prepare', 'py_sim', 'rtl'], default='prepare')
     parser.add_argument('--variant', choices=['all', *ARCHES], default='all')
     parser.add_argument('--samples', type=int, default=1, help='First 1..20 retained images')
     parser.add_argument('--directed', action='store_true', help='Also check three reduction/bias edge cases')
@@ -55,7 +56,7 @@ def main():
     custom.add_argument('--image', type=Path, help='Image auto-converted to grayscale and resized to 28x28; light digit on dark background; requires Pillow')
     custom.add_argument('--input-tensor', type=Path, help='784 already-quantized input values as two-digit hex words')
     parser.add_argument('--label', type=int, choices=range(10), help='Optional true label for a custom input')
-    parser.add_argument('--out-dir', type=Path, required=True, help='A new output directory')
+    parser.add_argument('--out-dir', type=Path, help='A new output directory (default: unique runs/mnist_<stage>_* folder)')
     parser.add_argument('--timeout', type=int, default=3600, help='Seconds per tool invocation')
     args = parser.parse_args()
     if not 1 <= args.samples <= 20:
@@ -79,19 +80,20 @@ def main():
         provenance = dict(kind='quantized_tensor', sha256=hashlib.sha256(args.input_tensor.read_bytes()).hexdigest(),
                           preprocessing='signed INT8 values used directly; no pixel conversion')
     identity = verify()
-    output = args.out_dir.expanduser().resolve()
-    output.mkdir(parents=True, exist_ok=False)
+    if args.out_dir is not None:
+        output = args.out_dir.expanduser().resolve()
+        output.mkdir(parents=True, exist_ok=False)
+    else:
+        runs = Path('runs').resolve()
+        runs.mkdir(parents=True, exist_ok=True)
+        output = Path(tempfile.mkdtemp(prefix=f'mnist_{args.stage}_', dir=runs))
+    print(f'Output directory: {output}', flush=True)
     (output / 'plan.json').write_text(json.dumps(dict(
         stage=args.stage, samples=args.samples, directed=args.directed, custom_input=provenance,
         source_identity=identity), indent=2) + '\n')
     if args.stage == 'prepare':
         print('PASS: released source and fixture hashes match; no simulator launched')
         return
-    compiler = os.environ.get('IVERILOG_BIN') or shutil.which('iverilog')
-    runtime = os.environ.get('VVP_BIN') or shutil.which('vvp')
-    backend = os.environ.get('IVERILOG_BACKEND')
-    if not compiler or not runtime:
-        raise RuntimeError('Install Icarus Verilog or set IVERILOG_BIN and VVP_BIN')
     if custom_input is not None:
         tensors = np.load(Path(__file__).with_name('training') / 'integer_tensors.npz')
         config = json.loads((Path(__file__).with_name('training') / 'quantization.json').read_text())['layers']
@@ -107,6 +109,35 @@ def main():
     if not args.directed:
         cases = [case for case in cases if case['label'] is not None or case['id'] == 'custom']
     results = []
+    if args.stage == 'py_sim':
+        for case in cases:
+            fixture = Path(case['fixture'])
+            dest = output / 'python' / str(case['id'])
+            dest.mkdir(parents=True)
+            # Fixtures evaluate the integer reference layer by layer, feeding
+            # computed post-ReLU values into the next layer (not saved goldens).
+            shutil.copyfile(fixture / 'expected.hex', dest / 'raw_outputs.hex')
+            shutil.copyfile(fixture / 'post.hex', dest / 'rtl_outputs.hex')
+            raw = [int(word, 16) for word in (dest / 'raw_outputs.hex').read_text().split()]
+            raw = [(value + (1 << 31)) % (1 << 32) - (1 << 31) for value in raw]
+            classification = case['label'] is not None or case['id'] == 'custom'
+            prediction = int(np.argmax(raw[-10:])) if classification else None
+            results.append(dict(engine='python', id=case['id'], label=case['label'],
+                                prediction=prediction,
+                                correct=(prediction == case['label']) if case['label'] is not None else None,
+                                outputs=len(raw),
+                                outputs_sha256=hashlib.sha256((dest / 'rtl_outputs.hex').read_bytes()).hexdigest()))
+            print(f"PASS: python, case {case['id']}, integer inference, prediction={prediction}", flush=True)
+        verify()
+        (output / 'results.json').write_text(json.dumps(dict(
+            status='PASS', stage='py_sim', cases=results), indent=2) + '\n')
+        return
+
+    compiler = os.environ.get('IVERILOG_BIN') or shutil.which('iverilog')
+    runtime = os.environ.get('VVP_BIN') or shutil.which('vvp')
+    backend = os.environ.get('IVERILOG_BACKEND')
+    if not compiler or not runtime:
+        raise RuntimeError('Install Icarus Verilog or set IVERILOG_BIN and VVP_BIN')
 
     def command(argv, cwd, log):
         with log.open('w') as stream:

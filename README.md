@@ -22,7 +22,7 @@ The table combines hardware comparisons with a trained **784→128→10 MNIST ne
 | Power at own Fmax (dynamic / static / total) | 22 / 123 / 145 mW | 15 / 123 / 138 mW |
 | Inference energy at own Fmax | 1.067 mJ | 1.552 mJ |
 
-Arrows show **unquantized → quantized**, with percentage change relative to the unquantized value. Cycle, latency, power and energy rows describe the accelerator with quantization logic; matching full-model measurements are unavailable for the raw-output baseline. Native Fmax analysis uses 27.766 ns for NHWC and 37.568 ns for NCHW (36.015 and 26.618 MHz); NCHW's 37.567 ns estimated minimum period rounds up by 1 ps to match simulator clock precision. Latency/energy use the actual simulated clock. The unquantized baseline also predates descriptor chaining and uses a different synthesis thread count, so hardware changes include wrapper and mapping effects.
+Arrows show **unquantized → quantized**, with percentage change relative to the unquantized value. Cycle, latency, power and energy rows describe the accelerator with quantization logic; matching full-model measurements are unavailable for the raw-output baseline. Native Fmax analysis uses 27.766 ns for NHWC and 37.568 ns for NCHW (36.015 and 26.618 MHz); NCHW's 37.567 ns estimated minimum period rounds up by 1 ps to match simulator clock precision. Latency/energy use the actual simulated clock. The unquantized baseline also predates descriptor chaining, so hardware changes include wrapper and mapping effects.
 
 Latency counts accelerator work; energy includes two descriptor-gap cycles and a 100 ps netlist propagation offset. Software processing and external-memory energy are excluded. All clocks and power are post-synthesis estimates, without routed timing closure or board validation.
 
@@ -67,23 +67,46 @@ There is no internal descriptor queue/fetcher, automatic base-address calculatio
 
 ## Run the accelerator
 
-Requirements: Python 3, NumPy for MNIST replay, and Icarus Verilog (`iverilog`/`vvp`). No training framework or dataset download is needed for the retained demo.
-
-Verify released source and model hashes without launching tools:
+In Ubuntu/WSL, install the dependencies:
 
 ```bash
-python3 tools/mnist/run.py --stage prepare --out-dir runs/mnist_prepare
+sudo apt update
+sudo apt install python3 python3-numpy python3-pil iverilog
 ```
 
-Replay one complete inference on each implementation at 20 MHz:
+From the repository root, run an included MNIST image:
 
 ```bash
-python3 tools/mnist/run.py --stage rtl --samples 1 --out-dir runs/mnist_rtl
+# Python-only integer inference
+python3 tools/mnist/run.py --stage py_sim
+
+# RTL simulation of both NHWC and NCHW
+python3 tools/mnist/run.py --stage rtl
 ```
 
-Use `--samples 20 --directed` for all retained images and three directed reduction/bias cases per implementation. See [MNIST replay](tools/mnist/README.md), [single-layer controls](tiled/NHWC/README.md) and [synthesis preparation](tools/vivado_synthesis/README.md). Generated outputs require a new directory and are excluded from Git.
+Use your own image:
 
-For a different input, use `--image digit.png` (automatically converted to grayscale and resized to 28×28; requires Pillow) or `--input-tensor input.hex` (784 already-quantized INT8 hex values). The runner generates fresh integer-reference outputs and checks all RTL intermediates. For different convolution tensors/shapes, use either implementation's `run_case.py` with input/kernel files and optional bias/scale controls. See [custom input examples](tools/mnist/README.md#use-a-different-image-or-tensor).
+```bash
+python3 tools/mnist/run.py --stage py_sim --image digit.png
+```
+
+Use a **white digit on a black background**, centered with some margin. Images automatically resize to 28×28; inversion and centering are manual. Replace `py_sim` with `rtl` to check the image through the accelerator simulation.
+
+Optional flags:
+
+| Flag | Purpose |
+|---|---|
+| `--variant NHWC` or `--variant NCHW` | Simulate one RTL implementation |
+| `--samples 20 --directed` | Run all retained images and directed cases |
+| `--label 7` | Record the expected digit for a custom image |
+| `--out-dir runs/my_run` | Choose a new output folder |
+
+Otherwise, a unique folder under `runs/` is created and its path is printed. Predictions are in `results.json`; tensors are under `python/<case>/` or `<architecture>/<case>/`:
+
+- `raw_outputs.hex`: layer outputs before software ReLU.
+- `rtl_outputs.hex`: layer outputs after software ReLU.
+
+Both files contain 128 hidden values followed by ten final scores for the MNIST model. `PASS` means arithmetic matched; it does not guarantee the digit was classified correctly.
 
 ## MNIST demonstration
 
@@ -138,7 +161,7 @@ Counts, estimated Fmax and percentage changes are combined in the opening summar
 
 Both designs add four DSPs. NHWC's five-tile BRAM reduction comes from output SRAM mapping to distributed RAM, including 1,760 LUTRAMs, while storage capacity stays unchanged. This mapping contributes to the LUT increase. NHWC's worst path moves into completed-output processing and estimated Fmax decreases 6.656%; NCHW remains limited by scheduler bank/address arithmetic, with its 0.117% Fmax increase reflecting a small whole-design mapping variation.
 
-These are retained full-design results: the unquantized baseline also predates descriptor chaining, and requested synthesis threads differ (two versus eight). The changes therefore include wrapper and synthesis-mapping effects, rather than isolating only the quantizer. See [the detailed comparison](reports/current/QUANTIZED_VS_RAW.md) and [underlying values](reports/current/quantized_vs_raw.json). No matched unquantized MNIST power/latency measurement is claimed.
+These are retained full-design results: the unquantized baseline also predates descriptor chaining. The changes therefore include wrapper and synthesis-mapping effects, rather than isolating only the quantizer. See [the detailed comparison](reports/current/QUANTIZED_VS_RAW.md) and [underlying values](reports/current/quantized_vs_raw.json). No matched unquantized MNIST power/latency measurement is claimed.
 
 ### Worst paths
 
