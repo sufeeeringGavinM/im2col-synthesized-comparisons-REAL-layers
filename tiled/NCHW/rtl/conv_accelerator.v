@@ -92,9 +92,9 @@ module conv_accelerator #(
   reg signed [63:0] output_row_origin,output_col_origin,tap_i_offset,tap_j_offset;
   assign busy=state!=IDLE;
 
-  // Bound the actual channel-last swizzled storage, including tile holes.
-  // Reserve enough groups for Ct channels and enough spatial slots for the
-  // complete requested patch; clipping can only reduce this bound.
+  // Bound the residue-swizzled input storage using the unclipped patch.
+  // Each group of ARRAY_SIZE flattened (c,r,s) terms needs one plane per bank.
+  // A plane includes unused positions at the edges of coarse spatial blocks.
   localparam JOB_SETUP=14;
   // Sequential capacity planning: one iterative divider is reused across steps.
   // job_pending means a divide was launched and has not returned its result.
@@ -110,11 +110,7 @@ module conv_accelerator #(
   // The planner uses the maximum C chunk conservatively; edge clipping can
   // reduce actual use, but cannot exceed this precomputed bound.
   reg [63:0] plan_c,plan_q,plan_temp;
-  // NCHW planner temporaries: spatial_rows/min_cols count coarse R/S blocks;
-  // spatial_footprint is their product; input_channels/kernel_channels are fit
-  // bounds, not the descriptor C. bounded_c is the selected maximum C chunk;
-  // groups counts its ARRAY_SIZE-wide CRS groups. Other wrappers retain these
-  // declarations but do not use this swizzled-storage planning path.
+  // The divider operands below and the JOB_SETUP case use the same job_step.
   reg [63:0] spatial_rows,min_cols,spatial_footprint,input_channels,kernel_channels,bounded_c,groups;
   wire job_div_done;
   wire [63:0] job_quotient,job_remainder;
@@ -145,6 +141,9 @@ module conv_accelerator #(
   // addr=(slot/ARRAY_SIZE)*spatial_pitch+(h/local_R)*tile_cols+w/local_S.
   // tile_rows/cols are ceil(patch_h/local_R), ceil(patch_w/local_S).
   // spatial_pitch=tile_rows*tile_cols words; it includes unused edge positions.
+  // With 10 banks and a 3x3 kernel, pixel (0,0) of channel 1 lands in bank 9
+  // at address 0 (slot 9). The next pixel, (0,1), uses slot 10, which wraps to
+  // bank 0 and starts the next plane at address spatial_pitch.
   reg [63:0] tile_rows,tile_cols,spatial_pitch;
   // hr/wr are h%local_R and w%local_S; wq is floor(w/local_S).
   // row_word_base is floor(h/local_R)*tile_cols. Maintain these counters
@@ -177,6 +176,8 @@ module conv_accelerator #(
   assign slot_delta[3]=(1-$signed(64'(local_R)))*$signed(64'(local_S));
   assign slot_delta[4]=$signed(64'(local_R))*$signed(64'(local_S));
   function automatic signed [63:0] floor_banks(input signed [63:0] value);
+    // With 10 banks, a move of -1 slot is -1 plane plus 9 banks.
+    // Signed division gives -1 / 10 = 0, so round down to get the plane offset.
     begin floor_banks=value/ARRAY_SIZE; if(value<0 && value%ARRAY_SIZE!=0) floor_banks=floor_banks-1; end
   endfunction
   function automatic [BW-1:0] hop_bank(input [BW-1:0] b,d);
@@ -190,11 +191,10 @@ module conv_accelerator #(
   wire [63:0] input_word=group_address+row_word_base+local_wq;
   integer delta_index;
 
-  // Clip a real input rectangle to the image. Local padding is the distance
-  // from the requested origin to its clipped origin. No padded pixels are DMA'd.
-  // Requested input rectangle may extend beyond the image. Clip its real pixels
-  // to [0,H) x [0,W); local padding reconstructs the missing zeros in the core.
-  // end_i/end_j are exclusive bounds. Never DMA synthetic padding values.
+  // Intersect the requested rectangle with [0,H) x [0,W).
+  // raw_i/raw_j are inclusive starts. end_i/end_j are exclusive ends.
+  // At the left edge of a 5-column image, a window covering columns -1, 0, 1
+  // reads columns 0 and 1 from memory. The core supplies zero for column -1.
   wire signed [63:0] raw_i=output_row_origin+tap_i_offset;
   wire signed [63:0] raw_j=output_col_origin+tap_j_offset;
   wire signed [63:0] end_i=raw_i+$signed(tap_mode?64'd1:extent_i);
@@ -307,6 +307,7 @@ module conv_accelerator #(
         // unchanged throughout this layer. Setup cycles are part of latency.
         JOB_SETUP: begin
           case(job_step)
+            // How much input storage does one output need for one channel?
             0:begin
               if(!job_pending) job_pending<=1;
               if(job_div_done) begin spatial_rows<=job_quotient; job_pending<=0;job_step<=1;end
@@ -317,6 +318,7 @@ module conv_accelerator #(
             end
             2:begin spatial_footprint<=spatial_rows*min_cols; job_step<=3;end
             3:begin needs_taps<=(taps>KERNEL_DEPTH || ((taps+ARRAY_SIZE-1)/ARRAY_SIZE)*spatial_footprint>INPUT_DEPTH); job_step<=4;end
+            // Find how many channels fit in the input banks and in the kernel banks.
             4:begin
               if(!job_pending) job_pending<=1;
               if(job_div_done) begin plan_temp<=job_quotient; job_pending<=0;job_step<=5;end
@@ -329,9 +331,11 @@ module conv_accelerator #(
               if(!job_pending) job_pending<=1;
               if(job_div_done) begin kernel_channels<=job_quotient; job_pending<=0;job_step<=7;end
             end
+            // Use the smaller limit, cap it at the array height, then count the groups of terms.
             7:begin plan_c<=input_channels<kernel_channels ? input_channels : kernel_channels; job_step<=8;end
             8:begin bounded_c<=plan_c<ARRAY_SIZE ? plan_c : ARRAY_SIZE; job_step<=9;end
             9:begin groups<=(bounded_c*taps+ARRAY_SIZE-1)/ARRAY_SIZE; job_step<=10;end
+            // Find how many output columns fit side by side at stride_j.
             10:begin
               if(!job_pending) job_pending<=1;
               if(job_div_done) begin plan_temp<=job_quotient; job_pending<=0;job_step<=11;end
@@ -340,6 +344,7 @@ module conv_accelerator #(
               if(!job_pending) job_pending<=1;
               if(job_div_done) begin plan_q<=job_quotient+1; job_pending<=0;job_step<=12;end
             end
+            // Step 12 saves the tile limits for the rest of this layer.
             default:begin
               tap_mode<=needs_taps;
               c_step<=CFG_WIDTH'(plan_c<ARRAY_SIZE?plan_c:ARRAY_SIZE);
@@ -358,9 +363,10 @@ module conv_accelerator #(
           tile_k<=K-k0<ARRAY_SIZE?K-k0:CFG_WIDTH'(ARRAY_SIZE);
           c0<=0;tap_r<=0;tap_s<=0;state<=PREPARE;
         end
-        // Select the next C reduction chunk and clipped input patch. Set first
-        // input/weight DMA addresses from global tile origins and saved pitches.
-        // No output is exported until all reduction jobs for this tile finish.
+        // Start the next channel chunk or fallback tap for this output tile.
+        // Input DMA and its row/channel bases all start at the clipped patch origin.
+        // Kernel DMA and its filter base start at channel c0 of filter k0.
+        // In single-tap mode the kernel address also includes tap_r*S + tap_s.
         PREPARE: begin
           dma_column<=0;dma_row<=0;
           input_dma_addr<=64'(input_base)+(64'(n0)*C+c0)*input_channel_pitch+64'(clip_i)*W+64'(clip_j);
@@ -399,9 +405,10 @@ module conv_accelerator #(
         // Issue a read, then consume its registered return in INPUT_WRITE.
         // This is intentionally two states per externally transferred operand.
         INPUT_READ: state<=INPUT_WRITE;
-        // Deposit one input value locally. Advance the external address by one
-        // inside a row, by W from its saved row base, or by H*W across channels.
+        // Store the returned pixel in its local bank.
         INPUT_WRITE: begin
+          // Move one word across a row. At a boundary,
+          // step W words from the row base or H*W words from the channel base.
           if(word_index+1<patch_words) begin
             if(dma_column+1<patch_w) begin dma_column<=dma_column+1'b1;input_dma_addr<=input_dma_addr+1;end
             else begin dma_column<=0;dma_row<=dma_row+1'b1;input_row_base<=input_row_base+W;input_dma_addr<=input_row_base+W;end
@@ -410,6 +417,8 @@ module conv_accelerator #(
             input_channel_base<=input_channel_base+input_channel_pitch;
             input_row_base<=input_channel_base+input_channel_pitch;input_dma_addr<=input_channel_base+input_channel_pitch;
           end
+          // In local SRAM, a new channel starts from channel_bank.
+          // A new row starts from row_bank. Within a row, step from input_bank.
           if(word_index+1==patch_words) begin
             input_bank<=hop_bank(channel_bank,delta_bank[4]);row_bank<=hop_bank(channel_bank,delta_bank[4]);channel_bank<=hop_bank(channel_bank,delta_bank[4]);
             group_address<=hop_address(channel_group_address,channel_bank,delta_bank[4],delta_address[4]);row_group_address<=hop_address(channel_group_address,channel_bank,delta_bank[4],delta_address[4]);channel_group_address<=hop_address(channel_group_address,channel_bank,delta_bank[4],delta_address[4]);

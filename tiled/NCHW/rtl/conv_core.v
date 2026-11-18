@@ -1,14 +1,15 @@
 `timescale 1ns / 1ps
 
-// Runtime configuration capture and wiring for channel-last convolution.
-// Images share weights and stream in spatial-position-major, image-minor order.
-// Configuration is captured on start and remains fixed throughout the run.
-// ONE LOCAL JOB: capture a descriptor, then connect control, memories and array.
-// N,C,H,W / K,C,R,S / N,K,P,Q are input / weight / output dimensions.
-// _i is height and _j is width: stride_i=stride_h, dilation_j=dil_w, etc.
-// The full-layer wrapper calls this core repeatedly with tile-local dimensions.
-// continue_sum retains earlier reduction-job results in output SRAM. It does not
-// request reuse of activations or weights across jobs. Output SRAM readback is idle-only.
+// NCHW uses channel-last unrolling. Within one channel the rows take kernel
+// columns (s) in order, then advance the kernel row (r), then the channel (c).
+// For a 3x3 kernel with two channels on a 10-row array, the first pass assigns
+// rows 0-8 to all nine taps of channel 0. Row 9 takes the first tap of channel 1.
+// Each active array column computes one output filter.
+//
+// The scheduler supplies tile dimensions on start. Output SRAM holds the sums
+// between passes. With continue_sum set, the first pass of this job adds to
+// the sums left by the previous job. The scheduler reads the finished tile
+// while the core is idle.
 module conv_core #(
     parameter ARRAY_SIZE = 4,
     parameter BIT_WIDTH = 8,

@@ -107,18 +107,21 @@ module conv_accelerator #(
   // A tile needs extent_i*((tile_q-1)*stride_w+extent_j) input words/channel.
   // Thus q_limit=min(OUTPUT_DEPTH,
   //   1+floor((floor(INPUT_DEPTH/extent_i)-extent_j)/stride_w)).
+  // With a 3x3 kernel, unit dilation, no padding, and horizontal stride 2,
+  // the first four windows start at columns 0, 2, 4, 6. They span 9 columns, so
+  // the patch needs 3 x 9 = 27 words per channel before clipping.
   // Fallback uses one-tap extents when a full footprint cannot fit.
   reg [63:0] plan_c,plan_q,plan_temp;
-  // NCHW planner temporaries: spatial_rows/min_cols count coarse R/S blocks;
-  // spatial_footprint is their product; input_channels/kernel_channels are fit
-  // bounds, not the descriptor C. bounded_c is the selected maximum C chunk;
-  // groups counts its ARRAY_SIZE-wide CRS groups. Other wrappers retain these
-  // declarations but do not use this swizzled-storage planning path.
+  // Only the NCHW variant uses these seven registers to size its input banks.
   reg [63:0] spatial_rows,min_cols,spatial_footprint,input_channels,kernel_channels,bounded_c,groups;
   wire job_div_done;
   wire [63:0] job_quotient,job_remainder;
   reg [63:0] job_numerator,job_denominator;
   reg job_division;
+  // JOB_SETUP uses the same step numbers to save each division result.
+  // Step 1 bounds the channels per kernel bank. Step 2 finds the input
+  // columns per bank at the chosen patch height. Step 3 converts the
+  // remaining input columns to output columns at stride_j.
   always @* begin
     job_numerator=0;job_denominator=1;job_division=0;
     case(job_step)
@@ -131,11 +134,10 @@ module conv_accelerator #(
     .clk(clk),.clear(!nrst || state!=JOB_SETUP),.start(state==JOB_SETUP && job_division && !job_pending),
     .numerator(job_numerator),.denominator(job_denominator),.done(job_div_done),.quotient(job_quotient),.remainder(job_remainder));
 
-  // Clip a real input rectangle to the image. Local padding is the distance
-  // from the requested origin to its clipped origin. No padded pixels are DMA'd.
-  // Requested input rectangle may extend beyond the image. Clip its real pixels
-  // to [0,H) x [0,W); local padding reconstructs the missing zeros in the core.
-  // end_i/end_j are exclusive bounds. Never DMA synthetic padding values.
+  // Intersect the requested rectangle with [0,H) x [0,W).
+  // raw_i/raw_j are inclusive starts. end_i/end_j are exclusive ends.
+  // At the left edge of a 5-column image, a window covering columns -1, 0, 1
+  // reads columns 0 and 1 from memory. The core supplies zero for column -1.
   wire signed [63:0] raw_i=output_row_origin+tap_i_offset;
   wire signed [63:0] raw_j=output_col_origin+tap_j_offset;
   wire signed [63:0] end_i=raw_i+$signed(tap_mode?64'd1:extent_i);
