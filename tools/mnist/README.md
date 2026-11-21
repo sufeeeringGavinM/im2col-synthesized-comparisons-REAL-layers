@@ -9,7 +9,7 @@ spatial convolutions and two Dense layers, using hardware ReLU on completed writ
 
 ```bash
 python3 tools/mnist/run.py --stage py_sim
-python3 tools/mnist/run.py --stage rtl --samples 3 --directed
+python3 tools/mnist/run.py --stage rtl --samples 20 --directed
 ```
 
 The original dense workload is available through `--model dense`. The commands

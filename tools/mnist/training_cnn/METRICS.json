@@ -192,5 +192,11 @@
     "epoch": 34,
     "float_test_accuracy": 0.9859,
     "integer_test_accuracy": 0.9856
+  },
+  "replay_export": {
+    "updated_notebook_sha256": "83c37989173e48ede3482c96101fdf9b9fe8a9e9bae65a0040d1f7311d5bcc54",
+    "sample_count": 20,
+    "selection": "Identical to the original dense MNIST RTL test indices",
+    "source": "Replayed the notebook integer layer function with the unchanged epoch-17 parameters"
   }
 }

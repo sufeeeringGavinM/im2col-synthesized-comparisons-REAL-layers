@@ -110,7 +110,7 @@ Optional flags:
 | Flag | Purpose |
 |---|---|
 | `--variant NHWC` or `--variant NCHW` | Simulate one RTL implementation |
-| `--samples 3 --directed` | Run all retained CNN images and directed cases |
+| `--samples 20 --directed` | Run all retained CNN images and directed cases |
 | `--model dense` | Run the original dense MNIST model and its retained images |
 | `--label 7` | Record the expected digit for a custom image |
 | `--out-dir runs/my_run` | Choose a new output folder |
@@ -156,7 +156,8 @@ before test evaluation and calibrated on the 48,000 training images.
 The selected checkpoint reached **98.65% floating-point and 98.62% INT8 accuracy**
 on 10,000 test images, a **0.03 percentage-point** drop. The independent
 integer reference matched every final score. Both RTL layouts matched all
-2,106 values per image for three selected images and classified each correctly.
+2,106 values per image for the same 20 test indices used in the dense baseline.
+Each layout classified 20/20 correctly on that subset.
 See [training metrics](tools/mnist/training_cnn/METRICS.json) and
 [current validation](reports/mnist_cnn_relu/README.md).
 
@@ -223,7 +224,7 @@ annotation coverage and tool warnings.
 ## Validation and provenance
 
 The notebook's INT8 inference matches an independent reference on the complete
-test set. Both RTL implementations pass three trained-image cases and three
+test set. Both RTL implementations pass 20 trained-image cases and three
 directed controls. The original dense runner also passes a retained case on each
 layout. All four native post-synthesis runs matched RTL outputs and cycle counts. See [current results](reports/mnist_cnn_relu/README.md)
 for source hashes, configuration, per-layer counters and report provenance.

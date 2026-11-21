@@ -35,7 +35,7 @@
     "tiled/NHWC/rtl/systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
     "tiled/NHWC/rtl/weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037",
     "tools/mnist/reference.py": "df0c977eca164ae6a37e7a0f1c14bfee8c9734f918e50143f13bde1bf8e43f71",
-    "tools/mnist/run.py": "6c2b487bf1a3382e3f06ac21a390b02ec368ef40f2a1324ca28b3157a8f2dea0",
+    "tools/mnist/run.py": "2c7f747abfd04bd5ae139b38ad059d3001dc6dd1b639a224c505ce0c4700128f",
     "tools/mnist/tb_mnist.v": "470341c6219c6d2bf50350644982ce19c4c33b8307c9a22dc3c6292dc50f96e8",
     "tools/mnist/training/integer_tensors.npz": "16f29b959ac19598bd62bb6a4d1fa79511ec44839258ab4fb5b5adb0688b4406",
     "tools/mnist/training/mnist_quantized_int8.npz": "b67d5a2dbc18778ccf969086b0af70606b921e327845896df8f519943c290cde",
@@ -43,7 +43,7 @@
     "tools/mnist/training/rtl_samples.npz": "c3ee9d1bd01ed446be811c65b66233fcf630b152696eecfb0f6c65282aefb319",
     "tools/mnist/training/test_predictions.npz": "54c2156a32ffaf9d1e284f334601f0a3d45b4ac410f41591fa73f362230253ae",
     "tools/mnist/training_cnn/mnist_quantized_int8.npz": "8d0b0998e526ab1ac2991be70a4a7a1e68a5a4380d9d0e641357bfa6debea928",
-    "tools/mnist/training_cnn/rtl_samples.npz": "88ce25bdbc2775404fb0277ed8df5e5dddeb3d0c72e64f93938b5aa6e038c5dc",
+    "tools/mnist/training_cnn/rtl_samples.npz": "86ae622a7f334ec24fa2e74283400009c3f70c147ce080abe62217ffbf0ff488",
     "tools/mnist/training_cnn/test_predictions.npz": "584764bcfc9ff27edf6a9f54573da4190791ac518d3592ef908bb8f988676c4f",
     "tools/mnist/workload.py": "b156bb10be78b3e5d4d7e4bd8d8d8d620aeccb8a7b0157a51dcb974a85959dcb"
   }

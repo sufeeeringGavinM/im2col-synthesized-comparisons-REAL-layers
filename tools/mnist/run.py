@@ -51,7 +51,7 @@ def main():
     parser.add_argument('--stage', choices=['prepare', 'py_sim', 'rtl'], default='prepare')
     parser.add_argument('--variant', choices=['all', *ARCHES], default='all')
     parser.add_argument('--model', choices=['cnn', 'dense'], default='cnn')
-    parser.add_argument('--samples', type=int, default=1, help='First retained images (CNN: 1..3, dense: 1..20)')
+    parser.add_argument('--samples', type=int, default=1, help='First 1..20 retained images')
     parser.add_argument('--directed', action='store_true', help='Also check three reduction/bias edge cases')
     custom = parser.add_mutually_exclusive_group()
     custom.add_argument('--image', type=Path, help='Image auto-converted to grayscale and resized to 28x28; light digit on dark background; requires Pillow')
@@ -60,7 +60,7 @@ def main():
     parser.add_argument('--out-dir', type=Path, help='A new output directory (default: unique runs/mnist_<stage>_* folder)')
     parser.add_argument('--timeout', type=int, default=3600, help='Seconds per tool invocation')
     args = parser.parse_args()
-    max_samples = 3 if args.model == 'cnn' else 20
+    max_samples = 20
     if not 1 <= args.samples <= max_samples:
         parser.error(f'--samples must be 1..{max_samples} for {args.model}')
     if args.label is not None and not (args.image or args.input_tensor):

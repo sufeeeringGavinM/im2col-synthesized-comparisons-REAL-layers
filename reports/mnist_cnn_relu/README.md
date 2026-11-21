@@ -1,6 +1,6 @@
 # Florida MNIST CNN results
 
-CNN with combinational writeback ReLU on the 10×10 NHWC and two-slot NCHW accelerators. The selected epoch-17 checkpoint achieved 98.65% float and 98.62% INT8 accuracy on 10,000 images. Both layouts matched all 2,106 values per image in three four-state RTL replays. The host ReLU controls matched hardware ReLU outputs and cycle counts.
+CNN with combinational writeback ReLU on the 10×10 NHWC and two-slot NCHW accelerators. The selected epoch-17 checkpoint achieved 98.65% float and 98.62% INT8 accuracy on 10,000 images. Both layouts matched all 2,106 values per image in 20 four-state RTL replays and classified 20/20 correctly per layout. Each layout also passed three directed cases. The selected test indices match the dense baseline. The host ReLU controls matched hardware ReLU outputs and cycle counts.
 
 - [Notebook](../../tools/mnist/MNIST_Training_Test_3_CNN.ipynb) and [training metrics](../../tools/mnist/training_cnn/METRICS.json)
 - [Full-test-set integer check](integer_validation.json), [RTL validation](rtl_results.json) and [layer phases](phase_cycles.csv)
