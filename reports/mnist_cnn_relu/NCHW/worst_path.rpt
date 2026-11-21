@@ -1,0 +1,319 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2026 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2026.1 (win64) Build 6511674 Tue Jun 16 11:02:23 MDT 2026
+| Date         : Thu Nov 19 23:53:14 2026
+| Host         : root running 64-bit major release  (build 9200)
+| Command      : report_timing -of_objects {{u_accelerator/tap_mode_reg/C --> u_accelerator/p_0_out__0/A[16]}} -file worst_path.rpt
+| Design       : conv_chain
+| Device       : 7a200t-sbg484
+| Speed File   : -1  PRODUCTION 1.23 2018-06-13
+| Design State : Synthesized
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Report
+
+Slack (VIOLATED) :        -17.618ns  (required time - arrival time)
+  Source:                 u_accelerator/tap_mode_reg/C
+                            (rising edge-triggered cell FDRE clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Destination:            u_accelerator/p_0_out__0/A[16]
+                            (rising edge-triggered cell DSP48E1 clocked by clk  {rise@0.000ns fall@10.000ns period=20.000ns})
+  Path Group:             clk
+  Path Type:              Setup (Max at Slow Process Corner)
+  Requirement:            20.000ns  (clk rise@20.000ns - clk rise@0.000ns)
+  Data Path Delay:        33.812ns  (logic 21.440ns (63.409%)  route 12.372ns (36.591%))
+  Logic Levels:           68  (CARRY4=54 DSP48E1=2 LUT2=3 LUT3=3 LUT4=1 LUT5=3 LUT6=2)
+  Clock Path Skew:        -0.049ns (DCD - SCD + CPR)
+    Destination Clock Delay (DCD):    0.924ns = ( 20.924 - 20.000 )
+    Source Clock Delay      (SCD):    0.973ns
+    Clock Pessimism Removal (CPR):    0.000ns
+  Clock Uncertainty:      0.035ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter     (TSJ):    0.071ns
+    Total Input Jitter      (TIJ):    0.000ns
+    Discrete Jitter          (DJ):    0.000ns
+    Phase Error              (PE):    0.000ns
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+                         (clock clk rise edge)        0.000     0.000 r  <hidden>
+                                                      0.000     0.000 r  clk
+                         net (fo=18489, unset)        0.973     0.973    u_accelerator/clk
+                         FDRE                                         r  u_accelerator/tap_mode_reg/C
+  -------------------------------------------------------------------    -------------------
+                         FDRE (Prop_fdre_C_Q)         0.456     1.429 r  u_accelerator/tap_mode_reg/Q
+                         net (fo=154, unplaced)       0.580     2.009    u_accelerator/tap_mode_reg_n_0
+                                                                      r  u_accelerator/slot_delta[3]__1_i_22/I0
+                         LUT2 (Prop_lut2_I0_O)        0.321     2.330 r  u_accelerator/slot_delta[3]__1_i_22/O
+                         net (fo=1, unplaced)         0.000     2.330    u_accelerator/slot_delta[3]__1_i_22_n_0
+                                                                      r  u_accelerator/slot_delta[3]__1_i_5__0/DI[1]
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.547     2.877 r  u_accelerator/slot_delta[3]__1_i_5__0/CO[3]
+                         net (fo=1, unplaced)         0.009     2.886    u_accelerator/slot_delta[3]__1_i_5__0_n_0
+                                                                      r  u_accelerator/slot_delta[3]__1_i_4__0/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     3.003 r  u_accelerator/slot_delta[3]__1_i_4__0/CO[3]
+                         net (fo=1, unplaced)         0.000     3.003    u_accelerator/slot_delta[3]__1_i_4__0_n_0
+                                                                      r  u_accelerator/slot_delta[3]__1_i_3__0/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     3.120 r  u_accelerator/slot_delta[3]__1_i_3__0/CO[3]
+                         net (fo=1, unplaced)         0.000     3.120    u_accelerator/slot_delta[3]__1_i_3__0_n_0
+                                                                      r  u_accelerator/slot_delta[3]__1_i_2__0/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117     3.237 r  u_accelerator/slot_delta[3]__1_i_2__0/CO[3]
+                         net (fo=1, unplaced)         0.000     3.237    u_accelerator/slot_delta[3]__1_i_2__0_n_0
+                                                                      r  u_accelerator/slot_delta[3]__1_i_1__0/CI
+                         CARRY4 (Prop_carry4_CI_O[0])
+                                                      0.232     3.469 r  u_accelerator/slot_delta[3]__1_i_1__0/O[0]
+                         net (fo=1, unplaced)         0.800     4.269    u_accelerator/slot_delta[3]__1_i_1__0_n_7
+                                                                      r  u_accelerator/slot_delta[3]__1/A[16]
+                         DSP48E1 (Prop_dsp48e1_A[16]_PCOUT[47])
+                                                      4.211     8.480 r  u_accelerator/slot_delta[3]__1/PCOUT[47]
+                         net (fo=1, unplaced)         0.055     8.535    u_accelerator/slot_delta[3]__1_n_106
+                                                                      r  u_accelerator/slot_delta[3]__2/PCIN[47]
+                         DSP48E1 (Prop_dsp48e1_PCIN[47]_P[0])
+                                                      1.518    10.053 r  u_accelerator/slot_delta[3]__2/P[0]
+                         net (fo=2, unplaced)         0.800    10.852    u_accelerator/slot_delta[3]__2_n_105
+                                                                      r  u_accelerator/p_0_out__0_i_1688/I0
+                         LUT2 (Prop_lut2_I0_O)        0.124    10.976 r  u_accelerator/p_0_out__0_i_1688/O
+                         net (fo=1, unplaced)         0.000    10.976    u_accelerator/p_0_out__0_i_1688_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1317/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    11.509 r  u_accelerator/p_0_out__0_i_1317/CO[3]
+                         net (fo=1, unplaced)         0.009    11.518    u_accelerator/p_0_out__0_i_1317_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1331/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    11.635 r  u_accelerator/p_0_out__0_i_1331/CO[3]
+                         net (fo=1, unplaced)         0.000    11.635    u_accelerator/p_0_out__0_i_1331_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1336/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    11.752 r  u_accelerator/p_0_out__0_i_1336/CO[3]
+                         net (fo=1, unplaced)         0.000    11.752    u_accelerator/p_0_out__0_i_1336_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1339/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    11.869 r  u_accelerator/p_0_out__0_i_1339/CO[3]
+                         net (fo=1, unplaced)         0.000    11.869    u_accelerator/p_0_out__0_i_1339_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1349/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    11.986 r  u_accelerator/p_0_out__0_i_1349/CO[3]
+                         net (fo=1, unplaced)         0.000    11.986    u_accelerator/p_0_out__0_i_1349_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_960/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.103 r  u_accelerator/p_0_out__0_i_960/CO[3]
+                         net (fo=1, unplaced)         0.000    12.103    u_accelerator/p_0_out__0_i_960_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_556/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.220 r  u_accelerator/p_0_out__0_i_556/CO[3]
+                         net (fo=1, unplaced)         0.000    12.220    u_accelerator/p_0_out__0_i_556_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_329/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.337 r  u_accelerator/p_0_out__0_i_329/CO[3]
+                         net (fo=1, unplaced)         0.000    12.337    u_accelerator/p_0_out__0_i_329_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_208/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.454 r  u_accelerator/p_0_out__0_i_208/CO[3]
+                         net (fo=1, unplaced)         0.000    12.454    u_accelerator/p_0_out__0_i_208_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_118/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.571 r  u_accelerator/p_0_out__0_i_118/CO[3]
+                         net (fo=1, unplaced)         0.000    12.571    u_accelerator/p_0_out__0_i_118_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_54/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    12.688 r  u_accelerator/p_0_out__0_i_54/CO[3]
+                         net (fo=1, unplaced)         0.000    12.688    u_accelerator/p_0_out__0_i_54_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_20/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331    13.019 r  u_accelerator/p_0_out__0_i_20/O[3]
+                         net (fo=739, unplaced)       0.758    13.777    u_accelerator/p_11_in
+                                                                      r  u_accelerator/p_0_out__0_i_762/I1
+                         LUT3 (Prop_lut3_I1_O)        0.307    14.084 r  u_accelerator/p_0_out__0_i_762/O
+                         net (fo=86, unplaced)        0.545    14.629    u_accelerator/p_0_out__0_i_762_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_882/I3
+                         LUT6 (Prop_lut6_I3_O)        0.124    14.753 r  u_accelerator/p_0_out__0_i_882/O
+                         net (fo=10, unplaced)        0.682    15.435    u_accelerator/p_0_out__0_i_882_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_3344/DI[1]
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.520    15.955 r  u_accelerator/p_0_out__0_i_3344/CO[3]
+                         net (fo=1, unplaced)         0.000    15.955    u_accelerator/p_0_out__0_i_3344_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_3260/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.072 r  u_accelerator/p_0_out__0_i_3260/CO[3]
+                         net (fo=1, unplaced)         0.000    16.072    u_accelerator/p_0_out__0_i_3260_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_3170/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.189 r  u_accelerator/p_0_out__0_i_3170/CO[3]
+                         net (fo=1, unplaced)         0.000    16.189    u_accelerator/p_0_out__0_i_3170_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_3054/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.306 r  u_accelerator/p_0_out__0_i_3054/CO[3]
+                         net (fo=1, unplaced)         0.000    16.306    u_accelerator/p_0_out__0_i_3054_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_2884/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.423 r  u_accelerator/p_0_out__0_i_2884/CO[3]
+                         net (fo=1, unplaced)         0.000    16.423    u_accelerator/p_0_out__0_i_2884_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_2687/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.540 r  u_accelerator/p_0_out__0_i_2687/CO[3]
+                         net (fo=1, unplaced)         0.000    16.540    u_accelerator/p_0_out__0_i_2687_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_2466/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.657 r  u_accelerator/p_0_out__0_i_2466/CO[3]
+                         net (fo=1, unplaced)         0.000    16.657    u_accelerator/p_0_out__0_i_2466_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_2236/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.774 r  u_accelerator/p_0_out__0_i_2236/CO[3]
+                         net (fo=1, unplaced)         0.000    16.774    u_accelerator/p_0_out__0_i_2236_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1924/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    16.891 r  u_accelerator/p_0_out__0_i_1924/CO[3]
+                         net (fo=1, unplaced)         0.000    16.891    u_accelerator/p_0_out__0_i_1924_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1605/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.008 r  u_accelerator/p_0_out__0_i_1605/CO[3]
+                         net (fo=1, unplaced)         0.000    17.008    u_accelerator/p_0_out__0_i_1605_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1245/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.125 r  u_accelerator/p_0_out__0_i_1245/CO[3]
+                         net (fo=1, unplaced)         0.000    17.125    u_accelerator/p_0_out__0_i_1245_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1277/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.242 r  u_accelerator/p_0_out__0_i_1277/CO[3]
+                         net (fo=1, unplaced)         0.000    17.242    u_accelerator/p_0_out__0_i_1277_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_871/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.359 r  u_accelerator/p_0_out__0_i_871/CO[3]
+                         net (fo=1, unplaced)         0.000    17.359    u_accelerator/p_0_out__0_i_871_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_754/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.476 r  u_accelerator/p_0_out__0_i_754/CO[3]
+                         net (fo=1, unplaced)         0.000    17.476    u_accelerator/p_0_out__0_i_754_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1302/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.593 r  u_accelerator/p_0_out__0_i_1302/CO[3]
+                         net (fo=1, unplaced)         0.000    17.593    u_accelerator/p_0_out__0_i_1302_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1441/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    17.710 f  u_accelerator/p_0_out__0_i_1441/CO[3]
+                         net (fo=108, unplaced)       1.019    18.729    u_accelerator/p_0_out__0_i_1441_n_0
+                                                                      f  u_accelerator/p_0_out__0_i_1069/I0
+                         LUT5 (Prop_lut5_I0_O)        0.124    18.853 r  u_accelerator/p_0_out__0_i_1069/O
+                         net (fo=1, unplaced)         0.639    19.492    u_accelerator/p_0_out__0_i_1069_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_579/DI[1]
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.520    20.012 r  u_accelerator/p_0_out__0_i_579/CO[3]
+                         net (fo=1, unplaced)         0.000    20.012    u_accelerator/p_0_out__0_i_579_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_564/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.129 r  u_accelerator/p_0_out__0_i_564/CO[3]
+                         net (fo=1, unplaced)         0.000    20.129    u_accelerator/p_0_out__0_i_564_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_561/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.246 r  u_accelerator/p_0_out__0_i_561/CO[3]
+                         net (fo=1, unplaced)         0.000    20.246    u_accelerator/p_0_out__0_i_561_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1174/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.363 r  u_accelerator/p_0_out__0_i_1174/CO[3]
+                         net (fo=1, unplaced)         0.000    20.363    u_accelerator/p_0_out__0_i_1174_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_3012/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.480 r  u_accelerator/p_0_out__0_i_3012/CO[3]
+                         net (fo=1, unplaced)         0.000    20.480    u_accelerator/p_0_out__0_i_3012_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_2841/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.597 r  u_accelerator/p_0_out__0_i_2841/CO[3]
+                         net (fo=1, unplaced)         0.000    20.597    u_accelerator/p_0_out__0_i_2841_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_2640/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    20.714 r  u_accelerator/p_0_out__0_i_2640/CO[3]
+                         net (fo=1, unplaced)         0.000    20.714    u_accelerator/p_0_out__0_i_2640_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_2414/CI
+                         CARRY4 (Prop_carry4_CI_O[2])
+                                                      0.256    20.970 r  u_accelerator/p_0_out__0_i_2414/O[2]
+                         net (fo=3, unplaced)         0.470    21.440    u_accelerator/p_0_out__0_i_2414_n_5
+                                                                      r  u_accelerator/p_0_out__0_i_2168/I0
+                         LUT3 (Prop_lut3_I0_O)        0.301    21.741 r  u_accelerator/p_0_out__0_i_2168/O
+                         net (fo=1, unplaced)         0.639    22.380    u_accelerator/p_0_out__0_i_2168_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1846/DI[1]
+                         CARRY4 (Prop_carry4_DI[1]_CO[3])
+                                                      0.520    22.900 r  u_accelerator/p_0_out__0_i_1846/CO[3]
+                         net (fo=1, unplaced)         0.000    22.900    u_accelerator/p_0_out__0_i_1846_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_1474/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331    23.231 r  u_accelerator/p_0_out__0_i_1474/O[3]
+                         net (fo=3, unplaced)         0.636    23.867    u_accelerator/p_0_out__0_i_1474_n_4
+                                                                      r  u_accelerator/p_0_out__0_i_1138/I0
+                         LUT3 (Prop_lut3_I0_O)        0.307    24.174 r  u_accelerator/p_0_out__0_i_1138/O
+                         net (fo=1, unplaced)         0.333    24.507    u_accelerator/p_0_out__0_i_1138_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_609/DI[0]
+                         CARRY4 (Prop_carry4_DI[0]_CO[3])
+                                                      0.550    25.057 r  u_accelerator/p_0_out__0_i_609/CO[3]
+                         net (fo=1, unplaced)         0.000    25.057    u_accelerator/p_0_out__0_i_609_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_405/CI
+                         CARRY4 (Prop_carry4_CI_O[1])
+                                                      0.337    25.394 r  u_accelerator/p_0_out__0_i_405/O[1]
+                         net (fo=3, unplaced)         0.330    25.724    u_accelerator/p_0_out__0_i_405_n_6
+                                                                      r  u_accelerator/p_0_out__0_i_607/I0
+                         LUT2 (Prop_lut2_I0_O)        0.306    26.030 r  u_accelerator/p_0_out__0_i_607/O
+                         net (fo=1, unplaced)         0.000    26.030    u_accelerator/p_0_out__0_i_607_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_400/S[1]
+                         CARRY4 (Prop_carry4_S[1]_CO[3])
+                                                      0.533    26.563 r  u_accelerator/p_0_out__0_i_400/CO[3]
+                         net (fo=1, unplaced)         0.000    26.563    u_accelerator/p_0_out__0_i_400_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_234/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331    26.894 r  u_accelerator/p_0_out__0_i_234/O[3]
+                         net (fo=3, unplaced)         0.636    27.530    u_accelerator/p_0_out__0_i_234_n_4
+                                                                      r  u_accelerator/p_0_out__0_i_223/I0
+                         LUT4 (Prop_lut4_I0_O)        0.307    27.837 r  u_accelerator/p_0_out__0_i_223/O
+                         net (fo=1, unplaced)         0.333    28.170    u_accelerator/p_0_out__0_i_223_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_135/DI[0]
+                         CARRY4 (Prop_carry4_DI[0]_CO[3])
+                                                      0.550    28.720 r  u_accelerator/p_0_out__0_i_135/CO[3]
+                         net (fo=1, unplaced)         0.000    28.720    u_accelerator/p_0_out__0_i_135_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_65/CI
+                         CARRY4 (Prop_carry4_CI_CO[1])
+                                                      0.179    28.899 r  u_accelerator/p_0_out__0_i_65/CO[1]
+                         net (fo=20, unplaced)        0.372    29.271    u_accelerator/p_0_out__0_i_65_n_2
+                                                                      r  u_accelerator/p_0_out__0_i_171/I4
+                         LUT6 (Prop_lut6_I4_O)        0.332    29.603 r  u_accelerator/p_0_out__0_i_171/O
+                         net (fo=1, unplaced)         0.665    30.268    u_accelerator/p_0_out__0_i_171_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_99/S[0]
+                         CARRY4 (Prop_carry4_S[0]_CO[3])
+                                                      0.637    30.905 r  u_accelerator/p_0_out__0_i_99/CO[3]
+                         net (fo=1, unplaced)         0.009    30.914    u_accelerator/p_0_out__0_i_99_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_88/CI
+                         CARRY4 (Prop_carry4_CI_CO[3])
+                                                      0.117    31.031 r  u_accelerator/p_0_out__0_i_88/CO[3]
+                         net (fo=1, unplaced)         0.000    31.031    u_accelerator/p_0_out__0_i_88_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_59/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331    31.362 r  u_accelerator/p_0_out__0_i_59/O[3]
+                         net (fo=3, unplaced)         0.636    31.998    u_accelerator/p_0_out__0_i_59_n_4
+                                                                      r  u_accelerator/p_0_out__0_i_70/I0
+                         LUT5 (Prop_lut5_I0_O)        0.302    32.300 r  u_accelerator/p_0_out__0_i_70/O
+                         net (fo=1, unplaced)         0.000    32.300    u_accelerator/p_0_out__0_i_70_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_26/DI[3]
+                         CARRY4 (Prop_carry4_DI[3]_CO[3])
+                                                      0.429    32.729 r  u_accelerator/p_0_out__0_i_26/CO[3]
+                         net (fo=1, unplaced)         0.000    32.729    u_accelerator/p_0_out__0_i_26_n_0
+                                                                      r  u_accelerator/p_0_out__0_i_18/CI
+                         CARRY4 (Prop_carry4_CI_O[3])
+                                                      0.331    33.060 r  u_accelerator/p_0_out__0_i_18/O[3]
+                         net (fo=1, unplaced)         0.618    33.678    u_accelerator/p_0_out__0_i_18_n_4
+                                                                      r  u_accelerator/p_0_out__0_i_1/I0
+                         LUT5 (Prop_lut5_I0_O)        0.307    33.985 r  u_accelerator/p_0_out__0_i_1/O
+                         net (fo=1, unplaced)         0.800    34.785    u_accelerator/floor_banks0_return__1[16]
+                         DSP48E1                                      r  u_accelerator/p_0_out__0/A[16]
+  -------------------------------------------------------------------    -------------------
+
+                         (clock clk rise edge)       20.000    20.000 r  <hidden>
+                                                      0.000    20.000 r  clk
+                         net (fo=18489, unset)        0.924    20.924    u_accelerator/clk
+                         DSP48E1                                      r  u_accelerator/p_0_out__0/CLK
+                         clock pessimism              0.000    20.924    <hidden>
+                         clock uncertainty           -0.035    20.889    <hidden>
+                         DSP48E1 (Setup_dsp48e1_CLK_A[16])
+                                                     -3.722    17.167    u_accelerator/p_0_out__0
+  -------------------------------------------------------------------
+                         required time                         17.167    <hidden>
+                         arrival time                         -34.785    <hidden>
+  -------------------------------------------------------------------
+                         slack                                -17.618    <hidden>

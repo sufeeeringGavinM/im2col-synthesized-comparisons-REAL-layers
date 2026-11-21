@@ -1,0 +1,37 @@
+s_input: 0.007874015748031496
+
+[conv1]
+  multiplier (dec): 2949987
+  multiplier (hex): 0x002d0363
+  weight_shape:     (16, 1, 8, 8) (KCRS)
+  stride:           (2, 2)
+  quantize:         1
+  relu:             1
+  right_shift:      31
+
+[conv2]
+  multiplier (dec): 2600691
+  multiplier (hex): 0x0027aef3
+  weight_shape:     (8, 16, 5, 5) (KCRS)
+  stride:           (2, 2)
+  quantize:         1
+  relu:             1
+  right_shift:      31
+
+[dense1]
+  multiplier (dec): 4658554
+  multiplier (hex): 0x0047157a
+  weight_shape:     (32, 128, 1, 1) (KCRS)
+  stride:           (1, 1)
+  quantize:         1
+  relu:             1
+  right_shift:      31
+
+[dense2]
+  multiplier (dec): 1
+  multiplier (hex): 0x00000001
+  weight_shape:     (10, 32, 1, 1) (KCRS)
+  stride:           (1, 1)
+  quantize:         0
+  relu:             0
+  right_shift:      0

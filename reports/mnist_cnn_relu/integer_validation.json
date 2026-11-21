@@ -1,0 +1,6 @@
+{
+  "status": "PASS",
+  "test_images": 10000,
+  "matches_all_integer_logits": true,
+  "hex_matches_npz_kcrs": true
+}

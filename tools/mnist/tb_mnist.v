@@ -2,7 +2,7 @@
 // AI assistance: Codex. Backing memory is a simulation model, not FPGA memory RTL.
 `timescale 1ns/1ps
 module tb_mnist;
-  parameter HOST_RELU=1;
+  parameter HOST_RELU=0;
   real clock_half_ns=5;
   initial if($value$plusargs("CLOCK_HALF_NS=%f",clock_half_ns)) begin end
   reg clk=0,nrst=0,descriptor_valid=0,descriptor_last;
@@ -11,12 +11,12 @@ module tb_mnist;
   reg [31:0] cfg_N,cfg_C,cfg_H,cfg_W,cfg_K,cfg_R,cfg_S,cfg_P,cfg_Q;
   reg [31:0] cfg_pad_i,cfg_pad_j,cfg_stride_i,cfg_stride_j,cfg_dilation_i,cfg_dilation_j;
   reg [31:0] cfg_input_base,cfg_kernel_base,cfg_output_base;
-  reg cfg_quantize,cfg_round_nearest,cfg_bias_enable;
+  reg cfg_quantize,cfg_round_nearest,cfg_bias_enable,cfg_relu_enable;
   reg [4:0] cfg_output_shift;
   reg [31:0] cfg_output_multiplier,cfg_bias_base;
   wire [31:0] mem_raddr,mem_waddr,mem_wdata;
   reg [31:0] mem_rdata;
-  reg [31:0] memory[0:199999],expected[0:5999],expected_post[0:5999],descriptors[0:80];
+  reg [31:0] memory[0:199999],expected[0:5999],expected_post[0:5999],descriptors[0:107];
   integer layer_count=2;
   integer writes[0:5999];
   integer layer,j,off=0,base,outputs,cycles=0,accepted=0,started;
@@ -58,9 +58,9 @@ module tb_mnist;
   end
   initial begin
     if($value$plusargs("LAYERS=%d",layer_count)) begin end
-    if(layer_count<1 || layer_count>3)$fatal(1,"Unsupported layer count");
+    if(layer_count<1 || layer_count>4)$fatal(1,"Unsupported layer count");
     if(!$value$plusargs("INIT=%s",init_file)||!$value$plusargs("DESC=%s",desc_file)||!$value$plusargs("EXPECTED=%s",expected_file))$fatal(1,"Missing fixture");
-    $readmemh(init_file,memory);$readmemh(desc_file,descriptors);$readmemh(expected_file,expected);
+    $readmemh(init_file,memory);$readmemh(desc_file,descriptors,0,layer_count*27-1);$readmemh(expected_file,expected);
     if(!$value$plusargs("POST=%s",post_file))$fatal(1,"Missing post-ReLU reference");
     $readmemh(post_file,expected_post);
     dump=$fopen("rtl_outputs.hex","w");
@@ -79,12 +79,13 @@ module tb_mnist;
       cfg_round_nearest=descriptors[layer*27+20];descriptor_last=descriptors[layer*27+21];
       cfg_output_multiplier=descriptors[layer*27+23];
       cfg_bias_enable=descriptors[layer*27+24];cfg_bias_base=descriptors[layer*27+25];
+      cfg_relu_enable=!HOST_RELU && descriptors[layer*27+26];
       base=cfg_output_base;outputs=descriptors[layer*27+22];
       wait(descriptor_ready);descriptor_valid=1;@(posedge clk);started=cycles;
       if(layer==0) begin window_start_time=$time; power_stage=1; end
       @(negedge clk);descriptor_valid=0;
       // Verify captured controls; attempted busy handshakes must be ignored.
-      cfg_bias_enable=~cfg_bias_enable;
+      cfg_bias_enable=~cfg_bias_enable;cfg_relu_enable=~cfg_relu_enable;
       cfg_bias_base=199999;cfg_input_base=199999;cfg_output_base=199999;cfg_C=0;
       cfg_output_multiplier=32'hdeadbeef;cfg_quantize=~cfg_quantize;
       cfg_output_shift=31;cfg_round_nearest=~cfg_round_nearest;descriptor_last=~descriptor_last;
@@ -97,7 +98,9 @@ module tb_mnist;
       if(writes_count!=outputs)$fatal(1,"Wrong completed write count");
       for(j=0;j<outputs;j=j+1) begin
         if(writes[j]!=1)$fatal(1,"Missing/duplicate completed output");
-        if(memory[base+j]!==expected[off+j])$fatal(1,"Layer%0d output%0d want%h got%h",layer,j,expected[off+j],memory[base+j]);
+        if(memory[base+j] !== (HOST_RELU ? expected[off+j] : expected_post[off+j]))
+          $fatal(1,"Layer%0d output%0d want%h got%h",layer,j,
+                 HOST_RELU ? expected[off+j] : expected_post[off+j],memory[base+j]);
         $fdisplay(raw_dump,"%08x",memory[base+j]);
         // Processor-offload stand-in: transform actual RTL writes, never goldens.
         // No simulated time is assigned; CPU offload latency/energy is unmeasured.

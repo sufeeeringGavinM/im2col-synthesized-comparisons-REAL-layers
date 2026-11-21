@@ -17,7 +17,7 @@ ARCHES = ['NHWC', 'NCHW']
 
 
 def verify():
-    identity = json.loads((ROOT / 'reports/current/source_identity.json').read_text())
+    identity = json.loads((Path(__file__).with_name('source_identity.json')).read_text())
     for name, digest in identity['files'].items():
         actual = hashlib.sha256((ROOT / name).read_bytes()).hexdigest()
         if actual != digest:
@@ -50,7 +50,8 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--stage', choices=['prepare', 'py_sim', 'rtl'], default='prepare')
     parser.add_argument('--variant', choices=['all', *ARCHES], default='all')
-    parser.add_argument('--samples', type=int, default=1, help='First 1..20 retained images')
+    parser.add_argument('--model', choices=['cnn', 'dense'], default='cnn')
+    parser.add_argument('--samples', type=int, default=1, help='First retained images (CNN: 1..3, dense: 1..20)')
     parser.add_argument('--directed', action='store_true', help='Also check three reduction/bias edge cases')
     custom = parser.add_mutually_exclusive_group()
     custom.add_argument('--image', type=Path, help='Image auto-converted to grayscale and resized to 28x28; light digit on dark background; requires Pillow')
@@ -59,8 +60,9 @@ def main():
     parser.add_argument('--out-dir', type=Path, help='A new output directory (default: unique runs/mnist_<stage>_* folder)')
     parser.add_argument('--timeout', type=int, default=3600, help='Seconds per tool invocation')
     args = parser.parse_args()
-    if not 1 <= args.samples <= 20:
-        parser.error('--samples must be 1..20')
+    max_samples = 3 if args.model == 'cnn' else 20
+    if not 1 <= args.samples <= max_samples:
+        parser.error(f'--samples must be 1..{max_samples} for {args.model}')
     if args.label is not None and not (args.image or args.input_tensor):
         parser.error('--label is for a custom image/input tensor')
     custom_input = None
@@ -89,23 +91,23 @@ def main():
         output = Path(tempfile.mkdtemp(prefix=f'mnist_{args.stage}_', dir=runs))
     print(f'Output directory: {output}', flush=True)
     (output / 'plan.json').write_text(json.dumps(dict(
-        stage=args.stage, samples=args.samples, directed=args.directed, custom_input=provenance,
+        stage=args.stage, model=args.model, samples=args.samples, directed=args.directed, custom_input=provenance,
         source_identity=identity), indent=2) + '\n')
     if args.stage == 'prepare':
         print('PASS: released source and fixture hashes match; no simulator launched')
         return
     if custom_input is not None:
-        tensors = np.load(Path(__file__).with_name('training') / 'integer_tensors.npz')
-        config = json.loads((Path(__file__).with_name('training') / 'quantization.json').read_text())['layers']
+        weights, biases, configs = workload.model_parameters(args.model)
         fixture = output / 'fixtures/custom'
-        workload.fixture(fixture, custom_input, [tensors[f'w{i}'] for i in range(len(config))],
-                         [tensors[f'b{i}'] for i in range(len(config))], config)
+        if args.model == 'cnn':
+            custom_input = custom_input.reshape(1, 28, 28)
+        workload.fixture(fixture, custom_input, weights, biases, configs)
         cases = [dict(id='custom', label=args.label, fixture=str(fixture))]
         if args.directed:
-            cases += [case for case in workload.fixtures(output / 'fixtures', 1)['quant']
+            cases += [case for case in workload.fixtures(output / 'fixtures', 1, args.model)['quant']
                       if case['label'] is None]
     else:
-        cases = workload.fixtures(output / 'fixtures', args.samples)['quant']
+        cases = workload.fixtures(output / 'fixtures', args.samples, args.model)['quant']
     if not args.directed:
         cases = [case for case in cases if case['label'] is not None or case['id'] == 'custom']
     results = []
@@ -116,7 +118,7 @@ def main():
             dest.mkdir(parents=True)
             # Fixtures evaluate the integer reference layer by layer, feeding
             # computed post-ReLU values into the next layer (not saved goldens).
-            shutil.copyfile(fixture / 'expected.hex', dest / 'raw_outputs.hex')
+            shutil.copyfile(fixture / 'post.hex', dest / 'raw_outputs.hex')
             shutil.copyfile(fixture / 'post.hex', dest / 'rtl_outputs.hex')
             raw = [int(word, 16) for word in (dest / 'raw_outputs.hex').read_text().split()]
             raw = [(value + (1 << 31)) % (1 << 32) - (1 << 31) for value in raw]
@@ -165,7 +167,7 @@ def main():
             raw = (raw + (1 << 31)) % (1 << 32) - (1 << 31)
             classification = case['label'] is not None or case['id'] == 'custom'
             prediction = int(raw[-10:].argmax()) if classification else None
-            if classification:
+            if classification and args.model == 'dense':
                 expected_cycles = json.loads((ROOT/'reports/current/cycles.json').read_text())[arch]['total_accelerator_cycles']
                 if measured['total_accelerator_cycles'] != expected_cycles:
                     raise RuntimeError('Released MNIST cycle count changed')

@@ -9,6 +9,7 @@ module tb_conv_chain;
   reg [31:0] cfg_input_base,cfg_kernel_base,cfg_output_base;
   wire [31:0] cfg_output_multiplier=32'd1,cfg_bias_base=32'd0;
   wire cfg_bias_enable=1'b0;
+  wire cfg_relu_enable=1'b0;
   reg cfg_quantize,cfg_round_nearest;reg [4:0] cfg_output_shift;
   wire [31:0] mem_raddr,mem_waddr,mem_wdata;reg [31:0] mem_rdata;
   reg [31:0] memory[0:39999],expected[0:5999],descriptors[0:68];

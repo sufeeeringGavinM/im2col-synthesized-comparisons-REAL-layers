@@ -1,4 +1,4 @@
-"""Model-independent INT8/ACC32 dense reference. AI assistance: Codex."""
+"""Model-independent INT8/ACC32 convolution and dense reference. AI assistance: Codex."""
 import numpy as np
 
 
@@ -24,11 +24,35 @@ def layer(x, weight, bias, multiplier=1, shift=0, quantize=False, relu=False):
     assert weight.min() >= -128 and weight.max() <= 127
     # Bound every prefix partial sum, not just the completed signed sum.
     prefix_bound = np.abs(x) @ np.abs(weight).T
-    sums = x @ weight.T
-    biased = wrap32(wrap32(sums) + bias)
-    stats = dict(max_abs_prefix_bound=int(prefix_bound.max()),
-                 accumulation_overflow_possible=int((prefix_bound > 2147483647).sum()),
-                 bias_wraps=int(((wrap32(sums) + bias) != biased).sum()),
+    output, stats = finish(x @ weight.T, bias, multiplier, shift, quantize, relu)
+    stats.update(max_abs_prefix_bound=int(prefix_bound.max()),
+                 accumulation_overflow_possible=int((prefix_bound > 2147483647).sum()))
+    return output, stats
+
+
+def conv_layer(x, weight, bias, stride, multiplier, shift, quantize, relu):
+    """Valid convolution on NCHW inputs and KCRS weights, summed one tap at a time."""
+    x = np.asarray(x, dtype=np.int64)
+    weight = np.asarray(weight, dtype=np.int64)
+    n, channels, h, w = x.shape
+    k, in_channels, r, s = weight.shape
+    if channels != in_channels:
+        raise ValueError(f"Input has {channels} channels, weights require {in_channels}")
+    si, sj = stride
+    p, q = (h - r) // si + 1, (w - s) // sj + 1
+    sums = np.zeros((n, p, q, k), dtype=np.int64)
+    for i in range(r):
+        for j in range(s):
+            pixels = x[:, :, i:i + p * si:si, j:j + q * sj:sj].transpose(0, 2, 3, 1)
+            sums += pixels @ weight[:, :, i, j].T
+    output, stats = finish(sums, bias, multiplier, shift, quantize, relu)
+    return output.transpose(0, 3, 1, 2), stats
+
+
+def finish(sums, bias, multiplier, shift, quantize, relu):
+    with_bias = wrap32(sums) + bias
+    biased = wrap32(with_bias)
+    stats = dict(bias_wraps=int((with_bias != biased).sum()),
                  biased_min=int(biased.min()), biased_max=int(biased.max()))
     if quantize:
         assert 0 <= multiplier <= 0xffffffff and 0 <= shift <= 31

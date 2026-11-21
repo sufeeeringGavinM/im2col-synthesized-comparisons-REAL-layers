@@ -1,30 +1,39 @@
 # Implicit-Im2col Accelerator
 
-FPGA convolution accelerators implementing **NHWC and NCHW**, with descriptor-based layer chaining, per-output-channel bias and configurable output quantization.
+FPGA convolution accelerators implementing **NHWC and NCHW**, with descriptor-based layer chaining, per-output-channel bias, configurable output quantization and combinational ReLU.
 
 Both implementations use a 10×10 systolic array, signed INT8 inputs/weights, wrapped INT32 accumulation, 32-bit configuration/external addresses and 8-bit local SRAM addresses. Base SRAM capacity is 15 KiB: 2.5 KiB input, 2.5 KiB kernel and 10 KiB output. Dense layers map to 1×1 convolutions.
 
 <!-- CURRENT_SUMMARY_START -->
-The table combines hardware comparisons with a trained **784→128→10 MNIST network**. Quantization includes bias, scaling, rounding/shift and saturation. Hidden ReLU runs in software/testbench; final scores retain biased INT32 precision.
+The table combines hardware comparisons with a trained **8,706-parameter MNIST CNN**.
+The CNN uses quantization and combinational ReLU on completed hidden-layer writes.
+Final scores retain biased INT32 precision.
 
-| Metric | NHWC (No quant logic → With quant logic) | NCHW (No quant logic → With quant logic) |
+| Metric | NHWC (Quantization → Quantization + ReLU) | NCHW (Quantization → Quantization + ReLU) |
 |---|---:|---:|
-| LUTs | 18,792 → 21,315 (+13.426%) | 61,055 → 61,703 (+1.061%) |
-| Flip-flops | 9,900 → 10,293 (+3.970%) | 17,995 → 18,083 (+0.489%) |
-| BRAM tiles | 15 → 10 (-33.333%) | 15 → 15 (+0.000%) |
-| DSPs | 111 → 115 (+3.604%) | 206 → 210 (+1.942%) |
-| Estimated Fmax | 38.583 MHz → 36.015 MHz (-6.656%) | 26.588 MHz → 26.619 MHz (+0.117%) |
-| MNIST accelerator cycles | 264,976 | 299,366 |
-| Latency at 20 MHz | 13.2488 ms | 14.9683 ms |
-| Power at 20 MHz (dynamic / static / total) | 12 / 123 / 135 mW | 11 / 123 / 134 mW |
-| Inference energy at 20 MHz | 1.789 mJ | 2.006 mJ |
-| Latency at own Fmax | 7.3573 ms | 11.2466 ms |
-| Power at own Fmax (dynamic / static / total) | 22 / 123 / 145 mW | 15 / 123 / 138 mW |
-| Inference energy at own Fmax | 1.067 mJ | 1.552 mJ |
+| LUTs | 21,315 → 21,455 (+0.66%) | 61,703 → 61,356 (-0.56%) |
+| Flip-flops | 10,293 → 10,297 (+0.04%) | 18,083 → 18,188 (+0.58%) |
+| BRAM tiles | 10 → 10 (+0.00%) | 15 → 15 (+0.00%) |
+| DSPs | 115 → 115 (+0.00%) | 210 → 215 (+2.38%) |
+| Estimated Fmax | 36.015 MHz → 34.942 MHz (-2.98%) | 26.619 MHz → 26.583 MHz (-0.14%) |
+| MNIST accelerator cycles | 132,353 | 96,169 |
+| Latency at 20 MHz | 6.6177 ms | 4.8084 ms |
+| Power at 20 MHz (dynamic / static / total) | 14 / 123 / 137 mW | 12 / 123 / 135 mW |
+| Inference energy at 20 MHz | 0.907 mJ | 0.649 mJ |
+| Latency at own Fmax | 3.7879 ms | 3.6177 ms |
+| Power at own Fmax (dynamic / static / total) | 25 / 123 / 147 mW | 16 / 123 / 139 mW |
+| Inference energy at own Fmax | 0.557 mJ | 0.503 mJ |
 
-Arrows show **unquantized → quantized**, with percentage change relative to the unquantized value. Cycle, latency, power and energy rows describe the accelerator with quantization logic; matching full-model measurements are unavailable for the raw-output baseline. Native Fmax analysis uses 27.766 ns for NHWC and 37.568 ns for NCHW (36.015 and 26.618 MHz); NCHW's 37.567 ns estimated minimum period rounds up by 1 ps to match simulator clock precision. Latency/energy use the actual simulated clock. The unquantized baseline also predates descriptor chaining, so hardware changes include wrapper and mapping effects.
+Arrows show **quantization only → quantization with ReLU**, with percentage change
+relative to the quantization-only design. Cycle, latency, power and energy rows
+describe the CNN on the ReLU-enabled design. The 20 MHz row uses a common
+50 ns period. Individual estimated-Fmax rows use the actual simulated periods
+of 28.620 ns for NHWC and 37.618 ns for NCHW.
 
-Latency counts accelerator work; energy includes two descriptor-gap cycles and a 100 ps netlist propagation offset. Software processing and external-memory energy are excluded. All clocks and power are post-synthesis estimates, without routed timing closure or board validation.
+Latency counts accelerator work. Energy uses the native activity window, which
+also includes six descriptor-gap cycles and a 100 ps netlist propagation offset.
+External-memory and software energy are excluded. Timing and power are
+post-synthesis estimates.
 
 <!-- CURRENT_SUMMARY_END -->
 
@@ -40,26 +49,30 @@ Tensor files use NCHW inputs, KCRS weights and NKPQ outputs in both implementati
 Completed outputs pass through:
 
 ```text
-INT32 accumulator → optional INT32 bias → scale multiply → round/shift → INT8 clamp
+INT32 accumulator → optional INT32 bias → scale multiply → round/shift → INT8 clamp → optional ReLU
 ```
 
 ```python
 biased = wrap_int32(accumulator + (bias[channel] if bias_enabled else 0))
 product = biased * multiplier
 output = saturate_int8(round_shift(product, shift)) if quantize else biased
+output = max(0, output) if relu_enabled else output
 ```
 
 The multiplier is an unsigned 32-bit numerator, with scale approximated by `multiplier / 2**shift`. A full signed 64-bit product and a wider rounding intermediate preserve precision before narrowing. Shift is 0–31; rounding selects arithmetic floor or nearest with ties away from zero. Quantization assumes symmetric signed integers with zero point zero; arbitrary affine zero points and per-channel multipliers are outside this implementation.
 
-Bias and requantization are independent descriptor controls. **Disabling requantization retains optional bias addition**, producing raw signed32 values; disable both to obtain the unmodified accumulator. This lets the MNIST final layer retain bias without narrowing its scores.
+Bias, requantization and ReLU are independent descriptor controls. **Disabling requantization retains optional bias addition**, producing raw signed32 values; disable bias and ReLU as well to obtain the unmodified accumulator. This lets the MNIST final layer retain bias without narrowing its scores.
 
-Partial sums stay INT32 across reduction jobs. Output processing is shared and applied only on completed external writes. Each external word contains one sign-extended INT8 value or one raw signed32 value; outputs are not packed. Nonlinear operations, including ReLU, run in testbench/software on actual accelerator outputs.
+Partial sums stay INT32 across reduction jobs. Output processing is shared and applied only on completed external writes. Each external word contains one sign-extended INT8 value or one raw signed32 value; outputs are not packed. The descriptor's `cfg_relu_enable` is captured at layer acceptance. ReLU
+uses a combinational sign clamp on completed writes and adds zero cycles in
+the matched CNN check. It also works on signed32 output when requantization is
+bypassed.
 
 See [file and memory formats](tools/mnist/MEMORY_FORMAT.md) for parameter loading and output layout.
 
 ## Layer chaining and memory
 
-The `conv_chain` top accepts a layer when `descriptor_valid && descriptor_ready`. The descriptor supplies geometry, input/kernel/output bases, bias enable/base, quantization enable, multiplier, shift, rounding mode and `descriptor_last`.
+The `conv_chain` top accepts a layer when `descriptor_valid && descriptor_ready`. The descriptor supplies geometry, input/kernel/output bases, bias enable/base, quantization enable, multiplier, shift, rounding mode, ReLU enable and `descriptor_last`.
 
 The wrapper launches the tiled `conv_accelerator`, retains the final-layer flag and keeps `chain_busy` asserted between descriptors. Each layer finishes all output writes before another is accepted; no reset is needed between layers. The producer holds each descriptor until acceptance and supplies the next input base matching the previous output region.
 
@@ -97,101 +110,134 @@ Optional flags:
 | Flag | Purpose |
 |---|---|
 | `--variant NHWC` or `--variant NCHW` | Simulate one RTL implementation |
-| `--samples 20 --directed` | Run all retained images and directed cases |
+| `--samples 3 --directed` | Run all retained CNN images and directed cases |
+| `--model dense` | Run the original dense MNIST model and its retained images |
 | `--label 7` | Record the expected digit for a custom image |
 | `--out-dir runs/my_run` | Choose a new output folder |
 
 Otherwise, a unique folder under `runs/` is created and its path is printed. Predictions are in `results.json`; tensors are under `python/<case>/` or `<architecture>/<case>/`:
 
-- `raw_outputs.hex`: layer outputs before software ReLU.
-- `rtl_outputs.hex`: layer outputs after software ReLU.
+- `raw_outputs.hex`: actual write data, including enabled hardware ReLU.
+- `rtl_outputs.hex`: verified chained outputs in increasing tensor-address order.
 
-Both files contain 128 hidden values followed by ten final scores for the MNIST model. `PASS` means arithmetic matched; it does not guarantee the digit was classified correctly.
+The four CNN layers write 1,936, 128, 32 and ten words per image. Passing the
+arithmetic check and correctly classifying a digit are recorded independently.
 
 ## MNIST demonstration
 
 ```text
-28×28 image → flatten 784 → Dense 128 → external ReLU
-                         → Dense 10  → raw32 scores → software argmax
+28×28 image → Conv16 + ReLU → Conv8 + ReLU → flatten 128
+            → Dense32 + ReLU → Dense10 → INT32 logits → software argmax
 ```
 
-Each dense layer runs as a **1×1 convolution at a single spatial position**. The flattened features become input channels, and each dense neuron becomes one output channel. Shapes below use NCHW for activations and KCRS for kernels, for both implementations:
+The [University of Florida course model](https://cmp.phys.ufl.edu/PHZ4710/files/unit7/mnist.html#train-network)
+uses two valid, stride-2 convolutions. Flatten reinterprets the previous output
+in external memory. Each dense layer executes as a **1×1 convolution at a single
+spatial position**.
 
-| Dense operation | Convolution input | Convolution kernel | Convolution output |
-|---|---|---|---|
-| 784 → 128 | 1×784×1×1 | 128×784×1×1 | 1×128×1×1 |
-| 128 → 10 | 1×128×1×1 | 10×128×1×1 | 1×10×1×1 |
+| Layer | Convolution input (NCHW) | Kernel (KCRS) | Output (NKPQ) | Stride |
+|---|---|---|---|---:|
+| Conv16 | 1×1×28×28 | 16×1×8×8 | 1×16×11×11 | 2 |
+| Conv8 | 1×16×11×11 | 8×16×5×5 | 1×8×4×4 | 2 |
+| Dense32 | 1×128×1×1 | 32×128×1×1 | 1×32×1×1 | 1 |
+| Dense10 | 1×32×1×1 | 10×32×1×1 | 1×10×1×1 | 1 |
 
-Both use stride 1, padding 0, dilation 1 and one group. At the only spatial position, each output is `sum(input[c] * weight[k,c,0,0]) + bias[k]`, exactly the dense dot product. Keras stores dense weights as `[input, output]`; the export transposes them to `[output, input]` and supplies them in KCRS order. The 28×28 image is flattened row by row into 784 channels before the first convolution. Thus, the accelerator executes the trained dense network using its convolution datapath, without changing the model's connectivity.
+Keras flattens in HWC order. The first Dense weights are permuted at export to
+match both implementations' external CHW order. Requantization and hardware
+ReLU apply to the first three layers. Bias stays enabled on the final layer
+with raw INT32 output. Software argmax uses logits directly.
 
-The hidden layer uses bias and requantization. The final layer uses bias with requantization disabled. ReLU transforms actual accelerator writes before they feed the next layer; reference tensors never replace those writes. The testbench assigns no simulated time to software ReLU, so its latency/energy is unmeasured.
+The [training notebook](tools/mnist/MNIST_Training_Test_3_CNN.ipynb) keeps
+Adam 0.001, batch size 128, a 20% validation split and seed 196. Over 40 epochs,
+validation accuracy peaked at **98.42%** at epoch 34. Epoch 17 reached
+**98.30%** and the lowest validation loss, **0.06563**. We selected epoch 17
+before test evaluation and calibrated on the 48,000 training images.
 
-The included [Keras training notebook](tools/mnist/MNIST_Training_Test_3_.ipynb) uses Keras Dense128 with ReLU, then Dense10 linear; Adam 0.001, 12 epochs, batch size 128, 20% validation, final-epoch weights and calibration over the 48,000 training images. Training uses seed 196 for reproducibility. All notebook cell source text is preserved; saved outputs/UI metadata are removed from the published copy.
+The selected checkpoint reached **98.65% floating-point and 98.62% INT8 accuracy**
+on 10,000 test images, a **0.03 percentage-point** drop. The independent
+integer reference matched every final score. Both RTL layouts matched all
+2,106 values per image for three selected images and classified each correctly.
+See [training metrics](tools/mnist/training_cnn/METRICS.json) and
+[current validation](reports/mnist_cnn_relu/README.md).
 
-Evaluation reports **97.53% floating-point and 97.51% integer accuracy** on 10,000 test images, a **0.02 percentage-point** drop. The independent integer reference matches every final score from notebook validation. RTL validation covers 20 selected images per implementation: all 138 intermediate/final values per image match, with 18/20 classifications correct. That subset is not a full-test-set RTL accuracy measurement. See [metrics](tools/mnist/training/METRICS.json) and [notebook provenance](tools/mnist/training/PROVENANCE.json).
-
-![Retained MNIST images, true labels and RTL predictions](reports/current/mnist_predictions.svg)
+![Selected MNIST images, true labels and RTL predictions](reports/mnist_cnn_relu/mnist_predictions.svg)
 
 ## Results and analysis
 
-Same network, parameters and 20 MHz comparison clock; both accelerators exclude nonlinear hardware. Resources/timing are Vivado post-synthesis estimates for Nexys Video `xc7a200tsbg484-1`.
+Both accelerators use identical CNN inputs and parameters. Resources and timing
+come from Vivado post-synthesis reports for Nexys Video `xc7a200tsbg484-1`.
 
+| Layer | NHWC cycles | NCHW cycles |
+|---|---:|---:|
+| Conv16 | 81,938 | 44,163 |
+| Conv8 | 38,105 | 37,778 |
+| Dense32 | 11,383 | 13,134 |
+| Dense10 | 927 | 1,094 |
+| Total | 132,353 | 96,169 |
 
-For this workload, **NHWC uses 11.49% fewer cycles, 65.46% fewer LUTs and 45.24% fewer DSPs than NCHW**. Conversely, NCHW takes 12.98% more cycles than NHWC; these percentages have different denominators.
+NCHW takes **36,184 fewer cycles (27.34%)** than NHWC on this CNN. Conv16 alone
+saves **37,775 cycles**. Both implementations run **22 jobs** and spend the
+same cycles on feature and weight transfers in Conv16. NCHW saves **38,192
+core-execution cycles** there, with **374 more address-setup cycles** and
+**43 more layer-planning cycles**. Across both Dense layers, NHWC saves
+**1,918 cycles**, where NCHW's extra setup and core startup are visible.
+Matched hardware and software ReLU controls produced the same outputs and
+cycle counts on both implementations.
 
-At each design's estimated Fmax, NHWC's accelerator latency is **34.58% lower than NCHW's**, combining fewer cycles with a higher clock. Compared with each design at 20 MHz, latency falls **44.47% for NHWC** and **24.86% for NCHW**, using the actual simulated clock periods in the table.
+### Quantized accelerator with and without ReLU
 
-NCHW's **34,390 additional cycles** break down as follows:
+The opening table compares the retained quantization-only designs against the
+current combinational-ReLU designs. Both use the same FPGA part, 10×10 array
+and precision. Deltas are relative to each architecture's own quantization-only
+baseline. [Prior quantization-only results](reports/current/README.md).
 
-- **24,960 cycles — core address/vector startup:** Compared with NHWC's simpler counter initialization, NCHW configures spatial divisions, bank/address movements and per-row starting addresses before delivering its first input vector, adding **24 cycles per job × 1,040 jobs**.
-- **9,360 cycles — input-placement setup:** Compared with NHWC's direct counter-based input placement, NCHW calculates spatial pitches and bank/address increments before loading each job's inputs into local SRAM, adding **9 cycles per job × 1,040 jobs**.
-- **70 cycles — layer capacity planning:** Compared with NHWC's three sequential divisions for choosing channel chunks and tile sizes, NCHW performs seven divisions plus intermediate calculations to accommodate its spatial banking, adding **35 cycles per layer × 2 layers**.
+Relative to the retained unquantized baseline, the complete bias, quantization
+and ReLU designs change by the amounts below. This baseline predates chaining.
 
-Both cores have **21 advancing computation/fill/drain cycles per job** for this network. The first-job trace shows NHWC PRIME/LOAD/RUN = 5/10/21 cycles; NCHW = 1/10/49, with 28 RUN cycles waiting before the advancing pass. Address setup overlaps weight loading, so those times must not be added twice.
-
-Dense 1×1 layers do not reduce the number of jobs using NCHW's more general spatial machinery. The first layer contributes about 98.72% of accelerator cycles; serialized weight transfers consume 203,264 cycles in both designs: 76.71% of NHWC time and 67.90% of NCHW time. These results describe these implementations on this network; other convolution shapes need separate measurement.
-
-### Quantized versus unquantized accelerator
-
-The unquantized baseline is the retained raw-output design without output bias, scale multiplication, shift/rounding or saturation logic. Both versions use INT8 operands and INT32 accumulation. This compares two synthesized designs; disabling requantization on the current accelerator does not remove its output-processing circuitry.
-
-Both use Nexys Video `xc7a200tsbg484-1`, A10 and the same base SRAM capacity. The opening table shows counts and changes relative to the unquantized baseline: `(quantized - unquantized) / unquantized × 100%`, calculated from unrounded counts/Fmax.
-
-Counts, estimated Fmax and percentage changes are combined in the opening summary table.
-
-Both designs add four DSPs. NHWC's five-tile BRAM reduction comes from output SRAM mapping to distributed RAM, including 1,760 LUTRAMs, while storage capacity stays unchanged. This mapping contributes to the LUT increase. NHWC's worst path moves into completed-output processing and estimated Fmax decreases 6.656%; NCHW remains limited by scheduler bank/address arithmetic, with its 0.117% Fmax increase reflecting a small whole-design mapping variation.
-
-These are retained full-design results: the unquantized baseline also predates descriptor chaining. The changes therefore include wrapper and synthesis-mapping effects, rather than isolating only the quantizer. See [the detailed comparison](reports/current/QUANTIZED_VS_RAW.md) and [underlying values](reports/current/quantized_vs_raw.json). No matched unquantized MNIST power/latency measurement is claimed.
+- NHWC versus retained unquantized: LUTs +14.17%, Flip-flops +4.01%, BRAM tiles -33.33%, DSPs +3.60%, Estimated Fmax -9.44%.
+- NCHW versus retained unquantized: LUTs +0.49%, Flip-flops +1.07%, BRAM tiles +0.00%, DSPs +4.37%, Estimated Fmax -0.02%.
 
 ### Worst paths
 
 | Implementation | Worst path | Data delay | Logic levels | Interpretation |
 |---|---|---:|---:|---|
-| NHWC | Accumulator SRAM read register → `mem_wdata[0]` | 24.757 ns | 45 | Completed-output bias/scale/round/saturation writeback limits timing |
-| NCHW | `tap_mode` register → scheduler DSP input `A[16]` | 33.761 ns | 68 | Bank/address planning arithmetic remains the limiting path |
+| NHWC | `u_accelerator/u_core/u_datapath/g_output[2].u_accumulator/u_sram/rdata_reg[1]/C` → `mem_wdata[0]` | 25.610ns | 46 | Completed-output writeback |
+| NCHW | `u_accelerator/tap_mode_reg/C` → `u_accelerator/p_0_out__0/A[16]` | 33.812ns | 68 | Scheduler bank/address planning |
 
-All ten worst setup paths per implementation are included in [current results](reports/current/README.md). Both miss the 50 MHz synthesis target; timing is reanalyzed at 20 MHz for the common-clock comparison. Estimated Fmax is reported separately and is not a measured board clock or speedup.
+See [timing reports](reports/mnist_cnn_relu/README.md) for constraints, setup
+paths and the relation between the estimate and the actual simulation clocks.
 
 ### Power and energy
 
-See the opening summary table for power and energy estimates at 20 MHz and each design’s estimated Fmax.
+At 20 MHz, NCHW has **27.34% lower latency**
+and **28.40% lower estimated energy** than NHWC.
+At each layout’s own estimated Fmax, the NCHW advantage is
+**4.49% for latency** and
+**9.69% for energy**.
 
-NCHW's estimated total power is **0.74% lower**, but energy is **12.14% higher**, relative to NHWC, because inference lasts longer. Native XSim activity covers one full inference per implementation, including two descriptor-gap cycles and a 100 ps netlist propagation offset beyond accelerator busy time. Annotation coverage is 87% NHWC and 79% NCHW; reset/activity warnings and incomplete coverage limit interpretation. Software and external-memory power are excluded.
-
-At each design’s own estimated Fmax, NHWC uses **31.26% less estimated inference energy than NCHW**. Relative to each design at 20 MHz, energy decreases **40.35% for NHWC** and **22.62% for NCHW**: higher clock power is outweighed by shorter elapsed time. These comparisons retain the same workload and output values.
-
-See [quantization versus raw-output hardware](reports/current/QUANTIZED_VS_RAW.md) for retained older controls and caveats. Historical 1 MHz measurements retain their original workload and release labels.
+Native SAIF covers one inference per layout and clock, including three
+two-cycle descriptor gaps and the primitive propagation offset. Read
+[the measurement details](reports/mnist_cnn_relu/README.md) for activity
+annotation coverage and tool warnings.
 
 ## Validation and provenance
 
-The current RTL is byte-identical to the accepted quantization-only synthesis sources. Verification covers 46 matched RTL pipeline cases, eight four-state controls and two native post-synthesis inferences at 20 MHz across the pair. Two additional native inferences at each design’s estimated Fmax also passed, using the actual simulated periods documented above. Source/model hashes, per-layer counters, report excerpts and publication provenance are in [current results](reports/current/README.md). Public-command packaging checks are recorded separately from the workload campaign.
+The notebook's INT8 inference matches an independent reference on the complete
+test set. Both RTL implementations pass three trained-image cases and three
+directed controls. The original dense runner also passes a retained case on each
+layout. All four native post-synthesis runs matched RTL outputs and cycle counts. See [current results](reports/mnist_cnn_relu/README.md)
+for source hashes, configuration, per-layer counters and report provenance.
+The [November 16 release report](reports/current/README.md) retains the dense
+model and quantization-only comparison.
 
-These are simulation and post-synthesis results. There is no placement/routing, bitstream, board inference or measured physical power claim. Out-of-context clock-placement/skew uncertainty also limits timing estimates. Previous four-way and chaining-only results remain historical.
+These results describe RTL simulation and Vivado post-synthesis estimates.
+Out-of-context clock placement, activity coverage and external-memory energy
+limit their interpretation as board results.
 
 ## Credits
 
 Original systolic-array foundation: [kaggar11/systolic_4x4arr](https://github.com/kaggar11/systolic_4x4arr). Algorithmic reference: Zhou et al., *Characterizing and Demystifying the Implicit Convolution Algorithm on Commercial Matrix-Multiplication Accelerators*, [arXiv:2110.03901](https://doi.org/10.48550/arXiv.2110.03901). Course/reference-model attribution is retained in `conv_golden.py`.
 
-The included [MNIST training notebook](tools/mnist/MNIST_Training_Test_3_.ipynb) is the model/training/quantization source. Published weights, biases and scales come from executing its training/export cells with seed 196; [provenance](tools/mnist/training/PROVENANCE.json) records source identity.
+The [CNN notebook](tools/mnist/MNIST_Training_Test_3_CNN.ipynb) adapts the original notebook’s training and export workflow to the exact [University of Florida PHZ4710 CNN](https://cmp.phys.ufl.edu/PHZ4710/files/unit7/mnist.html). The [original notebook](tools/mnist/MNIST_Training_Test_3_.ipynb) remains available for the dense model.
 
 AI assistance: Codex and GPT-6.1 Sol contributed to RTL, Python tooling, verification and documentation.

@@ -24,6 +24,7 @@ module conv_accelerator #(
     input [4:0] cfg_output_shift,
     input [31:0] cfg_output_multiplier,
     input cfg_bias_enable,
+    input cfg_relu_enable,
     input [MEM_ADDR_WIDTH-1:0] cfg_bias_base,
     output reg mem_re, mem_we,
     output reg [MEM_ADDR_WIDTH-1:0] mem_raddr,mem_waddr,
@@ -41,6 +42,7 @@ module conv_accelerator #(
   reg [4:0] output_shift;
   reg [31:0] output_multiplier;
   reg bias_enable;
+  reg relu_enable;
   reg [MEM_ADDR_WIDTH-1:0] bias_base;
   reg signed [ACC_WIDTH-1:0] output_bias;
 
@@ -237,7 +239,8 @@ module conv_accelerator #(
       OUTPUT_WRITE: begin
         mem_we=1;
         mem_waddr=MEM_ADDR_WIDTH'(output_dma_addr);
-        mem_wdata=MEM_DATA_WIDTH'(output_value);
+        // ReLU applies only to completed external writes, after bias/quantization.
+        mem_wdata=(relu_enable && output_value[ACC_WIDTH-1]) ? '0 : MEM_DATA_WIDTH'(output_value);
       end
     endcase
     end
@@ -270,7 +273,7 @@ module conv_accelerator #(
       for(delta_index=0;delta_index<5;delta_index=delta_index+1) begin delta_bank[delta_index]<=0;delta_address[delta_index]<=0;end
       job_step<=0;job_pending<=0;extent_i<=0;extent_j<=0;taps<=0;needs_taps<=0;plan_c<=0;plan_q<=0;plan_temp<=0;
       spatial_rows<=0;min_cols<=0;spatial_footprint<=0;input_channels<=0;kernel_channels<=0;bounded_c<=0;groups<=0;
-      state<=IDLE;done<=0;quantize<=0;round_nearest<=1;output_shift<=0;output_multiplier<=1;bias_enable<=0;bias_base<=0;output_bias<=0;
+      state<=IDLE;done<=0;quantize<=0;round_nearest<=1;output_shift<=0;output_multiplier<=1;bias_enable<=0;relu_enable<=0;bias_base<=0;output_bias<=0;
       N<=1;C<=1;H<=1;W<=1;K<=1;R<=1;S<=1;P<=1;Q<=1;
       pad_i<=0;pad_j<=0;stride_i<=1;stride_j<=1;dilation_i<=1;dilation_j<=1;
       input_base<=0;kernel_base<=0;output_base<=0;
@@ -285,7 +288,7 @@ module conv_accelerator #(
         // tile counters and padded origins; subsequent cfg_* changes are ignored.
         IDLE: if(start) begin
           quantize<=cfg_quantize;round_nearest<=cfg_round_nearest;output_shift<=cfg_output_shift;output_multiplier<=cfg_output_multiplier;
-          bias_enable<=cfg_bias_enable;bias_base<=cfg_bias_base;
+          bias_enable<=cfg_bias_enable;relu_enable<=cfg_relu_enable;bias_base<=cfg_bias_base;
           N<=cfg_N;C<=cfg_C;H<=cfg_H;W<=cfg_W;K<=cfg_K;R<=cfg_R;S<=cfg_S;P<=cfg_P;Q<=cfg_Q;
           pad_i<=cfg_pad_i;pad_j<=cfg_pad_j;stride_i<=cfg_stride_i;stride_j<=cfg_stride_j;
           dilation_i<=cfg_dilation_i;dilation_j<=cfg_dilation_j;

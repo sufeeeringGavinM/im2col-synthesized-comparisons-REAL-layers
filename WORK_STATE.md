@@ -1,9 +1,9 @@
 # Accelerator status
 
-The accelerator implements NHWC and two-slot NCHW with descriptor-based layer chaining, optional INT32 channel bias, scale multiplication and output quantization. Main source paths are `tiled/NHWC` and `tiled/NCHW`, with `conv_chain` as top.
+The accelerator implements NHWC and two-slot NCHW with descriptor-based layer chaining, optional INT32 channel bias, scale multiplication, output quantization and optional combinational ReLU. Main source paths are `tiled/NHWC` and `tiled/NCHW`, with `conv_chain` as top.
 
-Requantization bypass retains independently enabled bias. The MNIST testbench applies ReLU to actual hidden-layer output values between descriptors; final classification scores retain biased INT32 precision.
+Requantization bypass retains independently enabled bias. The default Florida MNIST CNN uses hardware ReLU on completed hidden-layer writes and retains biased INT32 logits for software argmax. Four-state RTL replays and four native XSim captures passed. The measured sources and results are verified in the local checkout. [CNN measurements](reports/mnist_cnn_relu/README.md) · [Replay commands](tools/mnist/README.md)
 
-The MNIST demonstration uses the included Keras training notebook: 784→128→10, trained for 12 epochs and calibrated on 48,000 training images with seed 196. Float/integer accuracy is 97.53%/97.51% on 10,000 test images. Selected RTL cases, four-state controls and native synthesized-netlist inferences pass; resource/timing, 20 MHz and individual-Fmax power estimates are in [reports/current](reports/current/README.md). Supported commands are in [tools](tools/README.md).
+The November 16 published dense model used testbench ReLU on actual hidden-layer outputs. It remains available for replay via `--model dense`, with the published measurements tied to the original quantization-only RTL. [Published dense evidence](reports/current/README.md)
 
-Hardware source hashes match the accepted synthesis inputs. Source/model identity, export provenance and public CLI checks are retained with the reports. Historical studies retain their own source identities and measurements. Routed timing closure and board validation remain outside the reported evidence.
+The November 16 release manifest records its measured synthesis inputs. Commit `419ca20` updated comments in four RTL files. The November 16 runtime identity records those updated hashes. The current runner verifies the selected model and release sources and supports Python-only inference and automatic output directories. Historical studies retain their own source identities and measurements. Routed timing closure and board validation remain outside the reported evidence.

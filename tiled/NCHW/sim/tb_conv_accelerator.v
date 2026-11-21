@@ -99,7 +99,7 @@ module tb_conv_accelerator;
     .cfg_input_base(MEM_ADDR_WIDTH'(input_base)),
     .cfg_kernel_base(MEM_ADDR_WIDTH'(kernel_base)),
     .cfg_output_base(MEM_ADDR_WIDTH'(output_base)),
-    .cfg_output_multiplier(output_multiplier),.cfg_bias_enable(bias_enable[0]),.cfg_bias_base(MEM_ADDR_WIDTH'(bias_base)),
+    .cfg_output_multiplier(output_multiplier),.cfg_bias_enable(bias_enable[0]),.cfg_relu_enable(1'b0),.cfg_bias_base(MEM_ADDR_WIDTH'(bias_base)),
     .cfg_quantize(quantize[0]),.cfg_round_nearest(round_nearest[0]),.cfg_output_shift(output_shift[4:0]),
     .mem_re(mem_re),
     .mem_we(mem_we),

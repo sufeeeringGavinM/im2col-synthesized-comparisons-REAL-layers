@@ -1,6 +1,6 @@
-# NCHW accelerator with bias and output scaling
+# NCHW accelerator with bias, output scaling and ReLU
 
-This is a current main implementation, with `conv_chain` as top. It includes descriptor chaining, optional signed32 bias per output channel, unsigned32 scale multiplication, shift/rounding and INT8 saturation. There is no activation-function hardware. See the [main README](../../README.md) for architecture, interfaces, MNIST results and limitations.
+This is a current main implementation, with `conv_chain` as top. It includes descriptor chaining, optional signed32 bias per output channel, unsigned32 scale multiplication, shift/rounding and INT8 saturation and optional combinational ReLU on completed external writes. See the [main README](../../README.md) for architecture, interfaces, MNIST results and limitations.
 
 The original scheduler/core, A10 defaults, signed8 operands, ACC32/CFG32, local8/external32 addressing and 15 KiB base SRAM capacity are preserved. Tensor-file order is NCHW input, KCRS kernel and NKPQ output. The fixed-latency external-memory model is testbench-only.
 
@@ -19,7 +19,7 @@ Tensor headers supply dimensions; without headers provide `--N --C --H --W --K -
 
 `conv_golden.py` retains the original course convolution reference; `output_processing.py` models wrapped bias and exact integer requantization. The runner checks actual RTL words against both Verilog and Python references. Generated outputs stay under the selected directory.
 
-Use [MNIST replay](../../tools/mnist/README.md) for full two-layer memory handoffs, released parameter checks and software nonlinear processing. [Current results](../../reports/current/README.md) are separate from the [historical chaining study](../../reports/chaining/README.md).
+Replay the spatial CNN to check actual layer-to-layer memory handoffs and combinational writeback ReLU. [MNIST replay](../../tools/mnist/README.md) · [Local CNN results](../../reports/mnist_cnn_relu/README.md) · [Published dense results](../../reports/current/README.md) · [Historical chaining study](../../reports/chaining/README.md)
 
 ## Credits
 

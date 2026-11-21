@@ -1,5 +1,20 @@
 # Files, descriptors and external-memory layout
 
+## Spatial CNN files
+
+The CNN notebook exports signed INT8 weights in KCRS order, biases in INT32
+and each layer's multiplier, shift, stride, requantization enable and ReLU
+enable. The first Dense weight tensor is permuted from Keras HWC feature
+order to the accelerator's external CHW order. The original dense release
+uses the legacy parameter format described below.
+
+The 27th descriptor word holds the per-layer ReLU enable. The testbench drives
+it on `cfg_relu_enable` for the current RTL. It expects hardware-clamped
+data in `raw_outputs.hex` and checks the chain against the independent Python
+reference. `expected.hex` stores the pre-clamp reference used in the software
+ReLU control and `post.hex` holds the final expected write data.
+
+
 Addresses below are **word addresses**. The external interface stores one value per word; no INT8 packing is implemented. These are testbench file conventions, not a hardware descriptor-fetch protocol. AI assistance: Codex.
 
 ## Inputs and weights
@@ -61,7 +76,7 @@ The MNIST runner creates:
 - `expected.hex`: completed pre-software outputs from the integer reference.
 - `post.hex`: reference outputs after any software activation.
 
-The testbench uses references only to check actual outputs. Software transforms the actual memory writes before the next layer begins.
+The testbench uses references only to check actual outputs. Each layer reads actual memory writes from its predecessor. Hardware ReLU is applied on writeback.
 
 ## Output layout and write sequence
 
@@ -93,7 +108,7 @@ These addresses are fixture choices, not hardwired RTL addresses. `raw_outputs.h
 | 101,376–102,655 | Final-layer weights, neuron-major `[10,128]` |
 | 140,000–140,127 | First-layer signed32 biases |
 | 140,128–140,137 | Final-layer signed32 biases |
-| 150,000–150,127 | First-layer completed INT8 outputs; software ReLU updates these actual words |
+| 150,000–150,127 | First-layer completed INT8 outputs after ReLU |
 | 151,000–151,009 | Final biased signed32 scores, classes 0–9 |
 
 Unused addresses are not parameter arrays. The two 27-word descriptors are held by the testbench, outside this data-memory map. `multiplier`, `shift`, rounding and bias controls are driven from those descriptor records. The output files concatenate 128 hidden values and ten final scores: 138 words per inference.

@@ -1,0 +1,101 @@
+{
+  "status": "PASS",
+  "architectures": {
+    "NHWC": {
+      "synthesis": {
+        "preset_version": 2,
+        "target_period_ns": 20.0,
+        "wns_ns": -8.619,
+        "estimated_minimum_period_ns": 28.619,
+        "estimated_fmax_mhz": 34.94182186659212,
+        "common_period_wns_ns": {
+          "50.0": 21.381,
+          "100.0": 71.381,
+          "1000.0": 971.381
+        }
+      },
+      "common_20mhz": {
+        "period_ns": 50.0,
+        "clock_mhz": 20.0,
+        "dynamic_w": 0.014,
+        "static_w": 0.123,
+        "total_w": 0.137,
+        "annotation": "87%   (59653/68244)",
+        "confidence": "High",
+        "duration_ps": 6617950100,
+        "accelerator_cycles": 132353,
+        "timing": {
+          "period_ns": 50,
+          "wns_ns": 21.381
+        },
+        "latency_ms": 6.61765,
+        "energy_mj": 0.9066591637
+      },
+      "estimated_fmax": {
+        "period_ns": 28.62,
+        "clock_mhz": 34.940600978336825,
+        "dynamic_w": 0.025,
+        "static_w": 0.123,
+        "total_w": 0.147,
+        "annotation": "87%   (59653/68244)",
+        "confidence": "High",
+        "duration_ps": 3788114680,
+        "accelerator_cycles": 132353,
+        "timing": {
+          "period_ns": 28.62,
+          "wns_ns": 0.001
+        },
+        "latency_ms": 3.78794286,
+        "energy_mj": 0.55685285796
+      }
+    },
+    "NCHW": {
+      "synthesis": {
+        "preset_version": 2,
+        "target_period_ns": 20.0,
+        "wns_ns": -17.618,
+        "estimated_minimum_period_ns": 37.617999999999995,
+        "estimated_fmax_mhz": 26.583018767611254,
+        "common_period_wns_ns": {
+          "50.0": 12.382,
+          "100.0": 62.382,
+          "1000.0": 962.382
+        }
+      },
+      "common_20mhz": {
+        "period_ns": 50.0,
+        "clock_mhz": 20.0,
+        "dynamic_w": 0.012,
+        "static_w": 0.123,
+        "total_w": 0.135,
+        "annotation": "85%   (161920/189699)",
+        "confidence": "High",
+        "duration_ps": 4808750100,
+        "accelerator_cycles": 96169,
+        "timing": {
+          "period_ns": 50,
+          "wns_ns": 12.382
+        },
+        "latency_ms": 4.80845,
+        "energy_mj": 0.6491812635
+      },
+      "estimated_fmax": {
+        "period_ns": 37.618,
+        "clock_mhz": 26.58301876761125,
+        "dynamic_w": 0.016,
+        "static_w": 0.123,
+        "total_w": 0.139,
+        "annotation": "85%   (161920/189699)",
+        "confidence": "High",
+        "duration_ps": 3617911250,
+        "accelerator_cycles": 96169,
+        "timing": {
+          "period_ns": 37.618,
+          "wns_ns": 0.0
+        },
+        "latency_ms": 3.617685442,
+        "energy_mj": 0.5028896637500001
+      }
+    }
+  }
+}

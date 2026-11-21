@@ -1,6 +1,6 @@
 # Reproduction tools
 
-- [Current MNIST replay](mnist/README.md): released source/model checks and actual two-layer RTL memory handoffs at 20 MHz.
+- Replay the spatial CNN with hardware ReLU and actual RTL memory handoffs. The runner also supports the original dense model via `--model dense`. [MNIST replay](mnist/README.md)
 - [Current synthesis preparation](vivado_synthesis/README.md): the shared accepted preset; preparation does not launch Vivado.
 - `tiled/NHWC/run_case.py` and `tiled/NCHW/run_case.py`: individual layers with optional bias and requantization.
 - [Historical chaining reproduction](chaining/README.md): source-gated earlier release, with original 1 MHz/own-Fmax measurements.
