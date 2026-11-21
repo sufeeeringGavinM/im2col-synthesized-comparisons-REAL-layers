@@ -161,7 +161,7 @@ Each layout classified 20/20 correctly on that subset.
 See [training metrics](tools/mnist/training_cnn/METRICS.json) and
 [current validation](reports/mnist_cnn_relu/README.md).
 
-![Selected MNIST images, true labels and RTL predictions](reports/mnist_cnn_relu/mnist_predictions.svg)
+![Selected MNIST images with true labels, RTL predictions and correctness](reports/mnist_cnn_relu/mnist_predictions.svg)
 
 ## Results and analysis
 
