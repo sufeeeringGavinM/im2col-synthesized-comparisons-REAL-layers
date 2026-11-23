@@ -29,13 +29,19 @@ python3 tools/mnist/run.py --model dense --stage rtl --samples 1 --out-dir runs/
 
 Use `--samples 20 --directed` for all retained images and three directed reduction/bias cases per implementation. Select one architecture with `--variant NHWC` or `--variant NCHW`. `--timeout` sets seconds per invocation. Set `IVERILOG_BIN`, `VVP_BIN` and optionally `IVERILOG_BACKEND` for nonstandard tool installations. `--out-dir` is optional: by default, each run creates a unique `runs/mnist_<stage>_*` folder under the current working directory and prints its absolute path. An explicitly supplied output directory must be new.
 
-`run.py` verifies released source/model hashes, generates memory fixtures, compiles `tb_mnist.v` against main RTL, and checks actual writes and intermediate handoffs. Per-layer phases/jobs/core cycles, raw/postprocessed outputs and predictions are written under the output folder. It checks accepted MNIST cycle totals as well as exact values; classification correctness is distinct from arithmetic correctness.
+`run.py` verifies released source/model hashes, generates memory fixtures, compiles `tb_mnist_program.v` against the `conv_program` top, and checks actual writes and intermediate handoffs. It records per-layer phases, jobs and core cycles, start-to-done chain cycles, descriptor reads, output words and predictions. Classification correctness is recorded separately from the exact output check.
 
 `reference.py` is an independent NumPy INT8/ACC32 dense model. `workload.py` generates fixtures. `training/integer_tensors.npz` stores `[output,input]` weights and signed32 biases; `quantization.json` contains calibration provenance and controls. `rtl_samples.npz` contains inputs, labels and expected intermediates. `test_predictions.npz`, metrics and history preserve original evaluation provenance; replay does not retrain.
 
-Descriptors in this **testbench file format** have 27 words per layer: geometry (0–14), input/kernel/output bases (15–17), requantization enable (18), shift (19), nearest mode (20), last flag (21), output count (22), multiplier (23), bias enable/base (24–25), and **software activation flag (26)**. Word 26 is not an RTL port. This is a testbench convention, not a hardware descriptor-fetch interface.
+The [27-word descriptor records](MEMORY_FORMAT.md#layer-descriptor-program)
+are embedded in `memory.hex`. The testbench presents the table base and pulses
+`start` once. It checks sequential fetch addresses and every output word, and
+attempts an extra launch during fetch. The `raw` directed case also tests a
+fresh launch from a different program address after completion.
 
-The published dense baseline applied software ReLU to actual writes. Current RTL applies it during writeback. The final layer uses bias and raw32 scores. Software transforms have zero assigned simulated time, so cycles exclude offload/host cost. The bench changes live configuration after acceptance to check captured controls and attempts descriptors while busy.
+The published dense baseline applied software ReLU to actual writes. Current
+RTL applies ReLU during writeback. The final layer uses bias and emits raw INT32
+scores for software argmax.
 
 The released parameters follow the supplied `MNIST_Training_Test_3_.ipynb`: 784→128→10, using its final-epoch training and export cells with seed 196. Fresh full-test-set accuracy is 97.53% float and 97.51% integer. RTL coverage of 20 selected images does not establish full-test-set RTL accuracy.
 

@@ -5,6 +5,8 @@ import numpy as np
 E=Path(__file__).resolve().parent
 from reference import conv_layer, layer
 
+PROGRAM_BASE = 199600
+
 
 def words(path,values):path.write_text(''.join(f'{int(v)&0xffffffff:08x}\n' for v in np.asarray(values).flat))
 
@@ -48,12 +50,13 @@ def fixture(dest, inputs, weights, biases, configs, expected=None):
         bbase += K
         ibase = obase
         obase += max(1000, outputs)
-    assert kbase <= 140000 and bbase <= 150000 and obase <= 200000
+    assert kbase <= 140000 and bbase <= 150000 and obase <= PROGRAM_BASE
+    memory.update({PROGRAM_BASE + offset: value for offset, value in enumerate(desc)})
     (dest/'memory.hex').write_text(''.join(f'@{a:x}\n{v & 0xffffffff:08x}\n' for a,v in sorted(memory.items())))
     words(dest/'descriptors.hex', desc)
     words(dest/'expected.hex', raw)
     words(dest/'post.hex', post)
-    (dest/'FIXTURE.json').write_text(json.dumps(dict(descriptor_words=27,
+    (dest/'FIXTURE.json').write_text(json.dumps(dict(descriptor_words=27, program_base=PROGRAM_BASE,
         layers=len(configs), outputs=len(post)), indent=2)+'\n')
 
 
@@ -101,7 +104,10 @@ def fixtures(root, sample_count=20, model='dense'):
 def args(fix,convert=str):
     p=Path(fix)
     result={k:convert(p/n) for k,n in [('INIT','memory.hex'),('DESC','descriptors.hex'),('EXPECTED','expected.hex'),('POST','post.hex')]}
-    result['LAYERS']=str(json.loads((p/'FIXTURE.json').read_text())['layers'])
+    fixture=json.loads((p/'FIXTURE.json').read_text())
+    result['LAYERS']=str(fixture['layers'])
+    if 'program_base' in fixture:
+        result['PROGRAM_BASE']=str(fixture['program_base'])
     return result
 
 
@@ -115,7 +121,13 @@ def parse(folder,log_name='run.log'):
         assert sum(row['phases'].values())==row['phase_total']==row['cycles']
         rows.append(row)
     assert len(rows)==int(re.search(r'PASS: matched (\d+)-layer pipeline',text)[1])
-    return dict(layers=rows,total_accelerator_cycles=sum(r['cycles'] for r in rows),
+    result = dict(layers=rows,total_accelerator_cycles=sum(r['cycles'] for r in rows),
                 outputs_sha256=hashlib.sha256((folder/'rtl_outputs.hex').read_bytes()).hexdigest(),
                 post_clamps=int(re.search(r'POST_CLAMPS (\d+)',text)[1]),
                 chain_window_ps=int(re.search(r'CHAIN_WINDOW_NS (\d+)',text)[1]))
+    fetch = re.search(r'DESCRIPTOR_READS (\d+)', text)
+    if fetch:
+        result['descriptor_reads'] = int(fetch[1])
+        assert result['descriptor_reads'] == 27 * len(rows)
+        result['restart_checked'] = 'RESTART_PASS' in text
+    return result

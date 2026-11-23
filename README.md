@@ -1,11 +1,17 @@
 # Implicit-Im2col Accelerator
 
-FPGA convolution accelerators implementing **NHWC and NCHW**, with descriptor-based layer chaining, per-output-channel bias, configurable output quantization and combinational ReLU.
+FPGA convolution accelerators implementing **NHWC and NCHW**, with autonomous memory-backed layer chaining, per-output-channel bias, configurable output quantization and combinational ReLU.
 
 Both implementations use a 10×10 systolic array, signed INT8 inputs/weights, wrapped INT32 accumulation, 32-bit configuration/external addresses and 8-bit local SRAM addresses. Base SRAM capacity is 15 KiB: 2.5 KiB input, 2.5 KiB kernel and 10 KiB output. Dense layers map to 1×1 convolutions.
 
+The `conv_program` top runs a whole layer program from a single start pulse.
+See [layer-program validation](reports/layer_program/README.md) for the current
+programmed interface's RTL, timing and power results.
+
 <!-- CURRENT_SUMMARY_START -->
-The table combines hardware comparisons with a trained **8,706-parameter MNIST CNN**.
+### Previous ReLU comparison
+
+This measured comparison used the streamed descriptor interface with a trained **8,706-parameter MNIST CNN**.
 The CNN uses quantization and combinational ReLU on completed hidden-layer writes.
 Final scores retain biased INT32 precision.
 
@@ -72,11 +78,27 @@ See [file and memory formats](tools/mnist/MEMORY_FORMAT.md) for parameter loadin
 
 ## Layer chaining and memory
 
-The `conv_chain` top accepts a layer when `descriptor_valid && descriptor_ready`. The descriptor supplies geometry, input/kernel/output bases, bias enable/base, quantization enable, multiplier, shift, rounding mode, ReLU enable and `descriptor_last`.
+Load the layer descriptors, input activations, weights and biases into backing
+memory. Present the word address of the first descriptor on `program_base` and
+pulse `start` for one clock while `chain_busy` is low. `conv_program` latches
+the base, reads 27 consecutive 32-bit words per descriptor and issues that
+descriptor to the existing `conv_chain` engine. It waits for layer completion
+before fetching the next descriptor at `pc + 27`. The final descriptor's
+`last` flag causes a one-cycle `chain_done` pulse after final writeback. Starts
+while busy are ignored.
 
-The wrapper launches the tiled `conv_accelerator`, retains the final-layer flag and keeps `chain_busy` asserted between descriptors. Each layer finishes all output writes before another is accepted; no reset is needed between layers. The producer holds each descriptor until acceptance and supplies the next input base matching the previous output region.
+The descriptors and tensors share the same memory interface. A read samples the
+word address on the rising clock edge and returns the word for capture on the
+following edge. Writes commit on the rising edge. Lay out the records outside
+all tensor output regions and point each layer's input base at its predecessor's
+output region. The model exporter supplies geometry, memory bounds and
+compatible addresses. See the [descriptor layout](tools/mnist/MEMORY_FORMAT.md#layer-descriptor-program).
 
-There is no internal descriptor queue/fetcher, automatic base-address calculation or overlap between layers. The producer owns shape compatibility, memory bounds and non-overlap. The external interface uses serialized, fixed-latency SRAM-style transfers: enabled synchronous reads and edge writes. The testbench supplies external memory and descriptors; AXI, DDR/MIG and a processor are outside this release.
+`conv_chain` also remains available for callers that stream one descriptor at a
+time through `descriptor_valid` and `descriptor_ready`. The MNIST runner
+selects `conv_program`. Its testbench initializes and models backing memory,
+then launches the program once. The hardware interface assumes fixed-latency
+SRAM-style memory. Board memory integration is outside the supplied RTL.
 
 ## Run the accelerator
 
@@ -159,11 +181,11 @@ integer reference matched every final score. Both RTL layouts matched all
 2,106 values per image for the same 20 test indices used in the dense baseline.
 Each layout classified 20/20 correctly on that subset.
 See [training metrics](tools/mnist/training_cnn/METRICS.json) and
-[current validation](reports/mnist_cnn_relu/README.md).
+[streamed-descriptor validation](reports/mnist_cnn_relu/README.md).
 
 ![Selected MNIST images with true labels, RTL predictions and correctness](reports/mnist_cnn_relu/mnist_predictions.svg)
 
-## Results and analysis
+## Previous ReLU results and analysis
 
 Both accelerators use identical CNN inputs and parameters. Resources and timing
 come from Vivado post-synthesis reports for Nexys Video `xc7a200tsbg484-1`.
@@ -188,7 +210,7 @@ cycle counts on both implementations.
 ### Quantized accelerator with and without ReLU
 
 The opening table compares the retained quantization-only designs against the
-current combinational-ReLU designs. Both use the same FPGA part, 10×10 array
+streamed-descriptor combinational-ReLU designs. Both use the same FPGA part, 10×10 array
 and precision. Deltas are relative to each architecture's own quantization-only
 baseline. [Prior quantization-only results](reports/current/README.md).
 
@@ -226,7 +248,7 @@ annotation coverage and tool warnings.
 The notebook's INT8 inference matches an independent reference on the complete
 test set. Both RTL implementations pass 20 trained-image cases and three
 directed controls. The original dense runner also passes a retained case on each
-layout. All four native post-synthesis runs matched RTL outputs and cycle counts. See [current results](reports/mnist_cnn_relu/README.md)
+layout. All four native post-synthesis runs matched RTL outputs and cycle counts. See [previous ReLU results](reports/mnist_cnn_relu/README.md)
 for source hashes, configuration, per-layer counters and report provenance.
 The [November 16 release report](reports/current/README.md) retains the dense
 model and quantization-only comparison.

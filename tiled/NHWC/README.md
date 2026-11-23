@@ -1,6 +1,6 @@
 # NHWC accelerator with bias, output scaling and ReLU
 
-This is a current main implementation, with `conv_chain` as top. It includes descriptor chaining, optional signed32 bias per output channel, unsigned32 scale multiplication, shift/rounding and INT8 saturation and optional combinational ReLU on completed external writes. See the [main README](../../README.md) for architecture, interfaces, MNIST results and limitations.
+This is a current main implementation, with `conv_program` as the memory-backed top. It includes descriptor chaining, optional signed32 bias per output channel, unsigned32 scale multiplication, shift/rounding and INT8 saturation and optional combinational ReLU on completed external writes. See the [main README](../../README.md) for architecture, interfaces, MNIST results and limitations.
 
 The original scheduler/core, A10 defaults, signed8 operands, ACC32/CFG32, local8/external32 addressing and 15 KiB base SRAM capacity are preserved. Tensor-file order is NCHW input, KCRS kernel and NKPQ output. The fixed-latency external-memory model is testbench-only.
 

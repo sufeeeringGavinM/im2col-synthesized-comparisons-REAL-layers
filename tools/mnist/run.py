@@ -151,7 +151,7 @@ def main():
         folder.mkdir()
         binary = folder / 'mnist.vvp'
         command([compiler, *(['-B', backend] if backend else []), '-g2012', '-Wall',
-                 '-s', 'tb_mnist', '-o', binary, Path(__file__).with_name('tb_mnist.v'),
+                 '-s', 'tb_mnist_program', '-o', binary, Path(__file__).with_name('tb_mnist_program.v'),
                  *sorted((ROOT / 'tiled' / arch / 'rtl').glob('*.v'))],
                 folder, folder / 'compile.log')
         for case in cases:
@@ -159,9 +159,17 @@ def main():
             dest.mkdir()
             command([runtime, *(['-M', backend] if backend else []), binary,
                      '+CLOCK_HALF_NS=25',
+                     *(['+RESTART'] if case['id'] == 'raw' else []),
                      *[f'+{k}={v}' for k, v in workload.args(case['fixture']).items()]],
                     dest, dest / 'run.log')
             measured = workload.parse(dest)
+            total, remainder = divmod(measured['chain_window_ps'], 50_000)
+            if remainder or measured['descriptor_reads'] != 27 * len(measured['layers']):
+                raise RuntimeError('Unexpected chain window or descriptor-read count')
+            if case['id'] == 'raw' and not measured['restart_checked']:
+                raise RuntimeError('Missing consecutive launch check')
+            measured['total_chain_cycles'] = total
+            measured['descriptor_control_cycles'] = total - measured['total_accelerator_cycles']
             raw = np.array([int(word, 16) for word in
                             (dest / 'raw_outputs.hex').read_text().split()], dtype=np.int64)
             raw = (raw + (1 << 31)) % (1 << 32) - (1 << 31)

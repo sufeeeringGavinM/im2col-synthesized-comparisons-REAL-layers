@@ -1,0 +1,141 @@
+{
+  "prior_release": "6c5f9979e2a947970fe6345f8a76e9c5187c4042",
+  "top": "conv_program",
+  "part": "xc7a200tsbg484-1",
+  "fixture": {
+    "FIXTURE.json": "bb8af8feec3ec1bbafd2d3b08318a66d2699639f59b7a3f3e1c669dfb217f5e1",
+    "post.hex": "bfca2147be69b5d267476061e2175c8a93d6db4b63c0ea05a04480d2a8a0e521",
+    "expected.hex": "597127e616afcab78781f159fc99e3ca09190c0c8d26ae12d07698f654915171",
+    "descriptors.hex": "5214de4dc713afcd79f7803dab5e18b7dfcce7e71b8923e7609e125024f3e1c4",
+    "memory.hex": "5715f6e961639ecdec902f637893ec03dfc70c06936e95323b713761667e3ec5"
+  },
+  "runtime_source": {
+    "release": "Memory-resident layer programs with bias, quantization and combinational ReLU",
+    "top": "conv_program",
+    "files": {
+      "tiled/NCHW/rtl/PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+      "tiled/NCHW/rtl/banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+      "tiled/NCHW/rtl/conv_accelerator.v": "a6f7fc12356ae872449cd332a036daacc530d1abc739e4b6abdb4940e59e94ef",
+      "tiled/NCHW/rtl/conv_chain.v": "7ec35a1d633be5a546688a88c9d88f9f29e37f09fd7c12af8e226af972e92015",
+      "tiled/NCHW/rtl/conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+      "tiled/NCHW/rtl/conv_core.v": "1f329fbb244b65e3e064948b1b19d55d45cd2f654c54186e2d8c2fadf31c2d06",
+      "tiled/NCHW/rtl/conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+      "tiled/NCHW/rtl/conv_program.v": "e1175e99ab8ec589e8aa25eaa354c4673edee557f22a0aa6c30273daa38ce32e",
+      "tiled/NCHW/rtl/im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+      "tiled/NCHW/rtl/input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+      "tiled/NCHW/rtl/kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+      "tiled/NCHW/rtl/output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+      "tiled/NCHW/rtl/output_quantizer.v": "fe89c0b7e51f003e6882c879980db910e4fcd5cffc5ec536682d3f127ec48224",
+      "tiled/NCHW/rtl/setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+      "tiled/NCHW/rtl/sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+      "tiled/NCHW/rtl/systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+      "tiled/NCHW/rtl/weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a",
+      "tiled/NHWC/rtl/PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+      "tiled/NHWC/rtl/activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+      "tiled/NHWC/rtl/conv_accelerator.v": "cb48dce2a4783427b7424af988f5bda0837b90c163ce2b54091e816a61e19bae",
+      "tiled/NHWC/rtl/conv_chain.v": "7ec35a1d633be5a546688a88c9d88f9f29e37f09fd7c12af8e226af972e92015",
+      "tiled/NHWC/rtl/conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+      "tiled/NHWC/rtl/conv_core.v": "cd9607736b7e85ea43645dd6c3f9e6996ab6a8332af3bfbb4e142eda68ffe3bd",
+      "tiled/NHWC/rtl/conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+      "tiled/NHWC/rtl/conv_program.v": "e1175e99ab8ec589e8aa25eaa354c4673edee557f22a0aa6c30273daa38ce32e",
+      "tiled/NHWC/rtl/im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+      "tiled/NHWC/rtl/kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+      "tiled/NHWC/rtl/linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+      "tiled/NHWC/rtl/output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+      "tiled/NHWC/rtl/output_quantizer.v": "fe89c0b7e51f003e6882c879980db910e4fcd5cffc5ec536682d3f127ec48224",
+      "tiled/NHWC/rtl/setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+      "tiled/NHWC/rtl/sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+      "tiled/NHWC/rtl/systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+      "tiled/NHWC/rtl/weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037",
+      "tools/mnist/reference.py": "df0c977eca164ae6a37e7a0f1c14bfee8c9734f918e50143f13bde1bf8e43f71",
+      "tools/mnist/run.py": "389b0911272be226c164be6167cee44fb0fcfa84dc0e70d398ce5b8156185273",
+      "tools/mnist/tb_mnist.v": "470341c6219c6d2bf50350644982ce19c4c33b8307c9a22dc3c6292dc50f96e8",
+      "tools/mnist/tb_mnist_program.v": "3f9c76dec9a54302a23df78d45528490c467da5f87725a4dcbfcd897d6355544",
+      "tools/mnist/training/integer_tensors.npz": "16f29b959ac19598bd62bb6a4d1fa79511ec44839258ab4fb5b5adb0688b4406",
+      "tools/mnist/training/mnist_quantized_int8.npz": "b67d5a2dbc18778ccf969086b0af70606b921e327845896df8f519943c290cde",
+      "tools/mnist/training/quantization.json": "a101ca0e28985f743519e03613c633efe0bb3f71ec082e33e38d3827952688f1",
+      "tools/mnist/training/rtl_samples.npz": "c3ee9d1bd01ed446be811c65b66233fcf630b152696eecfb0f6c65282aefb319",
+      "tools/mnist/training/test_predictions.npz": "54c2156a32ffaf9d1e284f334601f0a3d45b4ac410f41591fa73f362230253ae",
+      "tools/mnist/training_cnn/mnist_quantized_int8.npz": "8d0b0998e526ab1ac2991be70a4a7a1e68a5a4380d9d0e641357bfa6debea928",
+      "tools/mnist/training_cnn/rtl_samples.npz": "86ae622a7f334ec24fa2e74283400009c3f70c147ce080abe62217ffbf0ff488",
+      "tools/mnist/training_cnn/test_predictions.npz": "584764bcfc9ff27edf6a9f54573da4190791ac518d3592ef908bb8f988676c4f",
+      "tools/mnist/workload.py": "840497a6af9d0e0282e53b2988f41723b4cf3beaab2bca177c4570822c8dfc8a"
+    }
+  },
+  "architectures": {
+    "NHWC": {
+      "rtl": {
+        "tiled/NHWC/rtl/PE.v": "7f3ad58eaad4969c9405271730a9fc618394bee7fa31a0eff5e4733a3bab8c53",
+        "tiled/NHWC/rtl/activation_feeder.v": "ecf734adc1079402bf98542ca4c9190ac28ea452569f3bad7943a9a28830c60c",
+        "tiled/NHWC/rtl/conv_accelerator.v": "cb48dce2a4783427b7424af988f5bda0837b90c163ce2b54091e816a61e19bae",
+        "tiled/NHWC/rtl/conv_chain.v": "7ec35a1d633be5a546688a88c9d88f9f29e37f09fd7c12af8e226af972e92015",
+        "tiled/NHWC/rtl/conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
+        "tiled/NHWC/rtl/conv_core.v": "cd9607736b7e85ea43645dd6c3f9e6996ab6a8332af3bfbb4e142eda68ffe3bd",
+        "tiled/NHWC/rtl/conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+        "tiled/NHWC/rtl/conv_program.v": "e1175e99ab8ec589e8aa25eaa354c4673edee557f22a0aa6c30273daa38ce32e",
+        "tiled/NHWC/rtl/im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
+        "tiled/NHWC/rtl/kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "tiled/NHWC/rtl/linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
+        "tiled/NHWC/rtl/output_accumulator.v": "85c63245bd611e107fbda9181ef816b9818ed4814fb77874a0bb72e9d4d0babb",
+        "tiled/NHWC/rtl/output_quantizer.v": "fe89c0b7e51f003e6882c879980db910e4fcd5cffc5ec536682d3f127ec48224",
+        "tiled/NHWC/rtl/setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "tiled/NHWC/rtl/sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "tiled/NHWC/rtl/systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
+        "tiled/NHWC/rtl/weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037"
+      },
+      "synthesis_preset_sha256": "32383178d60ab7423dbb7c8b04a253954449b58cb7826fcd00a4ad4c6ee7dc9e",
+      "synthesis_configuration_sha256": "f1032f357908496a83ef82b4a39b160e15a1e71b2ec58ef8d59d16b6aeb8757a",
+      "synthesized_netlist_sha256": "32e8bac90e565d53a64388abace74fe9c463ad875892c123223956e9ac798969",
+      "synthesized_checkpoint_sha256": "35b5e070e7534145c3db59eef4bcfe9e8bc5afcaf23a49165c5215d8e8a93268",
+      "capture": {
+        "common_20mhz": {
+          "saif_sha256": "ba1b63a0bddf3ab4d7ba8dbfb79082702e72d178cb96f1ac1608147b18d7e684",
+          "console_log_sha256": "1b64d53cf4475ef0933986afed2dda14f668e7cad675c0c54c9ddb2078588449",
+          "power_report_sha256": "3d4875090990766bdc54ae981082c0abd1f748a236445308ff04ae6eb3f1a2b6"
+        },
+        "estimated_fmax": {
+          "saif_sha256": "7cb4d47e27d3db70161dfc0bf6a1b9e7d6be7441b2f8e52ac8b6828d556cdba5",
+          "console_log_sha256": "9cc76aaff145e633056d1eb49fc08da810b66ec21bafad90edb92d4d8088010e",
+          "power_report_sha256": "bfa27267270bebeee9f3d45b7d11f022d9b6bb670ca3024789821cf1c1e957d6"
+        }
+      }
+    },
+    "NCHW": {
+      "rtl": {
+        "tiled/NCHW/rtl/PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
+        "tiled/NCHW/rtl/banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
+        "tiled/NCHW/rtl/conv_accelerator.v": "a6f7fc12356ae872449cd332a036daacc530d1abc739e4b6abdb4940e59e94ef",
+        "tiled/NCHW/rtl/conv_chain.v": "7ec35a1d633be5a546688a88c9d88f9f29e37f09fd7c12af8e226af972e92015",
+        "tiled/NCHW/rtl/conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
+        "tiled/NCHW/rtl/conv_core.v": "1f329fbb244b65e3e064948b1b19d55d45cd2f654c54186e2d8c2fadf31c2d06",
+        "tiled/NCHW/rtl/conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+        "tiled/NCHW/rtl/conv_program.v": "e1175e99ab8ec589e8aa25eaa354c4673edee557f22a0aa6c30273daa38ce32e",
+        "tiled/NCHW/rtl/im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
+        "tiled/NCHW/rtl/input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
+        "tiled/NCHW/rtl/kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
+        "tiled/NCHW/rtl/output_accumulator.v": "fca7cfcb96198aff85fbf6f239b1cfafb52398f08f80bdb7d74f46110d3a3c13",
+        "tiled/NCHW/rtl/output_quantizer.v": "fe89c0b7e51f003e6882c879980db910e4fcd5cffc5ec536682d3f127ec48224",
+        "tiled/NCHW/rtl/setup_divider.v": "db3a89284de3f397a3f8dc07e1957955e9f6ac05421521d2decee1605bd52197",
+        "tiled/NCHW/rtl/sram.v": "3fc94186aa8c79378944b8b2c81c61a903ce961047afdb483714a6106984266e",
+        "tiled/NCHW/rtl/systolic_array.v": "8bc9aea99866bce54eb69e1a8cd9dc1e097db01029e53e94a4edda14f1ab9219",
+        "tiled/NCHW/rtl/weight_loader.v": "0cb344c6a1ebdfaaec030619348f3ee1939bb8d39843aa06e8d9512b1105c36a"
+      },
+      "synthesis_preset_sha256": "32383178d60ab7423dbb7c8b04a253954449b58cb7826fcd00a4ad4c6ee7dc9e",
+      "synthesis_configuration_sha256": "7f7a603b4e506f87d74f31715e1300af78423d4d0589244ed2358157ff063e04",
+      "synthesized_netlist_sha256": "f7b36edb72e4d21e5743d06e8742b2515e14cb8a7b0d83b007fa08260b191802",
+      "synthesized_checkpoint_sha256": "5688ae123b2a934445d9db1a788601d865f48a32fe2476d727afeae7c1fe4299",
+      "capture": {
+        "common_20mhz": {
+          "saif_sha256": "613ee47363ee0dcd2dd4ca171a5edeac53dbb0542b0a0fc2ca546b6110c4369f",
+          "console_log_sha256": "704b5990eac22e5f684e8cea868d2efe3f207e5c1bac78bb94de2098fb56bbef",
+          "power_report_sha256": "01829fdc917f29221db8926071f6ee4adf693a6d40cd45c4e0aace87be36f578"
+        },
+        "estimated_fmax": {
+          "saif_sha256": "86a29e2e2f297acefd6099ee608de206b091d8a8ddf835f6b6014d5d41cd5d19",
+          "console_log_sha256": "ecba9e717780748724251eef671014580ce5e0a7c466ea55c082f63a0ebed668",
+          "power_report_sha256": "5dfa8d0c03df72d30a1901983f82f5203eb1fba1da3ff3863add162ca8b624ed"
+        }
+      }
+    }
+  }
+}

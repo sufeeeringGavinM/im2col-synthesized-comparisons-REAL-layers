@@ -8,14 +8,34 @@ enable. The first Dense weight tensor is permuted from Keras HWC feature
 order to the accelerator's external CHW order. The original dense release
 uses the legacy parameter format described below.
 
-The 27th descriptor word holds the per-layer ReLU enable. The testbench drives
-it on `cfg_relu_enable` for the current RTL. It expects hardware-clamped
-data in `raw_outputs.hex` and checks the chain against the independent Python
-reference. `expected.hex` stores the pre-clamp reference used in the software
-ReLU control and `post.hex` holds the final expected write data.
+Addresses below are **word addresses**. Each memory word is 32 bits, with
+one value per word. AI assistance: Codex.
 
+## Layer descriptor program
 
-Addresses below are **word addresses**. The external interface stores one value per word; no INT8 packing is implemented. These are testbench file conventions, not a hardware descriptor-fetch protocol. AI assistance: Codex.
+`conv_program` starts reading at `program_base` and advances by 27 words per
+layer. The table and tensors share backing memory. Each descriptor occupies
+108 bytes. Place the table outside regions the accelerator writes.
+
+| Word offset | Field | Bits used |
+|---:|---|---:|
+| 0–8 | `N, C, H, W, K, R, S, P, Q`, in order | 32 each |
+| 9–14 | Vertical and horizontal padding, stride and dilation, in order | 32 each |
+| 15–17 | Input, weight and output base word addresses | 32 each |
+| 18 | Requantization enable | 1 |
+| 19 | Right shift | 5 |
+| 20 | Round-to-nearest enable | 1 |
+| 21 | `last` flag | 1 |
+| 22 | Expected output count for replay verification | 32 in the fixture |
+| 23 | Unsigned requantization multiplier | 32 |
+| 24 | Bias enable | 1 |
+| 25 | Bias base word address | 32 |
+| 26 | ReLU enable | 1 |
+
+The controller reads word 22 as part of the fixed record stride. Execution
+derives geometry from words 0–14. Flag bits occupy bit 0 and shift occupies
+bits 4:0. The exporter stores the addresses of actual tensor buffers, so the
+next layer uses the preceding layer's completed writes.
 
 ## Inputs and weights
 
@@ -63,7 +83,7 @@ The runner loads the bias file into its backing memory and drives the descriptor
 
 The final multiplier/shift are retained exactly as exported, though bypassed by `cfg_quantize=0`; bias remains enabled. Notebook-named exports `dense_weights.hex`/`dense_1_weights.hex` and bias files are byte-identical aliases of the corresponding `w0/w1` and `b0/b1` files.
 
-Scales do **not** occupy external output-memory words. The host/testbench drives `cfg_output_multiplier`, `cfg_output_shift`, `cfg_round_nearest` and `cfg_quantize`; the accelerator captures them on descriptor acceptance. One multiplier/shift pair serves the whole layer. Bias is independently enabled, including when final-layer requantization is disabled.
+The scale parameters are stored in the descriptor table. The accelerator captures the multiplier, shift, rounding and requantization enable on descriptor acceptance. One multiplier/shift pair serves the whole layer. Bias is independently enabled, including when final-layer requantization is disabled.
 
 For conventional symmetric quantization, the target requantization factor is `(input_scale * weight_scale) / output_scale`, and a bias is represented in accumulator units using `input_scale * weight_scale`. Supplied biases must already be integer-encoded in those units; the RTL does not convert floating-point biases or derive calibration scales.
 
@@ -71,10 +91,10 @@ For conventional symmetric quantization, the target requantization factor is `(i
 
 The MNIST runner creates:
 
-- `memory.hex`: sparse 32-bit `$readmemh` backing-memory initialization containing input, weights and biases, with `@` word-address markers.
-- `descriptors.hex`: 27 words per layer, including geometry, memory bases, bias/scale controls and testbench-only bookkeeping.
-- `expected.hex`: completed pre-software outputs from the integer reference.
-- `post.hex`: reference outputs after any software activation.
+- `memory.hex`: sparse 32-bit `$readmemh` backing-memory initialization containing input, weights, biases and the layer program, with `@` word-address markers.
+- `descriptors.hex`: copy of the 27-word records used by the testbench to check execution.
+- `expected.hex`: integer reference outputs before applying ReLU, used by the legacy comparison.
+- `post.hex`: integer reference outputs with the configured ReLU behavior.
 
 The testbench uses references only to check actual outputs. Each layer reads actual memory writes from its predecessor. Hardware ReLU is applied on writeback.
 
@@ -97,7 +117,7 @@ For dense MNIST, N=P=Q=1, so output neuron k is at `output_base+k`. The replay's
 | 784→128 | 0 | 1,024 | 140,000 | 150,000 | 128 |
 | 128→10 | 150,000 | 101,376 | 140,128 | 151,000 | 10 |
 
-These addresses are fixture choices, not hardwired RTL addresses. `raw_outputs.hex` concatenates actual completed outputs before software activation; `rtl_outputs.hex` concatenates the actual values after that activation, both in layer/tensor order. The final ten words are raw signed32 classification scores.
+These addresses are fixture choices, not hardwired RTL addresses. `raw_outputs.hex` and `rtl_outputs.hex` both contain the actual completed outputs, including enabled hardware ReLU, in layer/tensor order. The final ten words are raw signed32 classification scores.
 
 ## Complete demo memory ranges
 
@@ -110,5 +130,6 @@ These addresses are fixture choices, not hardwired RTL addresses. `raw_outputs.h
 | 140,128–140,137 | Final-layer signed32 biases |
 | 150,000–150,127 | First-layer completed INT8 outputs after ReLU |
 | 151,000–151,009 | Final biased signed32 scores, classes 0–9 |
+| 199,600–199,653 | Two 27-word layer descriptors |
 
-Unused addresses are not parameter arrays. The two 27-word descriptors are held by the testbench, outside this data-memory map. `multiplier`, `shift`, rounding and bias controls are driven from those descriptor records. The output files concatenate 128 hidden values and ten final scores: 138 words per inference.
+The Dense replay launches with `program_base=199600`. Its output files concatenate 128 hidden values and ten final scores for 138 words per inference.

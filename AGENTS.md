@@ -1,6 +1,6 @@
 # Working on the accelerator
 
-The current release is **NHWC and two-slot NCHW with bias, scale multiplication, output quantization and combinational ReLU**, with the CNN update selected on November 19, 2026. Main sources are `tiled/NHWC` and `tiled/NCHW`; `conv_chain` is the top. The current RTL captures an optional ReLU enable and clamps negative completed writes combinationally.
+The current release is **NHWC and two-slot NCHW with memory-resident layer programs, bias, scale multiplication, output quantization and combinational ReLU**. Main sources are `tiled/NHWC` and `tiled/NCHW`. Use `conv_program` as the top for memory-backed sequencing. Use the existing `conv_chain` interface for streamed descriptors. ReLU clamps negative completed writes combinationally when enabled.
 
 - The November 16 quantization-only publication used testbench/software ReLU. The current CNN uses hardware ReLU. Tie `cfg_relu_enable` low for the original raw/writeback behavior.
 
@@ -14,4 +14,4 @@ The current release is **NHWC and two-slot NCHW with bias, scale multiplication,
 - Use `tools/vivado_synthesis` for authorized synthesis, Nexys Video `xc7a200tsbg484-1` by default. Reuse unchanged hash-matched accepted work; do not rerun synthesis for documentation/publication.
 - Prefer native scheduled follow-ups for long runs. Keep monitors quiet while healthy, report failures/completion, and disable after the authorized work is finished. Never duplicate a job to monitor it.
 - Preserve numbered before/after source and tensor checkpoints for behavioral RTL/testbench/generator/mapping changes, with hashes, provenance and actual validation. Documentation edits need factual/link checks.
-- Preserve course/reference attribution and AI disclosures. Keep binaries, large builds, waveforms and private paths out of Git. The CNN/ReLU update is authorized for the local checkout. Commits, pushes and publication require separate user authorization.
+- Preserve course/reference attribution and AI disclosures. Keep binaries, large builds, waveforms and private paths out of Git. Commits, pushes and publication require user authorization.

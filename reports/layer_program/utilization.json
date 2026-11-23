@@ -1,0 +1,30 @@
+{
+  "NHWC": {
+    "program": {
+      "luts": 21552.0,
+      "registers": 10985.0,
+      "bram_tiles": 10.0,
+      "dsps": 115.0
+    },
+    "baseline": {
+      "luts": 21455.0,
+      "registers": 10297.0,
+      "bram_tiles": 10.0,
+      "dsps": 115.0
+    }
+  },
+  "NCHW": {
+    "program": {
+      "luts": 61935.0,
+      "registers": 18848.0,
+      "bram_tiles": 15.0,
+      "dsps": 215.0
+    },
+    "baseline": {
+      "luts": 61356.0,
+      "registers": 18188.0,
+      "bram_tiles": 15.0,
+      "dsps": 215.0
+    }
+  }
+}

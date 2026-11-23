@@ -1,6 +1,6 @@
 {
-  "release": "Bias, quantization and combinational ReLU",
-  "top": "conv_chain",
+  "release": "Memory-resident layer programs with bias, quantization and combinational ReLU",
+  "top": "conv_program",
   "files": {
     "tiled/NCHW/rtl/PE.v": "d0a5723b235ca37f59926168ab35a3d384a6b38eb6095a6d3a86e82ee8d04a89",
     "tiled/NCHW/rtl/banked_input.v": "e0affd59efee50477116c6ccba3bbbbab7cd5d3e7518d77b80a6d117c20b6413",
@@ -9,6 +9,7 @@
     "tiled/NCHW/rtl/conv_controller.v": "f821322c2982c89d69efdd46dfc3cc4cda8caa38ce8219e7e6cbffa80936ecfa",
     "tiled/NCHW/rtl/conv_core.v": "1f329fbb244b65e3e064948b1b19d55d45cd2f654c54186e2d8c2fadf31c2d06",
     "tiled/NCHW/rtl/conv_datapath.v": "70a37c6f6f05ac50258474a3b8c1a7f61c7395a281dd25c5442b729df50344d2",
+    "tiled/NCHW/rtl/conv_program.v": "e1175e99ab8ec589e8aa25eaa354c4673edee557f22a0aa6c30273daa38ce32e",
     "tiled/NCHW/rtl/im2col_addr_gen.v": "f3b31df81762b5ef89cea45d0bb861a81fead05105915517379c04f0f22ea282",
     "tiled/NCHW/rtl/input_bank.v": "789bc5bb8cd2ce4694de831887dc6410988ebc45cb996e675ade5ba754de3150",
     "tiled/NCHW/rtl/kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
@@ -25,6 +26,7 @@
     "tiled/NHWC/rtl/conv_controller.v": "4d3b8c1b4cf767ecc0d9421d282598a62d9a7ec1e2160abafcd23b123f4afdca",
     "tiled/NHWC/rtl/conv_core.v": "cd9607736b7e85ea43645dd6c3f9e6996ab6a8332af3bfbb4e142eda68ffe3bd",
     "tiled/NHWC/rtl/conv_datapath.v": "49b9beac502768b0e99b629c7828def50dc964b0a91ce30a5d35e41c26f274eb",
+    "tiled/NHWC/rtl/conv_program.v": "e1175e99ab8ec589e8aa25eaa354c4673edee557f22a0aa6c30273daa38ce32e",
     "tiled/NHWC/rtl/im2col_addr_gen.v": "218617009dfe88652fb19e502518e633adb15f97f6b02ce3a890dae2e98af370",
     "tiled/NHWC/rtl/kernel_bank.v": "2d428fab01497d3f67f35b9711c4709642f787e43a46d6f28da4ffb6c061c316",
     "tiled/NHWC/rtl/linear_address_counter.v": "90bfdc31a028478732f8632b6d2eca296cd225d373647cd19573810eb9151380",
@@ -35,8 +37,9 @@
     "tiled/NHWC/rtl/systolic_array.v": "b69d48fd018f8909cfceb024b104aadfdd66815a53365aff210dd8fad1c88b66",
     "tiled/NHWC/rtl/weight_loader.v": "1974f1f3381c15663c37a25290e8d97dc3d6b8e5bb0ff266ac0ffa1f14844037",
     "tools/mnist/reference.py": "df0c977eca164ae6a37e7a0f1c14bfee8c9734f918e50143f13bde1bf8e43f71",
-    "tools/mnist/run.py": "2c7f747abfd04bd5ae139b38ad059d3001dc6dd1b639a224c505ce0c4700128f",
+    "tools/mnist/run.py": "389b0911272be226c164be6167cee44fb0fcfa84dc0e70d398ce5b8156185273",
     "tools/mnist/tb_mnist.v": "470341c6219c6d2bf50350644982ce19c4c33b8307c9a22dc3c6292dc50f96e8",
+    "tools/mnist/tb_mnist_program.v": "3f9c76dec9a54302a23df78d45528490c467da5f87725a4dcbfcd897d6355544",
     "tools/mnist/training/integer_tensors.npz": "16f29b959ac19598bd62bb6a4d1fa79511ec44839258ab4fb5b5adb0688b4406",
     "tools/mnist/training/mnist_quantized_int8.npz": "b67d5a2dbc18778ccf969086b0af70606b921e327845896df8f519943c290cde",
     "tools/mnist/training/quantization.json": "a101ca0e28985f743519e03613c633efe0bb3f71ec082e33e38d3827952688f1",
@@ -45,6 +48,6 @@
     "tools/mnist/training_cnn/mnist_quantized_int8.npz": "8d0b0998e526ab1ac2991be70a4a7a1e68a5a4380d9d0e641357bfa6debea928",
     "tools/mnist/training_cnn/rtl_samples.npz": "86ae622a7f334ec24fa2e74283400009c3f70c147ce080abe62217ffbf0ff488",
     "tools/mnist/training_cnn/test_predictions.npz": "584764bcfc9ff27edf6a9f54573da4190791ac518d3592ef908bb8f988676c4f",
-    "tools/mnist/workload.py": "b156bb10be78b3e5d4d7e4bd8d8d8d620aeccb8a7b0157a51dcb974a85959dcb"
+    "tools/mnist/workload.py": "840497a6af9d0e0282e53b2988f41723b4cf3beaab2bca177c4570822c8dfc8a"
   }
 }

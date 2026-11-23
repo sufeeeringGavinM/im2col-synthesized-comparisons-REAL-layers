@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "test_images": 10000,
+  "exact_integer_logits": 100000,
+  "integer_correct": 9862,
+  "hex_matches_npz_kcrs": true,
+  "raw_dataset_sha256": "731c5ac602752760c8e48fbffcf8c3b850d9dc2a2aedcf2cc48468fc17b673d1"
+}
