@@ -1,5 +1,8 @@
 # Real model geometries on tiled address-counter hardware
 
+This page records the historical four-architecture study. See the
+[current layer-program results](layer_program/README.md) for NHWC and two-slot NCHW.
+
 State: MEASUREMENTS_COMPLETE; RTL 16/16; native SAIF/power 16/16.
 
 Batch size is 1. Every output filter uses all input channels (`groups=1`), and kernel taps are adjacent (`dilation=1`). Signed 8-bit synthetic operands; 32-bit wrapped sums. This studies individual convolution geometries, with no bias, normalization, activation, pooling, shortcut, trained weights or accuracy claim.

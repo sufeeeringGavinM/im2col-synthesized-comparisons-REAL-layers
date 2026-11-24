@@ -4,8 +4,8 @@
 
 The default workload is the University of Florida CNN. It runs two stride-2
 spatial convolutions and two Dense layers, using hardware ReLU on completed writes from the first three weighted layers. See [the training notebook](MNIST_Training_Test_3_CNN.ipynb),
-[training and checkpoint selection](training_cnn/METRICS.json), and the
-[main README](../../README.md).
+[training and checkpoint selection](training_cnn/METRICS.json), and
+[current RTL, timing and power results](../../reports/layer_program/README.md).
 
 ```bash
 python3 tools/mnist/run.py --stage py_sim

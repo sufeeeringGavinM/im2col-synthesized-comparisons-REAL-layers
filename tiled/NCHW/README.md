@@ -19,7 +19,7 @@ Tensor headers supply dimensions; without headers provide `--N --C --H --W --K -
 
 `conv_golden.py` retains the original course convolution reference; `output_processing.py` models wrapped bias and exact integer requantization. The runner checks actual RTL words against both Verilog and Python references. Generated outputs stay under the selected directory.
 
-Replay the spatial CNN to check actual layer-to-layer memory handoffs and combinational writeback ReLU. [MNIST replay](../../tools/mnist/README.md) · [Local CNN results](../../reports/mnist_cnn_relu/README.md) · [Published dense results](../../reports/current/README.md) · [Historical chaining study](../../reports/chaining/README.md)
+Replay the spatial CNN to check actual layer-to-layer memory handoffs and combinational writeback ReLU. [MNIST replay](../../tools/mnist/README.md) · [Current layer-program results](../../reports/layer_program/README.md) · [Historical dense results](../../reports/current/README.md) · [Historical chaining study](../../reports/chaining/README.md)
 
 ## Credits
 
