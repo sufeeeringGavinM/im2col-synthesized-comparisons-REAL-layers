@@ -1,0 +1,196 @@
+{
+  "NHWC": {
+    "rtl_changes": {},
+    "hardware": {
+      "luts": {
+        "previous": 21552.0,
+        "current": 21552.0,
+        "delta": 0.0
+      },
+      "registers": {
+        "previous": 10985.0,
+        "current": 10985.0,
+        "delta": 0.0
+      },
+      "bram_tiles": {
+        "previous": 10.0,
+        "current": 10.0,
+        "delta": 0.0
+      },
+      "dsps": {
+        "previous": 115.0,
+        "current": 115.0,
+        "delta": 0.0
+      },
+      "estimated_fmax_mhz": {
+        "previous": 34.94182186659212,
+        "current": 34.94182186659212,
+        "delta": 0.0
+      },
+      "setup_wns_20mhz_ns": {
+        "previous": 21.381,
+        "current": 21.381,
+        "delta": 0.0
+      },
+      "common_20mhz": {
+        "latency_ms": {
+          "previous": 6.6236,
+          "current": 6.6236,
+          "delta": 0.0
+        },
+        "dynamic_w": {
+          "previous": 0.014,
+          "current": 0.014,
+          "delta": 0.0
+        },
+        "static_w": {
+          "previous": 0.123,
+          "current": 0.123,
+          "delta": 0.0
+        },
+        "total_w": {
+          "previous": 0.136,
+          "current": 0.136,
+          "delta": 0.0
+        },
+        "energy_mj": {
+          "previous": 0.9008096136000001,
+          "current": 0.9008096136000001,
+          "delta": 0.0
+        },
+        "annotation": [
+          "87%   (59824/68557)",
+          "87%   (59792/68525)"
+        ]
+      },
+      "estimated_fmax": {
+        "latency_ms": {
+          "previous": 3.79134864,
+          "current": 3.79134864,
+          "delta": 0.0
+        },
+        "dynamic_w": {
+          "previous": 0.024,
+          "current": 0.024,
+          "delta": 0.0
+        },
+        "static_w": {
+          "previous": 0.123,
+          "current": 0.123,
+          "delta": 0.0
+        },
+        "total_w": {
+          "previous": 0.147,
+          "current": 0.147,
+          "delta": 0.0
+        },
+        "energy_mj": {
+          "previous": 0.55732826478,
+          "current": 0.55732826478,
+          "delta": 0.0
+        },
+        "annotation": [
+          "87%   (59824/68557)",
+          "87%   (59792/68525)"
+        ]
+      }
+    }
+  },
+  "NCHW": {
+    "rtl_changes": {},
+    "hardware": {
+      "luts": {
+        "previous": 61935.0,
+        "current": 61935.0,
+        "delta": 0.0
+      },
+      "registers": {
+        "previous": 18848.0,
+        "current": 18848.0,
+        "delta": 0.0
+      },
+      "bram_tiles": {
+        "previous": 15.0,
+        "current": 15.0,
+        "delta": 0.0
+      },
+      "dsps": {
+        "previous": 215.0,
+        "current": 215.0,
+        "delta": 0.0
+      },
+      "estimated_fmax_mhz": {
+        "previous": 26.5893802015475,
+        "current": 26.5893802015475,
+        "delta": 0.0
+      },
+      "setup_wns_20mhz_ns": {
+        "previous": 12.391,
+        "current": 12.391,
+        "delta": 0.0
+      },
+      "common_20mhz": {
+        "latency_ms": {
+          "previous": 4.8144,
+          "current": 4.8144,
+          "delta": 0.0
+        },
+        "dynamic_w": {
+          "previous": 0.012,
+          "current": 0.012,
+          "delta": 0.0
+        },
+        "static_w": {
+          "previous": 0.123,
+          "current": 0.123,
+          "delta": 0.0
+        },
+        "total_w": {
+          "previous": 0.135,
+          "current": 0.135,
+          "delta": 0.0
+        },
+        "energy_mj": {
+          "previous": 0.6499440135000001,
+          "current": 0.6499440135000001,
+          "delta": 0.0
+        },
+        "annotation": [
+          "85%   (162124/189900)",
+          "85%   (162092/189868)"
+        ]
+      },
+      "estimated_fmax": {
+        "latency_ms": {
+          "previous": 3.62139168,
+          "current": 3.62139168,
+          "delta": 0.0
+        },
+        "dynamic_w": {
+          "previous": 0.016,
+          "current": 0.016,
+          "delta": 0.0
+        },
+        "static_w": {
+          "previous": 0.123,
+          "current": 0.123,
+          "delta": 0.0
+        },
+        "total_w": {
+          "previous": 0.139,
+          "current": 0.139,
+          "delta": 0.0
+        },
+        "energy_mj": {
+          "previous": 0.5033734574200001,
+          "current": 0.5033734574200001,
+          "delta": 0.0
+        },
+        "annotation": [
+          "85%   (162124/189900)",
+          "85%   (162092/189868)"
+        ]
+      }
+    }
+  }
+}

@@ -1,9 +1,19 @@
 # Accelerator status
 
-The accelerator implements NHWC and two-slot NCHW with descriptor-based layer chaining, optional INT32 channel bias, scale multiplication, output quantization and optional combinational ReLU. Main source paths are `tiled/NHWC` and `tiled/NCHW`, with `conv_chain` as top.
+The official local NHWC and two-slot NCHW build uses `conv_program` to fetch
+27-word descriptors from backing memory starting at word address 0. The
+host pulses `start` once. Integrations that need a runtime descriptor base
+can set `USE_PROGRAM_BASE_INPUT=1`. `conv_chain` serves streamed-descriptor
+callers.
 
-Requantization bypass retains independently enabled bias. The default Florida MNIST CNN uses hardware ReLU on completed hidden-layer writes and retains biased INT32 logits for software argmax. Twenty MNIST replays and three directed four-state RTL cases per layout passed, alongside four native XSim captures. The measured sources and results are verified in the local checkout. [CNN measurements](reports/mnist_cnn_relu/README.md) · [Replay commands](tools/mnist/README.md)
+The Florida MNIST CNN uses hardware ReLU on completed hidden-layer writes
+and retains biased INT32 logits for software argmax. The address-zero build
+matched the published layer-program cycle counts, resource counts and
+post-synthesis timing. Both layouts also reproduced the reported power and energy at both clocks.
+[Address-zero validation](reports/address_zero/README.md).
+[Published measurements](reports/layer_program/README.md) ·
+[Replay commands](tools/mnist/README.md).
 
-The November 16 published dense model used testbench ReLU on actual hidden-layer outputs. It remains available for replay via `--model dense`, with the published measurements tied to the original quantization-only RTL. [Published dense evidence](reports/current/README.md)
-
-The November 16 release manifest records its measured synthesis inputs. Commit `419ca20` updated comments in four RTL files. The November 16 runtime identity records those updated hashes. The current runner verifies the selected model and release sources and supports Python-only inference and automatic output directories. Historical studies retain their own source identities and measurements. Routed timing closure and board validation remain outside the reported evidence.
+The original Dense model remains available via `--model dense`. Its
+November 16 measurements use the quantization-only RTL and testbench ReLU.
+[Historical Dense evidence](reports/current/README.md).

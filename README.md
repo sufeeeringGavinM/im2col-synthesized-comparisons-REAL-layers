@@ -5,8 +5,8 @@ FPGA convolution accelerators implementing **NHWC and NCHW**, with autonomous me
 Both implementations use a 10×10 systolic array, signed INT8 inputs/weights, wrapped INT32 accumulation, 32-bit configuration/external addresses and 8-bit local SRAM addresses. Base SRAM capacity is 15 KiB: 2.5 KiB input, 2.5 KiB kernel and 10 KiB output. Dense layers map to 1×1 convolutions.
 
 The `conv_program` top runs a whole layer program from a single start pulse.
-See [layer-program validation](reports/layer_program/README.md) for the current
-programmed interface's RTL, timing and power results.
+The official local build fetches descriptors from word address 0 by default.
+See [layer-program validation](reports/layer_program/README.md) for measurement provenance.
 
 <!-- CURRENT_SUMMARY_START -->
 ## MNIST CNN results
@@ -77,9 +77,11 @@ See [file and memory formats](tools/mnist/MEMORY_FORMAT.md) for parameter loadin
 ## Layer chaining and memory
 
 Load the layer descriptors, input activations, weights and biases into backing
-memory. Present the word address of the first descriptor on `program_base` and
-pulse `start` for one clock while `chain_busy` is low. `conv_program` latches
-the base, reads 27 consecutive 32-bit words per descriptor and issues that
+memory. By default, put the first descriptor at word address 0 and pulse
+`start` for one clock while `chain_busy` is low. For relocatable programs,
+elaborate with `USE_PROGRAM_BASE_INPUT=1` and supply the descriptor address
+on `program_base` at launch. `conv_program` reads 27 consecutive 32-bit words
+per descriptor and issues that
 descriptor to the existing `conv_chain` engine. It waits for layer completion
 before fetching the next descriptor at `pc + 27`. The final descriptor's
 `last` flag causes a one-cycle `chain_done` pulse after final writeback. Starts
@@ -132,6 +134,7 @@ Optional flags:
 | `--variant NHWC` or `--variant NCHW` | Simulate one RTL implementation |
 | `--samples 20 --directed` | Run all retained CNN images and directed cases |
 | `--model dense` | Run the original dense MNIST model and its retained images |
+| `--program-base-input` | Enable the optional relocatable program base in RTL replay |
 | `--label 7` | Record the expected digit for a custom image |
 | `--out-dir runs/my_run` | Choose a new output folder |
 

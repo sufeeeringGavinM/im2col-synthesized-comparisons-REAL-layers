@@ -1,13 +1,13 @@
 // Exercise the memory-backed top with real layer handoffs. AI assistance: Codex.
 `timescale 1ns/1ps
-module tb_mnist_program;
+module tb_mnist_program #(parameter USE_PROGRAM_BASE_INPUT = 0);
   reg clk=0, nrst=0, start=0;
   reg [31:0] program_base;
   wire chain_busy, chain_done, mem_re, mem_we;
   wire [31:0] mem_raddr, mem_waddr, mem_wdata;
   reg [31:0] mem_rdata;
   reg [31:0] memory[0:199999], expected_post[0:5999], descriptors[0:107];
-  integer fixture_base, active_base, layer_count, layer, trial, trials, j;
+  integer fixture_base, restart_base, active_base, layer_count, layer, trial, trials, j;
   integer off, base, outputs, live_input, live_words;
   integer writes[0:5999], phase[0:15];
   integer accepted, finished, fetch_reads, reads_count, writes_count, jobs, core_busy_count, phase_total;
@@ -17,7 +17,7 @@ module tb_mnist_program;
   realtime window_start_time, window_end_time;
   integer power_stage=0;
 
-  conv_program DUT(.*);
+  conv_program #(.USE_PROGRAM_BASE_INPUT(USE_PROGRAM_BASE_INPUT)) DUT(.*);
   wire busy = DUT.busy, done = DUT.done;
   wire accept = DUT.descriptor_valid && DUT.descriptor_ready;
 
@@ -74,9 +74,9 @@ module tb_mnist_program;
     $readmemh(desc_file,descriptors,0,layer_count*27-1);
     $readmemh(post_file,expected_post);
     trials = $test$plusargs("RESTART") ? 2 : 1;
-    if (trials==2) begin
-      // The second launch uses a different program address and the same tensors.
-      for (j=0;j<layer_count*27;j=j+1) memory[fixture_base+128+j]=descriptors[j];
+    if (trials==2 && USE_PROGRAM_BASE_INPUT) begin
+      if (!$value$plusargs("ALT_PROGRAM_BASE=%d",restart_base)) $fatal(1,"Missing alternate base");
+      for (j=0;j<layer_count*27;j=j+1) memory[restart_base+j]=descriptors[j];
     end
     dump=$fopen("rtl_outputs.hex","w");
     raw_dump=$fopen("raw_outputs.hex","w");
@@ -88,15 +88,15 @@ module tb_mnist_program;
       finished=0;
       fetch_reads=0;
       off=0;
-      active_base=fixture_base+trial*128;
-      program_base=active_base;
+      active_base=(trial!=0 && USE_PROGRAM_BASE_INPUT) ? restart_base : fixture_base;
+      if (USE_PROGRAM_BASE_INPUT) program_base=active_base;
       start=1;
       @(posedge clk);
       window_start_time=$realtime; power_stage=1;
       @(negedge clk);
       if (!chain_busy) $fatal(1,"Busy did not cover initial descriptor fetch");
       start=0;
-      program_base=199999;
+      if (USE_PROGRAM_BASE_INPUT) program_base=199999;
       // An extra pulse with a different base during fetch must be ignored.
       @(negedge clk); start=1;
       @(negedge clk); start=0;

@@ -1,6 +1,6 @@
 # Working on the accelerator
 
-The current release is **NHWC and two-slot NCHW with memory-resident layer programs, bias, scale multiplication, output quantization and combinational ReLU**. Main sources are `tiled/NHWC` and `tiled/NCHW`. Use `conv_program` as the top for memory-backed sequencing. Use the existing `conv_chain` interface for streamed descriptors. ReLU clamps negative completed writes combinationally when enabled.
+The current release is **NHWC and two-slot NCHW with memory-resident layer programs, bias, scale multiplication, output quantization and combinational ReLU**. Main sources are `tiled/NHWC` and `tiled/NCHW`. Use `conv_program` as the top for memory-backed sequencing. The default program base is word address 0. Set `USE_PROGRAM_BASE_INPUT=1` for a launch-time address. Use the existing `conv_chain` interface for streamed descriptors. ReLU clamps negative completed writes combinationally when enabled.
 
 - The November 16 quantization-only publication used testbench/software ReLU. The current CNN uses hardware ReLU. Tie `cfg_relu_enable` low for the original raw/writeback behavior.
 
@@ -15,3 +15,7 @@ The current release is **NHWC and two-slot NCHW with memory-resident layer progr
 - Prefer native scheduled follow-ups for long runs. Keep monitors quiet while healthy, report failures/completion, and disable after the authorized work is finished. Never duplicate a job to monitor it.
 - Preserve numbered before/after source and tensor checkpoints for behavioral RTL/testbench/generator/mapping changes, with hashes, provenance and actual validation. Documentation edits need factual/link checks.
 - Preserve course/reference attribution and AI disclosures. Keep binaries, large builds, waveforms and private paths out of Git. Commits, pushes and publication require user authorization.
+
+## Long-running job notifications
+
+For future long-running jobs, monitor status locally without starting chat turns while the job is healthy. Send a same-chat follow-up when the worker completes or fails, then stop the monitor once the app accepts the terminal follow-up. If the user explicitly requests interim updates, use their requested cadence. In WSL, use a user systemd timer and the native thread tool with the verified WSL host and chat ID.

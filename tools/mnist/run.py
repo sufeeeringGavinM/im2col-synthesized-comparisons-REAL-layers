@@ -58,6 +58,8 @@ def main():
     custom.add_argument('--input-tensor', type=Path, help='784 already-quantized input values as two-digit hex words')
     parser.add_argument('--label', type=int, choices=range(10), help='Optional true label for a custom input')
     parser.add_argument('--out-dir', type=Path, help='A new output directory (default: unique runs/mnist_<stage>_* folder)')
+    parser.add_argument('--program-base-input', action='store_true',
+                        help='Enable the optional relocatable program base input in RTL')
     parser.add_argument('--timeout', type=int, default=3600, help='Seconds per tool invocation')
     args = parser.parse_args()
     max_samples = 20
@@ -91,7 +93,8 @@ def main():
         output = Path(tempfile.mkdtemp(prefix=f'mnist_{args.stage}_', dir=runs))
     print(f'Output directory: {output}', flush=True)
     (output / 'plan.json').write_text(json.dumps(dict(
-        stage=args.stage, model=args.model, samples=args.samples, directed=args.directed, custom_input=provenance,
+        stage=args.stage, model=args.model, samples=args.samples, directed=args.directed,
+        program_base_input=args.program_base_input, custom_input=provenance,
         source_identity=identity), indent=2) + '\n')
     if args.stage == 'prepare':
         print('PASS: released source and fixture hashes match; no simulator launched')
@@ -151,7 +154,8 @@ def main():
         folder.mkdir()
         binary = folder / 'mnist.vvp'
         command([compiler, *(['-B', backend] if backend else []), '-g2012', '-Wall',
-                 '-s', 'tb_mnist_program', '-o', binary, Path(__file__).with_name('tb_mnist_program.v'),
+                 '-s', 'tb_mnist_program',
+                 f'-Ptb_mnist_program.USE_PROGRAM_BASE_INPUT={int(args.program_base_input)}', '-o', binary, Path(__file__).with_name('tb_mnist_program.v'),
                  *sorted((ROOT / 'tiled' / arch / 'rtl').glob('*.v'))],
                 folder, folder / 'compile.log')
         for case in cases:

@@ -5,7 +5,7 @@
 The default workload is the University of Florida CNN. It runs two stride-2
 spatial convolutions and two Dense layers, using hardware ReLU on completed writes from the first three weighted layers. See [the training notebook](MNIST_Training_Test_3_CNN.ipynb),
 [training and checkpoint selection](training_cnn/METRICS.json), and
-[current RTL, timing and power results](../../reports/layer_program/README.md).
+[layer-program RTL, timing and power evidence](../../reports/layer_program/README.md).
 
 ```bash
 python3 tools/mnist/run.py --stage py_sim
@@ -29,7 +29,7 @@ python3 tools/mnist/run.py --model dense --stage rtl --samples 1 --out-dir runs/
 
 Use `--samples 20 --directed` for all retained images and three directed reduction/bias cases per implementation. Select one architecture with `--variant NHWC` or `--variant NCHW`. `--timeout` sets seconds per invocation. Set `IVERILOG_BIN`, `VVP_BIN` and optionally `IVERILOG_BACKEND` for nonstandard tool installations. `--out-dir` is optional: by default, each run creates a unique `runs/mnist_<stage>_*` folder under the current working directory and prints its absolute path. An explicitly supplied output directory must be new.
 
-`run.py` verifies released source/model hashes, generates memory fixtures, compiles `tb_mnist_program.v` against the `conv_program` top, and checks actual writes and intermediate handoffs. It records per-layer phases, jobs and core cycles, start-to-done chain cycles, descriptor reads, output words and predictions. Classification correctness is recorded separately from the exact output check.
+`run.py` verifies released source/model hashes, generates memory fixtures, compiles `tb_mnist_program.v` against the `conv_program` top, and checks actual writes and intermediate handoffs. The generated fixture places descriptors at word address 0, followed by the image, weights, biases and outputs. The default RTL run supplies only a start pulse for launch. Enable `--program-base-input` with `--directed` to also verify a restart from a relocated table. It records per-layer phases, jobs and core cycles, start-to-done chain cycles, descriptor reads, output words and predictions. Classification correctness is recorded separately from the exact output check.
 
 `reference.py` is an independent NumPy INT8/ACC32 dense model. `workload.py` generates fixtures. `training/integer_tensors.npz` stores `[output,input]` weights and signed32 biases; `quantization.json` contains calibration provenance and controls. `rtl_samples.npz` contains inputs, labels and expected intermediates. `test_predictions.npz`, metrics and history preserve original evaluation provenance; replay does not retrain.
 

@@ -5,7 +5,9 @@ import numpy as np
 E=Path(__file__).resolve().parent
 from reference import conv_layer, layer
 
-PROGRAM_BASE = 199600
+PROGRAM_BASE = 0
+DESCRIPTOR_WORDS = 27
+RESTART_BASE = 199600
 
 
 def words(path,values):path.write_text(''.join(f'{int(v)&0xffffffff:08x}\n' for v in np.asarray(values).flat))
@@ -14,9 +16,12 @@ def words(path,values):path.write_text(''.join(f'{int(v)&0xffffffff:08x}\n' for 
 def fixture(dest, inputs, weights, biases, configs, expected=None):
     dest.mkdir(parents=True, exist_ok=False)
     x = np.asarray(inputs, dtype=np.int64)
-    memory = dict(enumerate(map(int, x.flat)))
+    ibase = PROGRAM_BASE + DESCRIPTOR_WORDS * len(configs)
+    kbase = ibase + x.size
+    bbase = kbase + sum(w.size for w in weights)
+    obase = bbase + sum(b.size for b in biases)
+    memory = dict(enumerate(map(int, x.flat), start=ibase))
     desc, raw, post = [], [], []
-    ibase, kbase, bbase, obase = 0, 1024, 140000, 150000
     for i, (w, b, c) in enumerate(zip(weights, biases, configs)):
         if w.ndim == 2:
             w = w[:, :, None, None]
@@ -49,14 +54,15 @@ def fixture(dest, inputs, weights, biases, configs, expected=None):
         kbase += w.size
         bbase += K
         ibase = obase
-        obase += max(1000, outputs)
-    assert kbase <= 140000 and bbase <= 150000 and obase <= PROGRAM_BASE
+        obase += outputs
+    assert obase <= RESTART_BASE
     memory.update({PROGRAM_BASE + offset: value for offset, value in enumerate(desc)})
     (dest/'memory.hex').write_text(''.join(f'@{a:x}\n{v & 0xffffffff:08x}\n' for a,v in sorted(memory.items())))
     words(dest/'descriptors.hex', desc)
     words(dest/'expected.hex', raw)
     words(dest/'post.hex', post)
-    (dest/'FIXTURE.json').write_text(json.dumps(dict(descriptor_words=27, program_base=PROGRAM_BASE,
+    (dest/'FIXTURE.json').write_text(json.dumps(dict(descriptor_words=DESCRIPTOR_WORDS, program_base=PROGRAM_BASE,
+        restart_base=RESTART_BASE,
         layers=len(configs), outputs=len(post)), indent=2)+'\n')
 
 
@@ -108,6 +114,8 @@ def args(fix,convert=str):
     result['LAYERS']=str(fixture['layers'])
     if 'program_base' in fixture:
         result['PROGRAM_BASE']=str(fixture['program_base'])
+    if 'restart_base' in fixture:
+        result['ALT_PROGRAM_BASE']=str(fixture['restart_base'])
     return result
 
 

@@ -5,7 +5,8 @@ module conv_program #(
     parameter ARRAY_SIZE = 10, BIT_WIDTH = 8, ACC_WIDTH = 32,
     parameter INPUT_ADDR_WIDTH = 8, OUTPUT_ADDR_WIDTH = 8, KERNEL_ADDR_WIDTH = 8,
     parameter CFG_WIDTH = 32, MEM_ADDR_WIDTH = 32,
-    parameter MEM_DATA_WIDTH = (ACC_WIDTH > 32 ? ACC_WIDTH : 32)
+    parameter MEM_DATA_WIDTH = (ACC_WIDTH > 32 ? ACC_WIDTH : 32),
+    parameter USE_PROGRAM_BASE_INPUT = 0
 ) (
     input clk, nrst, start,
     input [MEM_ADDR_WIDTH-1:0] program_base,
@@ -43,7 +44,7 @@ module conv_program #(
     end else begin
       case (state)
         IDLE: if (start) begin
-          pc <= program_base;
+          pc <= USE_PROGRAM_BASE_INPUT ? program_base : {MEM_ADDR_WIDTH{1'b0}};
           fetch_index <= 0;
           state <= FETCH;
         end

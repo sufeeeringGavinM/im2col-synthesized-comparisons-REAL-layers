@@ -13,9 +13,10 @@ one value per word. AI assistance: Codex.
 
 ## Layer descriptor program
 
-`conv_program` starts reading at `program_base` and advances by 27 words per
-layer. The table and tensors share backing memory. Each descriptor occupies
-108 bytes. Place the table outside regions the accelerator writes.
+`conv_program` starts at word address 0 by default and advances by 27 words per
+layer. With `USE_PROGRAM_BASE_INPUT=1`, it starts at the address sampled from
+`program_base` at launch. The table and tensors share backing memory. Each
+descriptor occupies 108 bytes. Place the table outside accelerator write regions.
 
 | Word offset | Field | Bits used |
 |---:|---|---:|
@@ -110,26 +111,21 @@ Each completed value occupies one 32-bit word. Quantized −3 is `fffffffd`; raw
 
 Writes traverse q positions within an output tile, then channels within its K tile. The scheduler advances q tiles, p rows, K tiles, then batch images. Addresses can jump between channel regions; a flat write transcript need not itself be NKPQ-ordered. Reading memory in increasing tensor-address order recovers NKPQ layout.
 
-For dense MNIST, N=P=Q=1, so output neuron k is at `output_base+k`. The replay's chosen map is:
-
-| Layer | Input base | Weight base | Bias base | Output base | Output words |
-|---|---:|---:|---:|---:|---:|
-| 784→128 | 0 | 1,024 | 140,000 | 150,000 | 128 |
-| 128→10 | 150,000 | 101,376 | 140,128 | 151,000 | 10 |
-
-These addresses are fixture choices, not hardwired RTL addresses. `raw_outputs.hex` and `rtl_outputs.hex` both contain the actual completed outputs, including enabled hardware ReLU, in layer/tensor order. The final ten words are raw signed32 classification scores.
-
-## Complete demo memory ranges
+For dense MNIST, N=P=Q=1, so output neuron k is at `output_base+k`.
+Generated fixtures lay out descriptors, input, weights, biases and outputs
+consecutively. The CNN places its descriptors at words 0–107 and image at
+108–891. The Dense fixture uses the following ranges.
 
 | Word addresses, decimal | Contents |
 |---|---|
-| 0–783 | Quantized input image, one sign-extended INT8 per word |
-| 1,024–101,375 | First-layer weights, neuron-major `[128,784]` |
-| 101,376–102,655 | Final-layer weights, neuron-major `[10,128]` |
-| 140,000–140,127 | First-layer signed32 biases |
-| 140,128–140,137 | Final-layer signed32 biases |
-| 150,000–150,127 | First-layer completed INT8 outputs after ReLU |
-| 151,000–151,009 | Final biased signed32 scores, classes 0–9 |
-| 199,600–199,653 | Two 27-word layer descriptors |
+| 0–53 | Two 27-word layer descriptors |
+| 54–837 | Quantized input image |
+| 838–101,189 | First-layer weights |
+| 101,190–102,469 | Final-layer weights |
+| 102,470–102,597 | First-layer INT32 biases |
+| 102,598–102,607 | Final-layer INT32 biases |
+| 102,608–102,735 | First-layer INT8 outputs after ReLU |
+| 102,736–102,745 | Final biased INT32 logits |
 
-The Dense replay launches with `program_base=199600`. Its output files concatenate 128 hidden values and ten final scores for 138 words per inference.
+`raw_outputs.hex` and `rtl_outputs.hex` contain the same completed writes in
+layer and tensor order, 138 words per Dense inference.

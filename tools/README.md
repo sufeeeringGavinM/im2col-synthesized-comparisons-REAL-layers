@@ -6,4 +6,4 @@
 - [Historical chaining reproduction](chaining/README.md): source-gated earlier release, with original 1 MHz/own-Fmax measurements.
 - [Workloads](workloads/README.md), [earlier cycle replay](cycles/README.md), [earlier Vivado flow](vivado/README.md) and [browser tools](browser/README.md): supporting/historical material with their own source identities.
 
-The current pair is NHWC and two-slot NCHW, with `conv_chain` as top. Commands write generated artifacts to new ignored directories. Historical source gates intentionally reject the current release; reproduce older measurements from the documented source commit.
+The current pair is NHWC and two-slot NCHW, with `conv_program` as the memory-backed top and `conv_chain` for streamed descriptors. Commands write generated artifacts to new ignored directories. Historical source gates intentionally reject the current release; reproduce older measurements from the documented source commit.

@@ -1,5 +1,10 @@
 # Memory-backed layer program results
 
+These measurements were captured on the published `c7634fc` build, which
+samples the launch-time descriptor base. The official local update defaults
+to word address 0 and reproduced its cycles, resource counts and estimated
+setup timing. The [address-zero validation](../address_zero/README.md) also reproduced the reported power and energy.
+
 NHWC and two-slot NCHW each matched all 2,106 outputs per image on 20 Florida MNIST CNN images
 and classified 20/20 correctly. Each layout also passed three directed cases and the original
 Dense replay. The directed restart check launched again from a different descriptor base.
