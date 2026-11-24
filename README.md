@@ -205,6 +205,25 @@ core-execution cycles** there, with **374 more address-setup cycles** and
 **43 more layer-planning cycles**. Across both Dense layers, NHWC saves
 **1,918 cycles**, where NCHW's extra setup and core startup are visible.
 
+### Hardware comparison with the November 12 presentation
+
+The baseline is the Nexys Video **chained** build shown on slide 10 of the
+November 12 progress report. Both releases use the same FPGA part and 10×10
+array. The table covers post-synthesis hardware metrics. The presentation
+used a synthetic ResNet8-derived chain, and the current workload is the
+trained MNIST CNN.
+
+| Metric | NHWC, presented → current | Two-slot NCHW, presented → current |
+|---|---:|---:|
+| Slice LUTs | 19,108 → 21,552 (+12.79%) | 60,980 → 61,935 (+1.57%) |
+| Slice registers | 9,908 → 10,985 (+10.87%) | 17,997 → 18,848 (+4.73%) |
+| BRAM tiles | 15 → 10 (-33.33%) | 15 → 15 (0.00%) |
+| DSPs | 111 → 115 (+3.60%) | 206 → 215 (+4.37%) |
+| Estimated Fmax | 38.583 → 34.942 MHz (-9.438%) | 26.590 → 26.589 MHz (-0.003%) |
+
+Percent changes use each layout’s presented build as its baseline.
+[Presented synthesis results](reports/chaining/OVERVIEW.md#resources-and-timing-previous-and-current-versions).
+
 ### Worst paths
 
 | Implementation | Worst path | Data delay | Logic levels | Interpretation |
