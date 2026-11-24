@@ -9,37 +9,36 @@ See [layer-program validation](reports/layer_program/README.md) for the current
 programmed interface's RTL, timing and power results.
 
 <!-- CURRENT_SUMMARY_START -->
-### Previous ReLU comparison
+## MNIST CNN results
 
-This measured comparison used the streamed descriptor interface with a trained **8,706-parameter MNIST CNN**.
-The CNN uses quantization and combinational ReLU on completed hidden-layer writes.
-Final scores retain biased INT32 precision.
+The current `conv_program` release runs the trained **8,706-parameter MNIST CNN**.
+Both layouts start from memory-resident descriptors and finish with biased INT32 logits.
 
-| Metric | NHWC (Quantization → Quantization + ReLU) | NCHW (Quantization → Quantization + ReLU) |
+| Metric | NHWC | Two-slot NCHW |
 |---|---:|---:|
-| LUTs | 21,315 → 21,455 (+0.66%) | 61,703 → 61,356 (-0.56%) |
-| Flip-flops | 10,293 → 10,297 (+0.04%) | 18,083 → 18,188 (+0.58%) |
-| BRAM tiles | 10 → 10 (+0.00%) | 15 → 15 (+0.00%) |
-| DSPs | 115 → 115 (+0.00%) | 210 → 215 (+2.38%) |
-| Estimated Fmax | 36.015 MHz → 34.942 MHz (-2.98%) | 26.619 MHz → 26.583 MHz (-0.14%) |
-| MNIST accelerator cycles | 132,353 | 96,169 |
-| Latency at 20 MHz | 6.6177 ms | 4.8084 ms |
-| Power at 20 MHz (dynamic / static / total) | 14 / 123 / 137 mW | 12 / 123 / 135 mW |
-| Inference energy at 20 MHz | 0.907 mJ | 0.649 mJ |
-| Latency at own Fmax | 3.7879 ms | 3.6177 ms |
-| Power at own Fmax (dynamic / static / total) | 25 / 123 / 147 mW | 16 / 123 / 139 mW |
-| Inference energy at own Fmax | 0.557 mJ | 0.503 mJ |
+| Slice LUTs | 21,552 | 61,935 |
+| Slice registers | 10,985 | 18,848 |
+| BRAM tiles | 10 | 15 |
+| DSPs | 115 | 215 |
+| Estimated Fmax | 34.942 MHz | 26.589 MHz |
+| 20 MHz setup WNS | +21.381 ns | +12.391 ns |
+| Layer execution cycles | 132,353 | 96,169 |
+| Descriptor word reads | 108 | 108 |
+| Descriptor fetch and launch cycles | 119 | 119 |
+| Start-to-done cycles | 132,472 | 96,288 |
+| Chain latency at 20 MHz | 6.62360 ms | 4.81440 ms |
+| Dynamic / static / total power at 20 MHz | 14 / 123 / 136 mW | 12 / 123 / 135 mW |
+| Estimated energy at 20 MHz | 0.901 mJ | 0.650 mJ |
+| Chain latency at own estimated Fmax | 3.79135 ms | 3.62139 ms |
+| Dynamic / static / total power at own estimated Fmax | 24 / 123 / 147 mW | 16 / 123 / 139 mW |
+| Estimated energy at own estimated Fmax | 0.557 mJ | 0.503 mJ |
 
-Arrows show **quantization only → quantization with ReLU**, with percentage change
-relative to the quantization-only design. Cycle, latency, power and energy rows
-describe the CNN on the ReLU-enabled design. The 20 MHz row uses a common
-50 ns period. Individual estimated-Fmax rows use the actual simulated periods
-of 28.620 ns for NHWC and 37.618 ns for NCHW.
-
-Latency counts accelerator work. Energy uses the native activity window, which
-also includes six descriptor-gap cycles and a 100 ps netlist propagation offset.
-External-memory and software energy are excluded. Timing and power are
-post-synthesis estimates.
+Timing and power are Vivado post-synthesis estimates for Nexys Video
+(`xc7a200tsbg484-1`). At their individual estimated Fmax, the layouts
+were simulated at periods of 28.620 ns (NHWC) and 37.610 ns (NCHW).
+Chain latency includes descriptor fetch and launch. Energy uses the native
+activity window from accepted start to completion, including 100 ps of
+netlist propagation. Estimates exclude external-memory and software energy.
 
 <!-- CURRENT_SUMMARY_END -->
 
@@ -70,9 +69,8 @@ The multiplier is an unsigned 32-bit numerator, with scale approximated by `mult
 Bias, requantization and ReLU are independent descriptor controls. **Disabling requantization retains optional bias addition**, producing raw signed32 values; disable bias and ReLU as well to obtain the unmodified accumulator. This lets the MNIST final layer retain bias without narrowing its scores.
 
 Partial sums stay INT32 across reduction jobs. Output processing is shared and applied only on completed external writes. Each external word contains one sign-extended INT8 value or one raw signed32 value; outputs are not packed. The descriptor's `cfg_relu_enable` is captured at layer acceptance. ReLU
-uses a combinational sign clamp on completed writes and adds zero cycles in
-the matched CNN check. It also works on signed32 output when requantization is
-bypassed.
+uses a combinational sign clamp on completed writes, including signed32 output
+when requantization is bypassed.
 
 See [file and memory formats](tools/mnist/MEMORY_FORMAT.md) for parameter loading and output layout.
 
@@ -178,14 +176,14 @@ before test evaluation and calibrated on the 48,000 training images.
 The selected checkpoint reached **98.65% floating-point and 98.62% INT8 accuracy**
 on 10,000 test images, a **0.03 percentage-point** drop. The independent
 integer reference matched every final score. Both RTL layouts matched all
-2,106 values per image for the same 20 test indices used in the dense baseline.
-Each layout classified 20/20 correctly on that subset.
+2,106 values per image across 20 retained test images. Each layout classified
+20/20 correctly on that subset.
 See [training metrics](tools/mnist/training_cnn/METRICS.json) and
-[streamed-descriptor validation](reports/mnist_cnn_relu/README.md).
+[RTL replay results](reports/layer_program/rtl_results.json).
 
-![Selected MNIST images with true labels, RTL predictions and correctness](reports/mnist_cnn_relu/mnist_predictions.svg)
+![Selected MNIST images with true labels, RTL predictions and correctness](reports/layer_program/mnist_predictions.svg)
 
-## Previous ReLU results and analysis
+## Cycle and timing analysis
 
 Both accelerators use identical CNN inputs and parameters. Resources and timing
 come from Vivado post-synthesis reports for Nexys Video `xc7a200tsbg484-1`.
@@ -196,62 +194,46 @@ come from Vivado post-synthesis reports for Nexys Video `xc7a200tsbg484-1`.
 | Conv8 | 38,105 | 37,778 |
 | Dense32 | 11,383 | 13,134 |
 | Dense10 | 927 | 1,094 |
-| Total | 132,353 | 96,169 |
+| Layer execution subtotal | 132,353 | 96,169 |
+| Descriptor fetch and launch | 119 | 119 |
+| Full chain | 132,472 | 96,288 |
 
-NCHW takes **36,184 fewer cycles (27.34%)** than NHWC on this CNN. Conv16 alone
+NCHW takes **36,184 fewer full-chain cycles (27.31%)** than NHWC on this CNN. Conv16 alone
 saves **37,775 cycles**. Both implementations run **22 jobs** and spend the
 same cycles on feature and weight transfers in Conv16. NCHW saves **38,192
 core-execution cycles** there, with **374 more address-setup cycles** and
 **43 more layer-planning cycles**. Across both Dense layers, NHWC saves
 **1,918 cycles**, where NCHW's extra setup and core startup are visible.
-Matched hardware and software ReLU controls produced the same outputs and
-cycle counts on both implementations.
-
-### Quantized accelerator with and without ReLU
-
-The opening table compares the retained quantization-only designs against the
-streamed-descriptor combinational-ReLU designs. Both use the same FPGA part, 10×10 array
-and precision. Deltas are relative to each architecture's own quantization-only
-baseline. [Prior quantization-only results](reports/current/README.md).
-
-Relative to the retained unquantized baseline, the complete bias, quantization
-and ReLU designs change by the amounts below. This baseline predates chaining.
-
-- NHWC versus retained unquantized: LUTs +14.17%, Flip-flops +4.01%, BRAM tiles -33.33%, DSPs +3.60%, Estimated Fmax -9.44%.
-- NCHW versus retained unquantized: LUTs +0.49%, Flip-flops +1.07%, BRAM tiles +0.00%, DSPs +4.37%, Estimated Fmax -0.02%.
 
 ### Worst paths
 
 | Implementation | Worst path | Data delay | Logic levels | Interpretation |
 |---|---|---:|---:|---|
-| NHWC | `u_accelerator/u_core/u_datapath/g_output[2].u_accumulator/u_sram/rdata_reg[1]/C` → `mem_wdata[0]` | 25.610ns | 46 | Completed-output writeback |
-| NCHW | `u_accelerator/tap_mode_reg/C` → `u_accelerator/p_0_out__0/A[16]` | 33.812ns | 68 | Scheduler bank/address planning |
+| NHWC | `u_chain/u_accelerator/u_core/u_datapath/g_output[2].u_accumulator/u_sram/rdata_reg[1]/C` → `mem_wdata[0]` | 25.610ns | 46 | Completed-output writeback |
+| NCHW | `u_chain/u_accelerator/tap_mode_reg_rep__5/C` → `u_chain/u_accelerator/p_0_out__0/A[16]` | 33.803ns | 68 | Scheduler bank/address planning |
 
-See [timing reports](reports/mnist_cnn_relu/README.md) for constraints, setup
+See [synthesis and simulation timing](reports/layer_program/native_results.json) for constraints, setup
 paths and the relation between the estimate and the actual simulation clocks.
 
 ### Power and energy
 
-At 20 MHz, NCHW has **27.34% lower latency**
-and **28.40% lower estimated energy** than NHWC.
-At each layout’s own estimated Fmax, the NCHW advantage is
-**4.49% for latency** and
-**9.69% for energy**.
+At 20 MHz, NCHW has **27.31% lower full-chain latency** and **27.85% lower
+estimated energy** than NHWC. At each layout’s own estimated Fmax, NCHW has
+**4.48% lower latency** and **9.68% lower estimated energy**.
 
-Native SAIF covers one inference per layout and clock, including three
-two-cycle descriptor gaps and the primitive propagation offset. Read
-[the measurement details](reports/mnist_cnn_relu/README.md) for activity
-annotation coverage and tool warnings.
+Native SAIF covers one full inference per layout and clock, including all
+descriptor fetches. At both clocks, it annotates **87%** of NHWC design nets
+and **85%** of NCHW design nets. Vivado rounds power to the nearest milliwatt.
+See the [native capture results](reports/layer_program/native_results.json).
 
 ## Validation and provenance
 
 The notebook's INT8 inference matches an independent reference on the complete
-test set. Both RTL implementations pass 20 trained-image cases and three
+test set. Both RTL implementations pass 20 retained test-image cases and three
 directed controls. The original dense runner also passes a retained case on each
-layout. All four native post-synthesis runs matched RTL outputs and cycle counts. See [previous ReLU results](reports/mnist_cnn_relu/README.md)
-for source hashes, configuration, per-layer counters and report provenance.
-The [November 16 release report](reports/current/README.md) retains the dense
-model and quantization-only comparison.
+layout. All four native post-synthesis runs matched RTL outputs and cycle
+counts. See the [source and capture identities](reports/layer_program/source_and_capture_identity.json)
+and [per-layer RTL results](reports/layer_program/rtl_results.json).
 
 These results describe RTL simulation and Vivado post-synthesis estimates.
 Out-of-context clock placement, activity coverage and external-memory energy
